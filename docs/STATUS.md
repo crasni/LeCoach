@@ -15,7 +15,7 @@ This file records verified implementation evidence. Task ownership and progress 
 
 - Live camera/microphone capture, speech/vision inference, the sole engagement engine, production rehearsal UI, and the sole recorder/feedback generator are not integrated. The implemented shell displays authored synthetic examples only.
 - No model availability, inference latency, local privacy behavior, or UGen300 runtime compatibility has been measured.
-- Competition details in GUIDE.md are project context; the latest official requirements have not been rechecked during repository bootstrap or team coordination.
+- Current competition requirement verification is recorded under INT-03 below; final submission, cutoff details and target-device inference remain unverified.
 - Executable event contracts and lifecycle/transport behavior are validated below. Subsystem role handoffs remain requirements for the live MVP.
 
 ## Team assignments and access
@@ -86,6 +86,18 @@ FACT: Public GitHub API checks of PR #4's reviews, issue comments, and inline co
 IMPACT: Publication tasks 6.4 and 6.5 are satisfied. INT-01 is in review with 19/20 OpenSpec tasks complete; task 6.6 is still unchecked because collaborator review and downstream acceptance have not been established. The scaffold is available on main for all lanes. INT-02's live composition dependencies are not yet met.
 
 PROPOSAL: Another collaborator reviews the merged scaffold and records contract/fixture acceptance before INT-01 is marked done or archived. Continue independent INT-03 source verification on `agent/integration`; the new local claim and follow-up remain unpublished until a separate approved push.
+
+## INT-03 source verification and hardware readiness
+
+FACT: On 2026-10-07, inspected the three supplied PDFs and retrieved the official competition page directly over HTTPS, including its JSON-LD rules description. The browser extraction service returned 404, so that failure was not treated as proof the page was unavailable. [CONTEST.md](CONTEST.md) records verified requirements and unresolved submission details; [SOURCES.md](SOURCES.md) records inspected pages, hashes, exact Hailo documentation revisions and untested adapter candidates. The official rules permit initial Stage I validation without the target accelerator; Stage II requires the selected platform. The cutoff date is verified, but its precise time/timezone is not established by the retrieved metadata.
+
+FACT: Read-only `lsusb` on Linux x86_64 (kernel `7.0.0-38-generic`) showed root hubs, an integrated camera, wireless device and USB receiver; no identifiable UGen300 appeared. `hailortcli` was absent from PATH. The application's `.venv/bin/python` reports Python 3.12.14 and `importlib.util.find_spec('hailo_platform')` returned `None`; system Python 3.14.4 is not the application's pinned runtime. These observations do not prove the team lacks hardware elsewhere. No device capture, driver install, model download or accelerator inference was performed.
+
+IMPACT: Vendor documentation supports specific Hailo-10H Whisper and pose HEF candidates, but LeCoach compatibility and concurrent inference remain unmeasured. The speech reference describes ten-second input windows, and the pose benchmark conditions use PCIe rather than the selected USB path. Neither model availability nor vendor throughput establishes a suitable live engagement delay. The current prototype still displays synthetic authored outputs only.
+
+PROPOSAL: [DEMO.md](DEMO.md) provides a proposed 2:55 recording sequence and existing replay commands for handoff to Lane 5. Complete INT-02 with the subsystem owners, then capture honest live CPU evidence and measured UGen300 evidence when the device/runtime are available. Confirm submission cutoff details and team registration, prepare final English assets, and obtain applicable publication/submission authorization. INT-03 remains in progress; documentation and its claim are local until a separately approved push.
+
+Validation: strict INT-01 OpenSpec validation passes; all 54 local documentation targets in the changed handoff/reference files resolve; Git whitespace checks pass. Five pinned Hailo source documents were retrieved successfully and their runtime/model assumptions checked against the cited content. Application code and contracts were unchanged, so the earlier scaffold test evidence was not rerun or represented as new live validation.
 
 ## Evidence to add as work lands
 
