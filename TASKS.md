@@ -14,7 +14,7 @@ Each collaborator takes one lane; a lane can use an AI coding agent under that c
 | 2 — Audio / speech | @firstsnow1226 | Pending invite | `agent/audio-streaming` | Microphone capture, local transcription, speech metrics, speech adapter | AUD-01 |
 | 3 — Vision / body language | @kai-nnnnn | Collaborator | `agent/vision-pose` | Camera capture, pose/facing approximation, motion metrics, vision adapter | VIS-01 |
 | 4 — Realtime experience / engagement | @ricebal1 | Pending invite | `agent/avatar-ui` | Deterministic engagement engine, smoothing, session controls and live audience UI | LIVE-01 |
-| 5 — Coaching / analytics / demo | @WolflordR | Pending invite | `agent/session-analysis` | Session event store, moment selection, feedback, demo scenarios and evidence | COACH-01 |
+| 5 — Coaching / analytics / demo | @WolflordR | Accepted invite (owner confirmed 2026-10-07) | `agent/session-analysis` | Session event store, moment selection, feedback, demo scenarios and evidence | COACH-01 |
 
 ### What each assigned agent does next
 
@@ -36,7 +36,7 @@ Module boundaries follow the agreed architecture. Lane 1 establishes actual dire
 6. Open a PR with the task ID, concrete behavior, reproduction/check commands and results, dependencies, mock/live mode, limitations and interface changes. Link the PR in the board and move the task to `review`.
 7. Lane 1 verifies the handoff against the shared contracts, resolves integration and merges in dependency order. Mark `done` only after merge and acceptance evidence. Update verified integration status when behavior changes.
 
-Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`, `review`, `done`. A blocked task includes the blocker, required decision/person and next action. `done` requires runnable behavior, basic failure handling, a consumable documented interface, relevant validation and downstream handoff. Tasks are assigned below; none has been reported started or implemented yet. Change `todo` to `claimed`/`in_progress` when the owner actually starts.
+Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`, `review`, `done`. A blocked task includes the blocker, required decision/person and next action. `done` requires runnable behavior, basic failure handling, a consumable documented interface, relevant validation and downstream handoff. Task rows below record current work; assignment alone does not mean implementation has started.
 
 | Task | Owner | Status | Branch | PR / evidence / blocker | Updated |
 | --- | --- | --- | --- | --- | --- |
@@ -49,7 +49,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
 | LIVE-01 | @ricebal1 | todo | `agent/avatar-ui` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | LIVE-02 | @ricebal1 | todo | `agent/avatar-ui` | Depends on LIVE-01 and live adapter handoffs | 2026-10-07 |
-| COACH-01 | @WolflordR | todo | `agent/session-analysis` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| COACH-01 | @WolflordR | in_progress | `agent/session-analysis` | Provisional claim: prepare synthetic coaching fixtures and checks only. @crasni to review the claim/INT-01 handoff; production recorder and feedback await INT-01 scaffold and LIVE-01 transitions. | 2026-10-07 |
 | COACH-02 | @WolflordR | todo | `agent/session-analysis` | Depends on COACH-01 and integrated live session | 2026-10-07 |
 
 ## Lane 1 — Integration / competition
