@@ -20,6 +20,8 @@ Each collaborator takes one lane; a lane can use an AI coding agent under that c
 
 Find your GitHub username in the Owner column. That row is your assignment: read the matching role prompt in docs/AGENT_ROLES.md, use its lane branch, and start its First task once its dependencies are met. Do not ask the maintainer to choose your lane again. The branch names below are assigned working branches, not a claim that those branches have already been created.
 
+All five owners must develop and commit on their assigned branches, including documentation and task-board updates. Follow [AGENTS.md's branch workflow](AGENTS.md#required-branch-workflow--never-push-to-main): never push directly to `main`; after user-approved branch publication, open a PR targeting `main` for review and integration.
+
 Pending invite owners must accept their GitHub repository invitation before pushing branches or PRs. They can read the shared plan and prepare their lane's fixtures/research in the meantime. Access does not change ownership; do not take a pending invite owner's lane.
 
 `crasni` starts INT-01 to establish the scaffold and contracts. The other four owners prepare their first task against the shared contract while INT-01 lands, then implement and integrate on their own branches. Assigning an owner does not mean their coding agent has started: update task status when work actually begins.

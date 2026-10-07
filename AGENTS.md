@@ -2,6 +2,16 @@
 
 You are joining a coordinated five-person engineering team building **LeCoach**. Read this file when you first open the repository and at the start of every new agent session. Understand the existing plan and your assignment before editing code.
 
+## Required branch workflow — never push to main
+
+Every collaborator and coding agent, including the integration owner, develops and commits on the assigned role branch in [TASKS.md](TASKS.md). This applies to code, documentation, task claims, and shared-interface changes.
+
+- Before editing, check the current branch. If it is `main`, create or switch to your assigned branch without discarding local work. If that branch already exists remotely, track it instead of starting a competing branch.
+- After explicit user push approval, push only the approved role branch. **Never push directly to `main`**, including with a refspec, force push, a multi-branch push, or an API bypass. Push approval does not waive this restriction.
+- Propose changes to `main` through a reviewed pull request from your role branch. The integration owner coordinates review and merge; remote merges remain subject to the approval rule below. Do not use a local merge followed by a push to `main`.
+
+The repository SSH remote is `git@github.com:crasni/LeCoach.git`. Read-only updates from `main` are allowed; publish your work from your own branch.
+
 ## Required user approval before every push
 
 The user explicitly requires this workflow for this project:
@@ -82,7 +92,7 @@ Link to these documents instead of copying their facts into another spec. Latest
 ## Claim and collaborate
 
 - Exactly one owner per task. Named assignments already in `TASKS.md` determine ownership; activate your assigned task by updating its status and date with your GitHub username and lane branch before implementing it. Land or coordinate that claim through the integration owner before assuming ownership; a conflicting claim must be resolved first.
-- Use your assigned role branch. Never commit directly to `main` during feature development.
+- Use your assigned role branch for every change. Follow the required branch workflow above: never commit or push directly to `main`; submit a reviewed PR instead.
 - Keep changes within your lane. Coordinate shared contracts, scaffold, dependencies, and root configuration through the integration owner; agree on a contract revision before changing producers or consumers.
 - Submit a scoped PR referencing task IDs, behavior changed, validation evidence, limitations, and downstream handoff. Subsystem PRs require integration-owner review before merge; integration-owner changes should receive another collaborator's review. Coordinate the initial documentation/scaffold handoff with the maintainer if the integration role is still unassigned.
 - Merge compatible PRs through the integration owner, then pull and inspect changes before continuing. Do not merge incomplete adapters into a supposedly live demo.

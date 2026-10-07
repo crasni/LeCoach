@@ -4,6 +4,8 @@ These five roles divide engineering ownership; they do not add five coaching mod
 
 All five roles must follow the [push approval rule in AGENTS.md](../AGENTS.md#required-user-approval-before-every-push). Local commits are allowed; before each push, present the changes, validation, commits, and destination, then wait for explicit user approval. A role assignment or instruction to publish a claim/PR does not waive this rule.
 
+All development, documentation, and task-claim commits belong on the role branch named in your prompt, including the integration owner's work. Follow the [required branch workflow](../AGENTS.md#required-branch-workflow--never-push-to-main). Never push directly to `main`; publish only the approved role branch and propose a reviewed PR into `main`.
+
 ## 1. Project, integration, and competition
 
 You own LeCoach integration. Work on `agent/integration`.

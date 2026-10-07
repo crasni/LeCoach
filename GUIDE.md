@@ -768,10 +768,11 @@ Do not duplicate work.
 
 ## Branching
 
-Prefer role-specific feature branches.
+Every agent must develop and commit on its assigned role branch, including the integration owner and documentation changes. Follow [AGENTS.md's required branch workflow](AGENTS.md#required-branch-workflow--never-push-to-main). Never push directly to `main`; propose changes through reviewed pull requests from the approved role branch.
 
 Examples:
 
+agent/integration
 agent/audio-streaming
 agent/vision-pose
 agent/avatar-ui

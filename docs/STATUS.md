@@ -6,7 +6,7 @@ This file records verified implementation evidence. Task ownership and progress 
 
 ## Verified
 
-- GitHub repository: https://github.com/crasni/leCoach.
+- GitHub repository: https://github.com/crasni/LeCoach. Canonical SSH remote supplied by the maintainer: `git@github.com:crasni/LeCoach.git`.
 - Initial bootstrap commit: `5f3eb6b` on `main`, pushed to `origin/main` and verified against the remote commit.
 - README, product guide, ignore rules, and three reference PDFs are present.
 - At the start of coordination work, `git pull --ff-only` reported already up to date.
