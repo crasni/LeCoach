@@ -11,10 +11,10 @@ Each collaborator takes one lane; a lane can use an AI coding agent under that c
 | Lane | Owner | Repository access | Lane branch | Owns | First task |
 | --- | --- | --- | --- | --- | --- |
 | 1 — Integration / competition | @crasni | Maintainer | `agent/integration` | Shared contracts, app composition, setup, project documentation, integration and submission checklist | INT-01 |
-| 2 — Audio / speech | @firstsnow1226 | Pending invite | `agent/audio-streaming` | Microphone capture, local transcription, speech metrics, speech adapter | AUD-01 |
+| 2 — Audio / speech | @firstsnow1226 | Collaborator (GitHub reported push permission for @firstsnow1226 on 2026-10-07) | `agent/audio-streaming` | Microphone capture, local transcription, speech metrics, speech adapter | AUD-01 |
 | 3 — Vision / body language | @kai-nnnnn | Collaborator | `agent/vision-pose` | Camera capture, pose/facing approximation, motion metrics, vision adapter | VIS-01 |
 | 4 — Realtime experience / engagement | @ricebal1 | Pending invite | `agent/avatar-ui` | Deterministic engagement engine, smoothing, session controls and live audience UI | LIVE-01 |
-| 5 — Coaching / analytics / demo | @WolflordR | Accepted invite (owner reported in PR #1) | `agent/session-analysis` | Session event store, moment selection, feedback, demo scenarios and evidence | COACH-01 |
+| 5 — Coaching / analytics / demo | @WolflordR | Accepted invite (owner confirmed 2026-10-07) | `agent/session-analysis` | Session event store, moment selection, feedback, demo scenarios and evidence | COACH-01 |
 
 ### What each assigned agent does next
 
@@ -45,13 +45,13 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | INT-01 | @crasni | done | `agent/integration` | Scaffold merged in [PR #4](https://github.com/crasni/LeCoach/pull/4), main `c0f6c68`; [validation](docs/STATUS.md#int-01-local-scaffold-validation). Maintainer accepted completion and waived the remaining peer-review/downstream signoff gate; [OpenSpec plan](openspec/changes/int-01-local-integration-scaffold/proposal.md). | 2026-10-07 |
 | INT-02 | @crasni | todo | `agent/integration` | Depends on subsystem PRs | 2026-10-07 |
 | INT-03 | @crasni | in_progress | `agent/integration` | [Verified submission requirements](docs/CONTEST.md), [hardware sources/candidates](docs/SOURCES.md), and [proposed demo](docs/DEMO.md) prepared locally; hardware measurements and final deliverables pending. | 2026-10-07 |
-| AUD-01 | @firstsnow1226 | todo | `agent/audio-streaming` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| AUD-01 | @firstsnow1226 | blocked | `agent/audio-streaming` | [Draft PR #3](https://github.com/crasni/LeCoach/pull/3) preparation reviewed locally: 10 cases / 11 sessions, 214 events pass executable contracts, 37 speech tests pass after lifecycle fixes. INT-01 scaffold is published through PR #4. Next: agree central speech configuration/language, then implement the live microphone adapter against the approved seams. AUD-01 is not complete. | 2026-10-07 |
 | AUD-02 | @firstsnow1226 | todo | `agent/audio-streaming` | Depends on AUD-01 | 2026-10-07 |
 | VIS-01 | @kai-nnnnn | todo | `agent/vision-pose` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
 | LIVE-01 | @ricebal1 | todo | `agent/avatar-ui` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | LIVE-02 | @ricebal1 | todo | `agent/avatar-ui` | Depends on LIVE-01 and live adapter handoffs | 2026-10-07 |
-| COACH-01 | @WolflordR | blocked | `agent/session-analysis` | [PR #1](https://github.com/crasni/LeCoach/pull/1) preparation reviewed locally; synthetic checks reused unchanged. INT-01 handoff is on main via PR #4; Lane 4 transition/reason evidence remains pending. Owner can continue against the published contracts and labeled fixtures. | 2026-10-07 |
+| COACH-01 | @WolflordR | blocked | `agent/session-analysis` | [Draft PR #1](https://github.com/crasni/LeCoach/pull/1), preparation at `dcc280f`: synthetic cases/checks already incorporated unchanged through INT-01 / PR #4. Integration-owner review reran 9 cases / 10 sessions and 18 utility tests. Published scaffold/contracts are available on main; next: coordinate Lane 4's LIVE-01 transition/reason evidence and implement the recorder/generator in the approved layout. COACH-01 is not complete. | 2026-10-07 |
 | COACH-02 | @WolflordR | todo | `agent/session-analysis` | Depends on COACH-01 and integrated live session | 2026-10-07 |
 
 ## Lane 1 — Integration / competition

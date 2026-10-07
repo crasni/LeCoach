@@ -28,7 +28,7 @@ packages = ["src/lecoach"]
 "checks/coaching/expectations.json" = "lecoach/fixture_data/expectations.json"
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "checks/coaching"]
+testpaths = ["tests", "checks/coaching", "checks/speech"]
 
 [tool.ruff]
 target-version = "py312"

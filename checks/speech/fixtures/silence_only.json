@@ -1,0 +1,8 @@
+[
+{"schema_version": 0, "session_id": "synthetic-speech-silence", "event_id": "00-start", "source": "session", "type": "session.started", "timestamp_s": 0, "payload": {}},
+{"schema_version": 0, "session_id": "synthetic-speech-silence", "event_id": "metrics-5", "source": "speech", "type": "speech.metrics", "timestamp_s": 5, "payload": {"window_start_s": 0, "window_end_s": 5, "availability": "available", "wpm": 0, "filler_count": 0, "filler_rate_per_min": 0, "pause": {"state": "none", "duration_s": 0, "start_s": null, "end_s": null}}},
+{"schema_version": 0, "session_id": "synthetic-speech-silence", "event_id": "metrics-10", "source": "speech", "type": "speech.metrics", "timestamp_s": 10, "payload": {"window_start_s": 0, "window_end_s": 10, "availability": "available", "wpm": 0, "filler_count": 0, "filler_rate_per_min": 0, "pause": {"state": "none", "duration_s": 0, "start_s": null, "end_s": null}}},
+{"schema_version": 0, "session_id": "synthetic-speech-silence", "event_id": "90-stop", "source": "session", "type": "session.stopping", "timestamp_s": 15, "payload": {}},
+{"schema_version": 0, "session_id": "synthetic-speech-silence", "event_id": "metrics-15", "source": "speech", "type": "speech.metrics", "timestamp_s": 15, "payload": {"window_start_s": 5, "window_end_s": 15, "availability": "available", "wpm": 0, "filler_count": 0, "filler_rate_per_min": 0, "pause": {"state": "none", "duration_s": 0, "start_s": null, "end_s": null}}},
+{"schema_version": 0, "session_id": "synthetic-speech-silence", "event_id": "99-completed", "source": "session", "type": "session.completed", "timestamp_s": 15, "payload": {"duration_s": 15, "incomplete_sources": []}}
+]

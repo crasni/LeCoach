@@ -1,0 +1,243 @@
+{
+  "steady_pace": {
+    "description": "Moderate English pace (about 110-130 WPM per window), one hesitation, three completed sentence pauses, and one partial misrecognition corrected by its final.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-steady-pace",
+        "capture_end_s": 31,
+        "final_transcript": [
+          ["u1", "Practicing a presentation alone has one fundamental problem for every speaker."],
+          ["u2", "There is no audience to tell you how it lands."],
+          ["u3", "LeCoach gives you a private audience that reacts while you speak."],
+          ["u4", "Everything runs locally, so your rehearsal never leaves the device."],
+          ["u5", "Um, the avatars lean in when your pace is steady and clear."],
+          ["u6", "Afterwards, it shows the few moments that mattered most."]
+        ],
+        "finalized_words": 62,
+        "finalized_fillers": 1,
+        "completed_pauses": [[4.6, 5.9], [14.1, 15.8], [24.7, 26.2]],
+        "longest_active_pause_s": 1.6,
+        "speech_status": [],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": [],
+        "wpm_min": 111.9,
+        "wpm_max": 132
+      }
+    ]
+  },
+  "rapid_speech": {
+    "description": "Pace rises from about 110 to above 200 WPM with only short gaps, so no completed pauses.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-rapid",
+        "capture_end_s": 30,
+        "final_transcript": [
+          ["u1", "Today I want to show you how LeCoach works."],
+          ["u2", "We capture your voice and camera, and the audience reacts right away."],
+          ["u3", "The speech pipeline transcribes locally, measures your pace, counts fillers, and tracks pauses."],
+          ["u4", "The vision pipeline estimates facing direction and movement, then the engagement engine combines everything."],
+          ["u5", "When you rush through the key result, the audience gets confused and starts drifting away."],
+          ["u6", "Then you see exactly where it happened, why it happened, and what to try next time."],
+          ["u7", "All of it runs on your own machine with no cloud service involved."]
+        ],
+        "finalized_words": 92,
+        "finalized_fillers": 0,
+        "completed_pauses": [],
+        "longest_active_pause_s": 1.4,
+        "speech_status": [],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": [],
+        "wpm_min": 108,
+        "wpm_max": 234
+      }
+    ]
+  },
+  "filler_heavy": {
+    "description": "Repeated hesitations and set-off discourse markers: 11 fillers in 37 words, about 24-29 fillers per minute.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-fillers",
+        "capture_end_s": 25,
+        "final_transcript": [
+          ["u1", "Um, so, uh, today I want to, um, talk about our results."],
+          ["u2", "The model, you know, it basically, uh, listens to the microphone."],
+          ["u3", "And then, like, the audience, um, reacts, I mean, it changes faces."],
+          ["u4", "Uh, so, um, that is basically how it, uh, works."]
+        ],
+        "finalized_words": 37,
+        "finalized_fillers": 11,
+        "completed_pauses": [[16.9, 18.3]],
+        "longest_active_pause_s": 2,
+        "speech_status": [],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": [],
+        "wpm_min": 72,
+        "wpm_max": 108
+      }
+    ]
+  },
+  "prolonged_silence": {
+    "description": "A 10.8 s silence with working capture: the pause is reported active as it grows, completed once speech resumes, and WPM is a measured 0 rather than null.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-long-pause",
+        "capture_end_s": 32,
+        "final_transcript": [
+          ["u1", "Let me walk you through the three steps of a rehearsal."],
+          ["u2", "First, you start a session and the audience appears."],
+          ["u3", "Sorry, I lost my place for a moment there."],
+          ["u4", "Second, you speak while the avatars react in real time."]
+        ],
+        "finalized_words": 39,
+        "finalized_fillers": 0,
+        "completed_pauses": [[9.8, 20.6]],
+        "longest_active_pause_s": 10.2,
+        "speech_status": [],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": [],
+        "wpm_min": 0,
+        "wpm_max": 132
+      }
+    ]
+  },
+  "delivery_effects": {
+    "description": "Producer delivery effects: model warm-up delays the first final so one window reports null coverage, a stale partial arrives after its final, a final is retried identically, a hallucinated partial is retracted by an empty final, pause metrics arrive out of order, and a final drains after session.stopping.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-delivery",
+        "capture_end_s": 20,
+        "final_transcript": [
+          ["u1", "Our results are ready."],
+          ["u2", "This is the part that matters most."],
+          ["u3", ""],
+          ["u4", "We slow down and pause before the key number."],
+          ["u5", "And that is why we"]
+        ],
+        "finalized_words": 25,
+        "finalized_fillers": 0,
+        "completed_pauses": [[4.6, 6], [9.6, 11], [11.4, 12.5]],
+        "longest_active_pause_s": 0,
+        "speech_status": [],
+        "null_wpm_metrics": ["metrics-5"],
+        "unavailable_metrics": [],
+        "wpm_min": 40,
+        "wpm_max": 84
+      }
+    ]
+  },
+  "microphone_denied": {
+    "description": "Microphone permission is denied at start: a speech signal.status and unavailable metrics with null values, never a measured zero.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-mic-denied",
+        "capture_end_s": 10,
+        "final_transcript": [],
+        "finalized_words": 0,
+        "finalized_fillers": 0,
+        "completed_pauses": [],
+        "longest_active_pause_s": 0,
+        "speech_status": [[0, "unavailable", "microphone_permission_denied"]],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": ["metrics-5", "metrics-10"],
+        "wpm_min": null,
+        "wpm_max": null
+      }
+    ]
+  },
+  "microphone_lost": {
+    "description": "The microphone disconnects mid-utterance: the cut utterance is finalized at the disconnect time and later windows report an error with null values.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-mic-lost",
+        "capture_end_s": 20,
+        "final_transcript": [
+          ["u1", "We are about to see the audience react."],
+          ["u2", "Watch what happens when I speed up a little."],
+          ["u3", "Here is the"]
+        ],
+        "finalized_words": 20,
+        "finalized_fillers": 0,
+        "completed_pauses": [],
+        "longest_active_pause_s": 0,
+        "speech_status": [[12.4, "error", "microphone_disconnected"]],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": ["metrics-15", "metrics-20"],
+        "wpm_min": 96,
+        "wpm_max": 102
+      }
+    ]
+  },
+  "silence_only": {
+    "description": "Capture works but the speaker never starts: measured 0 WPM and 0 fillers, and no pause because pauses are only measured after the first speech.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-silence",
+        "capture_end_s": 15,
+        "final_transcript": [],
+        "finalized_words": 0,
+        "finalized_fillers": 0,
+        "completed_pauses": [],
+        "longest_active_pause_s": 0,
+        "speech_status": [],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": [],
+        "wpm_min": 0,
+        "wpm_max": 0
+      }
+    ]
+  },
+  "unsupported_language": {
+    "description": "Mandarin speech outside the v0 English rules: transcripts and pauses are reported, while WPM and filler fields stay null.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-mandarin",
+        "capture_end_s": 15.5,
+        "final_transcript": [
+          ["u1", "大家好，今天我想介紹 LeCoach。"],
+          ["u2", "它會在你練習的時候即時給你反應。"],
+          ["u3", "所有資料都留在你的電腦上。"]
+        ],
+        "completed_pauses": [[4.6, 5.9]],
+        "longest_active_pause_s": 1.5,
+        "speech_status": [],
+        "null_wpm_metrics": ["metrics-5", "pause-5.9", "metrics-15", "metrics-15.5"],
+        "unavailable_metrics": [],
+        "wpm_min": null,
+        "wpm_max": null
+      }
+    ]
+  },
+  "repeated_sessions": {
+    "description": "Two sessions reuse zero-based clocks, event IDs, and utterance IDs; each is checked and reconstructed separately.",
+    "sessions": [
+      {
+        "session_id": "synthetic-speech-repeat-a",
+        "capture_end_s": 8,
+        "final_transcript": [["u1", "This is my first attempt."]],
+        "finalized_words": 5,
+        "finalized_fillers": 0,
+        "completed_pauses": [],
+        "longest_active_pause_s": 4,
+        "speech_status": [],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": [],
+        "wpm_min": 37.5,
+        "wpm_max": 60
+      },
+      {
+        "session_id": "synthetic-speech-repeat-b",
+        "capture_end_s": 8,
+        "final_transcript": [["u1", "Second attempt, a little slower."]],
+        "finalized_words": 5,
+        "finalized_fillers": 0,
+        "completed_pauses": [],
+        "longest_active_pause_s": 3.6,
+        "speech_status": [],
+        "null_wpm_metrics": [],
+        "unavailable_metrics": [],
+        "wpm_min": 37.5,
+        "wpm_max": 60
+      }
+    ]
+  }
+}
