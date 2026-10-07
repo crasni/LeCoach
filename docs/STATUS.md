@@ -107,3 +107,48 @@ PROPOSAL: Publish this local branch reconciliation only after explicit push appr
 ## Evidence to add as work lands
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
+
+## PR #3 integration-owner review
+
+FACT: Merged current main locally into `agent/audio-streaming` without Git conflicts and reviewed speech tokenization, fixture generation, semantic checker and tests against the executable contracts. All 214 fixture events validate with `lecoach.contracts.events.parse_event`; all 10 cases / 11 sessions pass the oracles and generator parity check.
+
+FACT: Reproduced acceptance of missing/late lifecycle starts and invalid lifecycle payloads (unknown or duplicated incomplete sources and extra fields). Added regression tests, observed seven failing assertions before the fix, then enforced lifecycle start/order and canonical lifecycle payload shapes. Speech-only exports remain supported. Added speech tests to default pytest discovery; no event schema or production adapter was changed.
+
+Validation on Linux using the existing project Python 3.12 environment: `python -m pytest -q tests checks/coaching checks/speech` passes 97 tests and 37 subtests, with the existing Starlette/httpx deprecation warning. The standalone speech suite passes 37 tests. Fixtures remain synthetic and unchanged.
+
+IMPACT: Preparation is acceptable with the local fixes. The standalone checker is not exhaustive schema validation; continue validating through executable contracts. Extra completed-pause metrics and leading-silence handling fit the current contract. Language and timing constants are fixture assumptions pending central configuration and demo-language agreement. Scaffold publication is no longer a blocker; live capture, inference, latency, filler recall and target hardware remain unverified.
+
+PROPOSAL: Publish the reviewed local branch only after explicit push approval, then accept the preparation PR without marking AUD-01 complete. The owner should implement the live adapter in `src/lecoach/speech/` against SessionContext and the start/stop_capture/drain seams. No remote review, push or merge was performed during this review.
+
+## AUD-01 preparation — original contributor evidence
+
+FACT: Lane 2 prepared commit `1ac7b53` on `agent/audio-streaming`, following claim commit `1412994`, and published [draft PR #3](https://github.com/crasni/LeCoach/pull/3) for integration-owner review. [checks/speech/README.md](../checks/speech/README.md) documents ten synthetic cases covering eleven speech sessions, generated from hand-written scenario scripts. They cover steady and rapid pace, heavy fillers, prolonged silence, model warm-up with late, retried and out-of-order delivery, a hallucinated partial retracted by an empty final, denied and lost microphones, silence only, unsupported language, and repeated sessions. They follow proposed v0 speech rules documented in that README: English tokenizer and filler lexicon, window and coverage rules, null versus zero, and pause reporting. No microphone, audio, model, or accelerator was used.
+
+Validation in the cloud development container (Linux, Python 3.13.16; the tests also pass with Python 3.11 and 3.12):
+
+```sh
+python3 checks/speech/check_speech.py
+python3 -m unittest discover -s checks/speech -p 'test_*.py' -v
+python3 checks/speech/make_fixtures.py --check
+```
+
+Observed result: all 10 cases / 11 sessions match their hand-derived oracles, and the committed fixtures match the scenario scripts. All 33 tests pass. They include rejection of:
+
+- double-counted retries;
+- revisions after a final;
+- overlapping finals;
+- unfinalized speech at completion;
+- windows counted before their overlapping finals;
+- zero instead of null for short or unavailable windows;
+- metrics claiming availability during an outage;
+- inflated WPM or filler counts;
+- leading silence reported as a pause;
+- unreported, duplicated or misplaced pauses.
+
+Lane 5's `check_event` from [draft PR #1](https://github.com/crasni/LeCoach/pull/1) accepted all 214 fixture events. These results verify synthetic artifacts and the check utility only. They do not verify microphone capture, transcription accuracy, latency, or a live adapter.
+
+FACT: The official SalesKit in `docs/` lists Whisper-Tiny, Whisper-Base and Whisper-Small as runnable on the UGen300 (Hailo-10H) SKUs through the Hailo GenAI Model Zoo (PDF pages 7, 8 and 15). External reports say Whisper often omits filler words and can produce text on silence or noise; sources are in the README. None of this has been run or measured locally or on UGen300.
+
+IMPACT: Lanes 4 and 5 can develop against realistic speech streams before the live adapter exists, including pace, fillers, pauses, unavailable input, and null versus zero. AUD-01 remains blocked on INT-01's scaffold, configuration location, and executable contract and replay seam. No production speech adapter, capture code, or dependency was added. Filler counts from standard Whisper output may be undercounts, so filler-driven reactions depend on AUD-02 measurements.
+
+PROPOSAL: The integration owner reviews the claim, the fixture placement, and the proposed v0 speech rules and open questions in the README: pause-completion events, leading silence, null reasons, configuration, analysis language, and model-failure status. After INT-01 lands, Lane 2 implements microphone capture → voice activity detection → local Whisper with word timestamps in the approved layout. Recorded sessions are then checked with `check_speech.py --stream`, and AUD-02 measures latency and filler recall per model size before any claim is made.
