@@ -28,7 +28,7 @@ PROPOSAL: Assigned owners follow the TASKS.md first-task and dependency instruct
 
 ## COACH-01 preparation — pending integration review
 
-FACT: Lane 5 prepared commit `dcc280f` on `agent/session-analysis`, following claim commit `8123599`. [checks/coaching/README.md](../checks/coaching/README.md) documents nine hand-authored synthetic cases covering ten expected completed sessions. Fixtures include weak-to-improved delivery, missing camera, no usable inputs, empty/startup sessions, late finals and duplicate retries, drain timeout, repeated sessions, and adjacent incidents. Example feedback uses the existing v0 document shapes; positive reason codes remain pending LIVE-01. No real rehearsal data or model output is included.
+FACT: Lane 5 prepared commit `dcc280f` on `agent/session-analysis`, following claim commit `8123599`, and published [draft PR #1](https://github.com/crasni/leCoach/pull/1) for integration-owner review. [checks/coaching/README.md](../checks/coaching/README.md) documents nine hand-authored synthetic cases covering ten expected completed sessions. Fixtures include weak-to-improved delivery, missing camera, no usable inputs, empty/startup sessions, late finals and duplicate retries, drain timeout, repeated sessions, and adjacent incidents. Example feedback uses the existing v0 document shapes; positive reason codes remain pending LIVE-01. No real rehearsal data or model output is included.
 
 Validation on the local macOS development host with Python 3.14.5:
 
