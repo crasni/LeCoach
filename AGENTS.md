@@ -15,7 +15,7 @@ This is an orientation summary. [GUIDE.md](GUIDE.md) controls product scope; [do
 ## First-session onboarding
 
 1. Follow the read-before-work sequence below, then inspect the repository, recent commits, and relevant open PRs when accessible.
-2. Identify the collaborator's GitHub username and look up their assigned lane in [TASKS.md](TASKS.md). A username, the five lane definitions, or the GUIDE's placeholder alone does not establish an assignment. Do not invent collaborators or assume repository ownership means integration ownership.
+2. Identify the collaborator's GitHub username and match it to the Owner column in [TASKS.md](TASKS.md). A matching row is the assigned lane: use its branch, first task, and role prompt without asking the user to assign a lane again. Do not invent a username or infer identity from someone else's Git commit author. Check the row's access state; pending invitations must be accepted before pushing work.
 3. If your user explicitly assigned a lane, use it and coordinate its claim on the shared board. Otherwise, if the roster does not identify your lane, ask the user which lane to take while continuing read-only inspection. Do not silently take another collaborator's work.
 4. Read that lane's prompt in [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md). TASKS.md provides its exact branch, first task, dependencies, and acceptance criteria. Remain in that lane for the session unless the team explicitly reassigns you.
 5. Pick the highest-priority available task whose dependencies are met. Claim it using the protocol below. If no integration owner is assigned yet, coordinate the initial claim with the repository maintainer identified in TASKS.md.
@@ -36,14 +36,14 @@ Open this repository in your coding agent and give it:
 
 ```text
 Read AGENTS.md and follow its onboarding instructions before making changes.
-My GitHub username is <username>; my assigned lane is <1–5>.
+My GitHub username is <username>. Find my assigned lane in TASKS.md.
 Read the shared documents, inspect current code and claims, then report your
 current state, role, next task, and blockers. Claim and implement the highest-
 priority available task in my lane, validate it, and update the shared task
 board and implementation status. Coordinate interfaces with the integrator.
 ```
 
-Replace the placeholders with the actual collaborator and agreed lane. The shared board remains authoritative for ownership; a handoff does not override an existing claim.
+Replace `<username>` with the actual collaborator's GitHub username. The shared board remains authoritative for ownership; a handoff does not override an existing claim.
 
 ## Read before work
 
@@ -68,7 +68,7 @@ Link to these documents instead of copying their facts into another spec. Latest
 
 ## Claim and collaborate
 
-- Exactly one owner per task. Claim the task in `TASKS.md` with your GitHub username and lane branch before implementing it. Land or coordinate that claim through the integration owner before assuming ownership; a conflicting claim must be resolved first.
+- Exactly one owner per task. Named assignments already in `TASKS.md` determine ownership; activate your assigned task by updating its status and date with your GitHub username and lane branch before implementing it. Land or coordinate that claim through the integration owner before assuming ownership; a conflicting claim must be resolved first.
 - Use your assigned role branch. Never commit directly to `main` during feature development.
 - Keep changes within your lane. Coordinate shared contracts, scaffold, dependencies, and root configuration through the integration owner; agree on a contract revision before changing producers or consumers.
 - Submit a scoped PR referencing task IDs, behavior changed, validation evidence, limitations, and downstream handoff. Subsystem PRs require integration-owner review before merge; integration-owner changes should receive another collaborator's review. Coordinate the initial documentation/scaffold handoff with the maintainer if the integration role is still unassigned.

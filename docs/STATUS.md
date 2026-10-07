@@ -18,13 +18,13 @@ This file records verified implementation evidence. Task ownership and progress 
 - Competition details in GUIDE.md are project context; the latest official requirements have not been rechecked during repository bootstrap or team coordination.
 - Event contracts and five role handoffs describe the intended MVP, not implementation evidence.
 
-## Team assignment blocker
+## Team assignments and access
 
-FACT: SSH Git pull/push is authenticated as `crasni`. GitHub CLI has no API login; the collaborators API returned HTTP 401 on 2026-10-07.
+FACT: On 2026-10-07 the maintainer supplied all five GitHub usernames and authorized assigning them to the five roles. The canonical named roster, task owners, branches, and reported invitation states are now in [TASKS.md](../TASKS.md). Assignment does not imply work has started.
 
-IMPACT: Repository collaborators cannot be fetched or mapped to workstreams automatically. `crasni` is the verified repository maintainer; the other four accounts and their role preferences are unconfirmed.
+IMPACT: Each onboarded agent can determine its lane from its collaborator's GitHub username. Some repository invitations are still pending according to the supplied roster, so those owners need to accept before pushing work. No collaborator has been messaged or newly invited by this agent.
 
-PROPOSAL: Obtain the four GitHub usernames from the maintainer, or authenticate GitHub CLI with repository read access, then update the sole team roster in TASKS.md. Independent planning and lane preparation can proceed meanwhile.
+PROPOSAL: Assigned owners follow the TASKS.md first-task and dependency instructions; the integration owner starts the scaffold. After accepting an invitation, update the access state in TASKS.md. GitHub API authentication is still unavailable here, so invitation acceptance cannot be checked automatically; SSH Git pull/push remains available.
 
 ## Evidence to add as work lands
 

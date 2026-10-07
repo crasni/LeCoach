@@ -6,15 +6,23 @@ Read [docs/STATUS.md](docs/STATUS.md) for the current implementation baseline an
 
 ## Five lanes
 
-Each collaborator takes one lane; a lane can use an AI coding agent under that collaborator's responsibility. These are persistent product responsibilities, not claims about concurrently running agents. `crasni` is the known repository maintainer. All lane assignments await verified collaborator names or an explicit claim.
+Each collaborator takes one lane; a lane can use an AI coding agent under that collaborator's responsibility. These are persistent product responsibilities, not claims about concurrently running agents. `crasni` is the repository maintainer and integration owner. The maintainer supplied the collaborator roster and authorized these assignments on 2026-10-07. Access states below come from that supplied roster; pending invitations have not been independently rechecked through the GitHub API.
 
-| Lane | Owner | Lane branch | Owns | First task |
-| --- | --- | --- | --- | --- |
-| 1 — Integration / competition | Unassigned | `agent/integration` | Shared contracts, app composition, setup, project documentation, integration and submission checklist | INT-01 |
-| 2 — Audio / speech | Unassigned | `agent/audio-streaming` | Microphone capture, local transcription, speech metrics, speech adapter | AUD-01 |
-| 3 — Vision / body language | Unassigned | `agent/vision-pose` | Camera capture, pose/facing approximation, motion metrics, vision adapter | VIS-01 |
-| 4 — Realtime experience / engagement | Unassigned | `agent/avatar-ui` | Deterministic engagement engine, smoothing, session controls and live audience UI | LIVE-01 |
-| 5 — Coaching / analytics / demo | Unassigned | `agent/session-analysis` | Session event store, moment selection, feedback, demo scenarios and evidence | COACH-01 |
+| Lane | Owner | Repository access | Lane branch | Owns | First task |
+| --- | --- | --- | --- | --- | --- |
+| 1 — Integration / competition | @crasni | Maintainer | `agent/integration` | Shared contracts, app composition, setup, project documentation, integration and submission checklist | INT-01 |
+| 2 — Audio / speech | @firstsnow1226 | Pending invite | `agent/audio-streaming` | Microphone capture, local transcription, speech metrics, speech adapter | AUD-01 |
+| 3 — Vision / body language | @kai-nnnnn | Collaborator | `agent/vision-pose` | Camera capture, pose/facing approximation, motion metrics, vision adapter | VIS-01 |
+| 4 — Realtime experience / engagement | @ricebal1 | Pending invite | `agent/avatar-ui` | Deterministic engagement engine, smoothing, session controls and live audience UI | LIVE-01 |
+| 5 — Coaching / analytics / demo | @WolflordR | Pending invite | `agent/session-analysis` | Session event store, moment selection, feedback, demo scenarios and evidence | COACH-01 |
+
+### What each assigned agent does next
+
+Find your GitHub username in the Owner column. That row is your assignment: read the matching role prompt in docs/AGENT_ROLES.md, use its lane branch, and start its First task once its dependencies are met. Do not ask the maintainer to choose your lane again. The branch names below are assigned working branches, not a claim that those branches have already been created.
+
+Pending invite owners must accept their GitHub repository invitation before pushing branches or PRs. They can read the shared plan and prepare their lane's fixtures/research in the meantime. Access does not change ownership; do not take a pending invite owner's lane.
+
+`crasni` starts INT-01 to establish the scaffold and contracts. The other four owners prepare their first task against the shared contract while INT-01 lands, then implement and integrate on their own branches. Assigning an owner does not mean their coding agent has started: update task status when work actually begins.
 
 Module boundaries follow the agreed architecture. Lane 1 establishes actual directories during INT-01; other lanes keep edits inside their subsystem and its checks/examples. Shared contracts, app entry point, dependency manifests/lockfiles and shared documentation require an integration handoff. Do not independently select incompatible frameworks or edit another lane's internals.
 
@@ -22,27 +30,27 @@ Module boundaries follow the agreed architecture. Lane 1 establishes actual dire
 
 1. Start each work session with `git status` and fetch/pull current work safely. Do not overwrite local changes; update the branch from current `main` before coding.
 2. Read GUIDE, AGENTS, this board, architecture, current status and relevant open PRs/issues. Inspect existing code and changed contracts.
-3. Pick the highest-priority unclaimed task in your lane whose dependencies are satisfied. Record a **GitHub username**, task status, exact branch and date below. A role label or a runtime agent name is not an owner.
+3. Pick the highest-priority `todo` task assigned to you whose dependencies are satisfied. Confirm your **GitHub username**, task status, exact branch and date below. A role label or a runtime agent name is not an owner.
 4. Publish the claim before implementation so other collaborators can see it. Use a small documentation PR through the integrator, or the repository's existing authorized claim workflow. Until visible on the shared board, the claim is provisional. Resolve conflicting claims before duplicating work.
 5. Work on the recorded feature branch. Keep changes scoped. Proposed contract changes go to Lane 1 first; the integrator owns approval and merge of shared contract changes and coordinates affected consumers.
 6. Open a PR with the task ID, concrete behavior, reproduction/check commands and results, dependencies, mock/live mode, limitations and interface changes. Link the PR in the board and move the task to `review`.
 7. Lane 1 verifies the handoff against the shared contracts, resolves integration and merges in dependency order. Mark `done` only after merge and acceptance evidence. Update verified integration status when behavior changes.
 
-Statuses: `todo` (unclaimed), `claimed`, `in_progress`, `blocked`, `review`, `done`. A blocked task includes the blocker, required decision/person and next action. `done` requires runnable behavior, basic failure handling, a consumable documented interface, relevant validation and downstream handoff. No task is currently implemented or claimed.
+Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`, `review`, `done`. A blocked task includes the blocker, required decision/person and next action. `done` requires runnable behavior, basic failure handling, a consumable documented interface, relevant validation and downstream handoff. Tasks are assigned below; none has been reported started or implemented yet. Change `todo` to `claimed`/`in_progress` when the owner actually starts.
 
 | Task | Owner | Status | Branch | PR / evidence / blocker | Updated |
 | --- | --- | --- | --- | --- | --- |
-| INT-01 | — | todo | — | Establish runnable skeleton and contract handoff | — |
-| INT-02 | — | todo | — | Depends on subsystem PRs | — |
-| INT-03 | — | todo | — | Hardware access and official submission verification needed | — |
-| AUD-01 | — | todo | — | Confirm INT-01 contracts before integration | — |
-| AUD-02 | — | todo | — | Depends on AUD-01 | — |
-| VIS-01 | — | todo | — | Confirm INT-01 contracts before integration | — |
-| VIS-02 | — | todo | — | Depends on VIS-01 | — |
-| LIVE-01 | — | todo | — | Confirm INT-01 contracts before integration | — |
-| LIVE-02 | — | todo | — | Depends on LIVE-01 and live adapter handoffs | — |
-| COACH-01 | — | todo | — | Confirm INT-01 contracts before integration | — |
-| COACH-02 | — | todo | — | Depends on COACH-01 and integrated live session | — |
+| INT-01 | @crasni | todo | `agent/integration` | Establish runnable skeleton and contract handoff | 2026-10-07 |
+| INT-02 | @crasni | todo | `agent/integration` | Depends on subsystem PRs | 2026-10-07 |
+| INT-03 | @crasni | todo | `agent/integration` | Hardware access and official submission verification needed | 2026-10-07 |
+| AUD-01 | @firstsnow1226 | todo | `agent/audio-streaming` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| AUD-02 | @firstsnow1226 | todo | `agent/audio-streaming` | Depends on AUD-01 | 2026-10-07 |
+| VIS-01 | @kai-nnnnn | todo | `agent/vision-pose` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
+| LIVE-01 | @ricebal1 | todo | `agent/avatar-ui` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| LIVE-02 | @ricebal1 | todo | `agent/avatar-ui` | Depends on LIVE-01 and live adapter handoffs | 2026-10-07 |
+| COACH-01 | @WolflordR | todo | `agent/session-analysis` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| COACH-02 | @WolflordR | todo | `agent/session-analysis` | Depends on COACH-01 and integrated live session | 2026-10-07 |
 
 ## Lane 1 — Integration / competition
 
