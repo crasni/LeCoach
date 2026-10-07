@@ -24,7 +24,24 @@ FACT: On 2026-10-07 the maintainer supplied all five GitHub usernames and author
 
 IMPACT: Each onboarded agent can determine its lane from its collaborator's GitHub username. Some repository invitations are still pending according to the supplied roster, so those owners need to accept before pushing work. No collaborator has been messaged or newly invited by this agent.
 
-PROPOSAL: Assigned owners follow the TASKS.md first-task and dependency instructions; the integration owner starts the scaffold. After accepting an invitation, update the access state in TASKS.md. GitHub API authentication is still unavailable here, so invitation acceptance cannot be checked automatically; SSH Git pull/push remains available.
+PROPOSAL: Assigned owners follow the TASKS.md first-task and dependency instructions; the integration owner starts the scaffold. After accepting an invitation, update the access state in TASKS.md. During initial coordination, GitHub API authentication was unavailable. In the Lane 5 session, WolflordR confirmed invitation acceptance, a branch push succeeded, and the existing Git credential authenticated the GitHub API as `WolflordR`. This does not verify other collaborators' invitation states.
+
+## COACH-01 preparation — pending integration review
+
+FACT: Lane 5 prepared commit `dcc280f` on `agent/session-analysis`, following claim commit `8123599`, and published [draft PR #1](https://github.com/crasni/leCoach/pull/1) for integration-owner review. [checks/coaching/README.md](../checks/coaching/README.md) documents nine hand-authored synthetic cases covering ten expected completed sessions. Fixtures include weak-to-improved delivery, missing camera, no usable inputs, empty/startup sessions, late finals and duplicate retries, drain timeout, repeated sessions, and adjacent incidents. Example feedback uses the existing v0 document shapes; positive reason codes remain pending LIVE-01. No real rehearsal data or model output is included.
+
+Validation on the local macOS development host with Python 3.14.5:
+
+```sh
+python3 checks/coaching/check_cases.py
+python3 -m unittest discover -s checks/coaching -p 'test_*.py' -v
+```
+
+Observed result: all 9 cases / 10 expected sessions are internally consistent; all 18 acceptance-utility tests pass. Negative checks reject dropped finals during drain, duplicate retained finals, post-completion callbacks, mixed-session logs, dangling/duplicate feedback evidence, invented moments, missing limitations, and added engagement scores. Output checks accept different feedback wording. These results verify synthetic artifacts and the check utility, not a production recorder, feedback generator, live audience engine, or inference pipeline. The checks use no network, devices, models, or persistent rehearsal storage; temporary synthetic output is cleaned up by the tests.
+
+IMPACT: Lane 5 can use these cases to check actual `CompletedSession` and `Feedback` outputs after dependency handoff. COACH-01 remains blocked on INT-01's scaffold, executable contract/lifecycle and layout handoff, plus LIVE-01's transition/reason evidence. No production logger, additional engagement engine, or new shared contract was created. The preparation claim and artifacts still require integration-owner review; COACH-01 is not complete.
+
+PROPOSAL: The integration owner reviews the claim and fixture placement, supplies the approved application layout and replay seam, and coordinates Lane 4's reason vocabulary/positive evidence. Lane 5 then implements the recorder, moment selector and template feedback in that layout, runs the cases against real consumer outputs, and records integration evidence before marking COACH-01 done.
 
 ## INT-01 planning — local, not published
 
@@ -76,6 +93,16 @@ FACT: Started the requested apply workflow on 2026-10-07. The CLI reports `ready
 FACT: A read-only SSH remote check found `main` at `d7d61c1` and no current `agent/integration` remote branch. The reviewed coaching preparation still matches its source commit unchanged. GitHub CLI/API authentication is unavailable in this environment; remote PR and collaborator-review state has not been established through the API.
 
 IMPACT: The local commit set can be proposed for publication on `agent/integration`, creating that role branch remotely after approval. Task 6.4 remains unchecked until explicit approval is received; publication and collaborator acceptance remain separate pending gates. No push, PR creation, remote merge, or archive has occurred during preparation.
+
+## PR #1 integration-owner review and conflict resolution
+
+FACT: Reviewed the coaching checker, negative tests, fixture/oracle structure and canonical contract compatibility. The coaching directory matches current main byte-for-byte: INT-01 / merged PR #4 already incorporated these artifacts. Merged current main locally into `agent/session-analysis`, resolving three TASKS.md conflicts by preserving the accepted invitation, current board semantics and contributor preparation evidence. No coaching code or fixture was changed.
+
+Validation on Linux: `python3 checks/coaching/check_cases.py` passes 9 cases / 10 sessions; `python3 -m unittest discover -s checks/coaching -p 'test_*.py'` passes 18 tests; the existing project Python 3.12 environment running `python -m pytest -q` passes 60 tests and 9 subtests, with the existing Starlette/httpx deprecation warning.
+
+IMPACT: No new blocking code defect was found in the preparation scope. Exact oracle moments are scenario acceptance targets, not proof of every valid coaching selection; the standalone checker is not a replacement for executable schema validation. Positive reason semantics still require Lane 4. The scaffold is already published, so waiting for scaffold publication is no longer a blocker; COACH-01 implementation is not done.
+
+PROPOSAL: Publish this local branch reconciliation only after explicit push approval. Accept PR #1 as preparation/documentation reconciliation, then let its owner implement the recorder/generator against the published seams and agreed LIVE-01 evidence. No remote review, push or merge was performed in this review.
 
 ## Evidence to add as work lands
 
