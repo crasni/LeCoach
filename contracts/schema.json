@@ -1,0 +1,1302 @@
+{
+  "$defs": {
+    "CompletedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "const": "session",
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "session.completed",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/CompletionPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "CompletedEvent",
+      "type": "object"
+    },
+    "CompletedSession": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_s": {
+          "minimum": 0,
+          "title": "Duration S",
+          "type": "number"
+        },
+        "incomplete_sources": {
+          "items": {
+            "enum": [
+              "speech",
+              "vision"
+            ],
+            "type": "string"
+          },
+          "title": "Incomplete Sources",
+          "type": "array"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "events": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "engagement.state": "#/$defs/EngagementEvent",
+                "session.completed": "#/$defs/CompletedEvent",
+                "session.started": "#/$defs/StartedEvent",
+                "session.stopping": "#/$defs/StoppingEvent",
+                "signal.status": "#/$defs/StatusEvent",
+                "speech.metrics": "#/$defs/SpeechMetricsEvent",
+                "speech.transcript": "#/$defs/TranscriptEvent",
+                "vision.metrics": "#/$defs/VisionMetricsEvent"
+              },
+              "propertyName": "type"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/StartedEvent"
+              },
+              {
+                "$ref": "#/$defs/StoppingEvent"
+              },
+              {
+                "$ref": "#/$defs/CompletedEvent"
+              },
+              {
+                "$ref": "#/$defs/StatusEvent"
+              },
+              {
+                "$ref": "#/$defs/TranscriptEvent"
+              },
+              {
+                "$ref": "#/$defs/SpeechMetricsEvent"
+              },
+              {
+                "$ref": "#/$defs/VisionMetricsEvent"
+              },
+              {
+                "$ref": "#/$defs/EngagementEvent"
+              }
+            ]
+          },
+          "title": "Events",
+          "type": "array"
+        }
+      },
+      "required": [
+        "duration_s",
+        "incomplete_sources",
+        "session_id",
+        "events"
+      ],
+      "title": "CompletedSession",
+      "type": "object"
+    },
+    "CompletionPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_s": {
+          "minimum": 0,
+          "title": "Duration S",
+          "type": "number"
+        },
+        "incomplete_sources": {
+          "items": {
+            "enum": [
+              "speech",
+              "vision"
+            ],
+            "type": "string"
+          },
+          "title": "Incomplete Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "duration_s",
+        "incomplete_sources"
+      ],
+      "title": "CompletionPayload",
+      "type": "object"
+    },
+    "EmptyPayload": {
+      "additionalProperties": false,
+      "properties": {},
+      "title": "EmptyPayload",
+      "type": "object"
+    },
+    "EngagementEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "const": "engagement",
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "engagement.state",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/EngagementPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "EngagementEvent",
+      "type": "object"
+    },
+    "EngagementPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "ENGAGED",
+            "NEUTRAL",
+            "CONFUSED",
+            "BORED",
+            "INTERESTED"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "previous_state": {
+          "enum": [
+            "ENGAGED",
+            "NEUTRAL",
+            "CONFUSED",
+            "BORED",
+            "INTERESTED"
+          ],
+          "title": "Previous State",
+          "type": "string"
+        },
+        "reasons": {
+          "items": {
+            "$ref": "#/$defs/Reason"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "usable_sources": {
+          "items": {
+            "enum": [
+              "speech",
+              "vision"
+            ],
+            "type": "string"
+          },
+          "title": "Usable Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "state",
+        "previous_state",
+        "reasons",
+        "usable_sources"
+      ],
+      "title": "EngagementPayload",
+      "type": "object"
+    },
+    "Feedback": {
+      "additionalProperties": false,
+      "properties": {
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "duration_s": {
+          "minimum": 0,
+          "title": "Duration S",
+          "type": "number"
+        },
+        "moments": {
+          "items": {
+            "$ref": "#/$defs/Moment"
+          },
+          "maxItems": 4,
+          "title": "Moments",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "session_id",
+        "duration_s",
+        "moments",
+        "limitations"
+      ],
+      "title": "Feedback",
+      "type": "object"
+    },
+    "Moment": {
+      "additionalProperties": false,
+      "properties": {
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "strength",
+            "improvement"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "observation": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Observation",
+          "type": "string"
+        },
+        "suggestion": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Suggestion",
+          "type": "string"
+        },
+        "evidence_event_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Event Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "timestamp_s",
+        "kind",
+        "observation",
+        "suggestion",
+        "evidence_event_ids"
+      ],
+      "title": "Moment",
+      "type": "object"
+    },
+    "Pause": {
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "none",
+            "active",
+            "completed",
+            "unknown"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "duration_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Duration S"
+        },
+        "start_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Start S"
+        },
+        "end_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "End S"
+        }
+      },
+      "required": [
+        "state",
+        "duration_s",
+        "start_s",
+        "end_s"
+      ],
+      "title": "Pause",
+      "type": "object"
+    },
+    "Reason": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Code",
+          "type": "string"
+        },
+        "source_event_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Source Event Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "source_event_ids"
+      ],
+      "title": "Reason",
+      "type": "object"
+    },
+    "SessionConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "default": "fixture",
+          "enum": [
+            "fixture",
+            "live"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "fixture_case": {
+          "default": "weak_to_improved",
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Fixture Case",
+          "type": "string"
+        },
+        "replay_speed": {
+          "default": 5.0,
+          "exclusiveMinimum": 0,
+          "maximum": 100,
+          "title": "Replay Speed",
+          "type": "number"
+        },
+        "startup_timeout_s": {
+          "default": 5.0,
+          "exclusiveMinimum": 0,
+          "maximum": 60,
+          "title": "Startup Timeout S",
+          "type": "number"
+        },
+        "drain_timeout_s": {
+          "default": 2.0,
+          "exclusiveMinimum": 0,
+          "maximum": 60,
+          "title": "Drain Timeout S",
+          "type": "number"
+        },
+        "feedback_timeout_s": {
+          "default": 5.0,
+          "exclusiveMinimum": 0,
+          "maximum": 60,
+          "title": "Feedback Timeout S",
+          "type": "number"
+        }
+      },
+      "title": "SessionConfig",
+      "type": "object"
+    },
+    "SessionSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "fixture",
+            "live"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "prepared",
+            "running",
+            "stopping",
+            "completed"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "elapsed_s": {
+          "minimum": 0,
+          "title": "Elapsed S",
+          "type": "number"
+        },
+        "duration_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Duration S"
+        },
+        "incomplete_sources": {
+          "items": {
+            "enum": [
+              "speech",
+              "vision"
+            ],
+            "type": "string"
+          },
+          "title": "Incomplete Sources",
+          "type": "array"
+        },
+        "input_status": {
+          "additionalProperties": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "title": "Input Status",
+          "type": "object"
+        },
+        "latest_events": {
+          "additionalProperties": {
+            "discriminator": {
+              "mapping": {
+                "engagement.state": "#/$defs/EngagementEvent",
+                "session.completed": "#/$defs/CompletedEvent",
+                "session.started": "#/$defs/StartedEvent",
+                "session.stopping": "#/$defs/StoppingEvent",
+                "signal.status": "#/$defs/StatusEvent",
+                "speech.metrics": "#/$defs/SpeechMetricsEvent",
+                "speech.transcript": "#/$defs/TranscriptEvent",
+                "vision.metrics": "#/$defs/VisionMetricsEvent"
+              },
+              "propertyName": "type"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/StartedEvent"
+              },
+              {
+                "$ref": "#/$defs/StoppingEvent"
+              },
+              {
+                "$ref": "#/$defs/CompletedEvent"
+              },
+              {
+                "$ref": "#/$defs/StatusEvent"
+              },
+              {
+                "$ref": "#/$defs/TranscriptEvent"
+              },
+              {
+                "$ref": "#/$defs/SpeechMetricsEvent"
+              },
+              {
+                "$ref": "#/$defs/VisionMetricsEvent"
+              },
+              {
+                "$ref": "#/$defs/EngagementEvent"
+              }
+            ]
+          },
+          "title": "Latest Events",
+          "type": "object"
+        },
+        "transcript": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "engagement.state": "#/$defs/EngagementEvent",
+                "session.completed": "#/$defs/CompletedEvent",
+                "session.started": "#/$defs/StartedEvent",
+                "session.stopping": "#/$defs/StoppingEvent",
+                "signal.status": "#/$defs/StatusEvent",
+                "speech.metrics": "#/$defs/SpeechMetricsEvent",
+                "speech.transcript": "#/$defs/TranscriptEvent",
+                "vision.metrics": "#/$defs/VisionMetricsEvent"
+              },
+              "propertyName": "type"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/StartedEvent"
+              },
+              {
+                "$ref": "#/$defs/StoppingEvent"
+              },
+              {
+                "$ref": "#/$defs/CompletedEvent"
+              },
+              {
+                "$ref": "#/$defs/StatusEvent"
+              },
+              {
+                "$ref": "#/$defs/TranscriptEvent"
+              },
+              {
+                "$ref": "#/$defs/SpeechMetricsEvent"
+              },
+              {
+                "$ref": "#/$defs/VisionMetricsEvent"
+              },
+              {
+                "$ref": "#/$defs/EngagementEvent"
+              }
+            ]
+          },
+          "title": "Transcript",
+          "type": "array"
+        },
+        "feedback_status": {
+          "enum": [
+            "pending",
+            "ready",
+            "unavailable"
+          ],
+          "title": "Feedback Status",
+          "type": "string"
+        },
+        "output_provenance": {
+          "enum": [
+            "hand_authored",
+            "computed"
+          ],
+          "title": "Output Provenance",
+          "type": "string"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Error"
+        }
+      },
+      "required": [
+        "session_id",
+        "mode",
+        "phase",
+        "elapsed_s",
+        "duration_s",
+        "incomplete_sources",
+        "input_status",
+        "latest_events",
+        "transcript",
+        "feedback_status",
+        "output_provenance",
+        "error"
+      ],
+      "title": "SessionSnapshot",
+      "type": "object"
+    },
+    "SpeechMetricsEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "const": "speech",
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "speech.metrics",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/SpeechMetricsPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "SpeechMetricsEvent",
+      "type": "object"
+    },
+    "SpeechMetricsPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "window_start_s": {
+          "minimum": 0,
+          "title": "Window Start S",
+          "type": "number"
+        },
+        "window_end_s": {
+          "minimum": 0,
+          "title": "Window End S",
+          "type": "number"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "unavailable",
+            "error"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "wpm": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Wpm"
+        },
+        "filler_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Filler Count"
+        },
+        "filler_rate_per_min": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Filler Rate Per Min"
+        },
+        "pause": {
+          "$ref": "#/$defs/Pause"
+        }
+      },
+      "required": [
+        "window_start_s",
+        "window_end_s",
+        "availability",
+        "wpm",
+        "filler_count",
+        "filler_rate_per_min",
+        "pause"
+      ],
+      "title": "SpeechMetricsPayload",
+      "type": "object"
+    },
+    "StartedEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "const": "session",
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "session.started",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/EmptyPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "StartedEvent",
+      "type": "object"
+    },
+    "StatusEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "enum": [
+            "speech",
+            "vision"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "signal.status",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/StatusPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "StatusEvent",
+      "type": "object"
+    },
+    "StatusPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "enum": [
+            "available",
+            "unavailable",
+            "error"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "availability",
+        "reason"
+      ],
+      "title": "StatusPayload",
+      "type": "object"
+    },
+    "StoppingEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "const": "session",
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "session.stopping",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/EmptyPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "StoppingEvent",
+      "type": "object"
+    },
+    "TranscriptEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "const": "speech",
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "speech.transcript",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/TranscriptPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "TranscriptEvent",
+      "type": "object"
+    },
+    "TranscriptPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "utterance_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Utterance Id",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "is_final": {
+          "title": "Is Final",
+          "type": "boolean"
+        },
+        "start_s": {
+          "minimum": 0,
+          "title": "Start S",
+          "type": "number"
+        },
+        "end_s": {
+          "minimum": 0,
+          "title": "End S",
+          "type": "number"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "utterance_id",
+        "revision",
+        "is_final",
+        "start_s",
+        "end_s",
+        "text"
+      ],
+      "title": "TranscriptPayload",
+      "type": "object"
+    },
+    "VisionMetricsEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": 0,
+          "title": "Schema Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Session Id",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "timestamp_s": {
+          "minimum": 0,
+          "title": "Timestamp S",
+          "type": "number"
+        },
+        "source": {
+          "const": "vision",
+          "title": "Source",
+          "type": "string"
+        },
+        "type": {
+          "const": "vision.metrics",
+          "title": "Type",
+          "type": "string"
+        },
+        "payload": {
+          "$ref": "#/$defs/VisionMetricsPayload"
+        }
+      },
+      "required": [
+        "schema_version",
+        "session_id",
+        "event_id",
+        "timestamp_s",
+        "source",
+        "type",
+        "payload"
+      ],
+      "title": "VisionMetricsEvent",
+      "type": "object"
+    },
+    "VisionMetricsPayload": {
+      "additionalProperties": false,
+      "properties": {
+        "window_start_s": {
+          "minimum": 0,
+          "title": "Window Start S",
+          "type": "number"
+        },
+        "window_end_s": {
+          "minimum": 0,
+          "title": "Window End S",
+          "type": "number"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "unavailable",
+            "error"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "person_present": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Person Present"
+        },
+        "pose_available": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Pose Available"
+        },
+        "facing_score": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Facing Score"
+        },
+        "activity_score": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Activity Score"
+        }
+      },
+      "required": [
+        "window_start_s",
+        "window_end_s",
+        "availability",
+        "person_present",
+        "pose_available",
+        "facing_score",
+        "activity_score"
+      ],
+      "title": "VisionMetricsPayload",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "event": {
+      "discriminator": {
+        "mapping": {
+          "engagement.state": "#/$defs/EngagementEvent",
+          "session.completed": "#/$defs/CompletedEvent",
+          "session.started": "#/$defs/StartedEvent",
+          "session.stopping": "#/$defs/StoppingEvent",
+          "signal.status": "#/$defs/StatusEvent",
+          "speech.metrics": "#/$defs/SpeechMetricsEvent",
+          "speech.transcript": "#/$defs/TranscriptEvent",
+          "vision.metrics": "#/$defs/VisionMetricsEvent"
+        },
+        "propertyName": "type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/StartedEvent"
+        },
+        {
+          "$ref": "#/$defs/StoppingEvent"
+        },
+        {
+          "$ref": "#/$defs/CompletedEvent"
+        },
+        {
+          "$ref": "#/$defs/StatusEvent"
+        },
+        {
+          "$ref": "#/$defs/TranscriptEvent"
+        },
+        {
+          "$ref": "#/$defs/SpeechMetricsEvent"
+        },
+        {
+          "$ref": "#/$defs/VisionMetricsEvent"
+        },
+        {
+          "$ref": "#/$defs/EngagementEvent"
+        }
+      ],
+      "title": "Event"
+    },
+    "config": {
+      "$ref": "#/$defs/SessionConfig"
+    },
+    "snapshot": {
+      "$ref": "#/$defs/SessionSnapshot"
+    },
+    "completed_session": {
+      "$ref": "#/$defs/CompletedSession"
+    },
+    "feedback": {
+      "$ref": "#/$defs/Feedback"
+    }
+  },
+  "required": [
+    "event",
+    "config",
+    "snapshot",
+    "completed_session",
+    "feedback"
+  ],
+  "title": "ContractSchema",
+  "type": "object"
+}
