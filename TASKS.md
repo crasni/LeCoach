@@ -45,7 +45,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | INT-01 | @crasni | todo | `agent/integration` | Establish runnable skeleton and contract handoff | 2026-10-07 |
 | INT-02 | @crasni | todo | `agent/integration` | Depends on subsystem PRs | 2026-10-07 |
 | INT-03 | @crasni | todo | `agent/integration` | Hardware access and official submission verification needed | 2026-10-07 |
-| AUD-01 | @firstsnow1226 | in_progress | `agent/audio-streaming` | Provisional claim: prepare synthetic speech fixtures, speech-contract checks and local STT research only. @crasni to review the claim/INT-01 handoff; the live microphone adapter awaits the INT-01 scaffold and contracts. | 2026-10-07 |
+| AUD-01 | @firstsnow1226 | blocked | `agent/audio-streaming` | Preparation at `1ac7b53`: [synthetic speech fixtures and checks](checks/speech/README.md), 10 cases / 11 sessions and 33 passing tests, with proposed v0 speech rules and open questions for review. Claim/integration review pending @crasni; next: INT-01 scaffold, configuration and contract handoff, then implement the live microphone adapter in the approved layout. PR pending. | 2026-10-07 |
 | AUD-02 | @firstsnow1226 | todo | `agent/audio-streaming` | Depends on AUD-01 | 2026-10-07 |
 | VIS-01 | @kai-nnnnn | todo | `agent/vision-pose` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
