@@ -1,0 +1,129 @@
+[
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-1",
+    "event_id": "00-start",
+    "source": "session",
+    "type": "session.started",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-1",
+    "event_id": "01-neutral",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 0,
+    "payload": {
+      "state": "NEUTRAL",
+      "previous_state": "NEUTRAL",
+      "reasons": [],
+      "usable_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-1",
+    "event_id": "vision-shared-id",
+    "source": "vision",
+    "type": "vision.metrics",
+    "timestamp_s": 4,
+    "payload": {
+      "window_start_s": 3,
+      "window_end_s": 4,
+      "availability": "available",
+      "person_present": true,
+      "pose_available": true,
+      "facing_score": 0.8,
+      "activity_score": 0.35
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-1",
+    "event_id": "90-stop",
+    "source": "session",
+    "type": "session.stopping",
+    "timestamp_s": 5,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-1",
+    "event_id": "99-completed",
+    "source": "session",
+    "type": "session.completed",
+    "timestamp_s": 5,
+    "payload": {
+      "duration_s": 5,
+      "incomplete_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-2",
+    "event_id": "00-start",
+    "source": "session",
+    "type": "session.started",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-2",
+    "event_id": "01-neutral",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 0,
+    "payload": {
+      "state": "NEUTRAL",
+      "previous_state": "NEUTRAL",
+      "reasons": [],
+      "usable_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-1",
+    "event_id": "old-session-callback",
+    "source": "speech",
+    "type": "speech.metrics",
+    "timestamp_s": 4,
+    "payload": {
+      "window_start_s": 0,
+      "window_end_s": 4,
+      "availability": "available",
+      "wpm": 205,
+      "filler_count": 0,
+      "filler_rate_per_min": 0,
+      "pause": {
+        "state": "none",
+        "duration_s": 0,
+        "start_s": null,
+        "end_s": null
+      }
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-2",
+    "event_id": "90-stop",
+    "source": "session",
+    "type": "session.stopping",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-repeat-2",
+    "event_id": "99-completed",
+    "source": "session",
+    "type": "session.completed",
+    "timestamp_s": 0,
+    "payload": {
+      "duration_s": 0,
+      "incomplete_sources": []
+    }
+  }
+]

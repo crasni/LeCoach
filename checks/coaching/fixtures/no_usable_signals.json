@@ -1,0 +1,70 @@
+[
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-no-signals",
+    "event_id": "00-start",
+    "source": "session",
+    "type": "session.started",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-no-signals",
+    "event_id": "01-neutral",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 0,
+    "payload": {
+      "state": "NEUTRAL",
+      "previous_state": "NEUTRAL",
+      "reasons": [],
+      "usable_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-no-signals",
+    "event_id": "speech-error",
+    "source": "speech",
+    "type": "signal.status",
+    "timestamp_s": 0,
+    "payload": {
+      "availability": "error",
+      "reason": "microphone_unavailable"
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-no-signals",
+    "event_id": "vision-error",
+    "source": "vision",
+    "type": "signal.status",
+    "timestamp_s": 0,
+    "payload": {
+      "availability": "unavailable",
+      "reason": "camera_permission_denied"
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-no-signals",
+    "event_id": "90-stop",
+    "source": "session",
+    "type": "session.stopping",
+    "timestamp_s": 5,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-no-signals",
+    "event_id": "99-completed",
+    "source": "session",
+    "type": "session.completed",
+    "timestamp_s": 5,
+    "payload": {
+      "duration_s": 5,
+      "incomplete_sources": []
+    }
+  }
+]

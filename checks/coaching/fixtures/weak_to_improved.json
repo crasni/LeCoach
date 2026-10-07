@@ -1,0 +1,320 @@
+[
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "00-start",
+    "source": "session",
+    "type": "session.started",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "01-neutral",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 0,
+    "payload": {
+      "state": "NEUTRAL",
+      "previous_state": "NEUTRAL",
+      "reasons": [],
+      "usable_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "speech-10",
+    "source": "speech",
+    "type": "speech.metrics",
+    "timestamp_s": 10,
+    "payload": {
+      "window_start_s": 0,
+      "window_end_s": 10,
+      "availability": "available",
+      "wpm": 205,
+      "filler_count": 0,
+      "filler_rate_per_min": 0,
+      "pause": {
+        "state": "none",
+        "duration_s": 0,
+        "start_s": null,
+        "end_s": null
+      }
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "vision-10",
+    "source": "vision",
+    "type": "vision.metrics",
+    "timestamp_s": 10,
+    "payload": {
+      "window_start_s": 9,
+      "window_end_s": 10,
+      "availability": "available",
+      "person_present": true,
+      "pose_available": true,
+      "facing_score": 0.8,
+      "activity_score": 0.35
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "speech-20",
+    "source": "speech",
+    "type": "speech.metrics",
+    "timestamp_s": 20,
+    "payload": {
+      "window_start_s": 10,
+      "window_end_s": 20,
+      "availability": "available",
+      "wpm": 200,
+      "filler_count": 0,
+      "filler_rate_per_min": 0,
+      "pause": {
+        "state": "none",
+        "duration_s": 0,
+        "start_s": null,
+        "end_s": null
+      }
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "vision-20",
+    "source": "vision",
+    "type": "vision.metrics",
+    "timestamp_s": 20,
+    "payload": {
+      "window_start_s": 19,
+      "window_end_s": 20,
+      "availability": "available",
+      "person_present": true,
+      "pose_available": true,
+      "facing_score": 0.8,
+      "activity_score": 0.35
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "audience-pace",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 20.5,
+    "payload": {
+      "state": "CONFUSED",
+      "previous_state": "NEUTRAL",
+      "reasons": [
+        {
+          "code": "pace_high",
+          "source_event_ids": [
+            "speech-10",
+            "speech-20"
+          ]
+        }
+      ],
+      "usable_sources": [
+        "speech",
+        "vision"
+      ]
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "vision-25",
+    "source": "vision",
+    "type": "vision.metrics",
+    "timestamp_s": 25,
+    "payload": {
+      "window_start_s": 20,
+      "window_end_s": 25,
+      "availability": "available",
+      "person_present": true,
+      "pose_available": true,
+      "facing_score": 0.2,
+      "activity_score": 0.35
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "vision-30",
+    "source": "vision",
+    "type": "vision.metrics",
+    "timestamp_s": 30,
+    "payload": {
+      "window_start_s": 25,
+      "window_end_s": 30,
+      "availability": "available",
+      "person_present": true,
+      "pose_available": true,
+      "facing_score": 0.2,
+      "activity_score": 0.35
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "audience-facing",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 30.5,
+    "payload": {
+      "state": "BORED",
+      "previous_state": "CONFUSED",
+      "reasons": [
+        {
+          "code": "facing_away_sustained",
+          "source_event_ids": [
+            "vision-25",
+            "vision-30"
+          ]
+        }
+      ],
+      "usable_sources": [
+        "speech",
+        "vision"
+      ]
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "speech-35",
+    "source": "speech",
+    "type": "speech.metrics",
+    "timestamp_s": 35,
+    "payload": {
+      "window_start_s": 25,
+      "window_end_s": 35,
+      "availability": "available",
+      "wpm": 144,
+      "filler_count": 0,
+      "filler_rate_per_min": 0,
+      "pause": {
+        "state": "none",
+        "duration_s": 0,
+        "start_s": null,
+        "end_s": null
+      }
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "vision-35",
+    "source": "vision",
+    "type": "vision.metrics",
+    "timestamp_s": 35,
+    "payload": {
+      "window_start_s": 34,
+      "window_end_s": 35,
+      "availability": "available",
+      "person_present": true,
+      "pose_available": true,
+      "facing_score": 0.85,
+      "activity_score": 0.35
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "audience-recovery",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 36,
+    "payload": {
+      "state": "INTERESTED",
+      "previous_state": "BORED",
+      "reasons": [],
+      "usable_sources": [
+        "speech",
+        "vision"
+      ]
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "speech-40",
+    "source": "speech",
+    "type": "speech.metrics",
+    "timestamp_s": 40,
+    "payload": {
+      "window_start_s": 30,
+      "window_end_s": 40,
+      "availability": "available",
+      "wpm": 144,
+      "filler_count": 0,
+      "filler_rate_per_min": 0,
+      "pause": {
+        "state": "none",
+        "duration_s": 0,
+        "start_s": null,
+        "end_s": null
+      }
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "vision-40",
+    "source": "vision",
+    "type": "vision.metrics",
+    "timestamp_s": 40,
+    "payload": {
+      "window_start_s": 39,
+      "window_end_s": 40,
+      "availability": "available",
+      "person_present": true,
+      "pose_available": true,
+      "facing_score": 0.85,
+      "activity_score": 0.35
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "audience-engaged",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 42,
+    "payload": {
+      "state": "ENGAGED",
+      "previous_state": "INTERESTED",
+      "reasons": [],
+      "usable_sources": [
+        "speech",
+        "vision"
+      ]
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "90-stop",
+    "source": "session",
+    "type": "session.stopping",
+    "timestamp_s": 50,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-weak-to-improved",
+    "event_id": "99-completed",
+    "source": "session",
+    "type": "session.completed",
+    "timestamp_s": 50,
+    "payload": {
+      "duration_s": 50,
+      "incomplete_sources": []
+    }
+  }
+]
