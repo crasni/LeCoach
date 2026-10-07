@@ -1,0 +1,36 @@
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+.aws/
+
+# Local agent configuration
+.agents/
+.codex/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# JavaScript and build output
+node_modules/
+dist/
+build/
+coverage/
+
+# Downloaded models and private rehearsal data
+models/
+recordings/
+sessions/
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.log

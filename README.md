@@ -1,0 +1,24 @@
+# leCoach
+
+Your Private AI Audience.
+
+leCoach is a local, multimodal presentation coach for the ASUS UGen AI League Hackathon 2026. It combines speech and body-language signals to make a virtual audience react in real time, then highlights specific moments and practical improvements after each rehearsal.
+
+## MVP
+
+- Local speech transcription, speaking pace, fillers, and pauses.
+- Webcam-based pose, approximate facing direction, and gesture activity.
+- A deterministic engagement engine with smooth audience reactions.
+- A synchronized session timeline and concise, actionable feedback.
+
+Target track: Workplace AI / Battlefield Lightning, with ASUS UGen300 as the intended accelerator. Hardware integration and performance remain to be validated.
+
+## Project status
+
+Repository bootstrap. No application implementation or setup commands yet.
+
+Read [GUIDE.md](GUIDE.md) for the agreed scope, architecture, and collaboration workflow. Official competition and hardware reference PDFs are in [docs/](docs/).
+
+## Development
+
+Inspect current code and task assignments before starting work. Keep subsystem interfaces explicit, changes scoped, and documentation current. Prioritize a reliable end-to-end MVP and demo before optional features.
