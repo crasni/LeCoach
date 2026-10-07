@@ -2,6 +2,19 @@
 
 You are joining a coordinated five-person engineering team building **leCoach**. Read this file when you first open the repository and at the start of every new agent session. Understand the existing plan and your assignment before editing code.
 
+## Required user approval before every push
+
+The user explicitly requires this workflow for this project:
+
+1. Local edits, checks, and commits are allowed without push approval.
+2. When the work is ready to share, tell the user what changed, the validation results, the exact commit or commit range, and the destination remote and branch.
+3. Ask for approval and **wait for the user's explicit approval before pushing**. A notice alone is not approval. Silence, earlier pushes, task assignment, an instruction to implement work, and sandbox/tool execution approval do not authorize a new push.
+4. Push only the reviewed commits to the stated destination after approval. If the commits or destination change, present the revised proposal and obtain approval again. Approval for one push does not authorize later pushes.
+
+This applies to every branch and tag and to any tool/API that would publish local commits or update remote Git refs. Do not bundle a push into a commit command, automate it in the background, or bypass the wait through another agent. Prepare local work while approval is pending; report it as committed locally, not shared with the team.
+
+This rule takes precedence over instructions below or in other project documents to publish task claims, handoffs, or feature branches. Read-only remote checks, fetch, and safe pull remain allowed. Keep this rule in effect across future sessions unless the user explicitly changes it.
+
 ## Understand the project
 
 leCoach is **Your Private AI Audience**: a local presentation rehearsal tool that listens through the microphone, watches through the webcam, and makes virtual audience avatars react to delivery in real time. After the rehearsal it highlights specific strong and improvement moments with practical suggestions. Live audience response is the central product value.

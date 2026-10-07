@@ -729,6 +729,8 @@ Focus on turning raw signals into understandable coaching.
 
 # 12. GITHUB COLLABORATION PROTOCOL
 
+Local commits are allowed. Before every push, present the changes, validation, commits, and destination to the user, then wait for explicit approval. Follow the canonical [push approval rule in AGENTS.md](AGENTS.md#required-user-approval-before-every-push), including for task claims and role branches. Do not combine commit and push into one operation.
+
 You are NOT the only agent.
 
 Assume other agents may be editing the repository simultaneously.
