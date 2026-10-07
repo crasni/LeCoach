@@ -49,7 +49,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
 | LIVE-01 | @ricebal1 | todo | `agent/avatar-ui` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | LIVE-02 | @ricebal1 | todo | `agent/avatar-ui` | Depends on LIVE-01 and live adapter handoffs | 2026-10-07 |
-| COACH-01 | @WolflordR | in_progress | `agent/session-analysis` | Provisional claim: prepare synthetic coaching fixtures and checks only. @crasni to review the claim/INT-01 handoff; production recorder and feedback await INT-01 scaffold and LIVE-01 transitions. | 2026-10-07 |
+| COACH-01 | @WolflordR | blocked | Preparation complete at `dcc280f`: [synthetic cases and checks](checks/coaching/README.md), 9 cases / 10 sessions and 18 passing utility tests. Claim/integration review pending @crasni; next: INT-01 scaffold/contract handoff and @ricebal1's LIVE-01 transition/reason evidence, then implement the recorder and feedback generator in the approved layout. PR pending. | 2026-10-07 |
 | COACH-02 | @WolflordR | todo | `agent/session-analysis` | Depends on COACH-01 and integrated live session | 2026-10-07 |
 
 ## Lane 1 — Integration / competition
