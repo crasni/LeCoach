@@ -11,7 +11,7 @@ Each collaborator takes one lane; a lane can use an AI coding agent under that c
 | Lane | Owner | Repository access | Lane branch | Owns | First task |
 | --- | --- | --- | --- | --- | --- |
 | 1 — Integration / competition | @crasni | Maintainer | `agent/integration` | Shared contracts, app composition, setup, project documentation, integration and submission checklist | INT-01 |
-| 2 — Audio / speech | @firstsnow1226 | Pending invite | `agent/audio-streaming` | Microphone capture, local transcription, speech metrics, speech adapter | AUD-01 |
+| 2 — Audio / speech | @firstsnow1226 | Collaborator (GitHub reported push permission for @firstsnow1226 on 2026-10-07) | `agent/audio-streaming` | Microphone capture, local transcription, speech metrics, speech adapter | AUD-01 |
 | 3 — Vision / body language | @kai-nnnnn | Collaborator | `agent/vision-pose` | Camera capture, pose/facing approximation, motion metrics, vision adapter | VIS-01 |
 | 4 — Realtime experience / engagement | @ricebal1 | Pending invite | `agent/avatar-ui` | Deterministic engagement engine, smoothing, session controls and live audience UI | LIVE-01 |
 | 5 — Coaching / analytics / demo | @WolflordR | Pending invite | `agent/session-analysis` | Session event store, moment selection, feedback, demo scenarios and evidence | COACH-01 |
@@ -45,7 +45,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | INT-01 | @crasni | todo | `agent/integration` | Establish runnable skeleton and contract handoff | 2026-10-07 |
 | INT-02 | @crasni | todo | `agent/integration` | Depends on subsystem PRs | 2026-10-07 |
 | INT-03 | @crasni | todo | `agent/integration` | Hardware access and official submission verification needed | 2026-10-07 |
-| AUD-01 | @firstsnow1226 | todo | `agent/audio-streaming` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| AUD-01 | @firstsnow1226 | in_progress | `agent/audio-streaming` | Provisional claim: prepare synthetic speech fixtures, speech-contract checks and local STT research only. @crasni to review the claim/INT-01 handoff; the live microphone adapter awaits the INT-01 scaffold and contracts. | 2026-10-07 |
 | AUD-02 | @firstsnow1226 | todo | `agent/audio-streaming` | Depends on AUD-01 | 2026-10-07 |
 | VIS-01 | @kai-nnnnn | todo | `agent/vision-pose` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
