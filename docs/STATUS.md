@@ -77,6 +77,16 @@ FACT: A read-only SSH remote check found `main` at `d7d61c1` and no current `age
 
 IMPACT: The local commit set can be proposed for publication on `agent/integration`, creating that role branch remotely after approval. Task 6.4 remains unchecked until explicit approval is received; publication and collaborator acceptance remain separate pending gates. No push, PR creation, remote merge, or archive has occurred during preparation.
 
+## INT-01 publication and remaining acceptance
+
+FACT: The user explicitly approved publication of the existing INT-01 commits through `a7a91ef` in this session. SSH push and remote verification confirmed `agent/integration` at `a7a91ef4dc91f810ac51c96db9d36423f6baa292`, while main remained at `d7d61c1`. [PR #4](https://github.com/crasni/LeCoach/pull/4) subsequently merged on 2026-10-07 at 11:03:57 UTC; fetched main is `c0f6c68` and contains all four approved commits. GitHub removed the remote role branch; its merged local branch/tracking ref were cleaned up, then the assigned branch was recreated from current main for this follow-up.
+
+FACT: Public GitHub API checks of PR #4's reviews, issue comments, and inline comments returned empty arrays. PRs [#1](https://github.com/crasni/LeCoach/pull/1) and [#3](https://github.com/crasni/LeCoach/pull/3) remain open synthetic preparation, not live subsystem handoffs. Public API reads are available; authenticated API writes remain unavailable. The earlier API-access limitation applied to that earlier preparation session.
+
+IMPACT: Publication tasks 6.4 and 6.5 are satisfied. INT-01 is in review with 19/20 OpenSpec tasks complete; task 6.6 is still unchecked because collaborator review and downstream acceptance have not been established. The scaffold is available on main for all lanes. INT-02's live composition dependencies are not yet met.
+
+PROPOSAL: Another collaborator reviews the merged scaffold and records contract/fixture acceptance before INT-01 is marked done or archived. Continue independent INT-03 source verification on `agent/integration`; the new local claim and follow-up remain unpublished until a separate approved push.
+
 ## Evidence to add as work lands
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.

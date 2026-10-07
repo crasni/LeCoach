@@ -36,11 +36,13 @@ Migrated from `docs/plans/INT-01.md` on 2026-10-07. Checked tasks reflect existi
 - [x] 6.1 Verify the combined scaffold with 60 Python tests, fixture checks, lint, schema/type parity, production build, and four Chromium checks; record observed results and environment limitations in STATUS.
 - [x] 6.2 Verify setup in an isolated fresh working-tree copy and core wheel fixture packaging; record passing setup commands and the standalone offline-wheel dependency-resolution limitation accurately in STATUS.
 - [x] 6.3 Prepare scoped local commits and update board/status/handoff links; verify the role branch contains implementation commits `b7a42cd` and `802042e`, with publication still pending.
-- [ ] 6.4 Prepare the final reviewable commit set, including this migration, and request explicit push approval naming exact commits and `git@github.com:crasni/LeCoach.git` / `agent/integration`; verify the user's approval matches that commit set and destination before publishing.
-- [ ] 6.5 After approval, publish only the approved role-branch commits and open a scoped INT-01 PR with evidence/limitations; verify remote refs and the PR point to the approved commits, then link the PR and set the shared board to review.
+- [x] 6.4 Prepare the final reviewable commit set, including this migration, and request explicit push approval naming exact commits and `git@github.com:crasni/LeCoach.git` / `agent/integration`; verify the user's approval matches that commit set and destination before publishing.
+- [x] 6.5 After approval, publish only the approved role-branch commits and open a scoped INT-01 PR with evidence/limitations; verify remote refs and the PR point to the approved commits, then link the PR and set the shared board to review.
 - [ ] 6.6 Obtain another collaborator's scaffold review, resolve findings, and confirm downstream contract/fixture acceptance; verify review/merge and acceptance evidence before marking INT-01 done in TASKS/STATUS.
 
 ## Workflow follow-up
+
+Publication evidence (2026-10-07): the user explicitly approved publication of `b7a42cd`, `802042e`, `8ecacd4`, and `a7a91ef` to the role branch. SSH verified head `a7a91ef`; [PR #4](https://github.com/crasni/LeCoach/pull/4) subsequently merged as main `c0f6c68`. Its public reviews and comments were empty when checked; merge alone does not satisfy task 6.6. See [STATUS](../../../docs/STATUS.md#int-01-publication-and-remaining-acceptance).
 
 - Continue remaining tasks through `$openspec-apply-change int-01-local-integration-scaffold` when explicitly requested. Starting apply does not grant push approval.
 - Archive with `$openspec-archive-change int-01-local-integration-scaffold` only after the handoff/review gates are satisfied; verify the resulting main capability specs and archive record.
