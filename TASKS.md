@@ -51,7 +51,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
 | LIVE-01 | @ricebal1 | todo | `agent/avatar-ui` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | LIVE-02 | @ricebal1 | todo | `agent/avatar-ui` | Depends on LIVE-01 and live adapter handoffs | 2026-10-07 |
-| COACH-01 | @WolflordR | blocked | `agent/session-analysis` | [Draft PR #1](https://github.com/crasni/LeCoach/pull/1), preparation at `dcc280f`: synthetic cases/checks already incorporated unchanged through INT-01 / PR #4. Integration-owner review reran 9 cases / 10 sessions and 18 utility tests. Published scaffold/contracts are available on main; next: coordinate Lane 4's LIVE-01 transition/reason evidence and implement the recorder/generator in the approved layout. COACH-01 is not complete. | 2026-10-07 |
+| COACH-01 | @WolflordR | blocked | `agent/session-analysis` | [Merged preparation PR #1](https://github.com/crasni/LeCoach/pull/1) accepted. [In-memory recorder](src/lecoach/coaching/README.md) implemented locally against published INT-01 seams: 9 cases / 10 sessions match, 13 recorder tests pass, full suite 110 tests / 46 subtests pass. Continuation awaits user push approval and integration review. Next: @ricebal1 provides LIVE-01 transition/reason evidence, then Lane 5 implements moment selection/template feedback. COACH-01 is not complete. | 2026-10-07 |
 | COACH-02 | @WolflordR | todo | `agent/session-analysis` | Depends on COACH-01 and integrated live session | 2026-10-07 |
 
 ## Lane 1 — Integration / competition
