@@ -1,4 +1,4 @@
-# leCoach architecture and shared contracts
+# LeCoach architecture and shared contracts
 
 This file is the canonical interface reference for all five roles. [GUIDE.md](../GUIDE.md) defines product scope; [TASKS.md](../TASKS.md) assigns work. Contracts below are proposed MVP v0, ready for implementation review. Current implementation evidence lives in [STATUS.md](STATUS.md). Framework, model, and transport choices remain open; these contracts do not require a server, queue service, or database.
 

@@ -1,10 +1,14 @@
-# leCoach agent handoffs
+# LeCoach agent handoffs
 
 These five roles divide engineering ownership; they do not add five coaching modes to the MVP. Collaborator assignments live only in [TASKS.md](../TASKS.md). Copy one numbered prompt into the assigned collaborator's agent session. Each collaborator operates one role; do not start additional agents independently. GUIDE.md owns product scope, TASKS.md owns task status and collaborator assignments, ARCHITECTURE.md owns shared contracts, and STATUS.md records implementation evidence. Coordinate shared-document changes through the integration owner. Integration merges the scaffold and shared contracts first; other roles may prepare fixtures and checks in parallel.
 
+All five roles must follow the [push approval rule in AGENTS.md](../AGENTS.md#required-user-approval-before-every-push). Local commits are allowed; before each push, present the changes, validation, commits, and destination, then wait for explicit user approval. A role assignment or instruction to publish a claim/PR does not waive this rule.
+
+All development, documentation, and task-claim commits belong on the role branch named in your prompt, including the integration owner's work. Follow the [required branch workflow](../AGENTS.md#required-branch-workflow--never-push-to-main). Never push directly to `main`; publish only the approved role branch and propose a reviewed PR into `main`.
+
 ## 1. Project, integration, and competition
 
-You own leCoach integration. Work on `agent/integration`.
+You own LeCoach integration. Work on `agent/integration`.
 
 Start with a clean checkout, pull the latest `main`, and read [AGENTS.md](../AGENTS.md), [GUIDE.md](../GUIDE.md), [TASKS.md](../TASKS.md), [docs/ARCHITECTURE.md](ARCHITECTURE.md), and README.md. Inspect existing code, assignments, and open PRs before editing. Follow the owner-claim protocol in AGENTS.md: start your next assigned task in TASKS.md with one Owner set to your actual GitHub username and your role branch before implementing it; add the PR URL when available. Confirm the task is assigned to your username and is not already active in another session; coordinate any conflicting ownership or unresolved claim rather than duplicate work. Report current state, role, next task, and blockers briefly.
 
@@ -16,7 +20,7 @@ Completion checks: all four subsystem PRs integrate; a fresh checkout can run th
 
 ## 2. Audio and speech
 
-You own leCoach audio and speech. Work on `agent/audio-streaming`.
+You own LeCoach audio and speech. Work on `agent/audio-streaming`.
 
 Start with a clean checkout, pull the latest `main`, and read [AGENTS.md](../AGENTS.md), [GUIDE.md](../GUIDE.md), [TASKS.md](../TASKS.md), [docs/ARCHITECTURE.md](ARCHITECTURE.md), and README.md. Inspect existing code, assignments, and open PRs before editing. Follow the owner-claim protocol in AGENTS.md: start your next assigned audio task in TASKS.md with one Owner set to your actual GitHub username and your role branch before implementing it; add the PR URL when available. Confirm the task is assigned to your username and is not already active in another session; coordinate any conflicting ownership or unresolved claim rather than duplicate work. Report current state, role, next task, and blockers briefly.
 
@@ -28,7 +32,7 @@ Completion checks: start/stop releases the microphone; absent permissions/device
 
 ## 3. Vision and body language
 
-You own leCoach vision. Work on `agent/vision-pose`.
+You own LeCoach vision. Work on `agent/vision-pose`.
 
 Start with a clean checkout, pull the latest `main`, and read [AGENTS.md](../AGENTS.md), [GUIDE.md](../GUIDE.md), [TASKS.md](../TASKS.md), [docs/ARCHITECTURE.md](ARCHITECTURE.md), and README.md. Inspect existing code, assignments, and open PRs before editing. Follow the owner-claim protocol in AGENTS.md: start your next assigned vision task in TASKS.md with one Owner set to your actual GitHub username and your role branch before implementing it; add the PR URL when available. Confirm the task is assigned to your username and is not already active in another session; coordinate any conflicting ownership or unresolved claim rather than duplicate work. Report current state, role, next task, and blockers briefly.
 
@@ -40,7 +44,7 @@ Completion checks: start/stop releases the webcam; camera denial, missing models
 
 ## 4. Real-time experience, engagement, and audience
 
-You own leCoach real-time experience. Work on `agent/avatar-ui`.
+You own LeCoach real-time experience. Work on `agent/avatar-ui`.
 
 Start with a clean checkout, pull the latest `main`, and read [AGENTS.md](../AGENTS.md), [GUIDE.md](../GUIDE.md), [TASKS.md](../TASKS.md), [docs/ARCHITECTURE.md](ARCHITECTURE.md), and README.md. Inspect existing code, assignments, and open PRs before editing. Follow the owner-claim protocol in AGENTS.md: start your next assigned engagement/UI task in TASKS.md with one Owner set to your actual GitHub username and your role branch before implementing it; add the PR URL when available. Confirm the task is assigned to your username and is not already active in another session; coordinate any conflicting ownership or unresolved claim rather than duplicate work. Report current state, role, next task, and blockers briefly.
 
@@ -52,7 +56,7 @@ Completion checks: repeatable fixtures verify deterioration and recovery, smooth
 
 ## 5. Coaching, session analysis, and demo evidence
 
-You own leCoach coaching and session analysis. Work on `agent/session-analysis`.
+You own LeCoach coaching and session analysis. Work on `agent/session-analysis`.
 
 Start with a clean checkout, pull the latest `main`, and read [AGENTS.md](../AGENTS.md), [GUIDE.md](../GUIDE.md), [TASKS.md](../TASKS.md), [docs/ARCHITECTURE.md](ARCHITECTURE.md), and README.md. Inspect existing code, assignments, and open PRs before editing. Follow the owner-claim protocol in AGENTS.md: start your next assigned session-analysis task in TASKS.md with one Owner set to your actual GitHub username and your role branch before implementing it; add the PR URL when available. Confirm the task is assigned to your username and is not already active in another session; coordinate any conflicting ownership or unresolved claim rather than duplicate work. Report current state, role, next task, and blockers briefly.
 

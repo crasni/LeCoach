@@ -1,4 +1,4 @@
-# leCoach — team work and ownership
+# LeCoach — team work and ownership
 
 This is the single task board for the five engineering lanes. Read [GUIDE.md](GUIDE.md) for product scope and priorities, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for shared contracts, and [docs/STATUS.md](docs/STATUS.md) for verified integration results. Do not maintain a competing task board or copy the product specification here.
 
@@ -20,6 +20,8 @@ Each collaborator takes one lane; a lane can use an AI coding agent under that c
 
 Find your GitHub username in the Owner column. That row is your assignment: read the matching role prompt in docs/AGENT_ROLES.md, use its lane branch, and start its First task once its dependencies are met. Do not ask the maintainer to choose your lane again. The branch names below are assigned working branches, not a claim that those branches have already been created.
 
+All five owners must develop and commit on their assigned branches, including documentation and task-board updates. Follow [AGENTS.md's branch workflow](AGENTS.md#required-branch-workflow--never-push-to-main): never push directly to `main`; after user-approved branch publication, open a PR targeting `main` for review and integration.
+
 Pending invite owners must accept their GitHub repository invitation before pushing branches or PRs. They can read the shared plan and prepare their lane's fixtures/research in the meantime. Access does not change ownership; do not take a pending invite owner's lane.
 
 `crasni` starts INT-01 to establish the scaffold and contracts. The other four owners prepare their first task against the shared contract while INT-01 lands, then implement and integrate on their own branches. Assigning an owner does not mean their coding agent has started: update task status when work actually begins.
@@ -31,7 +33,7 @@ Module boundaries follow the agreed architecture. Lane 1 establishes actual dire
 1. Start each work session with `git status` and fetch/pull current work safely. Do not overwrite local changes; update the branch from current `main` before coding.
 2. Read GUIDE, AGENTS, this board, architecture, current status and relevant open PRs/issues. Inspect existing code and changed contracts.
 3. Pick the highest-priority `todo` task assigned to you whose dependencies are satisfied. Confirm your **GitHub username**, task status, exact branch and date below. A role label or a runtime agent name is not an owner.
-4. Publish the claim before implementation so other collaborators can see it. Use a small documentation PR through the integrator, or the repository's existing authorized claim workflow. Until visible on the shared board, the claim is provisional. Resolve conflicting claims before duplicating work.
+4. Prepare the claim locally, then follow [AGENTS.md's push approval rule](AGENTS.md#required-user-approval-before-every-push): present the commits and destination, request approval, and wait before pushing. Publish the approved claim through a small documentation PR via the integrator or the existing authorized claim workflow. Until visible on the shared board, the claim is provisional. Resolve conflicting claims before duplicating work.
 5. Work on the recorded feature branch. Keep changes scoped. Proposed contract changes go to Lane 1 first; the integrator owns approval and merge of shared contract changes and coordinates affected consumers.
 6. Open a PR with the task ID, concrete behavior, reproduction/check commands and results, dependencies, mock/live mode, limitations and interface changes. Link the PR in the board and move the task to `review`.
 7. Lane 1 verifies the handoff against the shared contracts, resolves integration and merges in dependency order. Mark `done` only after merge and acceptance evidence. Update verified integration status when behavior changes.

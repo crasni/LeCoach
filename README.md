@@ -1,8 +1,8 @@
-# leCoach
+# LeCoach
 
 Your Private AI Audience.
 
-leCoach is a local, multimodal presentation coach for the ASUS UGen AI League Hackathon 2026. It combines speech and body-language signals to make a virtual audience react in real time, then highlights specific moments and practical improvements after each rehearsal.
+LeCoach is a local, multimodal presentation coach for the ASUS UGen AI League Hackathon 2026. It combines speech and body-language signals to make a virtual audience react in real time, then highlights specific moments and practical improvements after each rehearsal.
 
 ## MVP
 
