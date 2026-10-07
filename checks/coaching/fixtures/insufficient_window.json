@@ -1,0 +1,68 @@
+[
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-startup-window",
+    "event_id": "00-start",
+    "source": "session",
+    "type": "session.started",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-startup-window",
+    "event_id": "01-neutral",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 0,
+    "payload": {
+      "state": "NEUTRAL",
+      "previous_state": "NEUTRAL",
+      "reasons": [],
+      "usable_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-startup-window",
+    "event_id": "speech-startup",
+    "source": "speech",
+    "type": "speech.metrics",
+    "timestamp_s": 1,
+    "payload": {
+      "window_start_s": 0,
+      "window_end_s": 1,
+      "availability": "available",
+      "wpm": null,
+      "filler_count": null,
+      "filler_rate_per_min": null,
+      "pause": {
+        "state": "unknown",
+        "duration_s": null,
+        "start_s": null,
+        "end_s": null
+      }
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-startup-window",
+    "event_id": "90-stop",
+    "source": "session",
+    "type": "session.stopping",
+    "timestamp_s": 1,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-startup-window",
+    "event_id": "99-completed",
+    "source": "session",
+    "type": "session.completed",
+    "timestamp_s": 1,
+    "payload": {
+      "duration_s": 1,
+      "incomplete_sources": []
+    }
+  }
+]

@@ -1,6 +1,37 @@
 # LeCoach architecture and shared contracts
 
-This file is the canonical interface reference for all five roles. [GUIDE.md](../GUIDE.md) defines product scope; [TASKS.md](../TASKS.md) assigns work. Contracts below are proposed MVP v0, ready for implementation review. Current implementation evidence lives in [STATUS.md](STATUS.md). Framework, model, and transport choices remain open; these contracts do not require a server, queue service, or database.
+This file is the canonical interface reference for all five roles. [GUIDE.md](../GUIDE.md) defines product scope; [TASKS.md](../TASKS.md) assigns work. INT-01 implements the MVP v0 shapes below; its local integration handoff awaits team review/publication. Current implementation evidence lives in [STATUS.md](STATUS.md). Model choices remain with the producer owners. The [OpenSpec implementation checklist](../openspec/changes/int-01-local-integration-scaffold/tasks.md) records execution order.
+
+## INT-01 implementation decisions and handoff
+
+Python 3.12.14 with uv hosts the controller, in-process event bus, and local FastAPI API. React/TypeScript with Vite renders outputs. Core lockfiles exclude model/capture packages; request modality dependency additions through integration. One backend process runs on `127.0.0.1:8000`; development Vite runs on loopback port 5173 with an API/WebSocket proxy. The backend can serve the built frontend for the demo. No remote inference or media service is used.
+
+The executable event models live in `src/lecoach/contracts/events.py`; protocols/configuration live in `contracts/interfaces.py`. The root `contracts/schema.json` and `frontend/src/generated/contracts.ts` are generated artifacts. This document owns semantics; Python models implement them. Update both together and regenerate rather than editing TypeScript separately.
+
+| Location | Boundary |
+| --- | --- |
+| `src/lecoach/runtime/` | Shared clocks, controller, FIFO subscriptions, synthetic fixture playback. |
+| `src/lecoach/api/` | Local HTTP/WebSocket transport and composition. |
+| `src/lecoach/speech/`, `src/lecoach/vision/` | Producer implementation slots; no capture/model implementation in INT-01. |
+| `src/lecoach/engagement/`, `src/lecoach/coaching/` | Sole engine and recorder/generator implementation slots, for their assigned owners. |
+| `frontend/src/` | Integration inspection shell; Lane 4 replaces it with the rehearsal experience. |
+| `checks/coaching/` | Unchanged, locally reviewed Lane 5 synthetic cases from PR #1. |
+
+Inject `Components` into `SessionManager(factory)` to compose live implementations. `SessionContext` supplies `session_id`, the same `clock.now()` in seconds, synchronous `emit(event)`, and `SessionConfig`. Model work must run outside the API event loop; marshal worker-thread emissions back onto that loop. Synchronous subscriber callbacks must finish promptly; the bus drains reentrant emissions FIFO so supporting source events reach every subscriber before resulting audience events.
+
+The capture adapter protocol is `await start(context)`, `await stop_capture(capture_end_s)`, `await drain()`. `start` completes after capture is initialized, not after the rehearsal finishes. `stop_capture` stops acquisition; `drain` flushes observations captured at or before the supplied end. Implement both idempotently and release resources in cancellation-safe cleanup. The vision adapter additionally provides `preview_jpeg() -> bytes | None`; the local volatile preview uses only the latest JPEG, capped at 512 kB and five frames/s by default. The browser does not open a second camera stream.
+
+The engine protocol is `start(context)`, `on_event(event)`, `stop()`. The recorder protocol is `start(context)`, `on_event(event)`, `complete(duration_s, incomplete_sources) -> CompletedSession`. The generator protocol is `await generate(completed_session) -> Feedback`. No default live engine, logger, or coaching generator is implemented by integration. The proposed P0 recorder keeps active/completed data in memory until next session/application exit; explicit development exports use ignored `sessions/`. Producer owners must not enable raw recording by default.
+
+`SessionConfig.mode` and every transport snapshot explicitly distinguish `fixture` and `live`. `output_provenance` distinguishes authored fixture outputs from computed live outputs without changing the v0 event envelope. Default live composition is unavailable until the subsystem handoffs. Configuration defaults are centralized: startup timeout 5 s, shared stop/drain timeout 2 s, feedback timeout 5 s, browser queue 128 events, replay speed 5×. These are integration bounds, not engagement thresholds or measured inference latencies. Pace/language and audience rule defaults remain Lane 4's handoff.
+
+The controller validates event type/source, finite values, capture windows and null observations, deduplicates stable event IDs, rejects foreign/closed sessions, and freezes transcript display after a final revision. Its hash index and latest display state are not a second full recorder. The sole recorder must preserve the required timeline/revision evidence and validate feedback evidence links.
+
+Local API: `GET /api/health`, `GET /api/fixtures`, `POST /api/sessions` (prepare, no capture), `WS /api/sessions/{id}/events` (subscribe), `POST /api/sessions/{id}/start`, `POST /api/sessions/{id}/stop`, `GET /api/sessions/{id}`, `GET /api/sessions/{id}/feedback`, and `GET /api/sessions/{id}/preview`. Connect the event stream before starting. WebSocket wrappers are `{kind: "snapshot", snapshot: ...}` or `{kind: "event", event: ...}`; they do not add event types. Allowed browser origins are local ports 8000 and 5173. New sessions release the previous session's retained display state; old IDs become unavailable. Start/stop retries do not reopen capture.
+
+Browser delivery uses bounded queues independent of inference/recording. Overflow closes that connection with code 1013, requiring an explicit snapshot resynchronization. Reconnection supplies current phase, input status, transcript and latest audience state without restarting acquisition. Full completed timelines come from the actual recorder when integrated. Fixture feedback is served only when authored playback completes; stopping early reports feedback unavailable.
+
+Fixture arrays remain in delivery order, including late events; the fake clock advances monotonically to the maximum observed delivery time. A test-only explicit schedule can delay delivery beyond capture times. The headless replay command exposes a delivery trace and authored feedback, not a production CompletedSession. A consumer factory can replace authored engagement/feedback with real engine/recorder/generator outputs through the same replay seam. Positive reason codes and measured live behavior still need the assigned owners' handoffs.
 
 ## Ownership and flow
 
