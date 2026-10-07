@@ -1,9 +1,9 @@
-# LECOACH — MASTER AGENT PROMPT
+# LeCoach — MASTER AGENT PROMPT
 ## ASUS UGen AI League Hackathon 2026
 
 ## Shared team entry point
 
-Product name: **leCoach**.
+Product name: **LeCoach**. Use this exact spelling and capitalization in product copy, UI, proposal, demo, and project documentation. Technical identifiers and existing repository URLs follow their actual names.
 
 Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [TASKS.md](TASKS.md) owns assignments and progress; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
 
@@ -159,19 +159,19 @@ We are not optimizing purely for technical novelty.
 
 # 3. THE PRODUCT
 
-Working project name:
+Product name:
 
-# leCoach
+# LeCoach
 
-Working tagline:
+Tagline:
 
 > Your Private AI Audience.
 
 Core concept:
 
-leCoach is a local, multimodal presentation and speech coach.
+LeCoach is a local, multimodal presentation and speech coach.
 
-Instead of merely producing statistics after a presentation, leCoach creates the feeling of practicing in front of a real audience.
+Instead of merely producing statistics after a presentation, LeCoach creates the feeling of practicing in front of a real audience.
 
 The system:
 
@@ -187,13 +187,13 @@ The central product insight is:
 > Practicing alone has one fundamental problem:
 > there is no audience.
 
-leCoach provides that audience.
+LeCoach provides that audience.
 
 ---
 
 # 4. PRODUCT DIFFERENTIATION
 
-DO NOT reduce leCoach to:
+DO NOT reduce LeCoach to:
 
 "speech-to-text + WPM dashboard"
 
@@ -207,7 +207,7 @@ Our primary innovation is:
 
 # LIVE AUDIENCE RESPONSE
 
-Instead of showing constant technical warnings, leCoach turns multimodal delivery signals into intuitive audience reactions.
+Instead of showing constant technical warnings, LeCoach turns multimodal delivery signals into intuitive audience reactions.
 
 Example:
 
@@ -239,10 +239,10 @@ during the speech.
 
 Basic session:
 
-1. User opens leCoach.
+1. User opens LeCoach.
 2. Camera and microphone activate locally.
 3. User starts a presentation.
-4. leCoach continuously processes:
+4. LeCoach continuously processes:
 
 AUDIO
 - speech transcription
@@ -272,7 +272,7 @@ Possible audience states:
 
 7. Events are stored on a session timeline.
 
-8. When the user finishes, leCoach shows a concise analysis.
+8. When the user finishes, LeCoach shows a concise analysis.
 
 Example:
 
@@ -459,7 +459,7 @@ Example:
 
 "You said everything runs locally. Why is that better than using a cloud API?"
 
-This extends leCoach from speech coach toward:
+This extends LeCoach from speech coach toward:
 
 presentation rehearsal simulator.
 
@@ -514,7 +514,7 @@ Do not let them delay the prototype.
 
 This part is strategically important for the competition.
 
-leCoach continuously receives:
+LeCoach continuously receives:
 
 - camera video
 - microphone audio
@@ -554,7 +554,7 @@ internet
 ↓
 remote AI service
 
-leCoach:
+LeCoach:
 
 camera ─┐
         ├─ local device + UGen300 → AI Audience
@@ -896,7 +896,7 @@ Audience visibly becomes engaged.
 
 3. Session ends
 
-leCoach shows:
+LeCoach shows:
 
 - engagement timeline
 - important weak moment
@@ -980,7 +980,7 @@ ten incomplete features.
 The product thesis we are testing is:
 
 > Traditional speech coaches tell you statistics.
-> leCoach lets you feel the audience.
+> LeCoach lets you feel the audience.
 
 The privacy thesis is:
 
@@ -1032,7 +1032,7 @@ Escalate major irreversible product changes.
 
 By Stage I deadline, the repo should contain:
 
-1. A functioning leCoach prototype
+1. A functioning LeCoach prototype
 2. Real-time speech analysis
 3. Real-time visual/body-language analysis
 4. Live virtual audience reactions

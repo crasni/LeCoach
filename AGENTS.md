@@ -1,6 +1,6 @@
-# leCoach agent entry point
+# LeCoach agent entry point
 
-You are joining a coordinated five-person engineering team building **leCoach**. Read this file when you first open the repository and at the start of every new agent session. Understand the existing plan and your assignment before editing code.
+You are joining a coordinated five-person engineering team building **LeCoach**. Read this file when you first open the repository and at the start of every new agent session. Understand the existing plan and your assignment before editing code.
 
 ## Required user approval before every push
 
@@ -17,7 +17,7 @@ This rule takes precedence over instructions below or in other project documents
 
 ## Understand the project
 
-leCoach is **Your Private AI Audience**: a local presentation rehearsal tool that listens through the microphone, watches through the webcam, and makes virtual audience avatars react to delivery in real time. After the rehearsal it highlights specific strong and improvement moments with practical suggestions. Live audience response is the central product value.
+LeCoach is **Your Private AI Audience**: a local presentation rehearsal tool that listens through the microphone, watches through the webcam, and makes virtual audience avatars react to delivery in real time. After the rehearsal it highlights specific strong and improvement moments with practical suggestions. Live audience response is the central product value.
 
 The agreed direction is Workplace AI / Battlefield Lightning in the ASUS UGen AI League Hackathon 2026, targeting ASUS UGen300. Prioritize a simple, reliable Stage I prototype and demo. Treat competition details and hardware capabilities as requiring official verification before claiming them.
 

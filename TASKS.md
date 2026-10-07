@@ -1,4 +1,4 @@
-# leCoach — team work and ownership
+# LeCoach — team work and ownership
 
 This is the single task board for the five engineering lanes. Read [GUIDE.md](GUIDE.md) for product scope and priorities, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for shared contracts, and [docs/STATUS.md](docs/STATUS.md) for verified integration results. Do not maintain a competing task board or copy the product specification here.
 

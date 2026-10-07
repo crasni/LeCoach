@@ -1,4 +1,4 @@
-# leCoach implementation status
+# LeCoach implementation status
 
 Last updated: 2026-10-07.
 
