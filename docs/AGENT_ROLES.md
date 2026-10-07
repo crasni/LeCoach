@@ -1,5 +1,7 @@
 # LeCoach agent handoffs
 
+Internal planning commands and OpenSpec usage are documented in [WORKFLOW.md](WORKFLOW.md).
+
 These five roles divide engineering ownership; they do not add five coaching modes to the MVP. Collaborator assignments live only in [TASKS.md](../TASKS.md). Copy one numbered prompt into the assigned collaborator's agent session. Each collaborator operates one role; do not start additional agents independently. GUIDE.md owns product scope, TASKS.md owns task status and collaborator assignments, ARCHITECTURE.md owns shared contracts, and STATUS.md records implementation evidence. Coordinate shared-document changes through the integration owner. Integration merges the scaffold and shared contracts first; other roles may prepare fixtures and checks in parallel.
 
 All five roles must follow the [push approval rule in AGENTS.md](../AGENTS.md#required-user-approval-before-every-push). Local commits are allowed; before each push, present the changes, validation, commits, and destination, then wait for explicit user approval. A role assignment or instruction to publish a claim/PR does not waive this rule.

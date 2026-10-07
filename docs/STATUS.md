@@ -67,6 +67,8 @@ IMPACT: OpenSpec now tracks the existing local implementation and three remainin
 
 PROPOSAL: Review the migrated artifacts, then continue remaining handoff work using `$openspec-apply-change int-01-local-integration-scaffold`. Preserve the separate push approval rule and archive only after accepted completion.
 
+FACT: At the user's direction, OpenSpec commands and workflow guidance live in [WORKFLOW.md](WORKFLOW.md), linked from the internal agent handoffs. README contains no OpenSpec workflow section.
+
 ## OpenSpec apply — handoff preparation
 
 FACT: Started the requested apply workflow on 2026-10-07. The CLI reports `ready`, with 17/20 tasks complete and publication/review tasks 6.4–6.6 remaining. Reviewed all supplied context artifacts and prepared the migration for a scoped local commit. Strict OpenSpec validation passes with no issues, all 52 local documentation links resolve, and Git whitespace checks pass. Application code is unchanged; the earlier 60 Python tests and four browser checks remain the recorded scaffold evidence.
