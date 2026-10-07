@@ -1,0 +1,64 @@
+[
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-drain-timeout",
+    "event_id": "00-start",
+    "source": "session",
+    "type": "session.started",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-drain-timeout",
+    "event_id": "01-neutral",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 0,
+    "payload": {
+      "state": "NEUTRAL",
+      "previous_state": "NEUTRAL",
+      "reasons": [],
+      "usable_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-drain-timeout",
+    "event_id": "90-stop",
+    "source": "session",
+    "type": "session.stopping",
+    "timestamp_s": 10,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-drain-timeout",
+    "event_id": "99-completed",
+    "source": "session",
+    "type": "session.completed",
+    "timestamp_s": 10,
+    "payload": {
+      "duration_s": 10,
+      "incomplete_sources": [
+        "speech"
+      ]
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-drain-timeout",
+    "event_id": "after-timeout",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 9,
+    "payload": {
+      "utterance_id": "utterance-1",
+      "revision": 0,
+      "is_final": true,
+      "start_s": 1,
+      "end_s": 9,
+      "text": "A synthetic callback after timeout."
+    }
+  }
+]
