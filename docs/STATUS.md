@@ -55,7 +55,25 @@ The browser checks used headless Chromium 153.0.8010.12 downloaded to `/tmp`; th
 
 IMPACT: All four subsystem owners have concrete module slots, consumable executable contracts, a shared context/clock, lifecycle protocols, and repeatable fixtures. Integration implements no competing live audience engine, recorder, or coaching selector. Default live API composition explicitly reports unavailable until producers/consumers are injected. An early-stopped replay does not invent an authored summary. Preview/device release behavior is checked only through fake adapters; real devices remain an INT-02 acceptance requirement.
 
-PROPOSAL: Publish the reviewed role-branch commits only after explicit user push approval, obtain another collaborator's scaffold review, and hand off producer and consumer implementation. Keep INT-01 in progress until publication/review/acceptance; do not mark live P0 or UGen300 integration complete. The unrelated `openspec/config.yaml` that appeared during implementation was preserved and excluded from these commits.
+PROPOSAL: Publish the reviewed role-branch commits only after explicit user push approval, obtain another collaborator's scaffold review, and hand off producer and consumer implementation. Keep INT-01 in progress until publication/review/acceptance; do not mark live P0 or UGen300 integration complete. The `openspec/config.yaml` that appeared during implementation was preserved and excluded from the implementation commits; it is now used by the requested migration below.
+
+## OpenSpec plan migration
+
+FACT: On 2026-10-07, `openspec --version` reported 1.14.1. `openspec list --json` and `openspec context --json` resolved this repository as the nearest OpenSpec root, with the installed Codex skills and `spec-driven` configuration. No reinitialization was needed.
+
+FACT: Migrated the separate INT-01 plan into [int-01-local-integration-scaffold](../openspec/changes/int-01-local-integration-scaffold/proposal.md), with proposal, design, four capability delta specs, and an evidence-backed task checklist. `openspec status` reports 4/4 planning artifacts complete; strict validation passes with no issues, and `openspec doctor --json` reports a healthy root. The old plan is a compatibility pointer. Application code and contracts were not changed or retested during this documentation migration.
+
+IMPACT: OpenSpec now tracks the existing local implementation and three remaining publication/review gates. TASKS retains ownership/progress, ARCHITECTURE retains contract semantics, and this file retains observed evidence. Main OpenSpec specs are not synced yet; the active change is not archived.
+
+PROPOSAL: Review the migrated artifacts, then continue remaining handoff work using `$openspec-apply-change int-01-local-integration-scaffold`. Preserve the separate push approval rule and archive only after accepted completion.
+
+## OpenSpec apply — handoff preparation
+
+FACT: Started the requested apply workflow on 2026-10-07. The CLI reports `ready`, with 17/20 tasks complete and publication/review tasks 6.4–6.6 remaining. Reviewed all supplied context artifacts and prepared the migration for a scoped local commit. Strict OpenSpec validation passes with no issues, all 52 local documentation links resolve, and Git whitespace checks pass. Application code is unchanged; the earlier 60 Python tests and four browser checks remain the recorded scaffold evidence.
+
+FACT: A read-only SSH remote check found `main` at `d7d61c1` and no current `agent/integration` remote branch. The reviewed coaching preparation still matches its source commit unchanged. GitHub CLI/API authentication is unavailable in this environment; remote PR and collaborator-review state has not been established through the API.
+
+IMPACT: The local commit set can be proposed for publication on `agent/integration`, creating that role branch remotely after approval. Task 6.4 remains unchecked until explicit approval is received; publication and collaborator acceptance remain separate pending gates. No push, PR creation, remote merge, or archive has occurred during preparation.
 
 ## Evidence to add as work lands
 

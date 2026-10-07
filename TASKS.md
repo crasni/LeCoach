@@ -42,7 +42,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 
 | Task | Owner | Status | Branch | PR / evidence / blocker | Updated |
 | --- | --- | --- | --- | --- | --- |
-| INT-01 | @crasni | in_progress | `agent/integration` | [Scaffold and setup](README.md#development) validated locally; [evidence](docs/STATUS.md#int-01-local-scaffold-validation). Claim/publication and peer review pending; [separate plan](docs/plans/INT-01.md). | 2026-10-07 |
+| INT-01 | @crasni | in_progress | `agent/integration` | [Scaffold and setup](README.md#development) validated locally; [evidence](docs/STATUS.md#int-01-local-scaffold-validation). Claim/publication and peer review pending; [OpenSpec plan](openspec/changes/int-01-local-integration-scaffold/proposal.md). | 2026-10-07 |
 | INT-02 | @crasni | todo | `agent/integration` | Depends on subsystem PRs | 2026-10-07 |
 | INT-03 | @crasni | todo | `agent/integration` | Hardware access and official submission verification needed | 2026-10-07 |
 | AUD-01 | @firstsnow1226 | todo | `agent/audio-streaming` | Confirm INT-01 contracts before integration | 2026-10-07 |
