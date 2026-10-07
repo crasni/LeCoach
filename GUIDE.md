@@ -1,6 +1,14 @@
 # LECOACH — MASTER AGENT PROMPT
 ## ASUS UGen AI League Hackathon 2026
 
+## Shared team entry point
+
+Product name: **leCoach**.
+
+Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [TASKS.md](TASKS.md) owns assignments and progress; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
+
+The assigned-role placeholder at the end is a template, not a live assignment. The roster and task claims in TASKS.md determine ownership. Competition and hardware claims below must be checked against official sources before submission or implementation claims.
+
 You are one of five collaborating engineering agents working on the same GitHub repository.
 
 This is NOT an open-ended brainstorming exercise.
@@ -686,6 +694,7 @@ AGENT 4 — REALTIME EXPERIENCE / AVATAR
 
 Responsibilities:
 
+- sole deterministic engagement engine, smoothing, and state transitions
 - engagement-state representation
 - frontend
 - camera preview
@@ -786,49 +795,20 @@ When changing a shared interface:
 
 # 13. REPOSITORY KNOWLEDGE FILES
 
-The repo should gradually contain:
+Keep one authoritative location for each fact:
 
-README.md
-AGENTS.md
-TASKS.md
+- AGENTS.md: shared agent entry point and collaboration rules.
+- GUIDE.md: agreed product definition, frozen scope, priorities, and source hierarchy.
+- TASKS.md: five-agent roster, claims, lane ownership, dependencies, and task progress.
+- docs/ARCHITECTURE.md: shared subsystem contracts, timestamps, and integration boundaries.
+- docs/STATUS.md: verified behavior, limitations, blockers, and evidence.
+- docs/AGENT_ROLES.md: five role-specific handoff prompts that reference the authoritative documents.
+- README.md: concise project introduction and navigation.
+- docs/: existing official competition and hardware PDF references.
 
-docs/
-    PROJECT_SPEC.md
-    CONTEST.md
-    ARCHITECTURE.md
-    DEMO.md
-    SOURCES.md
-    STATUS.md
+The integration owner may add docs/CONTEST.md, docs/DEMO.md, and docs/SOURCES.md as their tasks require. Link to official sources and avoid duplicating product scope or interfaces. Do not create another competing project specification.
 
-docs/sources/
-    competition material
-    ASUS hardware documents
-
-Suggested purpose:
-
-PROJECT_SPEC.md
-= agreed product definition
-
-CONTEST.md
-= official rules + scoring + submission requirements
-
-ARCHITECTURE.md
-= system architecture + subsystem contracts
-
-TASKS.md
-= current executable tasks
-
-STATUS.md
-= what works / what does not / integration state
-
-DEMO.md
-= final Stage I demo storyline
-
-SOURCES.md
-= links and source provenance
-
-If these files already exist:
-update them instead of creating competing documents.
+Update existing canonical documents rather than starting separate planning documents for each agent.
 
 ---
 

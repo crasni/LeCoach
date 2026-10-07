@@ -17,7 +17,15 @@ Target track: Workplace AI / Battlefield Lightning, with ASUS UGen300 as the int
 
 Repository bootstrap. No application implementation or setup commands yet.
 
-Read [GUIDE.md](GUIDE.md) for the agreed scope, architecture, and collaboration workflow. Official competition and hardware reference PDFs are in [docs/](docs/).
+Start at [AGENTS.md](AGENTS.md), the shared entry point for all five collaborators. Follow the canonical documents linked there:
+
+- [GUIDE.md](GUIDE.md): agreed product scope and priorities.
+- [TASKS.md](TASKS.md): five workstreams, assignments, dependencies, and progress.
+- [Architecture](docs/ARCHITECTURE.md): shared event contracts.
+- [Implementation status](docs/STATUS.md): tested behavior and current blockers.
+- [Role handoffs](docs/AGENT_ROLES.md): the prompt for each agent.
+
+Official competition and hardware reference PDFs are in [docs/](docs/).
 
 ## Development
 
