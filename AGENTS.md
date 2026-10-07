@@ -1,10 +1,33 @@
-# leCoach agent entry point
+# LeCoach agent entry point
 
-You are joining a coordinated five-person engineering team building **leCoach**. Read this file when you first open the repository and at the start of every new agent session. Understand the existing plan and your assignment before editing code.
+You are joining a coordinated five-person engineering team building **LeCoach**. Read this file when you first open the repository and at the start of every new agent session. Understand the existing plan and your assignment before editing code.
+
+## Required branch workflow — never push to main
+
+Every collaborator and coding agent, including the integration owner, develops and commits on the assigned role branch in [TASKS.md](TASKS.md). This applies to code, documentation, task claims, and shared-interface changes.
+
+- Before editing, check the current branch. If it is `main`, create or switch to your assigned branch without discarding local work. If that branch already exists remotely, track it instead of starting a competing branch.
+- After explicit user push approval, push only the approved role branch. **Never push directly to `main`**, including with a refspec, force push, a multi-branch push, or an API bypass. Push approval does not waive this restriction.
+- Propose changes to `main` through a reviewed pull request from your role branch. The integration owner coordinates review and merge; remote merges remain subject to the approval rule below. Do not use a local merge followed by a push to `main`.
+
+The repository SSH remote is `git@github.com:crasni/LeCoach.git`. Read-only updates from `main` are allowed; publish your work from your own branch.
+
+## Required user approval before every push
+
+The user explicitly requires this workflow for this project:
+
+1. Local edits, checks, and commits are allowed without push approval.
+2. When the work is ready to share, tell the user what changed, the validation results, the exact commit or commit range, and the destination remote and branch.
+3. Ask for approval and **wait for the user's explicit approval before pushing**. A notice alone is not approval. Silence, earlier pushes, task assignment, an instruction to implement work, and sandbox/tool execution approval do not authorize a new push.
+4. Push only the reviewed commits to the stated destination after approval. If the commits or destination change, present the revised proposal and obtain approval again. Approval for one push does not authorize later pushes.
+
+This applies to every branch and tag and to any tool/API that would publish local commits or update remote Git refs. Do not bundle a push into a commit command, automate it in the background, or bypass the wait through another agent. Prepare local work while approval is pending; report it as committed locally, not shared with the team.
+
+This rule takes precedence over instructions below or in other project documents to publish task claims, handoffs, or feature branches. Read-only remote checks, fetch, and safe pull remain allowed. Keep this rule in effect across future sessions unless the user explicitly changes it.
 
 ## Understand the project
 
-leCoach is **Your Private AI Audience**: a local presentation rehearsal tool that listens through the microphone, watches through the webcam, and makes virtual audience avatars react to delivery in real time. After the rehearsal it highlights specific strong and improvement moments with practical suggestions. Live audience response is the central product value.
+LeCoach is **Your Private AI Audience**: a local presentation rehearsal tool that listens through the microphone, watches through the webcam, and makes virtual audience avatars react to delivery in real time. After the rehearsal it highlights specific strong and improvement moments with practical suggestions. Live audience response is the central product value.
 
 The agreed direction is Workplace AI / Battlefield Lightning in the ASUS UGen AI League Hackathon 2026, targeting ASUS UGen300. Prioritize a simple, reliable Stage I prototype and demo. Treat competition details and hardware capabilities as requiring official verification before claiming them.
 
@@ -69,7 +92,7 @@ Link to these documents instead of copying their facts into another spec. Latest
 ## Claim and collaborate
 
 - Exactly one owner per task. Named assignments already in `TASKS.md` determine ownership; activate your assigned task by updating its status and date with your GitHub username and lane branch before implementing it. Land or coordinate that claim through the integration owner before assuming ownership; a conflicting claim must be resolved first.
-- Use your assigned role branch. Never commit directly to `main` during feature development.
+- Use your assigned role branch for every change. Follow the required branch workflow above: never commit or push directly to `main`; submit a reviewed PR instead.
 - Keep changes within your lane. Coordinate shared contracts, scaffold, dependencies, and root configuration through the integration owner; agree on a contract revision before changing producers or consumers.
 - Submit a scoped PR referencing task IDs, behavior changed, validation evidence, limitations, and downstream handoff. Subsystem PRs require integration-owner review before merge; integration-owner changes should receive another collaborator's review. Coordinate the initial documentation/scaffold handoff with the maintainer if the integration role is still unassigned.
 - Merge compatible PRs through the integration owner, then pull and inspect changes before continuing. Do not merge incomplete adapters into a supposedly live demo.

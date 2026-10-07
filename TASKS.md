@@ -1,4 +1,4 @@
-# leCoach — team work and ownership
+# LeCoach — team work and ownership
 
 This is the single task board for the five engineering lanes. Read [GUIDE.md](GUIDE.md) for product scope and priorities, [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for shared contracts, and [docs/STATUS.md](docs/STATUS.md) for verified integration results. Do not maintain a competing task board or copy the product specification here.
 
@@ -20,6 +20,8 @@ Each collaborator takes one lane; a lane can use an AI coding agent under that c
 
 Find your GitHub username in the Owner column. That row is your assignment: read the matching role prompt in docs/AGENT_ROLES.md, use its lane branch, and start its First task once its dependencies are met. Do not ask the maintainer to choose your lane again. The branch names below are assigned working branches, not a claim that those branches have already been created.
 
+All five owners must develop and commit on their assigned branches, including documentation and task-board updates. Follow [AGENTS.md's branch workflow](AGENTS.md#required-branch-workflow--never-push-to-main): never push directly to `main`; after user-approved branch publication, open a PR targeting `main` for review and integration.
+
 Pending invite owners must accept their GitHub repository invitation before pushing branches or PRs. They can read the shared plan and prepare their lane's fixtures/research in the meantime. Access does not change ownership; do not take a pending invite owner's lane.
 
 `crasni` starts INT-01 to establish the scaffold and contracts. The other four owners prepare their first task against the shared contract while INT-01 lands, then implement and integrate on their own branches. Assigning an owner does not mean their coding agent has started: update task status when work actually begins.
@@ -31,16 +33,16 @@ Module boundaries follow the agreed architecture. Lane 1 establishes actual dire
 1. Start each work session with `git status` and fetch/pull current work safely. Do not overwrite local changes; update the branch from current `main` before coding.
 2. Read GUIDE, AGENTS, this board, architecture, current status and relevant open PRs/issues. Inspect existing code and changed contracts.
 3. Pick the highest-priority `todo` task assigned to you whose dependencies are satisfied. Confirm your **GitHub username**, task status, exact branch and date below. A role label or a runtime agent name is not an owner.
-4. Publish the claim before implementation so other collaborators can see it. Use a small documentation PR through the integrator, or the repository's existing authorized claim workflow. Until visible on the shared board, the claim is provisional. Resolve conflicting claims before duplicating work.
+4. Prepare the claim locally, then follow [AGENTS.md's push approval rule](AGENTS.md#required-user-approval-before-every-push): present the commits and destination, request approval, and wait before pushing. Publish the approved claim through a small documentation PR via the integrator or the existing authorized claim workflow. Until visible on the shared board, the claim is provisional. Resolve conflicting claims before duplicating work.
 5. Work on the recorded feature branch. Keep changes scoped. Proposed contract changes go to Lane 1 first; the integrator owns approval and merge of shared contract changes and coordinates affected consumers.
 6. Open a PR with the task ID, concrete behavior, reproduction/check commands and results, dependencies, mock/live mode, limitations and interface changes. Link the PR in the board and move the task to `review`.
 7. Lane 1 verifies the handoff against the shared contracts, resolves integration and merges in dependency order. Mark `done` only after merge and acceptance evidence. Update verified integration status when behavior changes.
 
-Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`, `review`, `done`. A blocked task includes the blocker, required decision/person and next action. `done` requires runnable behavior, basic failure handling, a consumable documented interface, relevant validation and downstream handoff. Task rows below record current work; assignment alone does not mean implementation has started.
+Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`, `review`, `done`. A blocked task includes the blocker, required decision/person and next action. `done` requires runnable behavior, basic failure handling, a consumable documented interface, relevant validation and downstream handoff. Rows describe the board on this branch; pending subsystem PRs may contain claims awaiting integration. Assignment alone does not mean implementation has started.
 
 | Task | Owner | Status | Branch | PR / evidence / blocker | Updated |
 | --- | --- | --- | --- | --- | --- |
-| INT-01 | @crasni | todo | `agent/integration` | Establish runnable skeleton and contract handoff | 2026-10-07 |
+| INT-01 | @crasni | in_progress | `agent/integration` | [Scaffold and setup](README.md#development) validated locally; [evidence](docs/STATUS.md#int-01-local-scaffold-validation). Claim/publication and peer review pending; [OpenSpec plan](openspec/changes/int-01-local-integration-scaffold/proposal.md). | 2026-10-07 |
 | INT-02 | @crasni | todo | `agent/integration` | Depends on subsystem PRs | 2026-10-07 |
 | INT-03 | @crasni | todo | `agent/integration` | Hardware access and official submission verification needed | 2026-10-07 |
 | AUD-01 | @firstsnow1226 | todo | `agent/audio-streaming` | Confirm INT-01 contracts before integration | 2026-10-07 |
@@ -49,7 +51,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
 | LIVE-01 | @ricebal1 | todo | `agent/avatar-ui` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | LIVE-02 | @ricebal1 | todo | `agent/avatar-ui` | Depends on LIVE-01 and live adapter handoffs | 2026-10-07 |
-| COACH-01 | @WolflordR | blocked | `agent/session-analysis` | [Draft PR #1](https://github.com/crasni/leCoach/pull/1), preparation at `dcc280f`: [synthetic cases and checks](checks/coaching/README.md), 9 cases / 10 sessions and 18 passing utility tests. Claim/integration review pending @crasni; next: INT-01 scaffold/contract handoff and @ricebal1's LIVE-01 transition/reason evidence, then implement the recorder and feedback generator in the approved layout. | 2026-10-07 |
+| COACH-01 | @WolflordR | blocked | `agent/session-analysis` | [Draft PR #1](https://github.com/crasni/LeCoach/pull/1), preparation at `dcc280f`: synthetic cases/checks already incorporated unchanged through INT-01 / PR #4. Integration-owner review reran 9 cases / 10 sessions and 18 utility tests. Published scaffold/contracts are available on main; next: coordinate Lane 4's LIVE-01 transition/reason evidence and implement the recorder/generator in the approved layout. COACH-01 is not complete. | 2026-10-07 |
 | COACH-02 | @WolflordR | todo | `agent/session-analysis` | Depends on COACH-01 and integrated live session | 2026-10-07 |
 
 ## Lane 1 — Integration / competition
