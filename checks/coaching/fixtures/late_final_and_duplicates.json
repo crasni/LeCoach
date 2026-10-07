@@ -1,0 +1,158 @@
+[
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "00-start",
+    "source": "session",
+    "type": "session.started",
+    "timestamp_s": 0,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "01-neutral",
+    "source": "engagement",
+    "type": "engagement.state",
+    "timestamp_s": 0,
+    "payload": {
+      "state": "NEUTRAL",
+      "previous_state": "NEUTRAL",
+      "reasons": [],
+      "usable_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "partial-0",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 4,
+    "payload": {
+      "utterance_id": "utterance-1",
+      "revision": 0,
+      "is_final": false,
+      "start_s": 1,
+      "end_s": 4,
+      "text": "Our"
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "partial-1",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 6,
+    "payload": {
+      "utterance_id": "utterance-1",
+      "revision": 1,
+      "is_final": false,
+      "start_s": 1,
+      "end_s": 6,
+      "text": "Our synthetic"
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-other-session",
+    "event_id": "final-2",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 8,
+    "payload": {
+      "utterance_id": "utterance-1",
+      "revision": 0,
+      "is_final": true,
+      "start_s": 1,
+      "end_s": 8,
+      "text": "Other session."
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "90-stop",
+    "source": "session",
+    "type": "session.stopping",
+    "timestamp_s": 10,
+    "payload": {}
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "final-2",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 8,
+    "payload": {
+      "utterance_id": "utterance-1",
+      "revision": 2,
+      "is_final": true,
+      "start_s": 1,
+      "end_s": 8,
+      "text": "Our synthetic example is ready."
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "final-2",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 8,
+    "payload": {
+      "utterance_id": "utterance-1",
+      "revision": 2,
+      "is_final": true,
+      "start_s": 1,
+      "end_s": 8,
+      "text": "Our synthetic example is ready."
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "partial-0",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 4,
+    "payload": {
+      "utterance_id": "utterance-1",
+      "revision": 0,
+      "is_final": false,
+      "start_s": 1,
+      "end_s": 4,
+      "text": "Our"
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "99-completed",
+    "source": "session",
+    "type": "session.completed",
+    "timestamp_s": 10,
+    "payload": {
+      "duration_s": 10,
+      "incomplete_sources": []
+    }
+  },
+  {
+    "schema_version": 0,
+    "session_id": "synthetic-late-final",
+    "event_id": "after-completion",
+    "source": "speech",
+    "type": "speech.transcript",
+    "timestamp_s": 9,
+    "payload": {
+      "utterance_id": "utterance-2",
+      "revision": 0,
+      "is_final": true,
+      "start_s": 8,
+      "end_s": 9,
+      "text": "This callback must be ignored."
+    }
+  }
+]

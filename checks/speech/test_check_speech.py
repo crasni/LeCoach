@@ -238,6 +238,38 @@ class PauseChecks(unittest.TestCase):
 
 
 class LifecycleAndSessions(unittest.TestCase):
+    def test_lifecycle_requires_start(self):
+        events = [event for event in fixture("silence_only")
+                  if event["type"] != "session.started"]
+        with self.assertRaisesRegex(CheckError, "requires session.started"):
+            check_stream(events)
+
+    def test_start_must_be_first_delivery(self):
+        events = fixture("silence_only")
+        start = events.pop(0)
+        events.insert(len(events) - 1, start)
+        with self.assertRaisesRegex(CheckError, "first delivery"):
+            check_stream(events)
+
+    def test_completion_needs_stop(self):
+        events = [event for event in fixture("silence_only")
+                  if event["type"] != "session.stopping"]
+        with self.assertRaisesRegex(CheckError, "must follow session.stopping"):
+            check_stream(events)
+
+    def test_lifecycle_payloads_match_canonical_contract(self):
+        for kind, update in (
+                ("session.started", {"unexpected": True}),
+                ("session.stopping", {"unexpected": True}),
+                ("session.completed", {"incomplete_sources": ["camera"]}),
+                ("session.completed", {"incomplete_sources": ["speech", "speech"]}),
+                ("session.completed", {"unexpected": True})):
+            with self.subTest(kind=kind, update=update):
+                events = fixture("silence_only")
+                next(event for event in events if event["type"] == kind)["payload"].update(update)
+                with self.assertRaises(CheckError):
+                    check_stream(events)
+
     def test_nothing_is_delivered_after_completion(self):
         events = fixture("steady_pace")
         events.append(copy.deepcopy(find(events, "u6-r2")))

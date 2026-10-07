@@ -103,11 +103,17 @@ def check_event(event, tolerance=DEFAULTS["tolerance_s"]):
         if kind in LIFECYCLE:
             require(event["source"] == "session", "Lifecycle events use source session")
             if kind == "session.completed":
-                require(number(payload.get("duration_s")) and
+                sources = payload.get("incomplete_sources")
+                require(set(payload) == {"duration_s", "incomplete_sources"} and
+                        number(payload.get("duration_s")) and
                         close(payload["duration_s"], at) and
-                        isinstance(payload.get("incomplete_sources"), list),
+                        isinstance(sources, list) and
+                        all(source in ("speech", "vision") for source in sources) and
+                        len(sources) == len(set(sources)),
                         "Completion needs duration_s at the capture end and "
-                        "incomplete_sources")
+                        "unique speech/vision incomplete_sources")
+            else:
+                require(not payload, "Start/stop lifecycle payload must be empty")
             return
         require(event["source"] == "speech", "Speech events use source speech")
         if kind == "signal.status":
@@ -184,7 +190,10 @@ def check_session(arrivals, config=None):
     # Lifecycle.
     for kind in LIFECYCLE:
         require(len(of_type.get(kind, [])) <= 1, f"More than one {kind}")
-    if "session.started" in of_type:
+    if any(kind in of_type for kind in LIFECYCLE):
+        require("session.started" in of_type, "Lifecycle requires session.started")
+        require(of_type["session.started"][0][0] == 0,
+                "session.started must be the first delivery")
         require(of_type["session.started"][0][1]["timestamp_s"] == 0,
                 "session.started must be at timestamp 0")
     capture_end = of_type["session.stopping"][0][1]["timestamp_s"] \

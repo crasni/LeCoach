@@ -1,0 +1,104 @@
+# COACH-01 synthetic acceptance cases
+
+These are Lane 5 preparation artifacts while INT-01 and LIVE-01 are pending.
+Every event, transcript, transition, and feedback example is hand-authored and
+synthetic. No microphone, camera, inference model, or accelerator was used.
+The checks do not implement a recorder, session controller, engagement engine,
+fake clock, or feedback generator. Application language and directories remain
+Lane 1's decision.
+
+[ARCHITECTURE.md](../../docs/ARCHITECTURE.md) remains the contract authority.
+`fixtures/*.json` are arrays of those events in **delivery order**. Array order
+models late delivery without changing capture timestamps or adding event fields.
+`expectations.json` is a test oracle: it lists the events a completed log should
+retain and gives illustrative `Feedback` objects. Its surrounding metadata is
+test-only and is not another application/session contract.
+
+## Run the preparation checks
+
+From the repository root, using Python 3.10+ and its standard library:
+
+```sh
+python3 checks/coaching/check_cases.py
+python3 -m unittest discover -s checks/coaching -p 'test_*.py' -v
+```
+
+The first command checks the synthetic input and manually written expectations.
+The second checks that the acceptance utility rejects representative faulty
+outputs. Passing them establishes **test artifact consistency**, not completed
+COACH-01 functionality or live inference.
+
+## Cases and expected behavior
+
+| Case | Expected coaching | Recorder/feedback acceptance target |
+| --- | --- | --- |
+| `weak_to_improved` | Two improvements and one supported strength | Preserve direct measurements and authored audience transitions; explain using capture times |
+| `camera_unavailable` | One speech improvement, no strength, camera limitation | Missing camera must not become negative delivery feedback or fill an insight quota |
+| `no_usable_signals` | No moments; input limitation | Unavailable microphone and camera are not poor delivery |
+| `empty_session` | No moments; insufficient-evidence limitation | Start and stop at zero duration without fabricated insights |
+| `insufficient_window` | No moments; insufficient-window limitation | Preserve null startup metrics; do not reinterpret them as zero WPM |
+| `late_final_and_duplicates` | No moments without supported audience evidence | Keep final arriving during drain, deduplicate retries, preserve partial history, exclude foreign session and post-completion callback |
+| `drain_timeout` | No moments; incomplete-speech limitation | Preserve `incomplete_sources`; ignore callback delivered after completion |
+| `repeated_sessions` | Separate summaries with no supported moments | Reused event IDs and zero-based clocks stay scoped to each session; discard old-session callback |
+| `adjacent_incidents` | One improvement, no strength | Two transitions citing the same incident do not create duplicate advice |
+
+The positive transitions in `weak_to_improved` deliberately have empty reason
+lists: the shared document has not named positive reason codes. The illustrative
+strength cites an authored `ENGAGED` state and direct speech/facing observations;
+it does not assert which rule caused that state. Lane 4 must supply and review
+actual reason codes and representative transition output before this example
+becomes an integrated acceptance baseline. Only the already documented
+`pace_high` and `facing_away_sustained` examples are used for negative reasons.
+Numeric observations are synthetic demo examples, not validated thresholds.
+Head/body facing is approximate; the feedback does not claim eye tracking,
+emotion detection, or inferred confidence. The adjacent-transition case tests
+coaching deduplication; it cannot establish that the live engine smooths correctly.
+
+## Check real output after the dependency handoff
+
+After Lane 1 confirms the contracts and Lane 4 provides transitions, use the
+application's actual recorder and feedback generator to consume a selected case.
+Export each consumer's results as a JSON array containing its canonical
+`CompletedSession` or `Feedback` objects; this array is only a CLI batch wrapper.
+Keep exports under ignored `sessions/` rather than committing rehearsal data.
+For example, after the application has produced those files:
+
+```sh
+python3 checks/coaching/check_cases.py --case weak_to_improved \
+  --completed sessions/coach-completed.json --feedback sessions/coach-feedback.json
+```
+
+The utility compares a completed timeline with the manually listed retained
+events, including order, original payloads, session identity, duration, and
+incomplete sources. Feedback checks compare the selected moment kinds, capture
+timestamps, and minimum evidence anchors. Wording may differ; every observation
+and suggestion must be nonempty, and limitations must be present when required.
+These assertions exercise the chosen cases, not every permissible feedback
+selection. Review and update the hand-authored expectations with the integrator
+when the implementation handoff changes a case; do not change production rules
+merely to match example wording.
+
+Human review must still verify that observations accurately describe evidence,
+suggestions are useful, missing-source limitations are specific, and moment
+selection is appropriate. This utility cannot validate natural-language truth,
+live latency, producer timeout duration, transcription accuracy, language-specific
+pace bands, audience smoothing, device release, or local privacy behavior.
+
+## Integration handoff
+
+Lane 1 needs to confirm executable event types, lifecycle subscription/stop
+boundaries, the shared clock and fixture replay entry point, application layout,
+and chosen local retention behavior. Lane 4 needs to confirm reason vocabulary,
+positive-transition evidence, and actual deterioration/recovery examples. No
+shared interface revision is introduced by these preparation artifacts.
+
+Once those dependencies land, the Lane 5 implementation needs a session recorder,
+moment selector, template feedback generator, and consumer checks in Lane 1's
+approved module layout. It should consume the existing `Event`,
+`CompletedSession`, `Feedback`, and `Moment` contracts. The UI remains Lane 4's
+responsibility. Durable storage, live integration, and the COACH-02 demo evidence
+are still pending; P1 LLM feedback/questions/TTS remain gated by integrated P0.
+
+These files contain only synthetic data and stay local when checks run. The
+utility has no network access or recording behavior and creates no persistent
+session output. Tests use temporary synthetic JSON files that are cleaned up.

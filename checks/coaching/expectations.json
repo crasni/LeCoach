@@ -1,0 +1,324 @@
+{
+  "weak_to_improved": {
+    "description": "Authored sustained pace and facing incidents followed by recovery. Positive reason codes are deliberately omitted pending LIVE-01; the example strength cites the recorded state and direct measurements without claiming causation.",
+    "sessions": [
+      {
+        "session_id": "synthetic-weak-to-improved",
+        "duration_s": 50,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "speech-10",
+          "vision-10",
+          "speech-20",
+          "vision-20",
+          "audience-pace",
+          "vision-25",
+          "vision-30",
+          "audience-facing",
+          "speech-35",
+          "vision-35",
+          "audience-recovery",
+          "speech-40",
+          "vision-40",
+          "audience-engaged",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-weak-to-improved",
+          "duration_s": 50,
+          "moments": [
+            {
+              "timestamp_s": 10,
+              "kind": "improvement",
+              "observation": "The speech windows at 00:10 and 00:20 were approximately 205 and 200 WPM. The simulated audience changed to CONFUSED at 00:20.5.",
+              "suggestion": "Pause after the key point and rehearse this passage at a slower pace.",
+              "evidence_event_ids": [
+                "speech-10",
+                "speech-20",
+                "audience-pace"
+              ]
+            },
+            {
+              "timestamp_s": 25,
+              "kind": "improvement",
+              "observation": "The head/body facing estimate stayed at 0.2 over 00:20 to 00:30. The simulated audience changed to BORED at 00:30.5.",
+              "suggestion": "Look toward the camera while delivering the next key sentence; place notes closer to it.",
+              "evidence_event_ids": [
+                "vision-25",
+                "vision-30",
+                "audience-facing"
+              ]
+            },
+            {
+              "timestamp_s": 40,
+              "kind": "strength",
+              "observation": "At 00:40 the speech window was approximately 144 WPM and the head/body facing estimate was 0.85. The authored audience sequence reached ENGAGED at 00:42 and remained there until stop.",
+              "suggestion": "Rehearse the next key point with a similarly steady pace while facing the camera.",
+              "evidence_event_ids": [
+                "speech-40",
+                "vision-40",
+                "audience-engaged"
+              ]
+            }
+          ],
+          "limitations": []
+        }
+      }
+    ]
+  },
+  "camera_unavailable": {
+    "description": "Valid speech supports one improvement; camera denial is only a limitation. No invented strength or quota filling.",
+    "sessions": [
+      {
+        "session_id": "synthetic-camera-unavailable",
+        "duration_s": 25,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "camera-denied",
+          "speech-10",
+          "speech-20",
+          "audience-pace",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-camera-unavailable",
+          "duration_s": 25,
+          "moments": [
+            {
+              "timestamp_s": 10,
+              "kind": "improvement",
+              "observation": "The speech windows at 00:10 and 00:20 were approximately 205 and 200 WPM. The simulated audience changed to CONFUSED at 00:20.5.",
+              "suggestion": "Pause after the key point and rehearse this passage at a slower pace.",
+              "evidence_event_ids": [
+                "speech-10",
+                "speech-20",
+                "audience-pace"
+              ]
+            }
+          ],
+          "limitations": [
+            "Camera access was unavailable; facing and movement could not be assessed."
+          ]
+        }
+      }
+    ]
+  },
+  "no_usable_signals": {
+    "description": "Unavailable sources do not become negative delivery evidence.",
+    "sessions": [
+      {
+        "session_id": "synthetic-no-signals",
+        "duration_s": 5,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "speech-error",
+          "vision-error",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-no-signals",
+          "duration_s": 5,
+          "moments": [],
+          "limitations": [
+            "Microphone and camera input were unavailable. There is not enough evidence for coaching."
+          ]
+        }
+      }
+    ]
+  },
+  "empty_session": {
+    "description": "An immediately stopped session has no supported moments.",
+    "sessions": [
+      {
+        "session_id": "synthetic-empty",
+        "duration_s": 0,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-empty",
+          "duration_s": 0,
+          "moments": [],
+          "limitations": [
+            "The session ended before delivery observations were available."
+          ]
+        }
+      }
+    ]
+  },
+  "insufficient_window": {
+    "description": "Null startup metrics remain unknown rather than becoming zero pace or a strength.",
+    "sessions": [
+      {
+        "session_id": "synthetic-startup-window",
+        "duration_s": 1,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "90-stop",
+          "99-completed",
+          "speech-startup"
+        ],
+        "feedback": {
+          "session_id": "synthetic-startup-window",
+          "duration_s": 1,
+          "moments": [],
+          "limitations": [
+            "The speech observation window was too short for usable delivery metrics."
+          ]
+        }
+      }
+    ]
+  },
+  "late_final_and_duplicates": {
+    "description": "Delivery order includes a final during drain, duplicate retries, an old partial retry, a foreign session, and a callback after completion. The logger preserves transcript revisions once each; interpretation/counting must use the final once.",
+    "sessions": [
+      {
+        "session_id": "synthetic-late-final",
+        "duration_s": 10,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "partial-0",
+          "partial-1",
+          "final-2",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-late-final",
+          "duration_s": 10,
+          "moments": [],
+          "limitations": [
+            "A final transcript was captured, but no supported audience transition or delivery metrics were available."
+          ]
+        }
+      }
+    ]
+  },
+  "drain_timeout": {
+    "description": "A timed-out producer is reported as incomplete and its post-completion callback is excluded.",
+    "sessions": [
+      {
+        "session_id": "synthetic-drain-timeout",
+        "duration_s": 10,
+        "incomplete_sources": [
+          "speech"
+        ],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-drain-timeout",
+          "duration_s": 10,
+          "moments": [],
+          "limitations": [
+            "Speech did not finish before the drain timeout. There is not enough evidence for coaching."
+          ]
+        }
+      }
+    ]
+  },
+  "repeated_sessions": {
+    "description": "Two sessions reuse event IDs and start at zero. An old-session callback during the second session is excluded from both completed logs.",
+    "sessions": [
+      {
+        "session_id": "synthetic-repeat-1",
+        "duration_s": 5,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "vision-shared-id",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-repeat-1",
+          "duration_s": 5,
+          "moments": [],
+          "limitations": [
+            "A brief facing observation without supported audience transitions is insufficient for coaching."
+          ]
+        }
+      },
+      {
+        "session_id": "synthetic-repeat-2",
+        "duration_s": 0,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-repeat-2",
+          "duration_s": 0,
+          "moments": [],
+          "limitations": [
+            "The session ended before delivery observations were available."
+          ]
+        }
+      }
+    ]
+  },
+  "adjacent_incidents": {
+    "description": "Two authored transitions share the same sustained pace evidence: expect one improvement and no fabricated strength. This is a coaching deduplication input, not a smoothing test.",
+    "sessions": [
+      {
+        "session_id": "synthetic-adjacent-incidents",
+        "duration_s": 25,
+        "incomplete_sources": [],
+        "retained_event_ids": [
+          "00-start",
+          "01-neutral",
+          "speech-10",
+          "speech-20",
+          "audience-pace",
+          "audience-same-incident",
+          "90-stop",
+          "99-completed"
+        ],
+        "feedback": {
+          "session_id": "synthetic-adjacent-incidents",
+          "duration_s": 25,
+          "moments": [
+            {
+              "timestamp_s": 10,
+              "kind": "improvement",
+              "observation": "The speech windows at 00:10 and 00:20 were approximately 205 and 200 WPM. The simulated audience changed to CONFUSED at 00:20.5.",
+              "suggestion": "Pause after the key point and rehearse this passage at a slower pace.",
+              "evidence_event_ids": [
+                "speech-10",
+                "speech-20",
+                "audience-pace"
+              ]
+            }
+          ],
+          "limitations": [
+            "No supported strong moment was observed."
+          ]
+        }
+      }
+    ]
+  }
+}

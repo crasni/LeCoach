@@ -1,6 +1,6 @@
 # AUD-01 speech preparation: fixtures, checks, and proposed v0 rules
 
-These are Lane 2 preparation artifacts while INT-01 is pending. Every event is
+These are Lane 2 preparation artifacts. INT-01's scaffold is now available on main through PR #4; a live adapter and agreed analysis configuration remain pending. Every event is
 synthetic. `make_fixtures.py` generates the fixtures from hand-written scenario
 scripts; no microphone, audio file, speech model, or accelerator was used. This
 directory has no speech adapter, session controller, replay clock, logger, or
@@ -27,7 +27,8 @@ python3 checks/speech/make_fixtures.py --check
 ```
 
 The first command checks every fixture against the speech contract checks and
-its oracle. The second confirms that the checker rejects representative faulty
+its oracle. The default `uv run pytest -q` also includes these speech tests.
+The second confirms that the checker rejects representative faulty
 producer output. The third confirms that the committed fixtures match the
 scenario scripts. Passing them establishes **test-artifact consistency**, not
 working microphone capture, transcription, or latency.
@@ -120,6 +121,24 @@ This is a proposed plan, not a measured or approved implementation:
 4. **Configuration (Lane 1):** where do window, hop, minimum observation, pause minimum, and coverage wait live, and with which values?
 5. **Language (team):** is English-only analysis acceptable for the demo? Mandarin would need a characters-per-minute measure and its own filler list (for example 嗯, 呃, 那個, 就是).
 6. **Model failure (Lane 1):** if capture works but the model fails to load, should the adapter emit `signal.status` error `speech_model_unavailable` and error-availability metrics?
+
+## Integration-owner review
+
+The preparation fixtures are compatible with the executable v0 event models:
+all 214 events validate. Keep schema validation alongside this standalone semantic
+checker; it does not exhaustively reproduce every strict model constraint.
+Lifecycle-bearing streams must start with `session.started`, completion requires
+stop, start/stop payloads are empty, and incomplete sources are unique speech/vision
+modalities. Speech-only exports without lifecycle remain supported, but cannot
+prove completion or drain behavior.
+
+The extra completed-pause metric and measured leading silence with zero WPM are
+compatible with the existing contract; they do not establish intentional pauses
+or poor delivery. Null remains unknown without adding a reason field. Device/model
+failure can use the existing `signal.status` error and unavailable metric shapes.
+English tokenization and the proposed timing constants remain fixture assumptions,
+not approved Mandarin/demo support or central live configuration. Coordinate those
+choices before implementing the live adapter. No shared event shape was changed.
 
 ## Integration handoff
 
