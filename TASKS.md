@@ -42,7 +42,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 
 | Task | Owner | Status | Branch | PR / evidence / blocker | Updated |
 | --- | --- | --- | --- | --- | --- |
-| INT-01 | @crasni | review | `agent/integration` | Scaffold merged in [PR #4](https://github.com/crasni/LeCoach/pull/4), main `c0f6c68`; [validation](docs/STATUS.md#int-01-local-scaffold-validation). Collaborator review and downstream acceptance remain unrecorded; [OpenSpec plan](openspec/changes/int-01-local-integration-scaffold/proposal.md). | 2026-10-07 |
+| INT-01 | @crasni | done | `agent/integration` | Scaffold merged in [PR #4](https://github.com/crasni/LeCoach/pull/4), main `c0f6c68`; [validation](docs/STATUS.md#int-01-local-scaffold-validation). Maintainer accepted completion and waived the remaining peer-review/downstream signoff gate; [OpenSpec plan](openspec/changes/int-01-local-integration-scaffold/proposal.md). | 2026-10-07 |
 | INT-02 | @crasni | todo | `agent/integration` | Depends on subsystem PRs | 2026-10-07 |
 | INT-03 | @crasni | in_progress | `agent/integration` | [Verified submission requirements](docs/CONTEST.md), [hardware sources/candidates](docs/SOURCES.md), and [proposed demo](docs/DEMO.md) prepared locally; hardware measurements and final deliverables pending. | 2026-10-07 |
 | AUD-01 | @firstsnow1226 | todo | `agent/audio-streaming` | Confirm INT-01 contracts before integration | 2026-10-07 |

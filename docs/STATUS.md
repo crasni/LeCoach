@@ -87,6 +87,14 @@ IMPACT: Publication tasks 6.4 and 6.5 are satisfied. INT-01 is in review with 19
 
 PROPOSAL: Another collaborator reviews the merged scaffold and records contract/fixture acceptance before INT-01 is marked done or archived. Continue independent INT-03 source verification on `agent/integration`; the new local claim and follow-up remain unpublished until a separate approved push.
 
+## INT-01 maintainer acceptance
+
+FACT: On 2026-10-07 the maintainer explicitly instructed: "just mark INT-01 as complete and /$openspec-archive-change". This accepts the merged, validated scaffold and waives the remaining collaborator-review/downstream signoff gate. The original review evidence is still absent; no collaborator review or new live/hardware validation is claimed.
+
+IMPACT: INT-01 is done with 20/20 tasks closed after updating task 6.6 to record this explicit acceptance exception. The maintainer's instruction supersedes the earlier proposal to wait for signoff. INT-02 can prepare composition and integration checks, but its live acceptance still depends on the assigned subsystem implementations. Closing INT-01 does not complete those tasks.
+
+PROPOSAL: Archive the accepted INT-01 change using the requested skill, preserving its implementation evidence and acceptance exception. Local archive/spec/documentation commits still require their own push approval under AGENTS.
+
 ## INT-03 source verification and hardware readiness
 
 FACT: On 2026-10-07, inspected the three supplied PDFs and retrieved the official competition page directly over HTTPS, including its JSON-LD rules description. The browser extraction service returned 404, so that failure was not treated as proof the page was unavailable. [CONTEST.md](CONTEST.md) records verified requirements and unresolved submission details; [SOURCES.md](SOURCES.md) records inspected pages, hashes, exact Hailo documentation revisions and untested adapter candidates. The official rules permit initial Stage I validation without the target accelerator; Stage II requires the selected platform. The cutoff date is verified, but its precise time/timezone is not established by the retrieved metadata.
