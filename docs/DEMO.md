@@ -10,16 +10,17 @@ Follow [README development setup](../README.md#development), then launch:
 uv run lecoach serve
 ```
 
-Open `http://127.0.0.1:8000`, select `weak_to_improved`, start replay and let it finish. The current UI displays authored synthetic reactions and example feedback, with microphone/camera off. At the default 5× speed, its 50-second fixture lasts about ten seconds of wall time. The synthetic audience sequence is NEUTRAL → CONFUSED → BORED → INTERESTED → ENGAGED. Its timestamps are fixture capture times, not browser playback elapsed time.
+Open `http://127.0.0.1:8000`, select `weak_to_improved`, start replay and let it finish. The current UI computes audience reactions from synthetic observations and displays authored example feedback, with microphone/camera off. At the default 5× speed, its 50-second fixture lasts about ten seconds of wall time. The computed audience sequence is NEUTRAL → CONFUSED → BORED → INTERESTED → ENGAGED at 0, 20, 30, 35 and 40 seconds. These are shared-clock decision times, not browser playback elapsed time.
 
 The headless reproduction is:
 
 ```sh
 uv run lecoach replay --case weak_to_improved
+uv run lecoach replay --case weak_to_improved --audience authored
 uv run python scripts/validate_fixtures.py
 ```
 
-Default replay is a delivery trace with authored feedback, not an implemented engagement algorithm or a production coaching recorder. An early stop leaves the full authored summary unavailable.
+Default replay computes engagement with the sole engine; feedback stays authored and the recorder is not enabled by the default composition. The explicit authored option reproduces the older deck's audience times. Lane 5 must reconcile example coaching timestamps with computed transitions before a final demo review. An early stop leaves the full authored summary unavailable.
 
 ## Proposed recording sequence
 
@@ -27,7 +28,7 @@ Default replay is a delivery trace with authored feedback, not an implemented en
 | --- | --- | --- |
 | 0:00–0:20 | Explain the problem: practicing alone gives little sense of audience response. | Product intent from GUIDE. |
 | 0:20–0:35 | Show LeCoach and session controls. Identify the demonstrated mode. | Current shell can show synthetic mode; live mode requires INT-02. |
-| 0:35–1:35 | Show weak delivery and recovery through visible audience changes. | Today: labeled authored replay. Later: Lane 5 scenario with actual speech/vision and Lane 4's sole engine. |
+| 0:35–1:35 | Show weak delivery and recovery through visible audience changes. | Today: synthetic observations and computed audience reactions. Later: Lane 5 scenario with actual speech/vision and the same engine. |
 | 1:35–2:15 | End the session and explain a few timestamped observations and actions. | Today: authored example. Later: recorder/generator outputs with traceable evidence. |
 | 2:15–2:40 | Show local architecture and the intended UGen300 adapter path. | Architecture plus SOURCES; label hardware work according to STATUS. |
 | 2:40–2:55 | State the intended practical value and next validated milestone. | Avoid invented user outcomes or performance figures. |
@@ -46,4 +47,4 @@ The final recording, YouTube upload and competition submission remain pending. V
 
 The [local English proposal](submission/proposal.pdf) is paired with a [readiness/claim map](submission/readiness.md). Headless reproduction was repeated during INT-03 apply; [STATUS](STATUS.md#int-03-apply-local-validation) records synthetic inputs, exact state times and authored outputs. This does not establish a recorded demo or live behavior.
 
-Lane 5's checked-in [scenario preparation](../checks/coaching/README.md) covers weak-to-improved delivery and limitation cases, but a final English narration/script has not been provided in the inspected handoff. Its new recorder [PR #5](https://github.com/crasni/LeCoach/pull/5) still needs separate integration review; it does not supply generated coaching or final footage here. Keep the script/scenario, accepted INT-02 run and final local recording gates pending. No synthetic-only final submission exception has been approved.
+Lane 5's checked-in [scenario preparation](../checks/coaching/README.md) covers weak-to-improved delivery and limitation cases, but a final English narration/script has not been provided in the inspected handoff. Recorder [PR #5](https://github.com/crasni/LeCoach/pull/5) is now merged and its synthetic injection checks pass; it does not supply generated coaching or final footage here. Keep the script/scenario, accepted INT-02 run and final local recording gates pending. The deck remains the earlier evidence snapshot and needs refreshing for this pull. No synthetic-only final submission exception has been approved.

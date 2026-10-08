@@ -13,10 +13,34 @@ This file records verified implementation evidence. Task ownership and progress 
 
 ## Not implemented or verified
 
-- Live camera/microphone capture, speech/vision inference, the sole engagement engine, production rehearsal UI, and the sole recorder/feedback generator are not integrated. The implemented shell displays authored synthetic examples only.
+- Live camera/microphone capture, speech/vision inference and generated coaching are not integrated. The synthetic rehearsal screen now uses the sole deterministic engagement engine; the in-memory recorder is available through injection but is not enabled in default API composition. Example feedback remains authored.
 - No model availability, inference latency, local privacy behavior, or UGen300 runtime compatibility has been measured.
 - Current competition requirement verification is recorded under INT-03 below; final submission, cutoff details and target-device inference remain unverified.
 - Executable event contracts and lifecycle/transport behavior are validated below. Subsystem role handoffs remain requirements for the live MVP.
+
+## Latest main reconciliation — 2026-10-08
+
+FACT: At the user's request, fetched and fast-forwarded local main to `c88386a`, then pulled it into `agent/integration` in local merge `8345c98`. Main includes [PR #7](https://github.com/crasni/LeCoach/pull/7) (engagement engine/rehearsal screen) and [PR #5](https://github.com/crasni/LeCoach/pull/5) (in-memory recorder). Resolved the COACH-01 task-board conflict by retaining owner evidence and recording the merged recorder plus unfinished selection/template feedback. Existing INT-01 acceptance and INT-03 deliverables are retained. A public read-only open-PR listing returned no open PRs at inspection; no remote review, merge or push was performed here.
+
+FACT: On Linux x86_64 / Python 3.12.14, merged application source `8345c98` passes **130 tests and 69 subtests** in 1.01 s, with one upstream Starlette/httpx deprecation warning. The recorder matches nine synthetic cases / ten sessions; fixture validation, core lint and schema parity pass. Frontend generated-type check and production build pass. Commands:
+
+```sh
+uv run --frozen pytest -q
+uv run --frozen --offline python checks/coaching/record_replay.py
+uv run --frozen --offline python scripts/validate_fixtures.py
+uv run --frozen --offline ruff check src scripts tests examples
+uv run --frozen --offline python scripts/export_schema.py --check
+npm --prefix frontend run types:check
+npm --prefix frontend run build
+```
+
+The earlier temporary Python interpreter was gone; the first offline run could not restore all locked dependencies. The frozen online run restored the development environment without changing dependency pins, then the checks passed. Browser E2E was not rerun in this pull review; no local browser executable was found.
+
+FACT: Explicit headless replay through `.venv/bin/lecoach replay --case weak_to_improved --audience engine` computes states at 0, 20, 30, 35 and 40 seconds. `--audience authored` retains the older fixture states at 0, 20.5, 30.5, 36 and 42 seconds. Both use synthetic input; feedback remains authored. The recorder check uses the actual recorder through injection, not the default browser composition. No live capture, model inference or target measurements occurred.
+
+IMPACT: The deck/PDF still describe the dated pre-pull `35e99b2` baseline. They need a content/claim-map refresh for the merged engine and recorder before final package acceptance; INT-03 task 6.1 is reopened. Previous source/PDF export and visual checks remain historical evidence, not a review of an updated deck. INT-02, feedback generation, final narration/recording and external gates remain unfinished.
+
+PROPOSAL: Refresh the proposal and claim map, reconcile authored coaching times with computed engine evidence through Lane 5, and accept live producer composition under INT-02 before final footage. The local publication range changed after this pull and still needs its own explicit push approval.
 
 ## INT-03 integration reconciliation
 

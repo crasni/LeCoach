@@ -2,6 +2,8 @@
 
 Local review draft, updated 2026-10-08 (Asia/Taipei). INT-03 is **in progress**, with the claim and new deliverables unpublished. This records package checks and evidence references, not team assignments or a submission receipt. [TASKS.md](../../TASKS.md) owns progress; [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) owns observed behavior.
 
+**After the latest main pull:** the deck and its claim map below remain the earlier `35e99b2` evidence snapshot. Main `c88386a`, pulled in merge `8345c98`, adds the engine/rehearsal screen and recorder; [fresh checks](../STATUS.md#latest-main-reconciliation--2026-10-08) pass. Refresh the deck/claim map and repeat final package review before acceptance. Earlier export/visual checks apply to the unchanged draft, not an updated proposal. INT-03 task 6.1 is reopened.
+
 ## Artifact versions and current gates
 
 | Item | Version / outcome | Remaining action |
@@ -9,7 +11,7 @@ Local review draft, updated 2026-10-08 (Asia/Taipei). INT-03 is **in progress**,
 | Editable English deck | [proposal.fodp](proposal.fodp), 12 slides, no appendices; SHA-256 `f9d5cbaf363e80761a55ff618e5ff85a97cd390d0f2c65e4063ce7821a46cfaa`. | Team content review and any revisions after live evidence lands. |
 | PDF | [proposal.pdf](proposal.pdf), 12 pages; SHA-256 `06670bd033e8710bd7bc8abc532f8d42168d347e758f7b78aecd0ab857744aa1`. | Confirm accepted file format/upload limits in the actual form. |
 | Demo | [DEMO.md](../DEMO.md) is a proposed 2:55 shot plan with synthetic replay instructions. No final recording, final narration, or video hash exists. | Lane 5 script/scenario and accepted INT-02 evidence, then reviewed local recording. |
-| Evidence baseline | Application source `35e99b2` includes fetched main `ebdf421`; [current checks](../STATUS.md#int-03-apply-local-validation). | Live producer/engine/coaching evidence remains pending. |
+| Evidence baseline | Deck uses application source `35e99b2`, main `ebdf421`; [earlier checks](../STATUS.md#int-03-apply-local-validation). New merged source `8345c98` passes 130 tests / 69 subtests. | Refresh deck/claims for the engine and recorder; live producers and generated coaching remain pending. |
 | Hardware | [Observed host outcome](../STATUS.md#int-03-apply-hardware-readiness) and [procedure](../HARDWARE.md). | No identifiable target device/runtime on this host; obtain supported setup and owner handoffs for measurements. |
 | Git publication | New local work on `agent/integration`; no INT-03 push or PR yet. | Review exact local commit set, receive separate push approval, then role-branch PR/review. |
 | YouTube | No upload or URL. | Separate publication authorization, unlisted upload and link verification after recording review. |
@@ -79,7 +81,7 @@ All 12 rendered pages were visually reviewed. Review corrected title/subtitle sp
 
 This is a review of delivered records, not proof that every conditional run or external action occurred. Spec scenario groups below are either supported by observed local evidence, covered by the procedure, or explicitly pending.
 
-Final local package review passed: 105 local Markdown targets/anchors resolve; all 12 source/PDF pages match; recorded artifact hashes and six exported reference links match. Both INT-03 and INT-01 pass OpenSpec strict validation, and Git whitespace checks pass. No final video exists to compare; its version review remains pending with the recording gate.
+Before the latest main pull, local package review passed: 105 local Markdown targets/anchors resolve; all 12 source/PDF pages match; recorded artifact hashes and six exported reference links match. Both INT-03 and INT-01 passed OpenSpec strict validation, and Git whitespace checks passed. Final review is now reopened for updated implementation claims. No final video exists to compare; its version review remains pending with the recording gate.
 
 | Capability / scenario group | Result and evidence |
 | --- | --- |
@@ -101,7 +103,7 @@ Final local package review passed: 105 local Markdown targets/anchors resolve; a
 
 - Team: confirm registration format/status and retain its private receipt; inspect the actual form for cutoff/timezone, accepted formats and upload limits, and review unresolved original-work terms.
 - Lane 5: provide/review the final English script and scenario. The checked-in preparation fixture is usable for development but is not a finished narration handoff.
-- Subsystem owners / integration: deliver and accept the live INT-02 run before claims/footage change to live processing. PR #5's recorder continuation is a separate review.
+- Integration / Lane 5: refresh proposal claims for merged PRs #5/#7 and reconcile computed audience times with authored coaching. Deliver and accept the live INT-02 run before claims/footage change to live processing.
 - Hardware owner / integration: provide supported target setup and adapters for measured evidence, or preserve the explicit unavailable-device disposition and deferred milestone.
 - Maintainer: review the local deck/records and exact role-branch commit set, then separately authorize a push if ready to share.
 - Team: separately authorize final video publication and competition submission, verify unlisted access, and obtain a real receipt before claiming submission complete.
