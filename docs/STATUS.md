@@ -1,6 +1,6 @@
 # LeCoach implementation status
 
-Last updated: 2026-10-07.
+Last updated: 2026-10-08.
 
 This file records verified implementation evidence. Task ownership and progress live in [TASKS.md](../TASKS.md); product scope lives in [GUIDE.md](../GUIDE.md).
 
@@ -107,6 +107,50 @@ PROPOSAL: Publish this local branch reconciliation only after explicit push appr
 ## Evidence to add as work lands
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
+
+## AUD-01 speech adapter core — local, pending publication and review
+
+FACT: On `agent/audio-streaming`, based on main `ebdf421`, Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/aud-01-live-speech-adapter/tasks.md) in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+
+- `SpeechConfig` with the defaults proposed in [issue #6](https://github.com/crasni/LeCoach/issues/6);
+- the English tokenizer and filler lexicon, kept equal to `checks/speech/speech_text.py` by a parity test;
+- utterance and metrics tracking that follows the fixture rules, and v0 event emission with stable IDs;
+- `SpeechAdapter` with `start` / `stop_capture` / `drain`, a voice-activity thread, a transcription thread, emission on the event loop, degraded mode, and release.
+
+The microphone, voice activity detection, and transcriber sit behind protocols; the tests use scripted implementations. No microphone, audio, model, accelerator, or dependency was used or added.
+
+Validation in the cloud development container (Linux). The project environment used Python 3.12.3, selected with `UV_PYTHON=/usr/bin/python3.12` because uv could not install the pinned 3.12.14; the standalone checks used Python 3.13.16.
+
+```sh
+uv run pytest -q
+uv run ruff check src scripts tests examples
+python3 checks/speech/check_speech.py
+python3 -m unittest discover -s checks/speech -p 'test_*.py'
+python3 checks/speech/make_fixtures.py --check
+openspec validate aud-01-live-speech-adapter --strict
+```
+
+Observed result: 128 tests and 254 subtests pass, with the existing Starlette/httpx deprecation warning; 31 of the tests are new speech tests. Ruff passes. The 10 speech cases / 11 sessions match their oracles, the 37 standalone speech tests pass, the fixtures match the scenario scripts, and the change validates. `numpy`, `sounddevice`, and `faster_whisper` are not installed, and importing `lecoach.speech` loads none of them.
+
+The new tests show:
+
+- Replaying every fixture scenario through the production pipeline reproduces the committed metric, transcript, and status payloads. Each replayed stream passes `parse_event` and `check_speech.py`.
+- Through `SessionController`, with real worker threads and scripted seams:
+  - timestamps come from sample offsets on the shared clock, unaffected by transcription delay;
+  - `start` returns within the startup bound without model work;
+  - nothing is emitted after capture end, including for a stop time with a sub-millisecond fraction and for audio that runs ahead of the clock;
+  - specific statuses with null windows follow an unavailable model, denied permission, a missing device, another microphone error, a device lost mid-utterance, queue overflow, a transcription failure, and a segmenter failure;
+  - speech longer than `max_utterance_s` is split;
+  - the microphone is closed exactly once on repeated stop and cancelled drain, and a slow final leaves speech in `incomplete_sources`;
+  - `SessionManager` composes the adapter per session.
+- Every recorded session stream passes `check_speech.py`, every emission runs on the event-loop thread, and the controller rejects none.
+- The adapter tests passed 40 consecutive runs and 30 runs under parallel load. Removing the clock cap, the capture-end flooring, the outage-start rule, the unmeasurable-final rule, or the utterance backstop each made its targeted test fail.
+
+FACT: Rounding capture times to the nearest millisecond can stamp an observation up to 0.5 ms after the controller's capture end, and the controller drops it. In the cut-at-stop test, a stop at 6.0006 s without capture-end flooring lost the capture-end window, so that session had no speech metrics at all. A monotonic clock gives a sub-millisecond fraction of 0.5 ms or more on about half of stops, and finals cut at stop have the same exposure. The adapter therefore floors capture times. The committed fixtures use whole milliseconds, so they could not show this.
+
+IMPACT: The speech rules and session lifecycle are ready for the production seams, and the issue #6 outcomes become configuration edits. Any producer that rounds capture times to the nearest unit risks the same dropped capture-end observations. AUD-01 is not complete: there is no live microphone capture, voice activity detection, or transcription yet, and no latency, drain-time, filler-recall, or UGen300 evidence. Degraded mode does not recover within a session.
+
+PROPOSAL: The integration owner reviews the package layout and the speech-owned configuration and answers issue #6: analysis language, defaults, configuration location, and the optional `speech` dependency group. It may also add "round capture times down" to the producer guidance in ARCHITECTURE. Lane 2 then implements task group 4: the PortAudio source, the model provider, and the faster-whisper transcriber with voice activity detection. A live rehearsal is checked with `check_speech.py --stream`, and AUD-02 measures latency and filler recall.
 
 ## PR #3 integration-owner review
 
