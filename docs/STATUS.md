@@ -19,7 +19,7 @@ IMPACT: File task boards/role prompts no longer duplicate live Issue fields. Ope
 Validation of the documentation migration on Linux/Python 3.12.14: `PYTHONPATH=src <reference-checkout>/.venv/bin/python -m pytest -q` passes 130 tests and 69 subtests with the existing Starlette/httpx deprecation warning. Both existing OpenSpec changes validate strictly; all 149 local Markdown targets/anchors resolve; Git whitespace checks pass. Read-back verification confirms 14 Issue records, their assignees/branches/status/acceptance and 19 native dependency relationships; the graph is acyclic. Application source, fixtures, dependencies, generated contracts and submission binary artifacts are unchanged.
 
 
-## COACH-01 computed coaching — local review candidate
+## COACH-01 computed coaching — synthetic validation
 
 FACT: On 2026-10-08, @WolflordR pulled the role branch safely and fast-forwarded
 `agent/session-analysis` from `main` at `558f56f` before implementation; then
@@ -77,11 +77,13 @@ available only with the documented optional factory. This does not complete
 COACH-01 or close issue #20. The original PR #5 validation below remains historical
 and attributed, with its publication status corrected to merged.
 
-PROPOSAL: Publish the exact local review candidate only after the user's explicit
-push approval, then submit a scoped PR referencing issue #20 without closing it.
-This session follows the per-push requirement in the AGENTS.md text supplied
-directly by @WolflordR, despite the repository migration's autonomous-push policy;
-this record does not change the team's repository-wide policy.
+Publication-policy follow-up: @WolflordR supplied the migrated working agreement
+after local implementation commit `50fb3cb`, adopting scoped autonomous assigned-
+role-branch publication for this session. This supersedes the earlier wait for
+per-push approval. The current publication/PR and review state belongs in issue #20.
+
+PROPOSAL: Submit the validated increment through the assigned role branch and a
+scoped PR referencing issue #20 without closing it.
 Lane 1 reviews the optional composition and consumer baseline; Lane 4 confirms
 the evidence handoff and renders the canonical feedback. Resolve issue #18's
 pending decision and validate integrated behavior before final task acceptance.
