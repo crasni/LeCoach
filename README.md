@@ -45,9 +45,8 @@ npm --prefix frontend run build
 uv run lecoach serve
 ```
 
-Open **http://127.0.0.1:8000**. Select an example, start replay, watch the audience
-react (computed by the engagement engine from the example observations), and let
-playback finish to see authored example coaching.
+Open **http://127.0.0.1:8000**. Select an example, start replay, watch the authored
+audience states change, and let playback finish to see authored example coaching.
 Stopping early leaves that example summary unavailable. The microphone and camera
 stay off. Live mode is unavailable in the default composition.
 
@@ -73,8 +72,6 @@ npm --prefix frontend run types:check
 ```
 
 Headless replay uses fake time and reports a delivery trace plus authored feedback.
-Audience states are computed by the engagement engine; `--audience authored` keeps the
-fixtures' authored transitions instead.
 It is not a production session log or computed coaching. All nine reviewed cases
 are available, including the multi-session `repeated_sessions` case. Explicit trace
 exports can use `--output sessions/replay.json`; nothing is automatically persisted.

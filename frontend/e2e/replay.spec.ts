@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('replay shows computed reactions with reasons and coaching and keeps all requests local', async ({ page }) => {
+test('replay shows authored reactions and coaching and keeps all requests local', async ({ page }) => {
   const remoteRequests: string[] = [];
   const browserErrors: string[] = [];
   page.on('request', request => {
@@ -12,12 +12,7 @@ test('replay shows computed reactions with reasons and coaching and keeps all re
   await page.getByRole('button', { name: 'Start replay' }).click();
   await expect(page.getByTestId('audience-state')).toHaveText('CONFUSED', { timeout: 12000 });
   await expect(page.getByTestId('audience-state')).toHaveText('BORED', { timeout: 5000 });
-  await expect(page.getByTestId('audience-state')).toHaveText('INTERESTED', { timeout: 5000 });
   await expect(page.getByTestId('audience-state')).toHaveText('ENGAGED', { timeout: 5000 });
-  const timeline = page.getByRole('list', { name: 'Audience transitions' });
-  await expect(timeline).toContainText('Pace has stayed fast');
-  await expect(timeline).toContainText('Turned away from the audience for a while');
-  await expect(page.getByText('Live microphone and camera (not connected yet)')).toBeAttached();
   await expect(page.getByRole('region', { name: 'Example coaching' })).toBeVisible();
   await expect(page.getByText('Keep doing this', { exact: true })).toBeVisible();
   await expect(page.getByText('Try next time', { exact: true })).toHaveCount(2);
@@ -38,8 +33,6 @@ test('stop, repeat and delayed transcript remain isolated', async ({ page }) => 
   await expect(page.locator('.transcript')).toHaveText('Our synthetic example is ready.');
   await expect(page.locator('.transcript')).not.toContainText('foreign');
   await expect(page.getByText('No supported coaching moments in this example.')).toBeVisible();
-  await expect(page.getByTestId('audience-state')).toHaveText('NEUTRAL');
-  await expect(page.getByRole('list', { name: 'Audience transitions' })).not.toContainText('Pace has stayed fast');
 });
 
 test('empty session completes and narrow layout fits', async ({ page }) => {
