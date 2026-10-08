@@ -1,5 +1,9 @@
 # COACH-01 synthetic acceptance cases
 
+For the COACH-02 English narration draft, scenario procedure and timing/evidence
+handoff, see [demo preparation](demo/README.md). It uses the computed coaching
+checks below; final live-demo acceptance stays with the assigned Issues.
+
 These are Lane 5 acceptance artifacts prepared before INT-01 and LIVE-01.
 Every event, transcript, transition, and feedback example is hand-authored and
 synthetic. No microphone, camera, inference model, or accelerator was used.
