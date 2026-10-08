@@ -12,6 +12,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from lecoach.contracts import Event
 from lecoach.contracts.interfaces import Components, RuntimeSettings, SessionConfig
+from lecoach.engagement.compose import replay_with_engine
 from lecoach.runtime.fixtures import FixtureRepository, play_browser, remap
 from lecoach.runtime.session import SessionConflict, SessionController, SessionManager
 
@@ -80,7 +81,7 @@ def create_app(
             "status": "ready",
             "default_mode": "fixture",
             "schema_version": 0,
-            "live_integrated": factory is not None,
+            "live_integrated": factory is not None and getattr(factory, "live_integrated", True),
         }
 
     @app.get("/api/fixtures")
@@ -247,4 +248,5 @@ def create_app(
     return app
 
 
-app = create_app()
+# Synthetic replay with the computed audience; coaching stays authored until COACH-01.
+app = create_app(replay_with_engine())

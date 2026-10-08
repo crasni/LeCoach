@@ -49,7 +49,7 @@ Statuses: `todo` (assigned but not started), `claimed`, `in_progress`, `blocked`
 | AUD-02 | @firstsnow1226 | todo | `agent/audio-streaming` | Depends on AUD-01 | 2026-10-07 |
 | VIS-01 | @kai-nnnnn | todo | `agent/vision-pose` | Confirm INT-01 contracts before integration | 2026-10-07 |
 | VIS-02 | @kai-nnnnn | todo | `agent/vision-pose` | Depends on VIS-01 | 2026-10-07 |
-| LIVE-01 | @ricebal1 | todo | `agent/avatar-ui` | Confirm INT-01 contracts before integration | 2026-10-07 |
+| LIVE-01 | @ricebal1 | in_progress | `agent/avatar-ui` | Engine, rules and rehearsal screen implemented locally against INT-01 contracts; synthetic replay evidence in [STATUS](docs/STATUS.md#live-01-local-engine-and-rehearsal-screen). Pending: repository invite acceptance, branch publication, PR and integration-owner review of reason codes and the small composition change. | 2026-10-08 |
 | LIVE-02 | @ricebal1 | todo | `agent/avatar-ui` | Depends on LIVE-01 and live adapter handoffs | 2026-10-07 |
 | COACH-01 | @WolflordR | blocked | `agent/session-analysis` | [Draft PR #1](https://github.com/crasni/LeCoach/pull/1), preparation at `dcc280f`: synthetic cases/checks already incorporated unchanged through INT-01 / PR #4. Integration-owner review reran 9 cases / 10 sessions and 18 utility tests. Published scaffold/contracts are available on main; next: coordinate Lane 4's LIVE-01 transition/reason evidence and implement the recorder/generator in the approved layout. COACH-01 is not complete. | 2026-10-07 |
 | COACH-02 | @WolflordR | todo | `agent/session-analysis` | Depends on COACH-01 and integrated live session | 2026-10-07 |
