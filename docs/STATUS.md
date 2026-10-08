@@ -2,7 +2,22 @@
 
 Last updated: 2026-10-08 (Asia/Taipei).
 
-This file records verified implementation evidence. Task ownership and progress live in [TASKS.md](../TASKS.md); product scope lives in [GUIDE.md](../GUIDE.md).
+This file preserves dated implementation evidence. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) alone own current assignments, branches, progress, blockers, remaining work and acceptance; product scope lives in [GUIDE.md](../GUIDE.md).
+
+**Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
+
+## Coordination migration audit — 2026-10-08
+
+FACT: Audited GitHub branches, complete Issue/PR lists, existing contracts and owner evidence. Main `558f56f` includes PRs #4 (accepted scaffold), #3/#1 (synthetic preparation), #5 (injected recorder), #7 (engine/rehearsal UI), and #8 (submission/evidence package). No open PR existed at audit start. Isolated integration checkout preserved local documentation record `bfef7c9` and merged current main without modifying the user's reference checkout.
+
+FACT: Audio `cea23e2` has four unmerged commits containing the model-free core and adapter lifecycle; actual source/VAD/transcriber/model work is not established. Its owner-reported tests were inspected, not rerun. Avatar `6f276eb` and coaching `5991048` are fully contained in main; their role refs remain intact. Vision has no remote role ref at inspection; local/offline work is unknown. Revert `7d760b2` has one unmerged rollback commit and is preserved for owner/maintainer disposition.
+
+FACT: Migrated existing assignments and task acceptance into GitHub Issues with one assignee, explicit branch/status, done-versus-remaining work, exact handoffs and verified native blocker relationships. Existing speech decision #6 and its original proposal were preserved. No shared behavior/configuration decision, new lane assignment, implementation restart or feature/revert merge was made.
+
+IMPACT: File task boards/role prompts no longer duplicate live Issue fields. OpenSpec remains the agreed behavior/interface workflow. Maintainer authorized scoped autonomous publication to assigned role branches; main pushes, destructive ref operations, merges, private-data publication and external competition delivery are outside that scope. This audit is not new live/model/target validation.
+
+Validation of the documentation migration on Linux/Python 3.12.14: `PYTHONPATH=src <reference-checkout>/.venv/bin/python -m pytest -q` passes 130 tests and 69 subtests with the existing Starlette/httpx deprecation warning. Both existing OpenSpec changes validate strictly; all 149 local Markdown targets/anchors resolve; Git whitespace checks pass. Read-back verification confirms 14 Issue records, their assignees/branches/status/acceptance and 19 native dependency relationships; the graph is acyclic. Application source, fixtures, dependencies, generated contracts and submission binary artifacts are unchanged.
+
 
 ## Verified
 

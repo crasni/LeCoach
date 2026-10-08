@@ -1,6 +1,8 @@
 # Tasks
 
-These tasks implement the [proposal](proposal.md), [design](design.md), and two capability specs. All are initially unchecked: existing research is a baseline, not newly completed implementation. [TASKS.md](../../../TASKS.md) remains authoritative for ownership and overall INT-03 status.
+**Frozen execution record (coordination migration, 2026-10-08):** historical checklist states below preserve implementation/publication evidence as recorded before this migration. Do not update them as a live task board or treat an old publication/approval instruction as current policy. Live remaining work, dependencies and task acceptance belong exclusively to [Issue #12](https://github.com/crasni/LeCoach/issues/12); current publication follows [AGENTS](../../../AGENTS.md). Proposal/design/capability specs remain the agreed behavior reference.
+
+These tasks implement the [proposal](proposal.md), [design](design.md), and two capability specs. Original planning baseline: the checklist was initially unchecked; later checked entries record observed implementation, not a fresh validation in this migration.
 
 Groups 1–4 can proceed with local artifacts and available evidence. Group 5's live recording depends on INT-02 and Lane 5. Group 6's external actions depend on separate approvals and confirmed form/registration details. Completing an unavailable-hardware disposition does not complete a measured-inference milestone. Leave unmet final gates unchecked and record their next actions.
 
