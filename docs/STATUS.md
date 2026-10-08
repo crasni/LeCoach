@@ -18,6 +18,33 @@ This file records verified implementation evidence. Task ownership and progress 
 - Current competition requirement verification is recorded under INT-03 below; final submission, cutoff details and target-device inference remain unverified.
 - Executable event contracts and lifecycle/transport behavior are validated below. Subsystem role handoffs remain requirements for the live MVP.
 
+## INT-03 refreshed package and browser validation
+
+FACT: Continued INT-03 on 2026-10-08, documentation branch baseline `4cd7887`; application code is unchanged from merged source `8345c98`. Refreshed the 12-slide editable proposal/PDF and claim map for the computed engine, rehearsal UI, injected recorder and 130-test / 69-subtest evidence. The synthetic audience now has the computed 0/20/30/35/40-second times; coaching remains explicitly authored. The recorder is tested through injection and is not enabled in default browser composition. Live capture, inference, feedback generation and UGen300 claims remain pending.
+
+FACT: With Node 24.11.0 / npm 11.6.1, generated frontend types and production build pass. Playwright Chromium 153.0.8010.12, downloaded into temporary storage, passes all **four existing browser checks** in 24.5 s:
+
+- Computed audience deterioration/recovery and reason labels; authored coaching after completion; no browser errors or non-loopback requests during this replay.
+- Early stop, repeat-session isolation and delayed/revised transcript handling.
+- Empty-session completion and a 390×844 narrow layout without horizontal overflow.
+- WebSocket interruption/reconnection without a duplicate start or playback restart.
+
+Commands from the repository root, with the documented Node 24 runtime on PATH:
+
+```sh
+npm --prefix frontend run types:check
+npm --prefix frontend run build
+PLAYWRIGHT_BROWSERS_PATH=/tmp/lecoach-browser npm --prefix frontend run test:e2e
+```
+
+The first browser run used system Node 22 and also passed; because the project requires Node 24, build/types/browser checks were repeated using the already-installed Node 24 runtime above. The backend's earlier 130 tests / 69 subtests, recorder checks and fixture checks are retained under the main-reconciliation record; no application changes justified another backend run. Headless replay also confirms camera-unavailable speech still reaches CONFUSED, while unavailable inputs, empty sessions, delayed transcript and drain-timeout examples stay NEUTRAL. These are synthetic checks, not actual microphone/camera or inference measurements.
+
+FACT: Re-exported with LibreOffice 26.2.6.3 and isolated profile `/tmp/lecoach-int03-refresh-lo`, inspected all 12 rendered pages, and checked paragraph/page parity and six reference annotations. The refreshed hashes and per-page evidence are recorded in [readiness](submission/readiness.md). Re-fetched the public official rules at approximately 11:18 UTC: their normalized content hash is unchanged, as SOURCES records. The rendered public announcements page showed no announcements at inspection; form/registration details and the pre-delivery recheck remain pending. No organizer/team message or authenticated action occurred.
+
+IMPACT: The refreshed local proposal passes task 6.1 with conditional/live/external scenarios explicitly pending; the CLI confirms 16/23 tasks complete. [README's test guide](../README.md#try-the-current-prototype) now explains what users can run and what to expect. Lane 5's script and advice reconciliation, INT-02 live evidence, final footage and external delivery still prevent full INT-03 completion.
+
+PROPOSAL: Review the refreshed proposal and exact local commit range for role-branch publication. Obtain the required team/form details and owner demo/live handoffs; do not treat authored example coaching as generated feedback or a local PDF as a submission receipt.
+
 ## Latest main reconciliation — 2026-10-08
 
 FACT: At the user's request, fetched and fast-forwarded local main to `c88386a`, then pulled it into `agent/integration` in local merge `8345c98`. Main includes [PR #7](https://github.com/crasni/LeCoach/pull/7) (engagement engine/rehearsal screen) and [PR #5](https://github.com/crasni/LeCoach/pull/5) (in-memory recorder). Resolved the COACH-01 task-board conflict by retaining owner evidence and recording the merged recorder plus unfinished selection/template feedback. Existing INT-01 acceptance and INT-03 deliverables are retained. A public read-only open-PR listing returned no open PRs at inspection; no remote review, merge or push was performed here.

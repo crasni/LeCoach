@@ -1,6 +1,6 @@
 # Competition and hardware source provenance
 
-Reviewed 2026-10-07 for INT-03. The source hierarchy is defined in [GUIDE.md](../GUIDE.md#0-source-of-truth). [CONTEST.md](CONTEST.md) records verified external requirements; [STATUS.md](STATUS.md) records LeCoach's observed implementation and hardware readiness. Reference information does not establish working LeCoach inference.
+Competition content rechecked 2026-10-08; hardware sources reviewed 2026-10-07 for INT-03. The source hierarchy is defined in [GUIDE.md](../GUIDE.md#0-source-of-truth). [CONTEST.md](CONTEST.md) records verified external requirements; [STATUS.md](STATUS.md) records LeCoach's observed implementation and hardware readiness. Reference information does not establish working LeCoach inference.
 
 ## Competition source
 
@@ -9,6 +9,8 @@ The [official competition page](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze
 Initial research HTML SHA-256: `6eb1c65f1f3b9052823c6ca5106578dc02531107d40edc9380b4452cf557b254`. During INT-03 apply on 2026-10-07 at approximately 15:48 UTC, direct retrieval was repeated: HTML SHA-256 `0a1b90451b558f665f677b5643b46c2d8d1aee86bb397cc6b25f103b83c1ec0b`; the HTML-unescaped Event rules-description SHA-256 is `5097d79890c35b3020cc654609f93f757bb5422ed5f449a0309205e2561e1fcb`. Sections III–VII, IX and XI were inspected. The verified deliverable/date guidance still agrees with CONTEST.
 
 The root Event's `endDate` reflected retrieval time, while nested events carried a timezone-free `2026-10-14T09:00:00`. Neither establishes a supported cutoff timezone; do not turn that metadata into a deadline claim. The returned page contains a client-loaded application shell and public rules metadata, not an inspected submission form. Separate announcements/form fields were not established through this retrieval or the browser/search extractor. A final rendered-page/form check remains pending; this does not establish that no newer announcements exist.
+
+On 2026-10-08 at approximately 11:18 UTC, direct retrieval before the refreshed package review produced HTML SHA-256 `3ac894f6a746662544072bdbfa9997297ce909623ac925a8cfb9de0c286563bf`. The HTML-unescaped rules-description hash still matches `5097d79890c35b3020cc654609f93f757bb5422ed5f449a0309205e2561e1fcb`; the inspected content and CONTEST requirements are unchanged. The browser extractor still returned 404. A fresh unauthenticated Chromium inspection also reached the rendered [official announcements page](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/news/), which displayed no announcements at that inspection. The public home page exposes registration buttons; no registration action was clicked and no account or submission form was used. The rendered [public FAQ](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/faq/) contains generic submission/edit/support guidance; it does not resolve the inspected cutoff, upload-limit or originality questions. Authenticated form details and team registration confirmation remain pending.
 
 Retrieval snapshots remain temporary investigation files, not committed copies of the rules. To recheck from a shell:
 

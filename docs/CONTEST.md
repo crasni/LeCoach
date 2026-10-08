@@ -1,6 +1,6 @@
 # Competition requirements and submission preparation
 
-Checked 2026-10-07 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [TASKS.md](../TASKS.md) controls ownership; [STATUS.md](STATUS.md) records demonstrated behavior.
+Content rechecked 2026-10-08 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [TASKS.md](../TASKS.md) controls ownership; [STATUS.md](STATUS.md) records demonstrated behavior.
 
 ## Verified requirements
 
@@ -38,3 +38,5 @@ INT-03 apply rechecked the accessible public rules on 2026-10-07; no change to t
 - [ ] Confirm registration format, cutoff details and the submission receipt.
 
 These are submission checks for INT-03, not a second task ownership board.
+
+On 2026-10-08, the rules content was rechecked unchanged and the rendered public announcements page showed no announcements at inspection. This does not establish registration completion, form limits or the precise cutoff. Those team/form gates remain pending.
