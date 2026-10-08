@@ -99,6 +99,14 @@ Local package review for the refreshed draft passed: 106 local Markdown targets/
 | Hardware: concurrent rehearsal / isolated model | Both actual run scenarios pending; no integrated or isolated target-inference claim. |
 | Hardware: missing adapter / private run retained | Adapter/INT-02 dependency explicit; local data rules and storage procedure checked, without creating a private measured run. |
 
+## Resume audit — 2026-10-08
+
+Authenticated GitHub identity `crasni` matches Issue #12's existing owner and `agent/integration` branch. The clean checkout fast-forwarded from `bfef7c9` to `63cff49`; the earlier publication record is preserved in ancestry. PR #8 is merged as `558f56f`, and the fetched main workflow is incorporated. No application, event-contract, dependency or deck change occurred in this audit.
+
+Issue #12's full body/comments and native dependencies were inspected alongside PR #8's review. The native blockers are #11 and #21; their exact evidence handoffs are recorded in the Issue. [DEMO's handoff format](../DEMO.md#evidence-handoff-format) supports incoming evidence review without taking the script owner's work. The historical 130-test/69-subtest and four-browser-check results remain dated observations; this resume does not claim a new live or target run.
+
+Fresh package-only checks pass: both recorded artifact SHA-256 values match; `pdfinfo` confirms 12 pages; all 245 FODP paragraphs match their corresponding pages extracted with `pdftotext -raw`; all 31 local file/anchor references in DEMO and this record resolve; `openspec validate int-03-submission-and-hardware-evidence --strict` and `git diff --check` pass. The source/PDF pair is unchanged, so the earlier visual review remains historical rather than a claimed fresh visual inspection. No backend/browser suite was rerun for this documentation increment.
+
 ## Live task follow-up
 
 Remaining decisions, owner handoffs, final review/recording, authorization and delivery acceptance are maintained exclusively in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12). Read that Issue and its native dependencies rather than maintaining a parallel checklist here. The artifact checks and unresolved scenario dispositions above are historical package evidence, not a submission receipt or a live task board. INT-01 archival is a separate Issue/workflow.

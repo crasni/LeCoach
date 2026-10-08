@@ -1,6 +1,6 @@
 # Stage I demo preparation
 
-Proposed 2:55 shot plan for INT-03, checked against [CONTEST.md](CONTEST.md). The official three-minute guidance is a recommendation; 2:55 is the team's planning target. This is not a recorded or published demo. Lane 5 owns the rehearsal scenarios and final script; integration maintains launch, evidence and claim checks here. [STATUS.md](STATUS.md) determines what can honestly be shown.
+Proposed 2:55 shot plan for INT-03, checked against [CONTEST.md](CONTEST.md). The official three-minute guidance is a recommendation; 2:55 is the team's planning target. This is not a recorded or published demo. Lane 5 owns the rehearsal scenarios and final script; integration maintains launch, evidence and claim checks here. [Issue #12](https://github.com/crasni/LeCoach/issues/12) owns package acceptance and current dependencies; [STATUS.md](STATUS.md) preserves dated observations.
 
 ## Run the current prototype
 
@@ -42,6 +42,18 @@ Coordinate the weak-to-improved scenario with Lane 5. For INT-02, record host/co
 For an accelerator run, add device/runtime/firmware identification, exact model/HEF hashes, input preprocessing and the measurement method. Report producer latency separately from window duration, engagement smoothing and browser delivery. Measure concurrent speech/vision operation; vendor FPS and TOPS do not substitute for this run.
 
 The final recording, YouTube upload and competition submission remain pending. Verify the resulting unlisted link and submission receipt under the team's authorization workflow.
+
+## Evidence handoff format
+
+Use the existing Issues for handoff and acceptance: [INT-02 #11](https://github.com/crasni/LeCoach/issues/11) for the integrated run, [COACH-02 #21](https://github.com/crasni/LeCoach/issues/21) for the script/scenario, and [INT-03 #12](https://github.com/crasni/LeCoach/issues/12) for package review. This format describes evidence to supply; it neither assigns work nor establishes a new interface.
+
+| Record | Fields needed for package review |
+| --- | --- |
+| Integrated run | Commit/PR and observation date; host, model/backend and configuration; exact setup/launch commands; actual input mode; scenario steps and session-clock audience transitions; generated feedback with evidence IDs; unavailable-input, stop/drain/resource-release and repeated-session observations; limitations and acceptance reference. |
+| Script/scenario | Version/commit; English narration and shot timings; rehearsal steps and reproduction commands; links to the accepted run and coaching evidence; on-screen mode labels; any accelerated replay disclosure; intended and observed runtime, distinguished explicitly. |
+| Reviewed recording | Separate recording authorization reference; ignored local artifact location and SHA-256; script/run revisions; measured video duration and narration language; legibility/provenance review; reviewer and outcome. Do not put private footage or transcripts in an Issue, PR or Git. |
+
+Before substituting live shots or revising deck claims, compare the run's source/configuration and observed transitions with the script, footage and readiness claim map. An authored coaching card or an isolated model run cannot establish integrated generated feedback. Preserve unknown timing phases as unmeasured; follow [HARDWARE.md](HARDWARE.md) for target evidence. Keep acceptance and unmet handoffs in the Issues, rather than checking them off in this document.
 
 ## INT-03 package handoff
 
