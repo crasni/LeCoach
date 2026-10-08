@@ -120,7 +120,9 @@ Validation on Windows 11 x86_64; CPython 3.12.14 via uv 0.12.23; Node 24.14.1; n
 
 IMPACT: Lane 5 can consume real transition events and reason codes; authored coaching in `weak_to_improved` still quotes authored times (20.5 s, 30.5 s, 42 s) that differ from computed ones, so its oracle needs review against engine output. Live adapters can replace fixtures through the unchanged `EngagementEngine` seam. Thresholds are demo heuristics, unvalidated against real rehearsals.
 
-PROPOSAL: After the repository invite is accepted and push is approved, publish `agent/avatar-ui` and open a PR for integration-owner review of the reason codes and the composition change. LIVE-02 then wires real speech/vision adapters, checks the live tick and camera preview with real devices, and retunes thresholds from recorded rehearsals.
+FACT: With the user's approval, `agent/avatar-ui` was pushed at `fc96ec8` and published as [PR #7](https://github.com/crasni/LeCoach/pull/7). The successful push shows @ricebal1 has repository write access.
+
+PROPOSAL: The integration owner reviews PR #7, especially the reason codes and the composition change. LIVE-02 then wires real speech/vision adapters, checks the live tick and camera preview with real devices, and retunes thresholds from recorded rehearsals.
 
 ## Evidence to add as work lands
 
