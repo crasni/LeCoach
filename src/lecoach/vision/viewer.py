@@ -80,15 +80,23 @@ class ProbeViewer:
         lines = lines + [
             f"person={pose.person_present}  frame facing={_fmt(frame_facing)}",
         ]
-        y = 28
-        for text in lines:
-            cv2.putText(
-                image, text, (12, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 4, cv2.LINE_AA
-            )
-            cv2.putText(
-                image, text, (12, y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1, cv2.LINE_AA
-            )
-            y += 26
+        # One white text pass on a translucent dark panel: an outline drawn as a
+        # second, thicker pass read as two overlapping copies on scaled displays.
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        scale = max(0.5, image.shape[1] / 1100)
+        thickness = 1 if scale < 0.9 else 2
+        sizes = [cv2.getTextSize(text, font, scale, thickness) for text in lines]
+        line_h = max(h + base for (_, h), base in sizes) + 8
+        pad = 10
+        width = min(image.shape[1], max(w for (w, _), _ in sizes) + 2 * pad)
+        height = min(image.shape[0], line_h * len(lines) + pad)
+        panel = image[:height, :width]
+        panel[:] = (panel * 0.35).astype(panel.dtype)
+        y = pad
+        for text, ((_, h), _) in zip(lines, sizes):
+            y += h
+            cv2.putText(image, text, (pad, y), font, scale, (255, 255, 255), thickness, cv2.LINE_AA)
+            y += line_h - h
         return image
 
     def show(self, lines: list[str]) -> bool:
