@@ -30,20 +30,20 @@ Groups 1–3 are model-free and device-free, and can proceed while issue #6 is o
 
 ## 3. Adapter lifecycle with injected seams
 
-- [ ] 3.1 Define `AudioSource`, segmenter, and `Transcriber` protocols, with scripted test doubles under `tests/`. Verify that `lecoach.speech` imports and the default `uv run pytest -q` passes without `faster-whisper`, `sounddevice`, or `numpy` installed.
-- [ ] 3.2 Implement `SpeechAdapter.start` / `stop_capture` / `drain`:
+- [x] 3.1 Define `AudioSource`, segmenter, and `Transcriber` protocols, with scripted test doubles under `tests/`. Verify that `lecoach.speech` imports and the default `uv run pytest -q` passes without `faster-whisper`, `sounddevice`, or `numpy` installed.
+- [x] 3.2 Implement `SpeechAdapter.start` / `stop_capture` / `drain`:
   - capture time from sample offsets on the shared clock;
-  - one worker thread;
+  - a voice-activity worker thread and a transcription worker thread;
   - emission through `call_soon_threadsafe`.
 
   Verify with fake-source tests that observations carry capture times, start returns within the startup bound, and nothing is emitted after capture end.
-- [ ] 3.3 Implement degraded mode and release:
+- [x] 3.3 Implement degraded mode and release:
   - specific `signal.status` reasons for permission denial, missing or lost device, unavailable model, and audio queue overflow;
   - null windows while unavailable;
   - idempotent, cancellation-safe cleanup.
 
   Verify with `SessionController` tests for each failure, a single microphone release on repeated stop or cancelled drain, and speech listed as incomplete when drain exceeds the bound.
-- [ ] 3.4 Document the adapter seams, configuration, failure reasons, and limitations in `src/lecoach/speech/README.md`. Verify that the documented test and check commands run as written.
+- [x] 3.4 Document the adapter seams, configuration, failure reasons, and limitations in `src/lecoach/speech/README.md`. Verify that the documented test and check commands run as written.
 
 ## 4. Production microphone and local transcription
 

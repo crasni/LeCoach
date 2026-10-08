@@ -44,16 +44,24 @@ AudioSource → Segmenter (voice activity) → Transcriber → UtteranceTracker 
 
 At stream start, the adapter records the shared clock value and the frame counter. A sample's capture time is that value plus elapsed frames divided by the sample rate. Segment boundaries, word times (segment start plus model word offset), and window ends all derive from this mapping.
 
+- Capture times are floored to the millisecond. Rounding to the nearest millisecond would stamp the capture-end window or final up to 0.5 ms after the controller's capture end, which the controller rejects.
+- On the event loop, times are capped at the shared clock and, after stop, at the capture end. A fast audio clock therefore cannot stamp an observation in the future.
 - **Alternative rejected:** wall-clock time in the audio callback. It adds callback jitter and would stamp observations with processing time rather than capture time.
-- Drift between the audio clock and the monotonic clock is negligible for rehearsal-length sessions; AUD-02 measures it.
+- Drift between the audio clock and the monotonic clock is expected to be small for rehearsal-length sessions; the cap prevents future stamps, and AUD-02 measures the drift.
 
 ### Threads and emission
 
-The PortAudio callback copies frames into a bounded queue. One worker thread runs voice activity detection, transcription, and tracking.
+The PortAudio callback only copies frames into a queue. Two worker threads follow:
 
-- Each event is handed to the controller with `loop.call_soon_threadsafe(context.emit, event)`, using the loop captured in `start`. The worker never calls `emit` directly.
-- Queue overflow drops the oldest audio, raises an error status, and ends the affected utterance. Blocking the audio callback would lose audio anyway.
-- **Alternative rejected:** asyncio-only processing. Model inference is CPU-bound and would stall the API loop.
+- A voice-activity thread segments audio in real time and advances the capture watermark.
+- A transcription thread runs the shared model on closed segments and partial snapshots. Slow inference therefore never delays segmentation, pause onsets, or windows that do not wait on that speech.
+
+Workers post their results to the loop captured in `start` with `loop.call_soon_threadsafe`. The utterance and metrics trackers run there, single-threaded, and emit through `context.emit`; workers never touch tracker state or call `emit`.
+
+- When segmentation falls more than a bounded backlog behind, the adapter ends the affected utterance at the last processed audio, reports `audio_queue_overflow`, and stops capture for the rest of the session. Later audio could only be analyzed late, and the v0 rules have no recovery transition. Blocking the audio callback would lose audio anyway.
+- **Alternatives rejected:**
+  - asyncio-only processing: model inference is CPU-bound and would stall the API loop;
+  - one worker for segmentation and transcription: every model call would delay segmentation by seconds and could trigger overflow.
 
 ### Process-wide model provider
 
@@ -65,14 +73,15 @@ A small speech-owned module (`python -m lecoach.speech.model --download`) pre-do
 
 ### Degraded mode reports instead of raising
 
-For permission denial, a missing device, or an unavailable model, the adapter emits a speech `signal.status` with a specific reason. Then it keeps emitting non-available windows with null values until stop, which matches the `microphone_denied` and `microphone_lost` fixtures.
+For permission denial, a missing or lost device, an unavailable model, queue overflow, or a failed transcription or segmentation, the adapter emits a speech `signal.status` with a specific reason. Then it keeps emitting non-available windows with null values until stop, which matches the `microphone_denied` and `microphone_lost` fixtures. Degraded mode does not recover within a session.
 
 - Raising from `start` would replace the specific reason with the controller's generic `adapter_start_failed`.
-- Unexpected exceptions still propagate, so the controller's bounded cleanup applies.
+- The outage begins where segmentation stops, so no utterance is finalized after the reported outage start. After a transcription failure, finals without text are marked unmeasurable, and windows overlapping them report null rather than zero.
+- Unexpected exceptions from `start` still propagate, so the controller's bounded cleanup applies, and speech emits nothing further.
 
 ### Segmentation and partial revisions
 
-- **Segments.** Voice activity detection uses the Silero model bundled with faster-whisper, at 16 kHz in 32 ms frames. A segment ends after a short hangover of trailing silence. A segment longer than `max_utterance_s` is split at its quietest recent frame.
+- **Segments.** Voice activity detection uses the Silero model bundled with faster-whisper, at 16 kHz in 32 ms frames. A segment ends after a short hangover of trailing silence. A segment longer than `max_utterance_s` is split at its quietest recent frame. As a backstop, the adapter itself ends any segment that reaches `max_utterance_s` and starts a new one at the same capture time, so memory and final transcription time stay bounded with any segmenter.
 - **Partials.** While a segment grows, it is re-transcribed every `partial_interval_s` to publish partial revisions (default 1.0 s; 0 disables partials). Finals come from one pass over the closed segment with word timestamps.
 - **Hallucination guards.** The no-speech threshold and empty results produce an empty final, which retracts any partial.
 - **Alternative rejected:** finals-only. The live transcript view (Lane 4) needs partials. The cost is bounded by the interval and can be disabled if AUD-02 shows CPU pressure.
