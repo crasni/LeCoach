@@ -104,6 +104,26 @@ IMPACT: No new blocking code defect was found in the preparation scope. Exact or
 
 PROPOSAL: Publish this local branch reconciliation only after explicit push approval. Accept PR #1 as preparation/documentation reconciliation, then let its owner implement the recorder/generator against the published seams and agreed LIVE-01 evidence. No remote review, push or merge was performed in this review.
 
+## LIVE-01 local engine and rehearsal screen
+
+FACT: On 2026-10-08, Lane 4 (@ricebal1) implemented the sole engagement engine in `src/lecoach/engagement/` (rules and defaults in [its README](../src/lecoach/engagement/README.md) and `config.py`) and replaced the inspection shell with a rehearsal screen: eight 2D SVG listeners that ripple through state changes, the current reaction with plain-language reasons, an audience timeline, input status, pace/filler/facing metrics, the live transcript with partials, a camera-preview slot for live mode, and the authored coaching summary. Composition change for integration review: `replay_with_engine()` supplies only the engine; the served app and `lecoach replay` (new `--audience engine|authored`, default `engine`) compute audience states from fixture observations, while live mode still reports unavailable. Proposed reason codes are recorded in ARCHITECTURE.
+
+Validation on Windows 11 x86_64; CPython 3.12.14 via uv 0.12.23; Node 24.14.1; npm 11.11.0; Playwright Chromium. No microphone, camera, model or accelerator was used.
+
+| Check | Observed result |
+| --- | --- |
+| `uv run pytest -q` | 117 passed, 60 subtests, including 20 engagement tests: deterioration/recovery and determinism on `weak_to_improved`; no negative state for missing inputs, outages, silence-only, unsupported language or delayed delivery; speech-only operation with the camera unavailable; 60 s of threshold-crossing jitter without negative states or transitions faster than the dwell; hysteresis hold; stale speech dropped from reasons; older observations ignored; absent person and camera outage not treated as facing away; restart/stop isolation; live tick; config validation; Lane 2 speech fixtures trigger `pace_high`, `fillers_frequent` and `silence_prolonged`. |
+| `uv run lecoach replay --case weak_to_improved` | `NEUTRAL → CONFUSED (20 s, pace_high) → BORED (30 s, pace_high + facing_away_sustained) → INTERESTED (35 s) → ENGAGED (40 s)`, every reason citing earlier fixture events. |
+| `uv run ruff check src scripts tests examples`, `scripts/export_schema.py --check`, `scripts/validate_fixtures.py`, `examples/consume_replay.py` | Pass. |
+| frontend `npm run build` and `npm run test:e2e` | Build passes; 4 Chromium checks pass, now asserting computed transitions with reasons and that the delayed-transcript case stays `NEUTRAL`. `playwright.config.ts` resolves the backend executable on Windows too. |
+| frontend `npm run types:check` | Fails identically on unmodified `main` in this checkout: Git `core.autocrlf=true` checks out the generated file with CRLF line endings. Not caused by this change; generated contracts were not modified. |
+
+IMPACT: Lane 5 can consume real transition events and reason codes; authored coaching in `weak_to_improved` still quotes authored times (20.5 s, 30.5 s, 42 s) that differ from computed ones, so its oracle needs review against engine output. Live adapters can replace fixtures through the unchanged `EngagementEngine` seam. Thresholds are demo heuristics, unvalidated against real rehearsals.
+
+FACT: With the user's approval, `agent/avatar-ui` was pushed at `fc96ec8` and published as [PR #7](https://github.com/crasni/LeCoach/pull/7). The successful push shows @ricebal1 has repository write access.
+
+PROPOSAL: The integration owner reviews PR #7, especially the reason codes and the composition change. LIVE-02 then wires real speech/vision adapters, checks the live tick and camera preview with real devices, and retunes thresholds from recorded rehearsals.
+
 ## Evidence to add as work lands
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
