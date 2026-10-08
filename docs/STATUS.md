@@ -74,6 +74,9 @@ PROPOSAL: Assigned owners follow the TASKS.md first-task and dependency instruct
 
 ## COACH-01 preparation — pending integration review
 
+Historical preparation evidence follows. PR #1 was subsequently accepted and
+merged; the recorder continuation below records the current Lane 5 work.
+
 FACT: Lane 5 prepared commit `dcc280f` on `agent/session-analysis`, following claim commit `8123599`, and published [draft PR #1](https://github.com/crasni/leCoach/pull/1) for integration-owner review. [checks/coaching/README.md](../checks/coaching/README.md) documents nine hand-authored synthetic cases covering ten expected completed sessions. Fixtures include weak-to-improved delivery, missing camera, no usable inputs, empty/startup sessions, late finals and duplicate retries, drain timeout, repeated sessions, and adjacent incidents. Example feedback uses the existing v0 document shapes; positive reason codes remain pending LIVE-01. No real rehearsal data or model output is included.
 
 Validation on the local macOS development host with Python 3.14.5:
@@ -88,6 +91,65 @@ Observed result: all 9 cases / 10 expected sessions are internally consistent; a
 IMPACT: Lane 5 can use these cases to check actual `CompletedSession` and `Feedback` outputs after dependency handoff. COACH-01 remains blocked on INT-01's scaffold, executable contract/lifecycle and layout handoff, plus LIVE-01's transition/reason evidence. No production logger, additional engagement engine, or new shared contract was created. The preparation claim and artifacts still require integration-owner review; COACH-01 is not complete.
 
 PROPOSAL: The integration owner reviews the claim and fixture placement, supplies the approved application layout and replay seam, and coordinates Lane 4's reason vocabulary/positive evidence. Lane 5 then implements the recorder, moment selector and template feedback in that layout, runs the cases against real consumer outputs, and records integration evidence before marking COACH-01 done.
+
+## COACH-01 recorder continuation — local, pending publication/review
+
+FACT: On 2026-10-07, read-only GitHub checks confirmed PRs #1, #3 and #4 merged.
+The remote role branch had been deleted following merge; a safe explicit pull
+from `origin/main` fast-forwarded the existing local `agent/session-analysis`
+branch to `ebdf421` before editing. INT-01's scaffold/contracts are now available;
+LIVE-01 is still `todo` on the shared board with no published engine implementation.
+No other lane's claim or task status was changed.
+
+FACT: Implemented the sole `InMemorySessionRecorder` in the approved
+`src/lecoach/coaching/` slot using the existing `SessionContext`, event models and
+`CompletedSession` protocol. It preserves normalized evidence and revisions,
+deduplicates stable retries, rejects changed retry payloads, orders by capture time
+and event ID, keeps eligible observations during drain, and ignores foreign/closed
+sessions, post-stop audience updates and observations captured after stop.
+Completion metadata is checked against the recorded lifecycle. Deep-copy snapshots
+protect retained evidence from mutations by producers or consumers.
+
+Retention: one active/completed timeline stays in memory until the recorder's next
+start or disposal. Returned copies belong to their callers. The recorder has no
+independent clock, media capture, disk persistence or network behavior. Its
+[module handoff](../src/lecoach/coaching/README.md) documents injection and retention.
+Default API composition remains the integration owner's responsibility; the actual
+recorder is exercised through the published consumer factory.
+
+Validation host: local macOS arm64, CPython 3.12.14 and the unchanged frozen uv
+lockfile. Local setup provisioned the pinned Python and development packages; no
+inference model was downloaded. Commands below were run with the resulting
+`.venv/bin/python` and `.venv/bin/ruff`; the equivalent project commands are:
+
+```sh
+uv run python checks/coaching/record_replay.py
+uv run pytest -q tests/test_coaching.py
+uv run pytest -q
+uv run python scripts/validate_fixtures.py
+uv run python scripts/export_schema.py --check
+uv run ruff check src scripts tests examples
+```
+
+Observed result: the actual recorder matches all 9 synthetic cases / 10 expected
+completed sessions. All 13 recorder tests and 9 fixture subtests pass, including
+controller drain/retry, bounded drain timeout with cancellation, empty stop,
+snapshot mutation isolation, reused recorder isolation and invalid lifecycle
+handling. The full suite passes 110 tests and 46 subtests, with the existing
+Starlette/httpx deprecation warning. Fixture validation, schema parity and core
+lint pass. UI and shared contracts were not changed.
+
+IMPACT: Lane 5 now has a runnable recorder against INT-01's real seams. Audience
+events in these checks remain hand-authored; producer release checks use fake
+adapters. No real microphone/camera, engagement inference, computed feedback or
+UGen300 behavior is established. Positive coaching semantics and actual transition
+evidence still depend on LIVE-01, so COACH-01 remains incomplete.
+
+PROPOSAL: Present the exact local commit and role-branch destination for user push
+approval, then open a scoped continuation PR for integration-owner review. Lane 4
+supplies its transition/reason evidence before Lane 5 implements and verifies
+moment selection/template feedback. No new shared interface or second engagement
+engine was introduced, and no commits from this continuation have been pushed.
 
 ## INT-01 planning — local, not published
 
@@ -179,6 +241,26 @@ Validation on Linux: `python3 checks/coaching/check_cases.py` passes 9 cases / 1
 IMPACT: No new blocking code defect was found in the preparation scope. Exact oracle moments are scenario acceptance targets, not proof of every valid coaching selection; the standalone checker is not a replacement for executable schema validation. Positive reason semantics still require Lane 4. The scaffold is already published, so waiting for scaffold publication is no longer a blocker; COACH-01 implementation is not done.
 
 PROPOSAL: Publish this local branch reconciliation only after explicit push approval. Accept PR #1 as preparation/documentation reconciliation, then let its owner implement the recorder/generator against the published seams and agreed LIVE-01 evidence. No remote review, push or merge was performed in this review.
+
+## LIVE-01 local engine and rehearsal screen
+
+FACT: On 2026-10-08, Lane 4 (@ricebal1) implemented the sole engagement engine in `src/lecoach/engagement/` (rules and defaults in [its README](../src/lecoach/engagement/README.md) and `config.py`) and replaced the inspection shell with a rehearsal screen: eight 2D SVG listeners that ripple through state changes, the current reaction with plain-language reasons, an audience timeline, input status, pace/filler/facing metrics, the live transcript with partials, a camera-preview slot for live mode, and the authored coaching summary. Composition change for integration review: `replay_with_engine()` supplies only the engine; the served app and `lecoach replay` (new `--audience engine|authored`, default `engine`) compute audience states from fixture observations, while live mode still reports unavailable. Proposed reason codes are recorded in ARCHITECTURE.
+
+Validation on Windows 11 x86_64; CPython 3.12.14 via uv 0.12.23; Node 24.14.1; npm 11.11.0; Playwright Chromium. No microphone, camera, model or accelerator was used.
+
+| Check | Observed result |
+| --- | --- |
+| `uv run pytest -q` | 117 passed, 60 subtests, including 20 engagement tests: deterioration/recovery and determinism on `weak_to_improved`; no negative state for missing inputs, outages, silence-only, unsupported language or delayed delivery; speech-only operation with the camera unavailable; 60 s of threshold-crossing jitter without negative states or transitions faster than the dwell; hysteresis hold; stale speech dropped from reasons; older observations ignored; absent person and camera outage not treated as facing away; restart/stop isolation; live tick; config validation; Lane 2 speech fixtures trigger `pace_high`, `fillers_frequent` and `silence_prolonged`. |
+| `uv run lecoach replay --case weak_to_improved` | `NEUTRAL → CONFUSED (20 s, pace_high) → BORED (30 s, pace_high + facing_away_sustained) → INTERESTED (35 s) → ENGAGED (40 s)`, every reason citing earlier fixture events. |
+| `uv run ruff check src scripts tests examples`, `scripts/export_schema.py --check`, `scripts/validate_fixtures.py`, `examples/consume_replay.py` | Pass. |
+| frontend `npm run build` and `npm run test:e2e` | Build passes; 4 Chromium checks pass, now asserting computed transitions with reasons and that the delayed-transcript case stays `NEUTRAL`. `playwright.config.ts` resolves the backend executable on Windows too. |
+| frontend `npm run types:check` | Fails identically on unmodified `main` in this checkout: Git `core.autocrlf=true` checks out the generated file with CRLF line endings. Not caused by this change; generated contracts were not modified. |
+
+IMPACT: Lane 5 can consume real transition events and reason codes; authored coaching in `weak_to_improved` still quotes authored times (20.5 s, 30.5 s, 42 s) that differ from computed ones, so its oracle needs review against engine output. Live adapters can replace fixtures through the unchanged `EngagementEngine` seam. Thresholds are demo heuristics, unvalidated against real rehearsals.
+
+FACT: With the user's approval, `agent/avatar-ui` was pushed at `fc96ec8` and published as [PR #7](https://github.com/crasni/LeCoach/pull/7). The successful push shows @ricebal1 has repository write access.
+
+PROPOSAL: The integration owner reviews PR #7, especially the reason codes and the composition change. LIVE-02 then wires real speech/vision adapters, checks the live tick and camera preview with real devices, and retunes thresholds from recorded rehearsals.
 
 ## Evidence to add as work lands
 
