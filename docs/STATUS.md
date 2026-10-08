@@ -18,6 +18,25 @@ This file records verified implementation evidence. Task ownership and progress 
 - Current competition requirement verification is recorded under INT-03 below; final submission, cutoff details and target-device inference remain unverified.
 - Executable event contracts and lifecycle/transport behavior are validated below. Subsystem role handoffs remain requirements for the live MVP.
 
+## INT-03 publication and cleanup review
+
+FACT: On 2026-10-08, the user approved checking and publishing the previously proposed eight-commit range `c88386a..b9e4cff` to `git@github.com:crasni/LeCoach.git`, branch `agent/integration`. The range and clean checkout were verified unchanged. Final checks pass: 130 tests / 69 subtests (0.82 s), four Node 24/Chromium browser checks (24.6 s), frontend build/types, core lint/schema parity, nine fixture cases / ten sessions and actual recorder injection. Both OpenSpec changes validate strictly; 138 local links/anchors, source/PDF parity, six reference annotations, recorded hashes and Git whitespace/private-data checks pass.
+
+FACT: Pushed exactly `b9e4cff721bfb85831c85dd4e4aeda95ff0630a1` to `origin/agent/integration` and verified the remote tip. Main remains `c88386a83a39fb08019789d1b6350cbacf7d741d`. Created [draft PR #8](https://github.com/crasni/LeCoach/pull/8); it contains the approved eight commits, targets main, and is mergeable. No hosted status checks are reported; the evidence above is local. Another collaborator's review and merge are pending; no merge or named review request occurred.
+
+FACT: `git fetch --prune origin` refreshed tracking refs. Only `main` and `agent/integration` remain as local branches; the three detached review worktrees were preserved. Remote cleanup audit found:
+
+| Remote branch / inspected tip | Evidence / disposition |
+| --- | --- |
+| `agent/avatar-ui` at `6f276eb6fb83926b69a07e6e7eea4b538b8c912d` | Fully reachable from main, zero unmerged commits; proposed stale-ref deletion with an exact-tip lease. |
+| `agent/session-analysis` at `5991048283b5e55af0a3de88fb66f89372bd03d3` | Fully reachable from main, zero unmerged commits; proposed stale-ref deletion with an exact-tip lease. |
+| `agent/audio-streaming` at `cea23e2ee906d4443a28102891c93acd73b54ba8` | Four commits outside main, including new speech adapter work; preserved. |
+| `revert-7-agent/avatar-ui` at `7d760b27ec1bff0e8e058ceedd29d5c92a0b4b45` | One unmerged revert commit; preserved. |
+
+IMPACT: INT-03's publication/handoff task 6.3 is complete; implementation remains in progress with registration/form, script, live evidence, final recording and external delivery gates open. This publication/task-board record was prepared after the initial push; its publication needs separate approval. The exact remote cleanup candidates likewise need ref-specific approval under AGENTS.md before deletion; the initial approved range did not list those remote refs.
+
+PROPOSAL: Approve publishing the follow-up record and deleting only the two inspected, fully merged refs. Verify expected tips immediately before deletion and abort if they changed. Keep PR #8 for collaborator review and preserve all unmerged work and private local artifacts.
+
 ## INT-03 refreshed package and browser validation
 
 FACT: Continued INT-03 on 2026-10-08, documentation branch baseline `4cd7887`; application code is unchanged from merged source `8345c98`. Refreshed the 12-slide editable proposal/PDF and claim map for the computed engine, rehearsal UI, injected recorder and 130-test / 69-subtest evidence. The synthetic audience now has the computed 0/20/30/35/40-second times; coaching remains explicitly authored. The recorder is tested through injection and is not enabled in default browser composition. Live capture, inference, feedback generation and UGen300 claims remain pending.

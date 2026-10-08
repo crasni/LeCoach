@@ -1,6 +1,6 @@
 # Stage I package readiness
 
-Local review draft, updated 2026-10-08 (Asia/Taipei). INT-03 is **in progress**, with the claim and new deliverables unpublished. This records package checks and evidence references, not team assignments or a submission receipt. [TASKS.md](../../TASKS.md) owns progress; [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) owns observed behavior.
+Local review draft, updated 2026-10-08 (Asia/Taipei). INT-03 is **in progress**; the proposal/evidence range is published in [draft PR #8](https://github.com/crasni/LeCoach/pull/8), with collaborator review pending. This publication record was prepared after the initial approved push; further Git updates follow the separate approval rule. This records package checks and evidence references, not team assignments or a submission receipt. [TASKS.md](../../TASKS.md) owns progress; [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) owns observed behavior.
 
 **Refreshed after the main pull:** the deck and claim map now reflect merged engine/rehearsal-screen and recorder work, with application source `8345c98` (main `c88386a`). [Fresh backend and browser evidence](../STATUS.md#int-03-refreshed-package-and-browser-validation) distinguishes computed reactions, injected recording and authored coaching. Live input and final recording remain pending.
 
@@ -13,7 +13,7 @@ Local review draft, updated 2026-10-08 (Asia/Taipei). INT-03 is **in progress**,
 | Demo | [DEMO.md](../DEMO.md) is a proposed 2:55 shot plan with synthetic replay instructions. No final recording, final narration, or video hash exists. | Lane 5 script/scenario and accepted INT-02 evidence, then reviewed local recording. |
 | Evidence baseline | Deck uses application source `8345c98`, main `c88386a`; 130 tests / 69 subtests and four browser checks pass. | Live producers and generated coaching remain pending; update claims after accepted live evidence. |
 | Hardware | [Observed host outcome](../STATUS.md#int-03-apply-hardware-readiness) and [procedure](../HARDWARE.md). | No identifiable target device/runtime on this host; obtain supported setup and owner handoffs for measurements. |
-| Git publication | New local work on `agent/integration`; no INT-03 push or PR yet. | Review exact local commit set, receive separate push approval, then role-branch PR/review. |
+| Git publication | Approved eight-commit range published at `b9e4cff` on `agent/integration`; [draft PR #8](https://github.com/crasni/LeCoach/pull/8) targets main. | Obtain collaborator review before merge; subsequent Git updates require their own approval. |
 | YouTube | No upload or URL. | Separate publication authorization, unlisted upload and link verification after recording review. |
 | Registration/submission | Team format, registration receipt, precise cutoff/timezone, upload limits and final receipt unknown. | Team/form confirmation; retain private details outside Git. |
 
@@ -90,7 +90,7 @@ Local package review for the refreshed draft passed: 106 local Markdown targets/
 | Submission: synthetic example / live replacement | Synthetic input/authored coaching and computed engine output are separately labeled, with exact replay times. Replacement with accepted INT-02 evidence is pending. |
 | Submission: demonstration ready / live unavailable | Live-unavailable gate exposed in DEMO/readiness; final script and recording review pending. |
 | Submission: local readiness with external dependencies | Registration, cutoff, form, originality interpretation, live/video and external receipt gates remain explicit. |
-| Submission: local-only authorization / authorized delivery | Local artifacts prepared; authorized upload/submission and receipt scenarios remain pending. No new push was performed. |
+| Submission: local-only authorization / authorized delivery | Initial preparation stayed local; the separately approved Git range is now published in PR #8. Authorized video/submission and receipt scenarios remain pending. |
 | Submission: commit contains no private rehearsal artifacts | Ignore patterns and staged files checked; the staged diff contains only sanitized documents, OpenSpec artifacts and the authored deck, with no private recordings, receipts, credentials or model weights. |
 | Hardware: synthetic validation / CPU rehearsal | Synthetic validation observed; live CPU rehearsal pending. |
 | Hardware: target absent / target prerequisites fail | No identifiable UGen300/CLI/module on inspected host; absent outcome recorded. An actual present-device failure is not exercised. |
@@ -105,7 +105,7 @@ Local package review for the refreshed draft passed: 106 local Markdown targets/
 - Lane 5: provide/review the final English script and scenario. The checked-in preparation fixture is usable for development but is not a finished narration handoff.
 - Lane 5 / integration: reconcile computed audience times with authored coaching; the deck now reflects merged PRs #5/#7. Deliver and accept the live INT-02 run before claims/footage change to live processing.
 - Hardware owner / integration: provide supported target setup and adapters for measured evidence, or preserve the explicit unavailable-device disposition and deferred milestone.
-- Maintainer: review the local deck/records and exact role-branch commit set, then separately authorize a push if ready to share.
+- Maintainer / collaborator: review PR #8 before merge. Separately approve the new local publication record and exact merged-branch cleanup refs; retain unmerged audio/revert work.
 - Team: separately authorize final video publication and competition submission, verify unlisted access, and obtain a real receipt before claiming submission complete.
 
 No final gate is satisfied by silence, an apply request, a local PDF, or earlier branch deletion approval. INT-01 archival remains a separate workflow.
