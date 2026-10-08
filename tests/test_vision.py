@@ -475,6 +475,10 @@ class ProbeRunTests(TestCase):
         # A still frontal pose passes the "toward" segments it fully covers.
         self.assertTrue(summary["segments"]["toward_still"]["pass"])
         self.assertFalse(summary["segments"]["no_person"]["pass"])
+        frames = summary["segments"]["toward_still"]["frames"]
+        self.assertGreater(frames["inferred"], 0)
+        self.assertEqual(frames["arms_visible_fraction"], 1.0)  # both wrists visible
+        self.assertTrue(summary["model"].endswith("pose_landmarker_lite.task"))
 
 
 def probe_args(**overrides):

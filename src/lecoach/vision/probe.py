@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import platform
 import sys
 import time
@@ -29,7 +30,8 @@ from lecoach.contracts.interfaces import SessionConfig, SessionContext
 from lecoach.runtime.clock import MonotonicClock
 
 from .config import VisionConfig
-from .local_backend import build_local_adapter
+from .features import ARM_JOINTS, FrameFeatures
+from .local_backend import DEFAULT_MODEL_PATH, MODEL_ENV, build_local_adapter
 
 SCRIPT = (
     ("toward_still", "Face the camera and stay still."),
@@ -47,6 +49,16 @@ DISPLAY_INTERVAL_S = 1 / 30
 
 def _fmt(value) -> str:
     return "--" if value is None else f"{value:.2f}"
+
+
+def frame_diagnostics(frames: list[tuple[float, bool, int]]) -> dict:
+    """How often a pose and at least two elbow/wrist joints were visible."""
+    n = len(frames)
+    return {
+        "inferred": n,
+        "pose_usable_fraction": round(sum(f[1] for f in frames) / n, 3) if n else None,
+        "arms_visible_fraction": round(sum(f[2] >= 2 for f in frames) / n, 3) if n else None,
+    }
 
 
 def judge(name: str, windows: list[dict]) -> dict:
@@ -113,9 +125,18 @@ async def run(args) -> dict:
             viewer = ProbeViewer(config)
         except ImportError:
             print("(opencv not importable; running without preview window)", flush=True)
-    adapter = build_local_adapter(
-        args.model, args.camera, config, on_frame=viewer.on_frame if viewer else None
-    )
+    # Per-inferred-frame diagnostics (worker thread appends; no image data):
+    # (capture time, pose usable, number of visible elbow/wrist joints).
+    frame_log: list[tuple[float, bool, int]] = []
+
+    def on_frame(frame, pose) -> None:
+        features = FrameFeatures(pose, config)
+        arms = sum(features.visible(joint) is not None for joint in ARM_JOINTS)
+        frame_log.append((pose.timestamp_s, features.pose_usable, arms))
+        if viewer is not None:
+            viewer.on_frame(frame, pose)
+
+    adapter = build_local_adapter(args.model, args.camera, config, on_frame=on_frame)
     context = SessionContext("vision-probe", clock, emit, SessionConfig(mode="live"))
     started = time.perf_counter()
     await adapter.start(context)
@@ -138,6 +159,10 @@ async def run(args) -> dict:
                     f"facing={_fmt(last.get('facing_score'))}  "
                     f"activity={_fmt(last.get('activity_score'))}",
                 ]
+                if frame_log:
+                    arms = frame_log[-1][2]
+                    hint = "" if arms >= 2 else "  <- move back: show elbows/wrists"
+                    lines.append(f"arm joints visible: {arms}/4{hint}")
                 if not viewer.show(lines):
                     return False
             await asyncio.sleep(DISPLAY_INTERVAL_S if viewer else min(left, 0.5))
@@ -162,12 +187,16 @@ async def run(args) -> dict:
         await adapter.stop_capture(end)
         release_s = time.perf_counter() - stop_started
         await adapter.drain()
-    segments = {
-        name: judge(
+    segments = {}
+    for name, lo, hi in marks:
+        result = judge(
             name, [w for w in windows if lo <= w["window_start_s"] and w["window_end_s"] <= hi]
         )
-        for name, lo, hi in marks
-    }
+        result["frames"] = frame_diagnostics([f for f in frame_log if lo <= f[0] <= hi])
+        if name == "toward_active" and not result["pass"]:
+            if (result["frames"]["arms_visible_fraction"] or 0) < 0.5:
+                result["note"] = "elbows/wrists mostly not visible; sit back so arms are in frame"
+        segments[name] = result
     return {
         "ok": not aborted and all(s["pass"] for s in segments.values()),
         "aborted": aborted,
@@ -177,7 +206,7 @@ async def run(args) -> dict:
             "machine": platform.machine(),
             "python": sys.version.split()[0],
         },
-        "model": str(args.model),
+        "model": str(args.model or os.environ.get(MODEL_ENV) or DEFAULT_MODEL_PATH),
         "config": {"window_s": config.window_s, "max_inference_fps": config.max_inference_fps},
         "startup_s": round(startup_s, 3),
         "camera_release_s": round(release_s, 3),
