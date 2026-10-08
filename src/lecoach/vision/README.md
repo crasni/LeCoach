@@ -16,6 +16,7 @@ contract is [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) (`vision.metrics`,
 | `adapter.py` | `LocalVisionAdapter`, the `VisionAdapter` seam (lifecycle, worker thread, preview, stats). |
 | `local_backend.py` | OpenCV camera + MediaPipe Pose Landmarker (lazy imports); `build_local_adapter()`. |
 | `probe.py` | Guided real-camera check that reports acceptance and measurements (no media saved). |
+| `viewer.py` | Probe-only preview window: mirrored camera, skeleton and live readout. |
 
 Test evidence: `tests/test_vision.py` and the synthetic labeled fixture in
 `checks/vision/` (`python3 checks/vision/make_fixture.py --check`).
@@ -68,6 +69,13 @@ mkdir -p models && curl -L -o models/pose_landmarker_lite.task \
   https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task
 uv run python -m lecoach.vision.probe -v --out sessions/vision-probe.json
 ```
+
+A preview window opens with the mirrored camera, the detected skeleton (green
+lines; orange dot = nose), the current prompt with a countdown, and the latest 1 s
+window's `person`/`facing`/`activity`. A 5 s unjudged "get ready" phase comes
+first so you can frame your head and shoulders. Press `q`/Esc to abort, or pass
+`--no-show` to run without the window. The window is display only and nothing is
+saved.
 
 `models/` and `sessions/` are git-ignored. On macOS, grant the terminal camera
 access (System Settings → Privacy & Security → Camera) — OpenCV cannot tell a denied

@@ -79,12 +79,15 @@ class LocalVisionAdapter:
         encoder: JpegEncoder | None = None,
         config: VisionConfig | None = None,
         on_window: Callable[[WindowSummary], None] | None = None,
+        on_frame: Callable[[object, PoseFrame], None] | None = None,
     ) -> None:
         self.config = config or VisionConfig()
         self._source_factory = source_factory
         self._estimator_factory = estimator_factory
         self._encoder = encoder
         self._on_window = on_window
+        # Local debug view only (probe window); called on the worker thread.
+        self._on_frame = on_frame
         self.stats = VisionStats()
         self._context: SessionContext | None = None
         self._loop: asyncio.AbstractEventLoop | None = None
@@ -234,6 +237,11 @@ class LocalVisionAdapter:
                     continue
                 last_inference = now
                 pose = self._estimate(estimator, frame, now)
+                if self._on_frame is not None:
+                    try:
+                        self._on_frame(frame, pose)
+                    except Exception:
+                        log.debug("on_frame hook failed", exc_info=True)
                 for summary in self._aggregator.add(pose):
                     self._post(self._emit_window, summary)
         except Exception:

@@ -408,3 +408,80 @@ class ProbeJudgeTests(TestCase):
         self.assertFalse(judge("away", [w(0.8, 0.0)] * 5)["pass"])
         self.assertTrue(judge("no_person", [w(None, None, False)] * 5)["pass"])
         self.assertFalse(judge("no_person", [])["pass"])
+
+
+class ProbeViewerTests(TestCase):
+    def setUp(self):
+        try:
+            import numpy  # noqa: F401
+
+            from lecoach.vision.viewer import ProbeViewer
+        except ImportError:
+            self.skipTest("opencv/numpy not installed")
+        self.viewer = ProbeViewer()
+
+    def test_compose_draws_mirrored_overlay_without_mutating_frame(self):
+        import numpy as np
+
+        frame = np.zeros((480, 640, 3), dtype=np.uint8)
+        image = self.viewer.compose(frame, frontal(), ["prompt", "metrics"])
+        self.assertEqual(image.shape, frame.shape)
+        self.assertEqual(int(frame.sum()), 0)  # caller's frame untouched
+        self.assertGreater(int(image.sum()), 0)
+        # Nose at x=320 stays centred; the left shoulder (x=240) is drawn mirrored at 399.
+        self.assertGreater(int(image[250, 395:405].sum()), 0)
+
+    def test_show_without_display_degrades_to_headless(self):
+        import numpy as np
+
+        self.viewer.on_frame(np.zeros((48, 64, 3), dtype=np.uint8), frontal())
+        self.assertTrue(self.viewer.show(["x"]))  # never aborts the probe
+        self.viewer.close()
+
+
+class ProbeRunTests(TestCase):
+    def test_probe_runs_scripted_segments_and_releases_camera(self):
+        from unittest import mock
+
+        from lecoach.vision import probe
+
+        frames = [frontal(i / 10 + 0.05) for i in range(10_000)]
+
+        class WallSource(ReplaySource):
+            def read(self):
+                threading.Event().wait(0.02)
+                return frames[0]
+
+        made = {}
+
+        def fake_build(model, camera, config, on_frame=None):
+            made["source"] = WallSource(FakeClock(), [])
+            made["adapter"] = LocalVisionAdapter(
+                lambda: made["source"], PassThroughPose, config=config, on_frame=on_frame
+            )
+            return made["adapter"]
+
+        with (
+            mock.patch.object(probe, "build_local_adapter", fake_build),
+            mock.patch.object(probe, "READY_S", 0.1),
+            mock.patch.object(probe, "SETTLE_S", 0.0),
+        ):
+            summary = asyncio.run(probe.run(probe_args(segment_s=2.1)))
+        self.assertFalse(summary["aborted"])
+        self.assertEqual(list(summary["segments"]), [name for name, _ in probe.SCRIPT])
+        self.assertTrue(summary["camera_released"])
+        self.assertEqual(made["source"].closed, 1)
+        self.assertGreater(summary["stats"]["frames_inferred"], 0)
+        # A still frontal pose passes the "toward" segments it fully covers.
+        self.assertTrue(summary["segments"]["toward_still"]["pass"])
+        self.assertFalse(summary["segments"]["no_person"]["pass"])
+
+
+def probe_args(**overrides):
+    import argparse
+
+    values = dict(
+        model=None, camera=None, segment_s=10.0, max_fps=10.0, out=None, verbose=False, show=False
+    )
+    values.update(overrides)
+    return argparse.Namespace(**values)

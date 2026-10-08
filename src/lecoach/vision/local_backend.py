@@ -162,7 +162,10 @@ class MediaPipePose:
 
 
 def build_local_adapter(
-    model_path: str | Path | None = None, camera_index: int | None = None, config=None
+    model_path: str | Path | None = None,
+    camera_index: int | None = None,
+    config=None,
+    on_frame=None,
 ):
     """Composition helper for integration: the default local camera/pose adapter."""
     from .adapter import LocalVisionAdapter
@@ -172,4 +175,5 @@ def build_local_adapter(
         estimator_factory=lambda: MediaPipePose(model_path),
         encoder=opencv_jpeg,
         config=config,
+        on_frame=on_frame,
     )

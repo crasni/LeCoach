@@ -8,6 +8,9 @@ optional ``--out`` summary contains only window metrics and counters.
 
     python -m lecoach.vision.probe --model models/pose_landmarker_lite.task
     python -m lecoach.vision.probe --segment-s 8 --out sessions/vision-probe.json
+
+A preview window (mirrored camera + detected skeleton + prompt/countdown + latest
+window metrics) opens by default; ``--no-show`` disables it. Press q/Esc to abort.
 """
 
 from __future__ import annotations
@@ -37,6 +40,13 @@ SCRIPT = (
 )
 # Seconds ignored after each prompt while the presenter changes position.
 SETTLE_S = 2.0
+# Unjudged lead-in so the presenter can frame themselves in the preview.
+READY_S = 5.0
+DISPLAY_INTERVAL_S = 1 / 30
+
+
+def _fmt(value) -> str:
+    return "--" if value is None else f"{value:.2f}"
 
 
 def judge(name: str, windows: list[dict]) -> dict:
@@ -95,7 +105,17 @@ async def run(args) -> dict:
         return True
 
     config = VisionConfig(max_inference_fps=args.max_fps)
-    adapter = build_local_adapter(args.model, args.camera, config)
+    viewer = None
+    if args.show:
+        try:
+            from .viewer import ProbeViewer
+
+            viewer = ProbeViewer(config)
+        except ImportError:
+            print("(opencv not importable; running without preview window)", flush=True)
+    adapter = build_local_adapter(
+        args.model, args.camera, config, on_frame=viewer.on_frame if viewer else None
+    )
     context = SessionContext("vision-probe", clock, emit, SessionConfig(mode="live"))
     started = time.perf_counter()
     await adapter.start(context)
@@ -104,13 +124,39 @@ async def run(args) -> dict:
         await adapter.stop_capture(clock.now())
         await adapter.drain()
         return {"ok": False, "statuses": statuses, "startup_s": round(startup_s, 3)}
+    aborted = False
+
+    async def hold(prompt: str, seconds: float) -> bool:
+        """Wait ``seconds`` while refreshing the preview; False if the user quit."""
+        ends = clock.now() + seconds
+        while (left := ends - clock.now()) > 0:
+            if viewer is not None:
+                last = windows[-1] if windows else {}
+                lines = [
+                    f"{prompt}  ({left:4.1f} s)",
+                    f"last 1 s: person={last.get('person_present')}  "
+                    f"facing={_fmt(last.get('facing_score'))}  "
+                    f"activity={_fmt(last.get('activity_score'))}",
+                ]
+                if not viewer.show(lines):
+                    return False
+            await asyncio.sleep(DISPLAY_INTERVAL_S if viewer else min(left, 0.5))
+        return True
+
     try:
+        print(f"\n>>> Get ready: frame your head and shoulders ({READY_S:.0f} s)", flush=True)
+        aborted = not await hold("Get ready: head + shoulders in frame", READY_S)
         for name, prompt in SCRIPT:
+            if aborted:
+                break
             print(f"\n>>> {prompt} ({args.segment_s:.0f} s)", flush=True)
             begin = clock.now()
-            await asyncio.sleep(args.segment_s)
-            marks.append((name, begin + SETTLE_S, clock.now()))
+            aborted = not await hold(prompt, args.segment_s)
+            if not aborted:
+                marks.append((name, begin + SETTLE_S, clock.now()))
     finally:
+        if viewer is not None:
+            viewer.close()
         end = clock.now()
         stop_started = time.perf_counter()
         await adapter.stop_capture(end)
@@ -123,7 +169,8 @@ async def run(args) -> dict:
         for name, lo, hi in marks
     }
     return {
-        "ok": all(s["pass"] for s in segments.values()),
+        "ok": not aborted and all(s["pass"] for s in segments.values()),
+        "aborted": aborted,
         "synthetic": False,
         "host": {
             "platform": platform.platform(),
@@ -150,6 +197,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-fps", type=float, default=VisionConfig.max_inference_fps)
     parser.add_argument("--out", type=Path, help="write the metrics-only summary JSON here")
     parser.add_argument("-v", "--verbose", action="store_true", help="print every window")
+    parser.add_argument(
+        "--no-show", dest="show", action="store_false", help="do not open the preview window"
+    )
     args = parser.parse_args(argv)
     summary = asyncio.run(run(args))
     text = json.dumps(summary, indent=2)
