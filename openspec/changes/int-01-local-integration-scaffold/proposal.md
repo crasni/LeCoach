@@ -11,7 +11,7 @@ The four subsystem owners need one runnable local scaffold and compatible contra
 - Expose a loopback API, reconnectable event stream, volatile preview seam, and browser inspection shell.
 - Reuse the reviewed coaching preparation cases for deterministic synthetic replay with explicit authored-output provenance.
 - Provide locked setup, reproducible checks, and downstream consumption examples.
-- Replace the full plan at `docs/plans/INT-01.md` with a compatibility link to these artifacts; keep ownership/progress in [TASKS.md](../../../TASKS.md).
+- Replace the full plan at `docs/plans/INT-01.md` with a compatibility link to these artifacts; keep live ownership/progress/acceptance in [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination).
 
 The implementation in `b7a42cd` and `802042e` is merged through PR #4; checked tasks record existing evidence, rather than new work performed during migration. On 2026-10-07 the maintainer accepted completion and instructed archiving, waiving the remaining peer-review/downstream signoff gate. Live inference, audience smoothing, production coaching, hardware validation, and P1 features are outside INT-01.
 

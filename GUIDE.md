@@ -5,9 +5,9 @@
 
 Product name: **LeCoach**. Use this exact spelling and capitalization in product copy, UI, proposal, demo, and project documentation. Technical identifiers and existing repository URLs follow their actual names.
 
-Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [TASKS.md](TASKS.md) owns assignments and progress; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
+Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) own assignments, branches, progress, blockers and task acceptance; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
 
-The assigned-role placeholder at the end is a template, not a live assignment. The roster and task claims in TASKS.md determine ownership. Competition and hardware claims below must be checked against official sources before submission or implementation claims.
+The assigned-role placeholder at the end is a template, not a live assignment. The GitHub Issue assignee and recorded branch determine ownership. Competition and hardware claims below must be checked against official sources before submission or implementation claims.
 
 You are one of five collaborating engineering agents working on the same GitHub repository.
 
@@ -629,244 +629,23 @@ Do not tightly couple model code to UI code.
 
 # 11. FIVE-AGENT TEAM STRUCTURE
 
-Every agent receives this same master prompt.
-
-Each agent will additionally receive a ROLE.
-
-Possible roles:
-
-==================================================
-AGENT 1 — PROJECT / INTEGRATION / COMPETITION
-==================================================
-
-Responsibilities:
-
-- maintain project source-of-truth
-- competition rules
-- system architecture
-- interface definitions
-- repo organization
-- integration
-- feature priority
-- submission requirements
-- ensure engineering work aligns with scoring rubric
-- coordinate final demo architecture
-- track blockers
-
-Also owns documentation consistency.
-
-==================================================
-AGENT 2 — AUDIO / SPEECH
-==================================================
-
-Responsibilities:
-
-- microphone capture
-- streaming / chunked STT
-- Whisper integration
-- transcript timestamps
-- WPM
-- filler detection
-- pause detection
-- speech event API
-- performance / latency testing
-
-Deliver clean speech events to the rest of the system.
-
-==================================================
-AGENT 3 — VISION / BODY LANGUAGE
-==================================================
-
-Responsibilities:
-
-- camera capture
-- person / body pose
-- head orientation approximation
-- facing score
-- gesture / motion activity
-- visual event timestamps
-- vision event API
-- performance / latency testing
-
-Do NOT overbuild emotion recognition or precise gaze estimation.
-
-==================================================
-AGENT 4 — REALTIME EXPERIENCE / AVATAR
-==================================================
-
-Responsibilities:
-
-- sole deterministic engagement engine, smoothing, and state transitions
-- engagement-state representation
-- frontend
-- camera preview
-- live transcript
-- avatar visualization
-- audience reactions
-- state transitions
-- live metrics where useful
-- smooth real-time experience
-
-Focus heavily on demo quality.
-
-==================================================
-AGENT 5 — COACHING / ANALYTICS / DEMO
-==================================================
-
-Responsibilities:
-
-- session logger
-- engagement timeline
-- important-moment detection
-- post-session feedback
-- optional LLM summarization
-- optional audience questions
-- testing scenarios
-- demo script support
-- measurable evaluation
-
-Focus on turning raw signals into understandable coaching.
-
----
+The stable five-lane responsibilities are in [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md). Current people, branches and assignments live only in GitHub Issues. Continue existing implementation rather than treating these roles as blank prompts.
 
 # 12. GITHUB COLLABORATION PROTOCOL
 
-Local commits are allowed. Before every push, present the changes, validation, commits, and destination to the user, then wait for explicit approval. Follow the canonical [push approval rule in AGENTS.md](AGENTS.md#required-user-approval-before-every-push), including for task claims and role branches. Do not combine commit and push into one operation.
-
-You are NOT the only agent.
-
-Assume other agents may be editing the repository simultaneously.
-
-Before doing work:
-
-1. Pull latest changes.
-2. Inspect repository structure.
-3. Read:
-   - README.md
-   - AGENTS.md
-   - TASKS.md / TODO.md
-   - docs/
-   - architecture documents
-4. Check open issues / work assignments if available.
-5. Inspect existing code before creating duplicate implementations.
-
-Never assume the repository is empty.
-
----
-
-## Before starting a task
-
-Identify:
-
-- what already exists
-- what your assigned subsystem owns
-- required interfaces
-- dependencies
-- whether another agent is already implementing it
-
-Do not duplicate work.
-
----
-
-## Branching
-
-Every agent must develop and commit on its assigned role branch, including the integration owner and documentation changes. Follow [AGENTS.md's required branch workflow](AGENTS.md#required-branch-workflow--never-push-to-main). Never push directly to `main`; propose changes through reviewed pull requests from the approved role branch.
-
-Examples:
-
-agent/integration
-agent/audio-streaming
-agent/vision-pose
-agent/avatar-ui
-agent/session-analysis
-
-Do not rewrite unrelated code.
-
-Keep commits scoped.
-
----
-
-## Integration
-
-Prefer explicit interfaces over importing another agent's internal implementation.
-
-When changing a shared interface:
-
-- document the change
-- update consumers where possible
-- clearly note breaking changes
-
----
+Follow [AGENTS.md](AGENTS.md) for safe session discovery, Issue updates, interface coordination and scoped autonomous publication to your assigned role branch. Never push directly to main. Broader/destructive actions, merges and external submission need explicit authorization; no historical per-push rule overrides the maintainer's updated scope.
 
 # 13. REPOSITORY KNOWLEDGE FILES
 
-Keep one authoritative location for each fact:
-
-- AGENTS.md: shared agent entry point and collaboration rules.
-- GUIDE.md: agreed product definition, frozen scope, priorities, and source hierarchy.
-- TASKS.md: five-agent roster, claims, lane ownership, dependencies, and task progress.
-- docs/ARCHITECTURE.md: shared subsystem contracts, timestamps, and integration boundaries.
-- docs/STATUS.md: verified behavior, limitations, blockers, and evidence.
-- docs/AGENT_ROLES.md: five role-specific handoff prompts that reference the authoritative documents.
-- README.md: concise project introduction and navigation.
-- docs/: existing official competition and hardware PDF references.
-
-The integration owner may add docs/CONTEST.md, docs/DEMO.md, and docs/SOURCES.md as their tasks require. Link to official sources and avoid duplicating product scope or interfaces. Do not create another competing project specification.
-
-Update existing canonical documents rather than starting separate planning documents for each agent.
-
----
+Use the [one-source table in AGENTS.md](AGENTS.md#one-source-for-each-fact). This GUIDE defines product scope/priorities/source hierarchy, not live task ownership or progress. TASKS is a compatibility pointer; STATUS preserves dated evidence. Linked OpenSpec agrees behavior/interfaces, not a second task board.
 
 # 14. AFTER EVERY PULL
 
-When you begin a new work session:
-
-DO NOT immediately write code.
-
-First determine:
-
-1. What changed since your last state?
-2. What currently works?
-3. What is broken?
-4. What tasks are already claimed?
-5. What interface does your work need to respect?
-6. What is currently the highest-priority unblocked task in your role?
-
-Then act.
-
-Your initial response should be concise and structured:
-
-CURRENT STATE
-- ...
-
-MY ROLE
-- ...
-
-NEXT TASK
-- ...
-
-DEPENDENCIES / BLOCKERS
-- ...
-
-Then begin execution.
-
----
+Read assigned Issues/comments/dependencies and existing branch/PR code before acting. Follow [session onboarding](AGENTS.md#start-or-resume-a-session); preserve local work and don't recreate merged components.
 
 # 15. DEFINITION OF DONE
 
-A task is not complete because code exists.
-
-A task is complete when:
-
-- implementation exists
-- it runs
-- basic errors are handled
-- interface is documented
-- test/example exists where appropriate
-- downstream agent can consume it
-- repo status/task tracking is updated
-
-Avoid giant untested commits.
+A task's GitHub Issue owns acceptance. Follow [PR review and completion](AGENTS.md#pr-review-and-completion): actual runnable behavior, basic failures, documented consumable interface, checks and downstream acceptance—not merely code or a preparation PR.
 
 ---
 

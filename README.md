@@ -23,10 +23,10 @@ camera and coaching generation await their assigned subsystem handoffs.
 Start at [AGENTS.md](AGENTS.md), the shared entry point for all five collaborators. Follow the canonical documents linked there:
 
 - [GUIDE.md](GUIDE.md): agreed product scope and priorities.
-- [TASKS.md](TASKS.md): five workstreams, assignments, dependencies, and progress.
+- [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination): assignments, branches, live status, blockers and acceptance.
 - [Architecture](docs/ARCHITECTURE.md): shared event contracts.
-- [Implementation status](docs/STATUS.md): tested behavior and current blockers.
-- [Role handoffs](docs/AGENT_ROLES.md): the prompt for each agent.
+- [Implementation evidence](docs/STATUS.md): dated checks and limitations, not live task state.
+- [Lane boundaries](docs/AGENT_ROLES.md): stable responsibilities; assigned Issues provide the handoff.
 
 Official competition and hardware reference PDFs are in [docs/](docs/).
 
@@ -151,4 +151,4 @@ Lane 5's preparation files in `checks/coaching/` are reused unchanged from PR #1
 synthetic checks in `checks/speech/` are merged through PR #3. These merges do
 not complete the live speech or coaching implementations. Positive reason codes
 still require Lane 4's handoff. Keep local rehearsal data, credentials, and weights
-out of Git, and follow the push approval rule in AGENTS.md.
+out of Git, and follow the scoped publication rules in AGENTS.md.

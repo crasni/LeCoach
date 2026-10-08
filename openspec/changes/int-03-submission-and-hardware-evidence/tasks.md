@@ -1,6 +1,8 @@
 # Tasks
 
-These tasks implement the [proposal](proposal.md), [design](design.md), and two capability specs. All are initially unchecked: existing research is a baseline, not newly completed implementation. [TASKS.md](../../../TASKS.md) remains authoritative for ownership and overall INT-03 status.
+**Frozen execution record (coordination migration, 2026-10-08):** historical checklist states below preserve implementation/publication evidence as recorded before this migration. Do not update them as a live task board or treat an old publication/approval instruction as current policy. Live remaining work, dependencies and task acceptance belong exclusively to [Issue #12](https://github.com/crasni/LeCoach/issues/12); current publication follows [AGENTS](../../../AGENTS.md). Proposal/design/capability specs remain the agreed behavior reference.
+
+These tasks implement the [proposal](proposal.md), [design](design.md), and two capability specs. Original planning baseline: the checklist was initially unchecked; later checked entries record observed implementation, not a fresh validation in this migration.
 
 Groups 1–4 can proceed with local artifacts and available evidence. Group 5's live recording depends on INT-02 and Lane 5. Group 6's external actions depend on separate approvals and confirmed form/registration details. Completing an unavailable-hardware disposition does not complete a measured-inference milestone. Leave unmet final gates unchecked and record their next actions.
 
@@ -41,7 +43,7 @@ Groups 1–4 can proceed with local artifacts and available evidence. Group 5's 
 
 - [x] 6.1 Review the complete local package against both specs and current official requirements; verify each requirement/scenario has a documented result or explicit pending gate, all local references resolve, source/PDF/video versions match, OpenSpec strict validation passes, and Git whitespace checks pass. Keep INT-03 in progress while required final gates are unmet.
 - [x] 6.2 Prepare scoped local commits on `agent/integration` and present the exact commit set, validation, limitations, and `git@github.com:crasni/LeCoach.git` destination for push approval; verify the staged diff excludes private data and unrelated work, then wait for explicit approval before publishing.
-- [ ] 6.3 After matching approval, publish only the approved role-branch commits and prepare the scoped reviewed PR/handoff; verify remote tips and approved commits, link the PR/validation in TASKS/STATUS, and follow integration-owner review rules without a direct push to main.
+- [x] 6.3 After matching approval, publish only the approved role-branch commits and prepare the scoped reviewed PR/handoff; verify remote tips and approved commits, link the PR/validation in TASKS/STATUS, and follow integration-owner review rules without a direct push to main.
 - [ ] 6.4 After separate applicable team authorization and resolved registration/form gates, publish the reviewed video and submit the approved package; verify unlisted link accessibility, submitted artifact versions, cutoff compliance, and actual receipt. Retain private registration/receipt details outside Git and record only a sanitized confirmation.
 - [ ] 6.5 Reconcile final INT-03 status and readiness with actual review/delivery outcomes; verify required task acceptance and external gates before marking done, preserve deferred target-device measurements explicitly, and prepare any new local status commit for its own separate push approval.
 

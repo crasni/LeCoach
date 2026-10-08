@@ -1,108 +1,72 @@
 # LeCoach agent entry point
 
-You are joining a coordinated five-person engineering team building **LeCoach**. Read this file when you first open the repository and at the start of every new agent session. Understand the existing plan and your assignment before editing code.
-
-## Required branch workflow — never push to main
-
-Every collaborator and coding agent, including the integration owner, develops and commits on the assigned role branch in [TASKS.md](TASKS.md). This applies to code, documentation, task claims, and shared-interface changes.
-
-- Before editing, check the current branch. If it is `main`, create or switch to your assigned branch without discarding local work. If that branch already exists remotely, track it instead of starting a competing branch.
-- After explicit user push approval, push only the approved role branch. **Never push directly to `main`**, including with a refspec, force push, a multi-branch push, or an API bypass. Push approval does not waive this restriction.
-- Propose changes to `main` through a reviewed pull request from your role branch. The integration owner coordinates review and merge; remote merges remain subject to the approval rule below. Do not use a local merge followed by a push to `main`.
-
-The repository SSH remote is `git@github.com:crasni/LeCoach.git`. Read-only updates from `main` are allowed; publish your work from your own branch.
-
-## Required user approval before every push
-
-The user explicitly requires this workflow for this project:
-
-1. Local edits, checks, and commits are allowed without push approval.
-2. When the work is ready to share, tell the user what changed, the validation results, the exact commit or commit range, and the destination remote and branch.
-3. Ask for approval and **wait for the user's explicit approval before pushing**. A notice alone is not approval. Silence, earlier pushes, task assignment, an instruction to implement work, and sandbox/tool execution approval do not authorize a new push.
-4. Push only the reviewed commits to the stated destination after approval. If the commits or destination change, present the revised proposal and obtain approval again. Approval for one push does not authorize later pushes.
-
-This applies to every branch and tag and to any tool/API that would publish local commits or update remote Git refs. Do not bundle a push into a commit command, automate it in the background, or bypass the wait through another agent. Prepare local work while approval is pending; report it as committed locally, not shared with the team.
-
-This rule takes precedence over instructions below or in other project documents to publish task claims, handoffs, or feature branches. Read-only remote checks, fetch, and safe pull remain allowed. Keep this rule in effect across future sessions unless the user explicitly changes it.
-
-## Understand the project
-
-LeCoach is **Your Private AI Audience**: a local presentation rehearsal tool that listens through the microphone, watches through the webcam, and makes virtual audience avatars react to delivery in real time. After the rehearsal it highlights specific strong and improvement moments with practical suggestions. Live audience response is the central product value.
-
-The agreed direction is Workplace AI / Battlefield Lightning in the ASUS UGen AI League Hackathon 2026, targeting ASUS UGen300. Prioritize a simple, reliable Stage I prototype and demo. Treat competition details and hardware capabilities as requiring official verification before claiming them.
-
-The frozen MVP is local speech analysis + approximate body/head-facing analysis → one deterministic engagement engine with smoothing → simple reactive avatars → synchronized timeline and concise feedback. Optional LLM feedback, audience questions, and TTS wait until P0 works end to end. Keep rehearsal data local.
-
-This is an orientation summary. [GUIDE.md](GUIDE.md) controls product scope; [docs/STATUS.md](docs/STATUS.md) records what actually works. Do not assume the planned system has been implemented, invent launch commands, or rebuild components without inspecting the repository.
-
-## First-session onboarding
-
-1. Follow the read-before-work sequence below, then inspect the repository, recent commits, and relevant open PRs when accessible.
-2. Identify the collaborator's GitHub username and match it to the Owner column in [TASKS.md](TASKS.md). A matching row is the assigned lane: use its branch, first task, and role prompt without asking the user to assign a lane again. Do not invent a username or infer identity from someone else's Git commit author. Check the row's access state; pending invitations must be accepted before pushing work.
-3. If your user explicitly assigned a lane, use it and coordinate its claim on the shared board. Otherwise, if the roster does not identify your lane, ask the user which lane to take while continuing read-only inspection. Do not silently take another collaborator's work.
-4. Read that lane's prompt in [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md). TASKS.md provides its exact branch, first task, dependencies, and acceptance criteria. Remain in that lane for the session unless the team explicitly reassigns you.
-5. Pick the highest-priority available task whose dependencies are met. Claim it using the protocol below. If no integration owner is assigned yet, coordinate the initial claim with the repository maintainer identified in TASKS.md.
-6. Start with a concise update using this format, then execute the authorized task:
-
-   ```text
-   CURRENT STATE: What exists, what changed, and what is verified.
-   MY ROLE: Lane and collaborator username; flag any unconfirmed assignment.
-   NEXT TASK: Task ID, branch, and concrete first deliverable.
-   DEPENDENCIES / BLOCKERS: Required interfaces, pending handoffs, and missing access.
-   ```
-
-If integration scaffolding or a required contract has not landed, coordinate with Lane 1. Prepare compatible fixtures, implementation research, or checks inside your lane while waiting; do not independently create a competing application stack or shared interface. Missing GitHub API access is a reported limitation, not evidence that there are no collaborators or open PRs.
-
-## Human handoff to a new agent
-
-Open this repository in your coding agent and give it:
-
-```text
-Read AGENTS.md and follow its onboarding instructions before making changes.
-My GitHub username is <username>. Find my assigned lane in TASKS.md.
-Read the shared documents, inspect current code and claims, then report your
-current state, role, next task, and blockers. Claim and implement the highest-
-priority available task in my lane, validate it, and update the shared task
-board and implementation status. Coordinate interfaces with the integrator.
-```
-
-Replace `<username>` with the actual collaborator's GitHub username. The shared board remains authoritative for ownership; a handoff does not override an existing claim.
-
-## Read before work
-
-1. Check `git status` and preserve existing local changes. Pull with `git pull --ff-only` when safe; never reset someone else's work.
-2. Read [GUIDE.md](GUIDE.md) for product scope and priorities.
-3. Read [TASKS.md](TASKS.md) for the five workstreams, owners, dependencies, and current task state.
-4. Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the shared event contracts.
-5. Read [docs/STATUS.md](docs/STATUS.md) for what has actually been verified, and the relevant prompt in [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md).
-6. Inspect current implementation and open PRs before adding code. GitHub collaborator access alone does not assign a workstream.
+LeCoach is **Your Private AI Audience**: local speech and approximate body/head-facing signals drive one deterministic audience engine, followed by evidence-based coaching. Keep the frozen P0 scope in [GUIDE.md](GUIDE.md); optional LLM, questions and TTS wait for an accepted end-to-end P0.
 
 ## One source for each fact
 
-| Fact | Authoritative location |
+| Fact | Source |
 | --- | --- |
-| Product scope, priorities, competition source hierarchy | `GUIDE.md` |
-| Team membership mapping, task ownership, branches, task progress | `TASKS.md` |
-| Event schemas, units, clocks, subsystem boundaries | `docs/ARCHITECTURE.md` |
-| Tested behavior, limitations, blockers and hardware evidence | `docs/STATUS.md` |
-| Instructions for starting each role | `docs/AGENT_ROLES.md` |
+| Owner, assigned branch, live status, blockers, remaining work and task acceptance | [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) |
+| Behavior/interface proposal, agreed delta and rationale | Linked `openspec/` proposal/design/specs; [OpenSpec workflow](docs/WORKFLOW.md) |
+| Canonical event schemas, units, clocks and subsystem boundaries | [ARCHITECTURE.md](docs/ARCHITECTURE.md) and `src/lecoach/contracts/` |
+| Product scope and official-source hierarchy | [GUIDE.md](GUIDE.md) |
+| Reproducible checks, dated observations and limitations | Issue/PR evidence; [STATUS.md](docs/STATUS.md) is historical evidence, not a live board |
+| Stable lane responsibilities | [AGENT_ROLES.md](docs/AGENT_ROLES.md) |
 
-Link to these documents instead of copying their facts into another spec. Latest official competition rules and official hardware documentation take precedence over repository assumptions, as GUIDE.md requires. Record a conflict before changing the plan.
+[TASKS.md](TASKS.md) is a compatibility pointer only. Do not copy live Issue fields or acceptance into a second file/board. OpenSpec implementation checklists may provide historical evidence/work breakdown, but never override the Issue's current state or acceptance.
 
-## Claim and collaborate
+## Start or resume a session
 
-- Exactly one owner per task. Named assignments already in `TASKS.md` determine ownership; activate your assigned task by updating its status and date with your GitHub username and lane branch before implementing it. Land or coordinate that claim through the integration owner before assuming ownership; a conflicting claim must be resolved first.
-- Use your assigned role branch for every change. Follow the required branch workflow above: never commit or push directly to `main`; submit a reviewed PR instead.
-- Keep changes within your lane. Coordinate shared contracts, scaffold, dependencies, and root configuration through the integration owner; agree on a contract revision before changing producers or consumers.
-- Submit a scoped PR referencing task IDs, behavior changed, validation evidence, limitations, and downstream handoff. Subsystem PRs require integration-owner review before merge; integration-owner changes should receive another collaborator's review. Coordinate the initial documentation/scaffold handoff with the maintainer if the integration role is still unassigned.
-- Merge compatible PRs through the integration owner, then pull and inspect changes before continuing. Do not merge incomplete adapters into a supposedly live demo.
-- Never overwrite uncommitted work, force-push shared branches, fabricate completion evidence, or create a second engagement engine/logger.
-- These five roles represent the whole team. Additional agent delegation requires an explicit request by the user or coordination with the team; avoid assigning another agent to an already-owned task.
+1. Check `git status` and the current branch. Preserve uncommitted work; fetch safely. Never reset, stash away, delete or overwrite another session's work. Use an isolated checkout/worktree when another session shares the clone.
+2. Confirm the collaborator's actual GitHub username from the user or authenticated account, never from a commit author or runtime agent name. Read assigned Issues, full bodies/comments, native **Blocked by** relationships, relevant PRs and existing remote/local code:
 
-## Completion standard
+   ```sh
+   gh issue list --repo crasni/LeCoach --assignee <username> --state open --label coordination
+   gh issue view <number> --repo crasni/LeCoach --comments
+   gh api repos/crasni/LeCoach/issues/<number>/dependencies/blocked_by
+   gh pr list --repo crasni/LeCoach --state open
+   git fetch --prune origin
+   ```
 
-A task is done when it runs, handles basic failures, respects the shared contracts, has an appropriate reproducible example or meaningful check, and downstream consumers can use it. Update `TASKS.md` and `docs/STATUS.md` with the evidence in the same PR.
+3. Use the Issue's owner and **Implementation branch**. Existing assignments persist; do not ask to choose a lane again, reassign someone else, create duplicate tasks or restart merged/partially implemented work. Track the existing remote role branch. If identity/assignment/access is unresolved, ask while continuing read-only inspection.
+4. Read the relevant contract/spec and stable role boundary before editing. Select useful work within the Issue: distinguish completed work, independent work and the exact gated handoff. A dependency on final acceptance need not prevent independent tests, fixtures or design.
+5. Update the assigned Issue body/status label and add a concise start/resume comment. Report `CURRENT STATE`, `MY ROLE`, `NEXT TASK` (Issue + branch + deliverable), and `DEPENDENCIES / BLOCKERS`. No documentation claim PR is needed.
 
-Distinguish synthetic fixtures, real camera/microphone input, local inference, and measured UGen300 inference. Do not present a planned accelerator adapter as working hardware integration. Do not claim eye tracking or emotion detection from approximate head direction.
+## Issue coordination
 
-Keep voice, video, transcripts, sessions, credentials, and downloaded model weights out of Git. P1 work begins only after the integrated P0 demo passes.
+- Exactly one responsible GitHub assignee and one `status:*` label: `todo`, `in_progress`, `blocked`, or `review`; accepted completion is a closed Issue. Keep the body status consistent with its label; don't treat a task's initial audit timestamp as current evidence.
+- Maintain owner, branch, already done, remaining work, exact required handoff, acceptance and links to relevant specs/PRs. Add/remove native **Blocked by** relationships as dependencies are actually accepted. Explain external access/hardware/team decisions in the body when they are not Issues.
+- Identify the blocker, needed decision/interface, responsible owner and useful independent work. Tag affected owners in the Issue. Never invent a shared contract or interpret silence as approval.
+- Shared event/configuration/behavior changes need a linked OpenSpec proposal/delta, integration agreement and affected-owner review before producers/consumers change. Routine implementation/tests against an agreed interface do not need a new spec.
+- Root composition, dependency manifests/lockfiles and canonical shared documentation are integration-owned. Other lanes propose those changes through the relevant Issue/PR; don't import another lane's private internals, create a second engine/recorder or merge an incomplete adapter to bypass a blocker.
+- Missing GitHub access is a limitation, not proof that work/owners/PRs do not exist. Keep local notes explicitly provisional and reconcile the Issue when access returns.
+
+## Scoped autonomous branch publication
+
+The maintainer explicitly replaced per-push approval with this scoped policy during the coordination migration. Agents may independently implement, test, commit and push routine work **within their assigned Issue/lane to its assigned role branch**, and open/update scoped PRs. No separate approval is required for each such push; record commit/PR/check evidence in the Issue.
+
+Before publishing, verify the exact branch, staged diff, remote and scope. The canonical remote is `git@github.com:crasni/LeCoach.git`. Push an explicit single destination, for example:
+
+```sh
+git push origin HEAD:refs/heads/<assigned-role-branch>
+```
+
+**Never push directly to `main`**, including refspec/API bypasses. No force push, history rewrite, multi-branch/tag push, branch deletion, ownership reassignment, unrelated changes or publication of private data is covered. Conflicting remote updates stop publication; inspect and reconcile without discarding work. Broader/destructive actions, other people's branches and merges require specific maintainer/team authorization. Competition upload/submission and real rehearsal recording/publication require their own authorization.
+
+## PR review and completion
+
+Open a scoped PR targeting `main`, linked to the Issue and relevant OpenSpec, with behavior, reproducible commands/results, fixture versus live mode, limitations, changed interfaces and downstream handoff. Move the Issue to `review` only when the submitted scope is reviewable. Integration coordinates review and dependency-order merge; integration-owned changes should receive another collaborator's review unless the maintainer explicitly waives it.
+
+A merged preparation/component PR does **not** complete a larger live task. Close the Issue only after all its acceptance is verified: runnable behavior, basic failures, documented consumable interface, appropriate tests and downstream acceptance. Partial PRs use `Refs #N`, not automatic closing keywords. Record any acceptance exception and who authorized it. Add dated implementation evidence to STATUS only when useful, not a second progress/blocker board.
+
+Distinguish synthetic fixtures, actual microphone/camera, local model inference and measured UGen300 inference. Do not claim validated latency, target compatibility, eye tracking or emotion detection without evidence. Keep voice/video/transcripts/sessions/credentials/downloaded model weights out of Git. Additional agent delegation needs an explicit user request or team coordination; don't duplicate an owned task.
+
+## Handoff to an existing or new agent
+
+```text
+Read AGENTS.md. My GitHub username is <username>.
+Read my assigned GitHub Issues, comments, dependencies and existing branch/PR work.
+Continue the existing assignment rather than restarting it. Report current state,
+next useful deliverable and exact blockers, then implement/check/publish within
+its authorized scope. Update the Issue; coordinate shared interfaces before changes.
+```
