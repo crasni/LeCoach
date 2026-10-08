@@ -58,19 +58,45 @@ files. See [recorder behavior and retention](../../src/lecoach/coaching/README.m
 | `repeated_sessions` | Separate summaries with no supported moments | Reused event IDs and zero-based clocks stay scoped to each session; discard old-session callback |
 | `adjacent_incidents` | One improvement, no strength | Two transitions citing the same incident do not create duplicate advice |
 
-The positive transitions in `weak_to_improved` deliberately have empty reason
-lists: the shared document has not named positive reason codes. The illustrative
+The historical authored positive transitions in `weak_to_improved` deliberately
+have empty reason lists: positive codes were not named when they were authored.
+The illustrative
 strength cites an authored `ENGAGED` state and direct speech/facing observations;
-it does not assert which rule caused that state. Lane 4 must supply and review
-actual reason codes and representative transition output before this example
-becomes an integrated acceptance baseline. Only the already documented
+it does not assert which rule caused that state. Lane 4 has since published
+`pace_steady` and `facing_audience` in merged PR #7; final evidence acceptance
+is tracked in issue #18. This historical example is not the computed-engine
+acceptance baseline. Only the originally documented
 `pace_high` and `facing_away_sustained` examples are used for negative reasons.
 Numeric observations are synthetic demo examples, not validated thresholds.
 Head/body facing is approximate; the feedback does not claim eye tracking,
 emotion detection, or inferred confidence. The adjacent-transition case tests
 coaching deduplication; it cannot establish that the live engine smooths correctly.
 
-## Check real output after the dependency handoff
+## Check computed engine and coaching output
+
+```sh
+uv run python checks/coaching/feedback_replay.py
+uv run python checks/coaching/feedback_replay.py --case weak_to_improved --show-feedback
+uv run pytest -q tests/test_feedback.py
+```
+
+This optional composition runs the production engine, recorder and template
+generator through the published replay seam. `engine_expectations.json` contains
+test-only assertions hand-derived from the merged engine's transition timing and
+reason citations. It defines no new session/event shape. The checker validates
+canonical completed sessions and feedback references before comparing anchors.
+All nine cases / ten sessions run without devices or persistent output. Tests also
+exercise the existing API with this factory injected; the default app is unchanged.
+
+For `weak_to_improved`, computed transitions occur at 0, 20, 30, 35 and 40 seconds.
+The feedback anchors at direct capture observations: pace improvement 10 seconds,
+approximate-facing improvement 25 seconds, and strength 40 seconds. The strength
+uses `vision-35`, as cited by the engine; `vision-40` arrived after that reaction.
+Repeated `pace_high` references at 20 and 30 seconds produce one improvement.
+Final engine/evidence acceptance and any revert disposition remain integration
+dependencies; this is a proposed consumer baseline for review.
+
+## Check historical authored outputs
 
 After Lane 1 confirms the contracts and Lane 4 provides transitions, use the
 application's actual recorder and feedback generator to consume a selected case.
@@ -104,14 +130,13 @@ pace bands, audience smoothing, device release, or local privacy behavior.
 
 Lane 1 has published executable event types, lifecycle subscription/stop boundaries,
 the shared clock, fixture replay entry point, and application layout through PR #4.
-The in-memory recorder continuation uses those seams and awaits integration review.
-Lane 4 still needs to confirm reason vocabulary,
-positive-transition evidence, and actual deterioration/recovery examples. No
-shared interface revision is introduced by these preparation artifacts.
+The in-memory recorder uses those seams and was merged in PR #5. Lane 4's merged
+PR #7 supplies reason vocabulary, positive evidence and computed deterioration/
+recovery examples, with final acceptance pending issue #18. No shared interface
+revision is introduced here.
 
-The recorder is implemented in `src/lecoach/coaching/`; moment selection and the
-template feedback generator remain pending Lane 4's evidence. Those consumers
-should use the existing `Event`,
+The recorder, selector, templates and optional replay composition are implemented
+in `src/lecoach/coaching/`; they use the existing `Event`,
 `CompletedSession`, `Feedback`, and `Moment` contracts. The UI remains Lane 4's
 responsibility. Durable storage, live integration, and the COACH-02 demo evidence
 are still pending; P1 LLM feedback/questions/TTS remain gated by integrated P0.
