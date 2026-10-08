@@ -113,7 +113,8 @@ real engine and recorder/generator. [The subscription example](examples/consume_
 demonstrates consumption without importing model internals.
 
 Lane 5's preparation files in `checks/coaching/` are reused unchanged from PR #1
-(`dcc280f`, branch head `b8f5597`). That is local integration of synthetic artifacts,
-not a remote PR merge or a completed coaching implementation. Positive reason codes
+(`dcc280f`, preparation head `b8f5597`), now merged as preparation. Lane 2's
+synthetic checks in `checks/speech/` are merged through PR #3. These merges do
+not complete the live speech or coaching implementations. Positive reason codes
 still require Lane 4's handoff. Keep local rehearsal data, credentials, and weights
 out of Git, and follow the push approval rule in AGENTS.md.

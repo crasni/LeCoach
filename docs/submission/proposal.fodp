@@ -1,0 +1,1305 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<office:document xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" office:version="1.3" office:mimetype="application/vnd.oasis.opendocument.presentation">
+  <office:meta>
+    <dc:title>LeCoach — Your Private AI Audience</dc:title>
+    <dc:creator>LeCoach team</dc:creator>
+  </office:meta>
+  <office:font-face-decls>
+    <style:font-face style:name="Arial" svg:font-family="Arial" />
+  </office:font-face-decls>
+  <office:styles>
+    <style:default-style style:family="paragraph">
+      <style:paragraph-properties fo:margin-top="0cm" fo:margin-bottom="0cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="18pt" fo:color="#F6F5EF" />
+    </style:default-style>
+  </office:styles>
+  <office:automatic-styles>
+    <style:page-layout style:name="PageLayout">
+      <style:page-layout-properties fo:page-width="33.8667cm" fo:page-height="19.05cm" style:print-orientation="landscape" fo:margin-top="0cm" fo:margin-bottom="0cm" fo:margin-left="0cm" fo:margin-right="0cm" />
+    </style:page-layout>
+    <style:style style:name="PageStyle" style:family="drawing-page">
+      <style:drawing-page-properties draw:fill="solid" draw:fill-color="#111E2D" presentation:background-visible="true" />
+    </style:style>
+    <style:style style:name="G0" style:family="graphic">
+      <style:graphic-properties draw:fill="solid" draw:stroke="none" fo:padding="0cm" draw:textarea-vertical-align="top" draw:auto-grow-height="false" draw:auto-grow-width="false" draw:fill-color="#87E6CA" />
+    </style:style>
+    <style:style style:name="G1" style:family="graphic">
+      <style:graphic-properties draw:fill="none" draw:stroke="none" fo:padding="0cm" draw:textarea-vertical-align="top" draw:auto-grow-height="false" draw:auto-grow-width="false" />
+    </style:style>
+    <style:style style:name="P0" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="11pt" fo:font-weight="bold" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="P1" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="34pt" fo:font-weight="bold" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P2" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="10pt" fo:font-weight="normal" fo:color="#B7C8D6" />
+    </style:style>
+    <style:style style:name="P3" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="right" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="10pt" fo:font-weight="normal" fo:color="#B7C8D6" />
+    </style:style>
+    <style:style style:name="P4" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="11pt" fo:font-weight="normal" fo:color="#F7BB70" />
+    </style:style>
+    <style:style style:name="P5" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="42pt" fo:font-weight="bold" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P6" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="22pt" fo:font-weight="normal" fo:color="#B7C8D6" />
+    </style:style>
+    <style:style style:name="G2" style:family="graphic">
+      <style:graphic-properties draw:fill="solid" draw:stroke="none" fo:padding="0cm" draw:textarea-vertical-align="top" draw:auto-grow-height="false" draw:auto-grow-width="false" draw:fill-color="#111E2D" />
+    </style:style>
+    <style:style style:name="P7" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="12pt" fo:font-weight="bold" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="G3" style:family="graphic">
+      <style:graphic-properties draw:fill="solid" draw:stroke="none" fo:padding="0cm" draw:textarea-vertical-align="top" draw:auto-grow-height="false" draw:auto-grow-width="false" draw:fill-color="#F7BB70" />
+    </style:style>
+    <style:style style:name="P8" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="12pt" fo:font-weight="bold" fo:color="#F7BB70" />
+    </style:style>
+    <style:style style:name="P9" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="18pt" fo:font-weight="normal" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="P10" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="17pt" fo:font-weight="normal" fo:color="#B7C8D6" />
+    </style:style>
+    <style:style style:name="G4" style:family="graphic">
+      <style:graphic-properties draw:fill="solid" draw:stroke="none" fo:padding="0cm" draw:textarea-vertical-align="top" draw:auto-grow-height="false" draw:auto-grow-width="false" draw:fill-color="#1B2D40" />
+    </style:style>
+    <style:style style:name="P11" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="23pt" fo:font-weight="bold" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P12" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="center" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="19pt" fo:font-weight="bold" fo:color="#111E2D" />
+    </style:style>
+    <style:style style:name="P13" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="24pt" fo:font-weight="bold" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P14" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="25pt" fo:font-weight="normal" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="P15" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="center" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="22pt" fo:font-weight="bold" fo:color="#B7C8D6" />
+    </style:style>
+    <style:style style:name="P16" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="center" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="13pt" fo:font-weight="bold" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P17" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="center" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="22pt" fo:font-weight="bold" fo:color="#F7BB70" />
+    </style:style>
+    <style:style style:name="P18" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="center" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="22pt" fo:font-weight="bold" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="P19" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="21pt" fo:font-weight="normal" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P20" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="19pt" fo:font-weight="bold" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P21" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="13pt" fo:font-weight="normal" fo:color="#B7C8D6" />
+    </style:style>
+    <style:style style:name="P22" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="24pt" fo:font-weight="normal" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="G5" style:family="graphic">
+      <style:graphic-properties draw:fill="none" draw:stroke="solid" fo:padding="0cm" draw:textarea-vertical-align="top" draw:auto-grow-height="false" draw:auto-grow-width="false" svg:stroke-color="#87E6CA" svg:stroke-width="0.035cm" />
+    </style:style>
+    <style:style style:name="P23" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="20pt" fo:font-weight="normal" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="P24" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="14pt" fo:font-weight="normal" fo:color="#B7C8D6" />
+    </style:style>
+    <style:style style:name="P25" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="25pt" fo:font-weight="bold" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="P26" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="19pt" fo:font-weight="normal" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P27" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="44pt" fo:font-weight="bold" fo:color="#87E6CA" />
+    </style:style>
+    <style:style style:name="P28" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="18pt" fo:font-weight="normal" fo:color="#F6F5EF" />
+    </style:style>
+    <style:style style:name="P29" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="18pt" fo:font-weight="normal" fo:color="#F7BB70" />
+    </style:style>
+    <style:style style:name="P30" style:family="paragraph">
+      <style:paragraph-properties fo:text-align="left" fo:margin-bottom="0.08cm" fo:line-height="112%" />
+      <style:text-properties style:font-name="Arial" fo:font-family="Arial" fo:font-size="17pt" fo:font-weight="normal" fo:color="#F6F5EF" />
+    </style:style>
+  </office:automatic-styles>
+  <office:master-styles>
+    <style:master-page style:name="Master" style:page-layout-name="PageLayout" draw:style-name="PageStyle" />
+  </office:master-styles>
+  <office:body>
+    <office:presentation>
+      <draw:page draw:name="01" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object1" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object2" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">WORKPLACE AI / BATTLEFIELD LIGHTNING</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object3" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">LeCoach</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object4" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object5" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  01</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object6" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Proposal draft • 8 October 2026 • Current prototype uses authored synthetic replay</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object7" draw:style-name="G1" svg:x="1.45cm" svg:y="5.5cm" svg:width="20cm" svg:height="3.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P5">Practice alone.</text:p>
+            <text:p text:style-name="P5">Feel an audience.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object8" draw:style-name="G1" svg:x="1.5cm" svg:y="10.25cm" svg:width="19.7cm" svg:height="2.2cm">
+          <draw:text-box>
+            <text:p text:style-name="P6">Your Private AI Audience.</text:p>
+            <text:p text:style-name="P6">A local rehearsal experience for workplace presenters.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:ellipse draw:name="Object9" draw:style-name="G0" svg:x="24.1cm" svg:y="6.0cm" svg:width="2.05cm" svg:height="2.05cm" />
+        <draw:ellipse draw:name="Object10" draw:style-name="G2" svg:x="24.6cm" svg:y="6.52cm" svg:width="0.16cm" svg:height="0.18cm" />
+        <draw:ellipse draw:name="Object11" draw:style-name="G2" svg:x="25.42cm" svg:y="6.52cm" svg:width="0.16cm" svg:height="0.18cm" />
+        <draw:rect draw:name="Object12" draw:style-name="G2" svg:x="24.67cm" svg:y="7.18cm" svg:width="0.84cm" svg:height="0.075cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object13" draw:style-name="G1" svg:x="27.0cm" svg:y="6.7cm" svg:width="5.0cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P7">ATTENTION</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:ellipse draw:name="Object14" draw:style-name="G3" svg:x="24.1cm" svg:y="9.0cm" svg:width="2.05cm" svg:height="2.05cm" />
+        <draw:ellipse draw:name="Object15" draw:style-name="G2" svg:x="24.6cm" svg:y="9.52cm" svg:width="0.16cm" svg:height="0.18cm" />
+        <draw:ellipse draw:name="Object16" draw:style-name="G2" svg:x="25.42cm" svg:y="9.52cm" svg:width="0.16cm" svg:height="0.18cm" />
+        <draw:rect draw:name="Object17" draw:style-name="G2" svg:x="24.67cm" svg:y="10.18cm" svg:width="0.84cm" svg:height="0.075cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object18" draw:style-name="G1" svg:x="27.0cm" svg:y="9.7cm" svg:width="5.0cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P8">REACTION</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:ellipse draw:name="Object19" draw:style-name="G0" svg:x="24.1cm" svg:y="12.0cm" svg:width="2.05cm" svg:height="2.05cm" />
+        <draw:ellipse draw:name="Object20" draw:style-name="G2" svg:x="24.6cm" svg:y="12.52cm" svg:width="0.16cm" svg:height="0.18cm" />
+        <draw:ellipse draw:name="Object21" draw:style-name="G2" svg:x="25.42cm" svg:y="12.52cm" svg:width="0.16cm" svg:height="0.18cm" />
+        <draw:rect draw:name="Object22" draw:style-name="G2" svg:x="24.67cm" svg:y="13.18cm" svg:width="0.84cm" svg:height="0.075cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object23" draw:style-name="G1" svg:x="27.0cm" svg:y="12.7cm" svg:width="5.0cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P7">NEXT ACTION</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object24" draw:style-name="G1" svg:x="1.5cm" svg:y="14.75cm" svg:width="26cm" svg:height="0.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P9">The problem: practicing alone offers no responsive audience.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="02" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object25" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object26" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">INTENDED USER</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object27" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">Before the meeting,</text:p>
+            <text:p text:style-name="P1">rehearse in private.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object28" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Initial user hypothesis: workplace speakers who need a repeatable way to practice delivery.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object29" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object30" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  02</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object31" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">User needs and value are hypotheses; no user study or measured benefit is claimed.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object32" draw:style-name="G4" svg:x="1.4cm" svg:y="7.0cm" svg:width="9.7cm" svg:height="8.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object33" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="7.35cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">01 / TEAM UPDATE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object34" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="8.120000000000001cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Make the message</text:p>
+            <text:p text:style-name="P11">easy to follow.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object35" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="10.65cm" svg:width="8.799999999999999cm" svg:height="4.249999999999999cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Team leads rehearsing an update before colleagues hear it.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object36" draw:style-name="G4" svg:x="12.1cm" svg:y="7.0cm" svg:width="9.7cm" svg:height="8.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object37" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="7.35cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">02 / PROPOSAL</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object38" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="8.120000000000001cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Explain a complex</text:p>
+            <text:p text:style-name="P11">idea clearly.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object39" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="10.65cm" svg:width="8.799999999999999cm" svg:height="4.249999999999999cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">People presenting a plan, product decision or project result.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object40" draw:style-name="G4" svg:x="22.8cm" svg:y="7.0cm" svg:width="9.7cm" svg:height="8.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object41" draw:style-name="G1" svg:x="23.25cm" svg:y="7.35cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">03 / IMPORTANT MOMENT</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object42" draw:style-name="G1" svg:x="23.25cm" svg:y="8.120000000000001cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Practice without</text:p>
+            <text:p text:style-name="P11">scheduling a crowd.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object43" draw:style-name="G1" svg:x="23.25cm" svg:y="10.65cm" svg:width="8.799999999999999cm" svg:height="4.249999999999999cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Speakers preparing for a pitch, interview or internal review.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="03" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object44" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object45" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">PLANNED REHEARSAL JOURNEY</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object46" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">One session.</text:p>
+            <text:p text:style-name="P1">A useful next rehearsal.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object47" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Speak, notice the audience response, then revisit a few moments with evidence.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object48" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object49" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  03</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object50" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Planned live experience. The current shell demonstrates authored synthetic playback only.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object51" draw:style-name="G4" svg:x="1.4cm" svg:y="7.7cm" svg:width="7.1cm" svg:height="7.0cm" draw:corner-radius="0.18cm" />
+        <draw:ellipse draw:name="Object52" draw:style-name="G0" svg:x="1.8499999999999999cm" svg:y="8.25cm" svg:width="1.15cm" svg:height="1.15cm" />
+        <draw:frame draw:name="Object53" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="8.42cm" svg:width="1.15cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P12">1</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object54" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="10.1cm" svg:width="6.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P13">Prepare</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object55" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="11.7cm" svg:width="6.2cm" svg:height="2.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Choose rehearsal.</text:p>
+            <text:p text:style-name="P10">Check input status.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object56" draw:style-name="G1" svg:x="8.6cm" svg:y="10.4cm" svg:width="0.8cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P14">→</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object57" draw:style-name="G4" svg:x="9.4cm" svg:y="7.7cm" svg:width="7.1cm" svg:height="7.0cm" draw:corner-radius="0.18cm" />
+        <draw:ellipse draw:name="Object58" draw:style-name="G0" svg:x="9.85cm" svg:y="8.25cm" svg:width="1.15cm" svg:height="1.15cm" />
+        <draw:frame draw:name="Object59" draw:style-name="G1" svg:x="9.85cm" svg:y="8.42cm" svg:width="1.15cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P12">2</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object60" draw:style-name="G1" svg:x="9.85cm" svg:y="10.1cm" svg:width="6.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P13">Deliver</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object61" draw:style-name="G1" svg:x="9.85cm" svg:y="11.7cm" svg:width="6.2cm" svg:height="2.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Speech + head/body</text:p>
+            <text:p text:style-name="P10">facing signals.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object62" draw:style-name="G1" svg:x="16.6cm" svg:y="10.4cm" svg:width="0.8cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P14">→</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object63" draw:style-name="G4" svg:x="17.4cm" svg:y="7.7cm" svg:width="7.1cm" svg:height="7.0cm" draw:corner-radius="0.18cm" />
+        <draw:ellipse draw:name="Object64" draw:style-name="G0" svg:x="17.849999999999998cm" svg:y="8.25cm" svg:width="1.15cm" svg:height="1.15cm" />
+        <draw:frame draw:name="Object65" draw:style-name="G1" svg:x="17.849999999999998cm" svg:y="8.42cm" svg:width="1.15cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P12">3</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object66" draw:style-name="G1" svg:x="17.849999999999998cm" svg:y="10.1cm" svg:width="6.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P13">Feel</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object67" draw:style-name="G1" svg:x="17.849999999999998cm" svg:y="11.7cm" svg:width="6.2cm" svg:height="2.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">One rule engine.</text:p>
+            <text:p text:style-name="P10">Gradual reactions.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object68" draw:style-name="G1" svg:x="24.599999999999998cm" svg:y="10.4cm" svg:width="0.8cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P14">→</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object69" draw:style-name="G4" svg:x="25.4cm" svg:y="7.7cm" svg:width="7.1cm" svg:height="7.0cm" draw:corner-radius="0.18cm" />
+        <draw:ellipse draw:name="Object70" draw:style-name="G0" svg:x="25.849999999999998cm" svg:y="8.25cm" svg:width="1.15cm" svg:height="1.15cm" />
+        <draw:frame draw:name="Object71" draw:style-name="G1" svg:x="25.849999999999998cm" svg:y="8.42cm" svg:width="1.15cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P12">4</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object72" draw:style-name="G1" svg:x="25.849999999999998cm" svg:y="10.1cm" svg:width="6.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P13">Review</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object73" draw:style-name="G1" svg:x="25.849999999999998cm" svg:y="11.7cm" svg:width="6.2cm" svg:height="2.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">A few moments.</text:p>
+            <text:p text:style-name="P10">Concrete next steps.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="04" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object74" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object75" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">CENTRAL PRODUCT VALUE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object76" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">Live audience response.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object77" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Turn delivery signals into an intuitive reaction the speaker can notice.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object78" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object79" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  04</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object80" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Deterministic engagement and smoothing are planned owner implementations; no emotion or eye tracking.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object81" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="7.9cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object82" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">OBSERVE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object83" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Delivery signals</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object84" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="3.95cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Pace, fillers and pauses.</text:p>
+            <text:p text:style-name="P10">Approximate facing and</text:p>
+            <text:p text:style-name="P10">movement observations.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object85" draw:style-name="G4" svg:x="12.1cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="7.9cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object86" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">COMBINE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object87" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">One engagement</text:p>
+            <text:p text:style-name="P11">engine</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object88" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="3.95cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Rules with smoothing.</text:p>
+            <text:p text:style-name="P10">Stale and missing signals</text:p>
+            <text:p text:style-name="P10">remain explicit.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object89" draw:style-name="G4" svg:x="22.8cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="7.9cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object90" draw:style-name="G1" svg:x="23.25cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">RESPOND</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object91" draw:style-name="G1" svg:x="23.25cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">A reactive</text:p>
+            <text:p text:style-name="P11">audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object92" draw:style-name="G1" svg:x="23.25cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="3.95cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Gradual loss of attention</text:p>
+            <text:p text:style-name="P10">and recovery as delivery</text:p>
+            <text:p text:style-name="P10">changes.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="05" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object93" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object94" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">DEMONSTRATED PROTOTYPE / AUTHORED FIXTURE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object95" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">Weak delivery → recovery</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object96" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">The 50-second weak_to_improved fixture illustrates the intended product loop.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object97" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object98" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  05</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object99" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Synthetic inputs • authored audience/feedback • microphone and camera off • not computed engagement</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object100" draw:style-name="G4" svg:x="1.4cm" svg:y="7.1cm" svg:width="5.8cm" svg:height="3.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object101" draw:style-name="G1" svg:x="1.7cm" svg:y="7.65cm" svg:width="5.2cm" svg:height="0.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P15">00:00</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object102" draw:style-name="G1" svg:x="1.7cm" svg:y="8.9cm" svg:width="5.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P16">NEUTRAL</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object103" draw:style-name="G4" svg:x="7.75cm" svg:y="7.1cm" svg:width="5.8cm" svg:height="3.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object104" draw:style-name="G1" svg:x="8.05cm" svg:y="7.65cm" svg:width="5.2cm" svg:height="0.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P17">00:20.5</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object105" draw:style-name="G1" svg:x="8.05cm" svg:y="8.9cm" svg:width="5.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P16">CONFUSED</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object106" draw:style-name="G4" svg:x="14.1cm" svg:y="7.1cm" svg:width="5.8cm" svg:height="3.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object107" draw:style-name="G1" svg:x="14.4cm" svg:y="7.65cm" svg:width="5.2cm" svg:height="0.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P17">00:30.5</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object108" draw:style-name="G1" svg:x="14.4cm" svg:y="8.9cm" svg:width="5.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P16">BORED</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object109" draw:style-name="G4" svg:x="20.449999999999996cm" svg:y="7.1cm" svg:width="5.8cm" svg:height="3.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object110" draw:style-name="G1" svg:x="20.749999999999996cm" svg:y="7.65cm" svg:width="5.2cm" svg:height="0.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P18">00:36</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object111" draw:style-name="G1" svg:x="20.749999999999996cm" svg:y="8.9cm" svg:width="5.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P16">INTERESTED</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object112" draw:style-name="G4" svg:x="26.799999999999997cm" svg:y="7.1cm" svg:width="5.8cm" svg:height="3.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object113" draw:style-name="G1" svg:x="27.099999999999998cm" svg:y="7.65cm" svg:width="5.2cm" svg:height="0.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P18">00:42</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object114" draw:style-name="G1" svg:x="27.099999999999998cm" svg:y="8.9cm" svg:width="5.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P16">ENGAGED</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object115" draw:style-name="G4" svg:x="1.4cm" svg:y="11.5cm" svg:width="15.0cm" svg:height="3.8cm" draw:corner-radius="0.18cm" />
+        <draw:rect draw:name="Object116" draw:style-name="G4" svg:x="17.4cm" svg:y="11.5cm" svg:width="15.0cm" svg:height="3.8cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object117" draw:style-name="G1" svg:x="1.9cm" svg:y="11.95cm" svg:width="14.0cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P8">00:10 / EXAMPLE IMPROVEMENT</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object118" draw:style-name="G1" svg:x="1.9cm" svg:y="12.9cm" svg:width="14.0cm" svg:height="1.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P19">Pause after a key point.</text:p>
+            <text:p text:style-name="P19">Rehearse the passage at a slower pace.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object119" draw:style-name="G1" svg:x="17.9cm" svg:y="11.95cm" svg:width="14.0cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P7">00:40 / EXAMPLE STRENGTH</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object120" draw:style-name="G1" svg:x="17.9cm" svg:y="12.9cm" svg:width="14.0cm" svg:height="1.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P19">Keep a steady pace while</text:p>
+            <text:p text:style-name="P19">facing toward the audience.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="06" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object121" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object122" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">LOCAL SOFTWARE ARCHITECTURE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object123" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">One shared clock.</text:p>
+            <text:p text:style-name="P1">One audience engine.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object124" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Normalized events connect independent adapters to audience reactions and session feedback.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object125" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object126" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  06</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object127" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Validated: contracts, lifecycle, replay and loopback shell. Live blocks await owner handoffs / INT-02.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object128" draw:style-name="G4" svg:x="1.4cm" svg:y="7.35cm" svg:width="7.0cm" svg:height="2.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object129" draw:style-name="G1" svg:x="1.7cm" svg:y="7.71cm" svg:width="6.4cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P20">Mic + webcam</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object130" draw:style-name="G1" svg:x="1.7cm" svg:y="8.73cm" svg:width="6.4cm" svg:height="0.7000000000000002cm">
+          <draw:text-box>
+            <text:p text:style-name="P21">planned local inputs</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object131" draw:style-name="G4" svg:x="10.0cm" svg:y="7.35cm" svg:width="9.4cm" svg:height="2.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object132" draw:style-name="G1" svg:x="10.3cm" svg:y="7.71cm" svg:width="8.8cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P20">Speech / vision adapters</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object133" draw:style-name="G1" svg:x="10.3cm" svg:y="8.73cm" svg:width="8.8cm" svg:height="0.7000000000000002cm">
+          <draw:text-box>
+            <text:p text:style-name="P21">planned local inference</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object134" draw:style-name="G4" svg:x="21.0cm" svg:y="7.35cm" svg:width="11.4cm" svg:height="2.2cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object135" draw:style-name="G1" svg:x="21.3cm" svg:y="7.71cm" svg:width="10.8cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P20">Canonical timestamped events</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object136" draw:style-name="G1" svg:x="21.3cm" svg:y="8.73cm" svg:width="10.8cm" svg:height="0.7000000000000002cm">
+          <draw:text-box>
+            <text:p text:style-name="P21">validated integration seam</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object137" draw:style-name="G4" svg:x="1.4cm" svg:y="11.15cm" svg:width="9.0cm" svg:height="3.4cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object138" draw:style-name="G1" svg:x="1.7cm" svg:y="11.51cm" svg:width="8.4cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P20">Engagement engine</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object139" draw:style-name="G1" svg:x="1.7cm" svg:y="12.530000000000001cm" svg:width="8.4cm" svg:height="1.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P21">planned rules + smoothing</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object140" draw:style-name="G4" svg:x="11.8cm" svg:y="11.15cm" svg:width="9.0cm" svg:height="3.4cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object141" draw:style-name="G1" svg:x="12.100000000000001cm" svg:y="11.51cm" svg:width="8.4cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P20">Audience UI</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object142" draw:style-name="G1" svg:x="12.100000000000001cm" svg:y="12.530000000000001cm" svg:width="8.4cm" svg:height="1.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P21">validated replay shell; live pending</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object143" draw:style-name="G4" svg:x="22.2cm" svg:y="11.15cm" svg:width="10.2cm" svg:height="3.4cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object144" draw:style-name="G1" svg:x="22.5cm" svg:y="11.51cm" svg:width="9.6cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P20">Recorder → feedback</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object145" draw:style-name="G1" svg:x="22.5cm" svg:y="12.530000000000001cm" svg:width="9.6cm" svg:height="1.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P21">planned completed timeline + advice</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object146" draw:style-name="G1" svg:x="8.6cm" svg:y="7.9cm" svg:width="1.1cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P22">→</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object147" draw:style-name="G1" svg:x="19.55cm" svg:y="7.9cm" svg:width="1.1cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P22">→</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:line draw:style-name="G5" svg:x1="26.7cm" svg:y1="9.55cm" svg:x2="26.7cm" svg:y2="10.2cm" />
+        <draw:line draw:style-name="G5" svg:x1="5.9cm" svg:y1="10.2cm" svg:x2="27.3cm" svg:y2="10.2cm" />
+        <draw:frame draw:name="Object148" draw:style-name="G1" svg:x="5.6cm" svg:y="10.23cm" svg:width="0.8cm" svg:height="0.85cm">
+          <draw:text-box>
+            <text:p text:style-name="P23">↓</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object149" draw:style-name="G1" svg:x="27.0cm" svg:y="10.23cm" svg:width="0.8cm" svg:height="0.85cm">
+          <draw:text-box>
+            <text:p text:style-name="P23">↓</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object150" draw:style-name="G1" svg:x="10.4cm" svg:y="12.1cm" svg:width="1.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P22">→</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object151" draw:style-name="G1" svg:x="1.45cm" svg:y="15.25cm" svg:width="30.5cm" svg:height="0.85cm">
+          <draw:text-box>
+            <text:p text:style-name="P24">Python + FastAPI / React + TypeScript / loopback transport / injected subsystem seams</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="07" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object152" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object153" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">TIMING, FAILURES AND LOCAL-DATA DESIGN</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object154" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">Handle missing signals honestly.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object155" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">A shared capture-time timeline makes audience changes and later feedback explainable.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object156" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object157" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  07</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object158" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Contracts/fake-adapter lifecycle tested. Actual capture cleanup, live privacy and inference delay remain unmeasured.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object159" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object160" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">TIMELINE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object161" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Capture time</text:p>
+            <text:p text:style-name="P11">is preserved.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object162" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Late observations retain</text:p>
+            <text:p text:style-name="P10">their original timestamps.</text:p>
+            <text:p text:style-name="P10">Sessions keep separate IDs.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object163" draw:style-name="G4" svg:x="12.1cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object164" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">FAILURES</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object165" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Unknown stays</text:p>
+            <text:p text:style-name="P11">unknown.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object166" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Unavailable inputs carry</text:p>
+            <text:p text:style-name="P10">explicit status and nulls.</text:p>
+            <text:p text:style-name="P10">Startup and drain are bounded.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object167" draw:style-name="G4" svg:x="22.8cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object168" draw:style-name="G1" svg:x="23.25cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">LOCAL-DATA DESIGN</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object169" draw:style-name="G1" svg:x="23.25cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Keep rehearsal</text:p>
+            <text:p text:style-name="P11">processing local.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object170" draw:style-name="G1" svg:x="23.25cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">No cloud inference planned.</text:p>
+            <text:p text:style-name="P10">Raw recording off by default.</text:p>
+            <text:p text:style-name="P10">Live privacy checks still pending.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="08" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object171" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object172" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">TARGET HARDWARE / UNTESTED ADAPTER PLAN</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object173" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">ASUS UGen300 USB-8G</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object174" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Intended Hailo-10H acceleration behind the same speech and vision adapter seams.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object175" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object176" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  08</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object177" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Vendor specifications and model candidates only. No UGen300 detected or measured on this development host.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object178" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="10.0cm" svg:height="3.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object179" draw:style-name="G1" svg:x="1.7999999999999998cm" svg:y="7.65cm" svg:width="9.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P25">Hailo-10H</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object180" draw:style-name="G1" svg:x="1.7999999999999998cm" svg:y="9.05cm" svg:width="9.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P24">Chipset</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object181" draw:style-name="G4" svg:x="12.05cm" svg:y="7.2cm" svg:width="10.0cm" svg:height="3.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object182" draw:style-name="G1" svg:x="12.450000000000001cm" svg:y="7.65cm" svg:width="9.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P25">8 GB</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object183" draw:style-name="G1" svg:x="12.450000000000001cm" svg:y="9.05cm" svg:width="9.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P24">LPDDR4</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object184" draw:style-name="G4" svg:x="22.7cm" svg:y="7.2cm" svg:width="10.0cm" svg:height="3.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object185" draw:style-name="G1" svg:x="23.099999999999998cm" svg:y="7.65cm" svg:width="9.2cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P25">USB 3.1 Gen2</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object186" draw:style-name="G1" svg:x="23.099999999999998cm" svg:y="9.05cm" svg:width="9.2cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P24">Type-C interface</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object187" draw:style-name="G4" svg:x="1.4cm" svg:y="11.35cm" svg:width="15.0cm" svg:height="4.0cm" draw:corner-radius="0.18cm" />
+        <draw:rect draw:name="Object188" draw:style-name="G4" svg:x="17.4cm" svg:y="11.35cm" svg:width="15.0cm" svg:height="4.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object189" draw:style-name="G1" svg:x="1.9cm" svg:y="11.8cm" svg:width="14.0cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P7">SPEECH / CANDIDATE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object190" draw:style-name="G1" svg:x="1.9cm" svg:y="12.75cm" svg:width="14.0cm" svg:height="1.75cm">
+          <draw:text-box>
+            <text:p text:style-name="P26">Whisper Tiny / Base / Small</text:p>
+            <text:p text:style-name="P26">Windowing and delivery delay need testing.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object191" draw:style-name="G1" svg:x="17.9cm" svg:y="11.8cm" svg:width="14.0cm" svg:height="0.6cm">
+          <draw:text-box>
+            <text:p text:style-name="P7">VISION / CANDIDATE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object192" draw:style-name="G1" svg:x="17.9cm" svg:y="12.75cm" svg:width="14.0cm" svg:height="1.75cm">
+          <draw:text-box>
+            <text:p text:style-name="P26">Hailo-10H pose HEFs</text:p>
+            <text:p text:style-name="P26">USB + concurrent compatibility unverified.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="09" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object193" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object194" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">VALIDATION EVIDENCE / CURRENT CHECKOUT</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object195" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">A reproducible synthetic baseline.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object196" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Local checks validate contracts and lifecycle; they do not establish live inference performance.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object197" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object198" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  09</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object199" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Observed 7 October 2026 / Linux x86_64 / Python 3.12.14 / source checkout 35e99b2</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object200" draw:style-name="G4" svg:x="1.4cm" svg:y="7.25cm" svg:width="9.7cm" svg:height="4.3cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object201" draw:style-name="G1" svg:x="1.9cm" svg:y="7.8cm" svg:width="8.7cm" svg:height="1.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P27">97</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object202" draw:style-name="G1" svg:x="1.9cm" svg:y="10.05cm" svg:width="8.7cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">tests passed</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object203" draw:style-name="G4" svg:x="12.1cm" svg:y="7.25cm" svg:width="9.7cm" svg:height="4.3cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object204" draw:style-name="G1" svg:x="12.6cm" svg:y="7.8cm" svg:width="8.7cm" svg:height="1.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P27">37</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object205" draw:style-name="G1" svg:x="12.6cm" svg:y="10.05cm" svg:width="8.7cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">subtests passed</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object206" draw:style-name="G4" svg:x="22.8cm" svg:y="7.25cm" svg:width="9.7cm" svg:height="4.3cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object207" draw:style-name="G1" svg:x="23.3cm" svg:y="7.8cm" svg:width="8.7cm" svg:height="1.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P27">9 / 10</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object208" draw:style-name="G1" svg:x="23.3cm" svg:y="10.05cm" svg:width="8.7cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">fixture cases / sessions</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object209" draw:style-name="G1" svg:x="1.5cm" svg:y="12.3cm" svg:width="15.0cm" svg:height="2.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P28">Checked: lifecycle and strict contracts,</text:p>
+            <text:p text:style-name="P28">late/revised events, failure handling,</text:p>
+            <text:p text:style-name="P28">repeated synthetic sessions.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object210" draw:style-name="G1" svg:x="18.0cm" svg:y="12.3cm" svg:width="14.3cm" svg:height="2.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P29">Pending: real input accuracy, live</text:p>
+            <text:p text:style-name="P29">audience rules, generated coaching,</text:p>
+            <text:p text:style-name="P29">UGen300 performance.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="10" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object211" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object212" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">EXPECTED PRACTICAL VALUE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object213" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">Make rehearsal a repeatable loop.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object214" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Audience response is intended to make delivery changes easier to notice and practice.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object215" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object216" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  10</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object217" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Expected value and evaluation plan. No measured user outcomes, ROI or accuracy claim.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object218" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="7.9cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object219" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">FEEL THE CHANGE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object220" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Intuitive reactions</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object221" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="3.95cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Use audience behavior to</text:p>
+            <text:p text:style-name="P10">make delivery changes</text:p>
+            <text:p text:style-name="P10">noticeable during practice.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object222" draw:style-name="G4" svg:x="12.1cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="7.9cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object223" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">REVISIT A MOMENT</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object224" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Concrete next actions</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object225" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="3.95cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Return to a timestamp</text:p>
+            <text:p text:style-name="P10">and practice a specific</text:p>
+            <text:p text:style-name="P10">delivery adjustment.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object226" draw:style-name="G4" svg:x="22.8cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="7.9cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object227" draw:style-name="G1" svg:x="23.25cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">EVALUATE THE VALUE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object228" draw:style-name="G1" svg:x="23.25cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">A workplace pilot</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object229" draw:style-name="G1" svg:x="23.25cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="3.95cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Compare practice approaches;</text:p>
+            <text:p text:style-name="P10">review clarity of feedback</text:p>
+            <text:p text:style-name="P10">and willingness to rehearse again.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="11" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object230" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object231" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">DELIVERY MILESTONES</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object232" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">Prove the live loop.</text:p>
+            <text:p text:style-name="P1">Then measure the target.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object233" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Each milestone needs its own evidence; preparation merges do not complete live P0.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object234" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object235" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  11</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object236" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Stage I can use host-based validation. Target-platform validation is required in Stage II; final submission gates remain pending.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object237" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object238" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">NOW / VERIFIED BASELINE</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object239" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Synthetic scaffold</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object240" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Contracts, lifecycle and</text:p>
+            <text:p text:style-name="P10">repeatable examples.</text:p>
+            <text:p text:style-name="P10">English proposal preparation.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object241" draw:style-name="G4" svg:x="12.1cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object242" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">NEXT / INT-02</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object243" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Live rehearsal</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object244" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Owner speech/vision adapters,</text:p>
+            <text:p text:style-name="P10">sole engine and coaching.</text:p>
+            <text:p text:style-name="P10">Record accepted real-input demo.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object245" draw:style-name="G4" svg:x="22.8cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object246" draw:style-name="G1" svg:x="23.25cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">TARGET / INT-03</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object247" draw:style-name="G1" svg:x="23.25cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
+          <draw:text-box>
+            <text:p text:style-name="P11">Measured UGen300</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object248" draw:style-name="G1" svg:x="23.25cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Resolve USB/runtime setup.</text:p>
+            <text:p text:style-name="P10">Measure concurrent operation.</text:p>
+            <text:p text:style-name="P10">Publish scoped, honest evidence.</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+      <draw:page draw:name="12" draw:style-name="PageStyle" draw:master-page-name="Master">
+        <draw:rect draw:name="Object249" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object250" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
+          <draw:text-box>
+            <text:p text:style-name="P0">REFERENCES AND REPOSITORY</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object251" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P1">Review the evidence.</text:p>
+            <text:p text:style-name="P1">Run the prototype.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object252" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
+          <draw:text-box>
+            <text:p text:style-name="P10">Source links and limitations accompany the proposal, with reproducible setup in the repository.</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object253" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P2">LeCoach  /  Your Private AI Audience</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object254" draw:style-name="G1" svg:x="26.8cm" svg:y="17.7cm" svg:width="5.6cm" svg:height="0.5cm">
+          <draw:text-box>
+            <text:p text:style-name="P3">STAGE I  /  12</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object255" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
+          <draw:text-box>
+            <text:p text:style-name="P4">Draft for team review • final recording, registration confirmation, publication and receipt pending</text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object256" draw:style-name="G1" svg:x="1.45cm" svg:y="7.0cm" svg:width="30.8cm" svg:height="1.0cm">
+          <draw:text-box>
+            <text:p text:style-name="P25">
+              <text:a xlink:type="simple" xlink:href="https://github.com/crasni/LeCoach">https://github.com/crasni/LeCoach</text:a>
+            </text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object257" draw:style-name="G0" svg:x="1.45cm" svg:y="9.12cm" svg:width="0.14cm" svg:height="0.35cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object258" draw:style-name="G1" svg:x="1.95cm" svg:y="9.0cm" svg:width="30.0cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P30">
+              <text:a xlink:type="simple" xlink:href="https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/">Official competition rules</text:a>
+            </text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object259" draw:style-name="G0" svg:x="1.45cm" svg:y="10.319999999999999cm" svg:width="0.14cm" svg:height="0.35cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object260" draw:style-name="G1" svg:x="1.95cm" svg:y="10.2cm" svg:width="30.0cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P30">
+              <text:a xlink:type="simple" xlink:href="https://www.asus.com/motherboards-components/ai-accelerator/ugen/ugen300-usb-8g/techspec/">ASUS UGen300 USB-8G technical specifications</text:a>
+            </text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object261" draw:style-name="G0" svg:x="1.45cm" svg:y="11.52cm" svg:width="0.14cm" svg:height="0.35cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object262" draw:style-name="G1" svg:x="1.95cm" svg:y="11.4cm" svg:width="30.0cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P30">
+              <text:a xlink:type="simple" xlink:href="https://github.com/hailo-ai/hailo_model_zoo_genai/blob/187484184ff8bdfb04f035b30d6be2bbf4fcb57f/docs/MODELS.rst">Pinned Hailo GenAI models / Whisper candidates</text:a>
+            </text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object263" draw:style-name="G0" svg:x="1.45cm" svg:y="12.719999999999999cm" svg:width="0.14cm" svg:height="0.35cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object264" draw:style-name="G1" svg:x="1.95cm" svg:y="12.6cm" svg:width="30.0cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P30">
+              <text:a xlink:type="simple" xlink:href="https://github.com/hailo-ai/hailo_model_zoo/blob/49039700f5c1aff9063e028c3bc55ef174371b36/docs/public_models/HAILO10H/HAILO10H_pose_estimation.rst">Pinned Hailo-10H pose model table</text:a>
+            </text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:rect draw:name="Object265" draw:style-name="G0" svg:x="1.45cm" svg:y="13.92cm" svg:width="0.14cm" svg:height="0.35cm" draw:corner-radius="0.18cm" />
+        <draw:frame draw:name="Object266" draw:style-name="G1" svg:x="1.95cm" svg:y="13.8cm" svg:width="30.0cm" svg:height="0.9cm">
+          <draw:text-box>
+            <text:p text:style-name="P30">
+              <text:a xlink:type="simple" xlink:href="https://github.com/crasni/LeCoach">LeCoach setup, architecture and implementation evidence</text:a>
+            </text:p>
+          </draw:text-box>
+        </draw:frame>
+        <draw:frame draw:name="Object267" draw:style-name="G1" svg:x="1.45cm" svg:y="15.5cm" svg:width="30.4cm" svg:height="0.7cm">
+          <draw:text-box>
+            <text:p text:style-name="P21">Detailed provenance: docs/SOURCES.md   /   Tested behavior and limits: docs/STATUS.md</text:p>
+          </draw:text-box>
+        </draw:frame>
+      </draw:page>
+    </office:presentation>
+  </office:body>
+</office:document>

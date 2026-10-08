@@ -17,7 +17,7 @@ Checked 2026-10-07 against the [official competition rules](https://contest.bhun
 
 ## Preparation for LeCoach
 
-Keep an English deck within the verified page budget. A proposed 12-slide structure is: problem; intended user; rehearsal journey; live audience response; demonstrated prototype; local architecture; event timing and failure handling; hardware adapter approach; validation evidence; practical value; delivery milestones; references and repository. This is a planning outline, not a finished submission or a change to the MVP.
+The local [English deck](submission/proposal.pdf) and [editable source](submission/proposal.fodp) now follow the 12-slide structure: problem; intended user; rehearsal journey; live audience response; demonstrated prototype; local architecture; event timing and failure handling; hardware adapter approach; validation evidence; practical value; delivery milestones; references and repository. [Readiness](submission/readiness.md) records local page/language/content/visual checks and the claim map. This is a review draft, not a finished submission or a change to the MVP; current prototype claims remain synthetic.
 
 Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The current shell can demonstrate synthetic playback only. Replace those shots with actual rehearsal behavior after INT-02 passes; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeCoach has already run on that hardware.
 
@@ -27,6 +27,8 @@ Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS.
 - The team's online/onsite registration choice and completion receipt have not been checked.
 - Review section IX's original-work and licensing terms with the team. Clarify the treatment of a public development repository alongside the required GitHub link; do not assume an eligibility interpretation.
 - Recheck the official rules immediately before submission. External upload, publication and submission follow the team's authorization requirements.
+
+INT-03 apply rechecked the accessible public rules on 2026-10-07; no change to the table above was found. The public response is a client-loaded application shell with rules metadata, so final form/announcement inspection remains pending. No authenticated registration page or receipt was accessed. Team confirmation of format, cutoff and originality interpretation was requested; unanswered details remain unknown, not accepted by default.
 
 ## Review before submission
 

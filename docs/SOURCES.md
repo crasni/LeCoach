@@ -6,7 +6,11 @@ Reviewed 2026-10-07 for INT-03. The source hierarchy is defined in [GUIDE.md](..
 
 The [official competition page](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/) was fetched directly over HTTPS. The browser extraction service returned 404, but direct retrieval succeeded and included the full rules in the `application/ld+json` Event description. Sections III–VII were inspected for platform, schedule, deliverable and judging requirements. The top-level metadata contains inconsistent/dynamic end dates; the rules prose establishes the date recorded in CONTEST, but does not establish a precise cutoff timezone.
 
-The retrieved HTML SHA-256 is `6eb1c65f1f3b9052823c6ca5106578dc02531107d40edc9380b4452cf557b254`. Retrieval snapshots remain temporary investigation files, not committed copies of the rules. To recheck from a shell:
+Initial research HTML SHA-256: `6eb1c65f1f3b9052823c6ca5106578dc02531107d40edc9380b4452cf557b254`. During INT-03 apply on 2026-10-07 at approximately 15:48 UTC, direct retrieval was repeated: HTML SHA-256 `0a1b90451b558f665f677b5643b46c2d8d1aee86bb397cc6b25f103b83c1ec0b`; the HTML-unescaped Event rules-description SHA-256 is `5097d79890c35b3020cc654609f93f757bb5422ed5f449a0309205e2561e1fcb`. Sections III–VII, IX and XI were inspected. The verified deliverable/date guidance still agrees with CONTEST.
+
+The root Event's `endDate` reflected retrieval time, while nested events carried a timezone-free `2026-10-14T09:00:00`. Neither establishes a supported cutoff timezone; do not turn that metadata into a deadline claim. The returned page contains a client-loaded application shell and public rules metadata, not an inspected submission form. Separate announcements/form fields were not established through this retrieval or the browser/search extractor. A final rendered-page/form check remains pending; this does not establish that no newer announcements exist.
+
+Retrieval snapshots remain temporary investigation files, not committed copies of the rules. To recheck from a shell:
 
 ```sh
 curl --fail --location --silent --show-error \
@@ -49,5 +53,19 @@ Official Hailo revisions were resolved through GitHub's public commit API to mak
 | Vision | The Hailo-10H pose table provides `yolov8s_pose` and `yolov8m_pose` HEFs with 640×640×3 input. | Lane 3 must validate preprocessing, keypoint postprocessing, approximate facing/activity mapping and model rights. Published FPS uses PCIe Gen3 ×4, not the selected USB host path. |
 
 Hailo Apps' inspected prerequisites identify v5.4.0 as their tested HailoRT version. Installation is platform/app dependent, and Python wheels are ABI-specific. Validate an actual USB-8G driver/runtime/firmware combination through ASUS/Hailo before selecting dependencies; generic PCIe instructions are not USB installation evidence. Do not change the core Python 3.12 pin or install an incompatible wheel based on a model list alone.
+
+### INT-03 apply source recheck
+
+Re-fetched and inspected the five pinned documents on 2026-10-07. The candidate/window/runtime assumptions above remain supported at those revisions. No model/HEF was downloaded or executed.
+
+| Pinned document | Retrieved SHA-256 |
+| --- | --- |
+| HailoRT README | `bf2d5a62e9b9698b5f97739e16d582af8afa10986f5bb070f273d025c036599f` |
+| Hailo Apps prerequisites | `28039870709fd220c11aaec11ea7b2500e2e61852fc162126687cf33eec168b4` |
+| Hailo Apps installation | `33517103049a7a6ed288202c173a8913a17e09e92e92eccd0e84a56a83fc79eb` |
+| Hailo-10H pose table | `024583a942e9e2982676087cf0d2f0661e27d78ab87cc4bb764d1ac1ce1b4145` |
+| GenAI model table | `14e6d96913d3066be56483e93bd7fe3e7602a72da94e5ce9ecb8018b86cf9af5` |
+
+The prerequisites link to Hailo-8/PCIe-oriented installation guidance, despite the selected Hailo-10H USB device. That is a compatibility gap to resolve with official USB-specific guidance, not permission to install those drivers here. [HARDWARE.md](HARDWARE.md) defines the readiness/run procedure; actual observations remain in STATUS.
 
 The speech path's windowing and both producers' device contention need measurement before tuning engagement staleness. Shared capture-time and adapter cleanup contracts stay in [ARCHITECTURE.md](ARCHITECTURE.md); this research changes no contracts or producer implementation.

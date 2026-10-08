@@ -41,3 +41,9 @@ Coordinate the weak-to-improved scenario with Lane 5. For INT-02, record host/co
 For an accelerator run, add device/runtime/firmware identification, exact model/HEF hashes, input preprocessing and the measurement method. Report producer latency separately from window duration, engagement smoothing and browser delivery. Measure concurrent speech/vision operation; vendor FPS and TOPS do not substitute for this run.
 
 The final recording, YouTube upload and competition submission remain pending. Verify the resulting unlisted link and submission receipt under the team's authorization workflow.
+
+## INT-03 package handoff
+
+The [local English proposal](submission/proposal.pdf) is paired with a [readiness/claim map](submission/readiness.md). Headless reproduction was repeated during INT-03 apply; [STATUS](STATUS.md#int-03-apply-local-validation) records synthetic inputs, exact state times and authored outputs. This does not establish a recorded demo or live behavior.
+
+Lane 5's checked-in [scenario preparation](../checks/coaching/README.md) covers weak-to-improved delivery and limitation cases, but a final English narration/script has not been provided in the inspected handoff. Its new recorder [PR #5](https://github.com/crasni/LeCoach/pull/5) still needs separate integration review; it does not supply generated coaching or final footage here. Keep the script/scenario, accepted INT-02 run and final local recording gates pending. No synthetic-only final submission exception has been approved.

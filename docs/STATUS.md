@@ -1,6 +1,6 @@
 # LeCoach implementation status
 
-Last updated: 2026-10-07.
+Last updated: 2026-10-08 (Asia/Taipei).
 
 This file records verified implementation evidence. Task ownership and progress live in [TASKS.md](../TASKS.md); product scope lives in [GUIDE.md](../GUIDE.md).
 
@@ -17,6 +17,52 @@ This file records verified implementation evidence. Task ownership and progress 
 - No model availability, inference latency, local privacy behavior, or UGen300 runtime compatibility has been measured.
 - Current competition requirement verification is recorded under INT-03 below; final submission, cutoff details and target-device inference remain unverified.
 - Executable event contracts and lifecycle/transport behavior are validated below. Subsystem role handoffs remain requirements for the live MVP.
+
+## INT-03 integration reconciliation
+
+FACT: On 2026-10-07, preserved the six existing INT-01 acceptance edits in local commit `9dd550e`, then merged fetched main `ebdf421` into `agent/integration` in local commit `35e99b2`. TASKS/STATUS conflicts were resolved by retaining the maintainer's acceptance exception and both contributors' preparation/review records. The shared contracts and acceptance artifacts are unchanged from the preservation commit. The coaching/speech preparation directories match fetched main.
+
+FACT: Main contains PR #1 through merge `48597bb` and PR #3 through `ebdf421`. Those merges publish synthetic preparation and reviewed checks, not live producers or generated coaching. Their original validation records below remain attributed to the original host/date; they are not new checks performed by this reconciliation. TASKS now points to the merged preparation and preserves incomplete live tasks.
+
+FACT: Fetch also found resumed `origin/agent/session-analysis` at `5991048`, with a recorder implementation and owner-reported synthetic evidence. Its handoff README and changed-file list were inspected read-only. That continuation is not incorporated or validated on this integration branch, and the owner still needs LIVE-01 reason/transition evidence for feedback generation. No final English demo script was found in the inspected handoff.
+
+IMPACT: INT-03 can produce the local proposal/evidence package against current main without erasing prior acceptance or contributor work. INT-02's live acceptance remains pending. The local INT-03 claim is linked to its [OpenSpec change](../openspec/changes/int-03-submission-and-hardware-evidence/proposal.md); no new push is authorized by apply.
+
+PROPOSAL: Complete the independent deck, requirements and hardware-readiness records; review the recorder continuation separately with its owner and obtain the remaining live subsystem/demo handoffs. Keep INT-03 in progress until final acceptance and submission gates are met.
+
+## INT-03 apply hardware readiness
+
+FACT: Repeated read-only readiness inspection on 2026-10-07 at approximately 15:48 UTC, source checkout `35e99b2` on Linux x86_64, kernel `7.0.0-38-generic`. Sandbox `lsusb` failed to initialize libusb (`-99`); a permitted host read returned USB root hubs, the integrated Chicony camera, wireless device and Logitech receiver, with no identifiable UGen300. `command -v hailortcli` returned no path. The project `.venv/bin/python` reported 3.12.14 and `find_spec('hailo_platform')` returned `None`. [HARDWARE.md](HARDWARE.md#inspect-an-available-host) documents the exact inspection commands. No capture device was opened; no driver, runtime, model or HEF was installed/downloaded.
+
+FACT: Re-fetched and inspected five pinned Hailo sources; [SOURCES](SOURCES.md#int-03-apply-source-recheck) records hashes. The speech candidate documents windowed audio and the pose benchmark uses PCIe conditions. Generic Hailo Apps prerequisites reference PCIe/Hailo-8 installation material; that does not establish the selected Hailo-10H USB setup or a Python 3.12-compatible binding here.
+
+IMPACT: Target-evidence disposition is **unavailable prerequisites / no measured inference** on this host. Approved live adapters, integrated composition and timing instrumentation are also absent from this checkout. Model load/processing, producer delivery, engagement decision, browser render delay, concurrent inference, real device release and actual speech accuracy are all unmeasured. This observation does not establish the team's hardware access elsewhere.
+
+PROPOSAL: Obtain the actual USB host/device/runtime/firmware combination and owner adapter handoffs, then follow HARDWARE's isolated/concurrent procedure with INT-02. Keep the deferred accelerator measurement milestone explicit. The English deck can show a sourced target architecture and synthetic scaffold evidence; it cannot claim target performance, live P0 completion or measured privacy behavior.
+
+## INT-03 apply local validation
+
+FACT: On 2026-10-07 UTC / overnight into 2026-10-08 Asia/Taipei, implemented the local INT-03 package on `agent/integration`: a 12-slide editable [English proposal](submission/proposal.fodp), matching [PDF](submission/proposal.pdf), [readiness/claim map](submission/readiness.md), refreshed canonical requirements/source records, and the hardware inspection/measurement procedure. Application source, event contracts and dependency pins are unchanged by INT-03. The new deck uses native text/vector shapes, not borrowed imagery or a mock claim of a live app screenshot.
+
+FACT: Reproduced the model-free baseline against application source `35e99b2` with the existing project Python 3.12.14 environment on Linux x86_64:
+
+```sh
+uv run --frozen --offline lecoach replay --case weak_to_improved
+uv run --frozen --offline python scripts/validate_fixtures.py
+uv run --frozen --offline pytest -q
+```
+
+Observed: headless result reports `mode: fixture` and `output_provenance: hand_authored`; all nine cases / ten sessions validate; **97 tests and 37 subtests pass** in 0.96 s, with the existing Starlette/httpx deprecation warning. The five authored state transitions in the weak-to-improved case occur at 0, 20.5, 30.5, 36 and 42 seconds; authored feedback has two improvements and one strength. No real device, inference model or target accelerator was used.
+
+An initial attempt with a new empty temporary uv cache could not resolve the build dependency offline; no tests ran in that attempt. Reusing the existing populated cache built the editable package and passed the checks above. This is existing-environment/offline-cache reproduction, not a new uncached installation result. The API suite needed permitted local execution for the documented sandbox thread/event-loop limitation.
+
+FACT: Exported with LibreOffice 26.2.6.3 and an isolated temporary profile; `pdfinfo` reports 12 pages. Every source paragraph appears on its corresponding raw-extracted PDF page, and `pdfinfo -url` lists the six intended clickable annotations. All 12 rendered pages were visually inspected; title/card spacing and diagram event flow were corrected before the final review. Artifact hashes, exact export/inspection commands, topic coverage and per-page claim references are in readiness. The current verified page budget is satisfied; final form format/upload limits remain unconfirmed.
+
+FACT: Git ignore checks cover `sessions/`, `recordings/`, `models/` and `.env.*`; no files in those private-data locations are tracked. Only authored proposal content and sanitized observations are prepared for publication. No video/audio capture, transcript export from a real rehearsal, model download, upload, push, organizer message or competition submission occurred during this apply work.
+
+IMPACT: Local deck/evidence preparation is ready for team review. Target inference remains unmeasured; final Lane 5 narration/recording, accepted INT-02 live evidence, registration/cutoff/form/originality confirmation, role-branch publication, video link and actual submission receipt remain pending. The recorder continuation is open as [PR #5](https://github.com/crasni/LeCoach/pull/5), not accepted/integrated by this work.
+
+PROPOSAL: Review the scoped local commit set and authorize publication separately if ready to share; then use the owner handoffs to replace draft/live placeholders with accepted observations. Keep INT-03 in progress and its unmet OpenSpec tasks unchecked. Existing INT-01 acceptance is preserved; archiving remains separate.
 
 ## Team assignments and access
 
