@@ -125,6 +125,8 @@ Any proposal to change this decision must provide a strong competition-level jus
 
 # 2. STAGE I REQUIREMENTS
 
+Current source verification and submission preparation are in [docs/CONTEST.md](docs/CONTEST.md), with provenance in [docs/SOURCES.md](docs/SOURCES.md) and a proposed recording sequence in [docs/DEMO.md](docs/DEMO.md). Product priorities remain defined here; demonstrated behavior remains in STATUS.
+
 Current known Stage I requirements:
 
 - English proposal deck

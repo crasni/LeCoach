@@ -13,7 +13,7 @@ The four subsystem owners need one runnable local scaffold and compatible contra
 - Provide locked setup, reproducible checks, and downstream consumption examples.
 - Replace the full plan at `docs/plans/INT-01.md` with a compatibility link to these artifacts; keep ownership/progress in [TASKS.md](../../../TASKS.md).
 
-The implementation is already present in local commits `b7a42cd` and `802042e`; checked tasks record existing evidence, rather than new work performed during migration. Publication, peer review, and downstream acceptance remain pending. Live inference, audience smoothing, production coaching, hardware validation, and P1 features are outside INT-01.
+The implementation in `b7a42cd` and `802042e` is merged through PR #4; checked tasks record existing evidence, rather than new work performed during migration. On 2026-10-07 the maintainer accepted completion and instructed archiving, waiving the remaining peer-review/downstream signoff gate. Live inference, audience smoothing, production coaching, hardware validation, and P1 features are outside INT-01.
 
 ## Capabilities
 

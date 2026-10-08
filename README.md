@@ -15,9 +15,10 @@ Target track: Workplace AI / Battlefield Lightning, with ASUS UGen300 as the int
 
 ## Project status
 
-INT-01 local scaffold: validated event contracts, session lifecycle, a loopback API,
-and a browser shell that plays clearly labeled synthetic rehearsals. Live microphone,
-camera, audience rules, and coaching generation await their assigned subsystem handoffs.
+The current prototype has validated event contracts, session lifecycle, a loopback
+API, a deterministic engagement engine and a rehearsal screen driven by synthetic
+observations. An in-memory recorder is available through injection. Live microphone,
+camera and coaching generation await their assigned subsystem handoffs.
 
 Start at [AGENTS.md](AGENTS.md), the shared entry point for all five collaborators. Follow the canonical documents linked there:
 
@@ -50,6 +51,36 @@ react (computed by the engagement engine from the example observations), and let
 playback finish to see authored example coaching.
 Stopping early leaves that example summary unavailable. The microphone and camera
 stay off. Live mode is unavailable in the default composition.
+
+### Try the current prototype
+
+Select an example and press **Start replay**. The default 5× playback compresses
+the 50-second "Finding your rhythm" example to about ten seconds; the displayed
+times remain session times. Watch the eight listeners, reaction reasons, audience
+timeline, example pace/fillers/facing metrics and transcript.
+
+| Example / action | Expected behavior |
+| --- | --- |
+| Finding your rhythm (`weak_to_improved`) | NEUTRAL → CONFUSED at 20 s → BORED at 30 s → INTERESTED at 35 s → ENGAGED at 40 s. Finishing shows three authored coaching moments. |
+| Stop early, then start another example | Early stop leaves example coaching unavailable; the next session clears the prior transcript and reactions. |
+| Delayed transcript (`late_final_and_duplicates`) | The final text is "Our synthetic example is ready." Retries/revisions do not duplicate it; audience stays NEUTRAL and there are no supported coaching moments. |
+| Speech with camera unavailable (`camera_unavailable`) | Camera status is unavailable; sustained fast speech still produces CONFUSED. Missing camera input alone is not negative evidence. |
+| Unavailable inputs / An empty rehearsal | Audience stays NEUTRAL, missing metrics stay unknown, and completion invents no coaching moments. |
+
+These are synthetic observations with computed reactions and authored example
+coaching. Example coaching timestamps still need Lane 5's reconciliation with the
+computed transitions. Live capture, transcription, pose inference, generated
+coaching and UGen300 execution cannot be tested in the default app yet.
+
+The recorder can be exercised separately, without recording media:
+
+```sh
+uv run python checks/coaching/record_replay.py
+```
+
+It checks the actual in-memory recorder against nine synthetic cases / ten sessions;
+the default browser composition does not use this recorder. Existing browser checks
+also cover connection recovery and a narrow screen. See [current evidence](docs/STATUS.md#int-03-refreshed-package-and-browser-validation).
 
 For frontend development, keep the backend running and use a second terminal:
 
@@ -116,7 +147,8 @@ real engine and recorder/generator. [The subscription example](examples/consume_
 demonstrates consumption without importing model internals.
 
 Lane 5's preparation files in `checks/coaching/` are reused unchanged from PR #1
-(`dcc280f`, branch head `b8f5597`). That is local integration of synthetic artifacts,
-not a remote PR merge or a completed coaching implementation. Positive reason codes
+(`dcc280f`, preparation head `b8f5597`), now merged as preparation. Lane 2's
+synthetic checks in `checks/speech/` are merged through PR #3. These merges do
+not complete the live speech or coaching implementations. Positive reason codes
 still require Lane 4's handoff. Keep local rehearsal data, credentials, and weights
 out of Git, and follow the push approval rule in AGENTS.md.
