@@ -4,19 +4,19 @@ Groups 1–3 are model-free and device-free, and can proceed while issue #6 is o
 
 ## 1. Configuration and text rules
 
-- [ ] 1.1 Add a strict `SpeechConfig` in `src/lecoach/speech/config.py`. Defaults come from the issue #6 proposal (`en`, window 10 s, hop 1 s, minimum observation 5 s, pause minimum 1 s, coverage wait 3 s, maximum utterance 8 s), and the model, device, sample-rate, and partial-interval fields are documented. Verify that `tests/test_speech_config.py` covers defaults and rejects non-positive values and a hop longer than the window.
-- [ ] 1.2 Move the English tokenizer and filler lexicon into `src/lecoach/speech/text.py`. Verify that a parity test gives identical word and filler counts with `checks/speech/speech_text.py` for every fixture transcript and the existing tokenizer test sentences.
+- [x] 1.1 Add a strict `SpeechConfig` in `src/lecoach/speech/config.py`. Defaults come from the issue #6 proposal (`en`, window 10 s, hop 1 s, minimum observation 5 s, pause minimum 1 s, coverage wait 3 s, maximum utterance 8 s), and the model, device, sample-rate, and partial-interval fields are documented. Verify that `tests/test_speech_config.py` covers defaults and rejects non-positive values and a hop longer than the window.
+- [x] 1.2 Move the English tokenizer and filler lexicon into `src/lecoach/speech/text.py`. Verify that a parity test gives identical word and filler counts with `checks/speech/speech_text.py` for every fixture transcript and the existing tokenizer test sentences.
 
 ## 2. Model-free transcript and metrics tracking
 
-- [ ] 2.1 Implement utterance tracking from segment and transcription results:
+- [x] 2.1 Implement utterance tracking from segment and transcription results:
   - monotonic partial revisions;
   - a single final per utterance;
   - empty-final retraction;
   - non-overlapping finals.
 
   Verify with unit tests for a corrected partial, a retracted hallucination, and no revision after a final.
-- [ ] 2.2 Implement metrics tracking:
+- [x] 2.2 Implement metrics tracking:
   - trailing window and hop;
   - a window ends at the start of an in-progress utterance;
   - non-advancing and short windows are skipped;
@@ -26,7 +26,7 @@ Groups 1–3 are model-free and device-free, and can proceed while issue #6 is o
   - unsupported-language and unavailable-input nulls.
 
   Verify that a parity test replays the `checks/speech/make_fixtures.py` scenarios and reproduces the committed fixture metric payloads.
-- [ ] 2.3 Implement the event emitter with v0 envelopes and stable IDs (`u<n>-r<revision>`, `metrics-<end>`, `pause-<end>`, `speech-status-<n>`). Verify that every emitted event passes `parse_event`, and that replayed tracker streams pass `checks/speech/check_speech.py --stream`.
+- [x] 2.3 Implement the event emitter with v0 envelopes and stable IDs (`u<n>-r<revision>`, `metrics-<end>`, `pause-<end>`, `speech-status-<n>`). Verify that every emitted event passes `parse_event`, and that replayed tracker streams pass `checks/speech/check_speech.py --stream`.
 
 ## 3. Adapter lifecycle with injected seams
 
