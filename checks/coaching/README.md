@@ -1,11 +1,12 @@
 # COACH-01 synthetic acceptance cases
 
-These are Lane 5 preparation artifacts while INT-01 and LIVE-01 are pending.
+These are Lane 5 acceptance artifacts prepared before INT-01 and LIVE-01.
 Every event, transcript, transition, and feedback example is hand-authored and
 synthetic. No microphone, camera, inference model, or accelerator was used.
-The checks do not implement a recorder, session controller, engagement engine,
-fake clock, or feedback generator. Application language and directories remain
-Lane 1's decision.
+The original consistency utility does not implement a recorder, session controller,
+engagement engine, fake clock, or feedback generator. INT-01 has since published
+Python contracts and the approved application layout. The actual recorder can now
+be checked separately using the continuation command below.
 
 [ARCHITECTURE.md](../../docs/ARCHITECTURE.md) remains the contract authority.
 `fixtures/*.json` are arrays of those events in **delivery order**. Array order
@@ -27,6 +28,21 @@ The first command checks the synthetic input and manually written expectations.
 The second checks that the acceptance utility rejects representative faulty
 outputs. Passing them establishes **test artifact consistency**, not completed
 COACH-01 functionality or live inference.
+
+## Check the actual recorder
+
+With the pinned project environment, run:
+
+```sh
+uv run python checks/coaching/record_replay.py
+uv run pytest -q tests/test_coaching.py
+```
+
+`record_replay.py` injects the production `InMemorySessionRecorder` into the
+published fixture/controller seam and checks its completed timelines against
+all ten session oracles. The controller still receives authored audience events;
+no live engine or feedback generator is injected. The command writes no session
+files. See [recorder behavior and retention](../../src/lecoach/coaching/README.md).
 
 ## Cases and expected behavior
 
@@ -86,15 +102,16 @@ pace bands, audience smoothing, device release, or local privacy behavior.
 
 ## Integration handoff
 
-Lane 1 needs to confirm executable event types, lifecycle subscription/stop
-boundaries, the shared clock and fixture replay entry point, application layout,
-and chosen local retention behavior. Lane 4 needs to confirm reason vocabulary,
+Lane 1 has published executable event types, lifecycle subscription/stop boundaries,
+the shared clock, fixture replay entry point, and application layout through PR #4.
+The in-memory recorder continuation uses those seams and awaits integration review.
+Lane 4 still needs to confirm reason vocabulary,
 positive-transition evidence, and actual deterioration/recovery examples. No
 shared interface revision is introduced by these preparation artifacts.
 
-Once those dependencies land, the Lane 5 implementation needs a session recorder,
-moment selector, template feedback generator, and consumer checks in Lane 1's
-approved module layout. It should consume the existing `Event`,
+The recorder is implemented in `src/lecoach/coaching/`; moment selection and the
+template feedback generator remain pending Lane 4's evidence. Those consumers
+should use the existing `Event`,
 `CompletedSession`, `Feedback`, and `Moment` contracts. The UI remains Lane 4's
 responsibility. Durable storage, live integration, and the COACH-02 demo evidence
 are still pending; P1 LLM feedback/questions/TTS remain gated by integrated P0.

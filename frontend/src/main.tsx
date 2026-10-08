@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Audience } from './Audience';
+import {
+  type AudienceState, caseLabels, clock, reasonText, stateCopy, statusText,
+} from './copy';
 import type { ContractSchema } from './generated/contracts';
 import './style.css';
 
@@ -7,20 +11,10 @@ type Snapshot = ContractSchema['snapshot'];
 type Event = ContractSchema['event'];
 type Feedback = ContractSchema['feedback'];
 type Fixture = { name: string; description: string; session_count: number };
+type Health = { live_integrated: boolean };
+type EngagementEvent = Extract<Event, { type: 'engagement.state' }>;
 
-const labels: Record<string, string> = {
-  weak_to_improved: 'Finding your rhythm', camera_unavailable: 'Speech with camera unavailable',
-  no_usable_signals: 'Unavailable inputs', empty_session: 'An empty rehearsal',
-  insufficient_window: 'A short rehearsal', late_final_and_duplicates: 'Delayed transcript',
-  drain_timeout: 'Incomplete speech processing', adjacent_incidents: 'One repeated incident',
-};
-const faces: Record<string, string> = {
-  ENGAGED: '🙂', NEUTRAL: '😐', CONFUSED: '🤔', BORED: '😴', INTERESTED: '👀',
-};
-
-function time(seconds: number) {
-  return `${Math.floor(seconds / 60).toString().padStart(2, '0')}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`;
-}
+const LIVE = '__live__';
 
 async function api<T>(path: string, body?: object): Promise<T> {
   const response = await fetch(path, body === undefined ? undefined : {
@@ -34,12 +28,38 @@ async function api<T>(path: string, body?: object): Promise<T> {
   return result as T;
 }
 
+function Timeline({ transitions, end }: { transitions: EngagementEvent[]; end: number }) {
+  if (!transitions.length) return null;
+  const span = Math.max(end, transitions[transitions.length - 1].timestamp_s, 1);
+  return <div className="timeline" aria-label="Audience timeline">
+    <div className="track">{transitions.map((event, index) => {
+      const from = event.timestamp_s;
+      const to = index + 1 < transitions.length ? transitions[index + 1].timestamp_s : span;
+      return <span key={event.event_id} className={`segment state-${event.payload.state.toLowerCase()}`}
+        style={{ left: `${(from / span) * 100}%`, width: `${Math.max(0, (to - from) / span) * 100}%` }}
+        title={`${clock(from)} ${stateCopy[event.payload.state].label}`} />;
+    })}</div>
+    <ol className="transitions" aria-label="Audience transitions">
+      {transitions.map(event => <li key={event.event_id}>
+        <time>{clock(event.timestamp_s)}</time>
+        <strong className={`dot state-${event.payload.state.toLowerCase()}`}>
+          {stateCopy[event.payload.state].label}</strong>
+        <span>{event.payload.reasons.length
+          ? event.payload.reasons.map(r => reasonText(r.code)).join(' · ')
+          : event.payload.usable_sources.length ? 'No specific reason' : 'Waiting for usable input'}</span>
+      </li>)}
+    </ol>
+  </div>;
+}
+
 function App() {
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
+  const [health, setHealth] = useState<Health | null>(null);
   const [selected, setSelected] = useState('weak_to_improved');
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [transitions, setTransitions] = useState<Event[]>([]);
+  const [transitions, setTransitions] = useState<EngagementEvent[]>([]);
+  const [previewOk, setPreviewOk] = useState(true);
   const [busy, setBusy] = useState(false);
   const [connection, setConnection] = useState('Ready when you are');
   const [error, setError] = useState('');
@@ -53,6 +73,7 @@ function App() {
     api<Fixture[]>('/api/fixtures').then(setFixtures).catch(() => {
       setError('The local service is unavailable. Reopen LeCoach after starting it.');
     });
+    api<Health>('/api/health').then(setHealth).catch(() => {});
     return () => {
       mounted.current = false;
       activeId.current = null;
@@ -66,13 +87,14 @@ function App() {
     const id = snapshot.session_id;
     api<Feedback>(`/api/sessions/${id}/feedback`).then(value => {
       if (activeId.current === id) setFeedback(value);
-    }).catch(() => setError('The example summary could not be loaded.'));
+    }).catch(() => setError('The rehearsal summary could not be loaded.'));
   }, [snapshot?.session_id, snapshot?.feedback_status]);
 
   function applyEvent(event: Event) {
     if (event.session_id !== activeId.current) return;
     if (event.type === 'engagement.state') {
-      setTransitions(current => [...current, event].slice(-20));
+      setTransitions(current => current.some(e => e.event_id === event.event_id)
+        ? current : [...current, event].slice(-60));
     }
     setSnapshot(current => {
       if (!current || current.session_id !== event.session_id) return current;
@@ -85,7 +107,8 @@ function App() {
         if (event.type === 'signal.status') next.input_status[event.source] = { ...event.payload };
         if (event.type === 'speech.metrics' || event.type === 'vision.metrics') {
           next.input_status[event.source] = { availability: event.payload.availability,
-            reason: 'Observation received' };
+            reason: event.payload.availability === 'available'
+              ? 'observation_available' : 'observation_unavailable' };
         }
       }
       if (event.type === 'speech.transcript') {
@@ -123,7 +146,13 @@ function App() {
         try {
           const value = JSON.parse(message.data);
           if (value.kind === 'snapshot') {
-            setSnapshot(value.snapshot as Snapshot);
+            const snap = value.snapshot as Snapshot;
+            setSnapshot(snap);
+            const latest = snap.latest_events['engagement.state'];
+            if (latest?.type === 'engagement.state') {
+              setTransitions(current => current.some(e => e.event_id === latest.event_id)
+                ? current : [...current, latest].sort((a, b) => a.timestamp_s - b.timestamp_s));
+            }
             setConnection('Connected locally');
             if (!ready) { ready = true; clearTimeout(timeout); resolve(); }
           } else if (value.kind === 'event') applyEvent(value.event as Event);
@@ -151,18 +180,19 @@ function App() {
 
   async function start() {
     if (busy) return;
-    setBusy(true); setError(''); setFeedback(null); setTransitions([]);
+    setBusy(true); setError(''); setFeedback(null); setTransitions([]); setPreviewOk(true);
     activeId.current = null;
     if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
     socket.current?.close();
     try {
-      const prepared = await api<Snapshot>('/api/sessions', { mode: 'fixture', fixture_case: selected });
+      const config = selected === LIVE ? { mode: 'live' } : { mode: 'fixture', fixture_case: selected };
+      const prepared = await api<Snapshot>('/api/sessions', config);
       activeId.current = prepared.session_id;
       setSnapshot(prepared);
       await connect(prepared.session_id);
       await api<Snapshot>(`/api/sessions/${prepared.session_id}/start`, {});
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Could not start the example.');
+      setError(reason instanceof Error ? reason.message : 'Could not start the rehearsal.');
       if (activeId.current) {
         await api(`/api/sessions/${activeId.current}/stop`, {}).catch(() => {});
       }
@@ -177,30 +207,47 @@ function App() {
     finally { setBusy(false); }
   }
 
+  const live = snapshot ? snapshot.mode === 'live' : selected === LIVE;
   const running = snapshot?.phase === 'running' || snapshot?.phase === 'stopping';
   const audience = snapshot?.latest_events['engagement.state'];
-  const state = audience?.type === 'engagement.state' ? audience.payload.state : 'NEUTRAL';
-  const transcript = snapshot?.transcript.filter(e => e.type === 'speech.transcript');
-  const speech = snapshot?.latest_events['speech.metrics'];
+  const engagement = audience?.type === 'engagement.state' ? audience : null;
+  const state: AudienceState = engagement?.payload.state ?? 'NEUTRAL';
+  const transcript = snapshot?.transcript.filter(e => e.type === 'speech.transcript') ?? [];
+  const speechEvent = snapshot?.latest_events['speech.metrics'];
+  const speech = speechEvent?.type === 'speech.metrics' ? speechEvent.payload : null;
+  const visionEvent = snapshot?.latest_events['vision.metrics'];
+  const vision = visionEvent?.type === 'vision.metrics' ? visionEvent.payload : null;
+  const facing = vision?.facing_score ?? null;
+  const pause = speech?.pause.state === 'active' && speech.pause.duration_s != null
+    ? `Pausing · ${speech.pause.duration_s.toFixed(1)} s` : null;
+  const end = snapshot?.duration_s ?? snapshot?.elapsed_s ?? 0;
+  const inputs = Object.entries(snapshot?.input_status || {});
 
   return <main>
     <header><a className="brand" href="/">LeCoach<span>Your Private AI Audience.</span></a>
       <span className="local"><i /> Runs on this device</span></header>
     <section className="intro"><div className="eyebrow">A SPACE TO PRACTICE</div>
       <h1>Find your rhythm.<br /><span>Feel the audience.</span></h1>
-      <p>Try an example rehearsal and see how delivery can shape an audience’s response.</p>
+      <p>Rehearse and watch a simulated audience respond to your pace, fillers, pauses and
+        whether you face the room. Reactions come from fixed rules, not from reading emotions.</p>
     </section>
-    <aside className="mode"><strong>Synthetic replay</strong>
-      <span>Speech, audience reactions, and coaching are authored examples. Microphone and camera are off.</span></aside>
+    {live
+      ? <aside className="mode live"><strong>Live rehearsal</strong>
+        <span>Microphone and camera are processed on this device. No audio or video is recorded.</span></aside>
+      : <aside className="mode"><strong>Synthetic replay</strong>
+        <span>Speech and camera observations are authored examples; the audience is computed from
+          them by the engagement engine. Coaching is an authored example. Microphone and camera are off.</span></aside>}
     <section className="controls" aria-label="Rehearsal controls">
       <label>Example<select aria-label="Example" value={selected} onChange={e => setSelected(e.target.value)} disabled={!!running || busy}>
+        <option value={LIVE} disabled={!health?.live_integrated}>
+          Live microphone and camera{health?.live_integrated ? '' : ' (not connected yet)'}</option>
         {fixtures.filter(f => f.session_count === 1).map(f => <option key={f.name} value={f.name}>
-          {labels[f.name] || f.name}</option>)}
+          {caseLabels[f.name] || f.name}</option>)}
       </select></label>
-      <button className="primary" onClick={start} disabled={!!running || busy || !fixtures.length}>
-        {busy && !running ? 'Connecting…' : 'Start replay'}</button>
+      <button className="primary" onClick={start} disabled={!!running || busy || (!fixtures.length && selected !== LIVE)}>
+        {busy && !running ? 'Connecting…' : selected === LIVE ? 'Start rehearsal' : 'Start replay'}</button>
       <button className="secondary" onClick={stop} disabled={!running || busy}>Stop</button>
-      <div className="timer" aria-label="Elapsed time">{time(snapshot?.elapsed_s || 0)}
+      <div className="timer" aria-label="Elapsed time">{clock(snapshot?.elapsed_s || 0)}
         <small>{snapshot?.phase || 'Ready'}</small></div>
     </section>
     {error && <div className="error" role="alert">{error}
@@ -211,38 +258,52 @@ function App() {
       }}>Reconnect</button>}</div>}
     <section className="grid">
       <article className="audience card"><div className="card-top"><h2>Your audience</h2>
-        <span className="state" data-testid="audience-state">{state}</span></div>
-        <div className="audience-faces" aria-label={`Example audience is ${state.toLowerCase()}`}>
-          {[0, 1, 2].map(n => <div className={`seat state-${state.toLowerCase()}`} key={n}>
-            <span aria-hidden="true">{faces[state]}</span><div /></div>)}
-        </div><p className="muted">Example reactions follow the replay. They are simulated audience states.</p>
-        <div className="transitions" aria-label="Audience transitions">
-          {transitions.filter(e => e.type === 'engagement.state').map(e => <span key={e.event_id}>
-            {time(e.timestamp_s)} · {e.type === 'engagement.state' && e.payload.state.toLowerCase()}</span>)}
+        <span className={`state state-${state.toLowerCase()}`} data-testid="audience-state">{state}</span></div>
+        <Audience state={state} label={live ? 'Audience' : 'Example audience'} />
+        <div className="reaction" aria-live="polite">
+          <strong>{stateCopy[state].label}</strong>
+          <span>{engagement?.payload.reasons.length
+            ? engagement.payload.reasons.map(r => reasonText(r.code)).join(' · ')
+            : engagement && !engagement.payload.usable_sources.length && running
+              ? 'Waiting for usable speech or camera input.' : stateCopy[state].detail}</span>
         </div>
+        <p className="muted">Simulated audience states from deterministic rules. They are not measured
+          emotions or judgments of you.</p>
+        <Timeline transitions={transitions} end={end} />
       </article>
       <article className="card observations"><div className="card-top"><h2>Rehearsal input</h2>
-        <span className="muted">Example data</span></div>
-        <div className="preview"><span aria-hidden="true">◉</span>
-          <p>Camera is off during replay</p><small>No video is recorded.</small></div>
-        <div className="metrics"><div><small>Example pace</small><strong>
-          {speech?.type === 'speech.metrics' && speech.payload.wpm != null
-            ? `${Math.round(speech.payload.wpm)} WPM` : '—'}</strong></div>
-          <div><small>Inputs</small><strong>{snapshot?.input_status.speech.availability === 'available'
-            ? 'Speech available' : 'Awaiting example'}</strong></div></div>
-        <h3>Transcript</h3><p className="transcript">{transcript?.length
-          ? transcript.map(e => e.type === 'speech.transcript' ? e.payload.text : '').join(' ')
-          : 'No transcript in this example yet.'}</p>
-        {Object.entries(snapshot?.input_status || {}).filter(([, value]) => value.availability !== 'available')
-          .map(([name, value]) => <p className="notice" key={name}>
-            {name === 'speech' ? 'Speech' : 'Camera'}: {value.reason.replaceAll('_', ' ')}</p>)}
+        <span className="muted">{live ? 'On this device' : 'Example data'}</span></div>
+        {live && running && previewOk
+          ? <img className="camera" alt="Camera preview" src={`/api/sessions/${snapshot!.session_id}/preview`}
+            onError={() => setPreviewOk(false)} />
+          : <div className="preview"><span aria-hidden="true">◉</span>
+            <p>{live ? (running ? 'Camera preview unavailable' : 'Camera starts with the rehearsal')
+              : 'Camera is off during replay'}</p><small>No video is recorded.</small></div>}
+        <div className="inputs">{inputs.map(([name, value]) => <span key={name}
+          className={`input input-${value.availability}`}>
+          {name === 'speech' ? 'Microphone' : 'Camera'}: {statusText(value.reason)}</span>)}</div>
+        <div className="metrics">
+          <div><small>{live ? 'Pace' : 'Example pace'}</small><strong>
+            {speech?.wpm != null ? `${Math.round(speech.wpm)} WPM` : '—'}</strong></div>
+          <div><small>Fillers</small><strong>
+            {speech?.filler_rate_per_min != null ? `${speech.filler_rate_per_min.toFixed(0)}/min` : '—'}</strong></div>
+          <div><small>Facing (approx.)</small><strong>
+            {facing != null ? <meter min={0} max={1} low={0.4} high={0.6} optimum={1} value={facing}
+              aria-label="Facing the audience" /> : '—'}</strong></div>
+        </div>
+        {pause && <p className="pause">{pause}</p>}
+        <h3>Transcript</h3><p className="transcript">{transcript.length
+          ? transcript.map((e, i) => e.type === 'speech.transcript'
+            ? <span key={e.event_id} className={e.payload.is_final ? undefined : 'partial'}>
+              {i ? ' ' : ''}{e.payload.text}</span> : null)
+          : 'No transcript yet.'}</p>
       </article>
     </section>
-    {feedback && <section className="summary" aria-label="Example coaching">
+    {feedback && <section className="summary" aria-label={live ? 'Rehearsal coaching' : 'Example coaching'}>
       <div className="eyebrow">AFTER THE REHEARSAL</div><h2>A few moments to learn from.</h2>
-      <p className="muted">Authored example coaching · {time(feedback.duration_s)} rehearsal</p>
+      <p className="muted">{live ? 'Coaching' : 'Authored example coaching'} · {clock(feedback.duration_s)} rehearsal</p>
       <div className="moments">{feedback.moments.map((moment, index) => <article className="card" key={index}>
-        <div className="moment-top"><span>{time(moment.timestamp_s)}</span>
+        <div className="moment-top"><span>{clock(moment.timestamp_s)}</span>
           <strong>{moment.kind === 'strength' ? 'Keep doing this' : 'Try next time'}</strong></div>
         <p>{moment.observation}</p><p className="suggestion">{moment.suggestion}</p>
       </article>)}</div>
@@ -250,7 +311,8 @@ function App() {
       {!feedback.moments.length && <p>No supported coaching moments in this example.</p>}
     </section>}
     {snapshot?.phase === 'completed' && snapshot.feedback_status === 'unavailable'
-      && <p className="notice">Replay stopped early. The authored example summary is unavailable.</p>}
+      && <p className="notice">{live ? 'The rehearsal summary is unavailable.'
+        : 'Replay stopped early. The authored example summary is unavailable.'}</p>}
     <footer><span><i /> {connection}</span><span>Private practice, one rehearsal at a time.</span></footer>
   </main>;
 }
