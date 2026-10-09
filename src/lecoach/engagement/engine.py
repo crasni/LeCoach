@@ -17,7 +17,6 @@ from lecoach.contracts.interfaces import SessionContext
 from .config import DEFAULT_RULES, RuleConfig
 
 SOURCES = ("speech", "vision")
-HISTORY_LIMIT = 64
 
 
 @dataclass(frozen=True)
@@ -81,10 +80,9 @@ class RuleEngine:
         if event.source not in SOURCES:
             return
         if event.type == "signal.status":
-            if event.payload.availability == "available":
-                if event.timestamp_s >= self._down_since.get(event.source, -1.0):
-                    self._down_since.pop(event.source, None)
-            else:
+            # Only an observation captured after an outage restores the source; an
+            # "available" status alone never revives pre-outage evidence.
+            if event.payload.availability != "available":
                 self._down_since[event.source] = max(
                     event.timestamp_s, self._down_since.get(event.source, -1.0)
                 )
@@ -107,6 +105,7 @@ class RuleEngine:
         self.entered_s = 0.0
         self._sequence = 0
         self._neutral_since: float | None = None
+        self._positive_since: float | None = None
         self._history: dict[str, list[Observation]] = {s: [] for s in SOURCES}
         self._down_since: dict[str, float] = {}
         self.rules = [
@@ -114,16 +113,24 @@ class RuleEngine:
                 "pace_high",
                 "speech",
                 "CONFUSED",
-                lambda p: _known(p.wpm, lambda w: w >= c.pace_high_wpm),
-                lambda p: _known(p.wpm, lambda w: w <= c.pace_high_clear_wpm),
+                *self._speaking(
+                    lambda p: _known(p.wpm, lambda w: w >= c.pace_high_wpm),
+                    lambda p: _known(p.wpm, lambda w: w <= c.pace_high_clear_wpm),
+                ),
                 c.pace_sustain_s,
             ),
             Rule(
                 "fillers_frequent",
                 "speech",
                 "CONFUSED",
-                lambda p: _known(p.filler_rate_per_min, lambda r: r >= c.filler_rate_high_per_min),
-                lambda p: _known(p.filler_rate_per_min, lambda r: r <= c.filler_rate_clear_per_min),
+                *self._speaking(
+                    lambda p: _known(
+                        p.filler_rate_per_min, lambda r: r >= c.filler_rate_high_per_min
+                    ),
+                    lambda p: _known(
+                        p.filler_rate_per_min, lambda r: r <= c.filler_rate_clear_per_min
+                    ),
+                ),
                 c.filler_sustain_s,
             ),
             Rule(
@@ -131,8 +138,10 @@ class RuleEngine:
                 "pace_low",
                 "speech",
                 "BORED",
-                lambda p: _known(p.wpm or None, lambda w: w <= c.pace_low_wpm),
-                lambda p: _known(p.wpm or None, lambda w: w >= c.pace_low_clear_wpm),
+                *self._speaking(
+                    lambda p: _known(p.wpm or None, lambda w: w <= c.pace_low_wpm),
+                    lambda p: _known(p.wpm or None, lambda w: w >= c.pace_low_clear_wpm),
+                ),
                 c.pace_sustain_s,
             ),
             Rule(
@@ -152,6 +161,19 @@ class RuleEngine:
                 c.facing_away_sustain_s,
             ),
         ]
+
+    def _pausing(self, p: SpeechMetricsPayload) -> bool:
+        """A long active pause fills the trailing window with silence."""
+        return p.pause.state == "active" and (
+            p.pause.duration_s is None or p.pause.duration_s >= self.config.pause_hold_s
+        )
+
+    def _speaking(self, trigger: Predicate, clear: Predicate) -> tuple[Predicate, Predicate]:
+        """While the speaker is pausing, pace and filler rules hold rather than decide."""
+        return (
+            lambda p: None if self._pausing(p) else trigger(p),
+            lambda p: False if self._pausing(p) else clear(p),
+        )
 
     def _silence_trigger(self, p: SpeechMetricsPayload) -> bool | None:
         if p.pause.state == "unknown":
@@ -176,7 +198,7 @@ class RuleEngine:
         history.append(
             Observation(event.event_id, payload.window_start_s, payload.window_end_s, payload)
         )
-        del history[:-HISTORY_LIMIT]
+        del history[: -self.config.history_limit]
 
     def usable(self, source: str, now: float) -> bool:
         history = self._history[source]
@@ -198,9 +220,10 @@ class RuleEngine:
     def _run(self, source: str, test: Predicate) -> list[Observation]:
         """Consecutive most-recent observations that satisfy `test`, oldest first."""
         run: list[Observation] = []
+        down = self._down_since.get(source, -1.0)
         for obs in reversed(self._history[source]):
-            if test(obs.payload) is not True:
-                break
+            if obs.end_s <= down or test(obs.payload) is not True:
+                break  # A run never spans an outage.
             if run and run[-1].start_s - obs.end_s > self.config.max_window_gap_s:
                 break
             run.append(obs)
@@ -235,15 +258,11 @@ class RuleEngine:
         if source == "speech":
 
             def test(p: SpeechMetricsPayload) -> bool | None:
-                if not p.wpm:
+                if not p.wpm or self._pausing(p):
                     return None  # Silence or unknown coverage says nothing positive.
-                return (
-                    c.pace_low_clear_wpm <= p.wpm <= c.pace_high_clear_wpm
-                    and (
-                        p.filler_rate_per_min is None
-                        or p.filler_rate_per_min <= c.filler_rate_clear_per_min
-                    )
-                    and self._silence_trigger(p) is not True
+                return c.pace_low_clear_wpm <= p.wpm <= c.pace_high_clear_wpm and (
+                    p.filler_rate_per_min is None
+                    or p.filler_rate_per_min <= c.filler_rate_clear_per_min
                 )
 
             return "pace_steady", test
@@ -283,29 +302,34 @@ class RuleEngine:
         order = {rule.code: index for index, rule in enumerate(self.rules)}
 
         if not usable:
-            self._neutral_since = None
+            self._neutral_since = self._positive_since = None
             if self.state != "NEUTRAL":
                 self._emit("NEUTRAL", [], [])  # Input loss is shown separately; not a reaction.
             return
 
         positive = None if active else self._positive(usable)
         if active:
-            self._neutral_since = None
+            self._neutral_since = self._positive_since = None
             active.sort(key=lambda r: (r.onset_s, order[r.code]))
             newest = max(active, key=lambda r: (r.onset_s, -order[r.code]))
             target = newest.state
             reasons = [{"code": r.code, "source_event_ids": list(r.evidence)} for r in active]
         elif positive:
             self._neutral_since = None
+            if self._positive_since is None:
+                self._positive_since = now
             reasons = positive
+            # ENGAGED needs positive evidence at every evaluation for engaged_after_s.
             if self.state == "ENGAGED" or (
-                self.state == "INTERESTED" and now - self.entered_s >= self.config.engaged_after_s
+                self.state == "INTERESTED"
+                and now - self._positive_since >= self.config.engaged_after_s
             ):
                 target = "ENGAGED"
             else:
                 target = "INTERESTED"
         else:
             reasons = []
+            self._positive_since = None
             if self._neutral_since is None:
                 self._neutral_since = now
             target = (

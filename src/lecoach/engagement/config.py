@@ -28,6 +28,11 @@ class RuleConfig(Model):
 
     # An active pause at least this long, after speech has started, while capture works.
     silence_prolonged_s: float = Field(default=6.0, gt=0)
+    # An active pause at least this long fills the trailing window with silence: pace and
+    # filler rules neither latch nor clear, and pace cannot count as positive evidence.
+    # The speech producer reports a pause as active only after 1 s, so by default every
+    # reported active pause holds.
+    pause_hold_s: float = Field(default=1.0, gt=0)
 
     # Approximate head/body facing in [0, 1]. Not eye contact.
     facing_away_below: float = Field(default=0.4, ge=0, le=1)
@@ -51,6 +56,8 @@ class RuleConfig(Model):
 
     # Most recent supporting event IDs cited per reason.
     max_evidence_ids: int = Field(default=4, ge=1)
+    # Observations kept per source; bounds how long a sustained run can be measured.
+    history_limit: int = Field(default=64, ge=2)
 
     @model_validator(mode="after")
     def ordered_bands(self) -> Self:
@@ -63,6 +70,8 @@ class RuleConfig(Model):
             raise ValueError("pace bands must be low < low_clear < high_clear < high")
         if self.filler_rate_clear_per_min >= self.filler_rate_high_per_min:
             raise ValueError("filler clear rate must be below the trigger rate")
+        if self.pause_hold_s > self.silence_prolonged_s:
+            raise ValueError("pause hold cannot exceed the prolonged-silence duration")
         if self.facing_away_below >= self.facing_toward_at_least:
             raise ValueError("facing-away threshold must be below the facing-toward threshold")
         return self

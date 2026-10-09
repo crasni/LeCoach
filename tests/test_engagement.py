@@ -242,7 +242,9 @@ class EngineRuleTests(TestCase):
         times = [e.timestamp_s for e in h.events]
         gaps = [b - a for a, b in zip(times, times[1:])]
         self.assertTrue(all(gap >= h.engine.config.min_state_dwell_s for gap in gaps))
-        self.assertLessEqual(len(h.events), 3)
+        # Interrupted positive evidence never counts as sustained engagement.
+        self.assertNotIn("ENGAGED", h.states)
+        self.assertLessEqual(len(h.events), 2)
 
     def test_hysteresis_band_holds_a_negative_state(self):
         h = Harness()
@@ -254,6 +256,22 @@ class EngineRuleTests(TestCase):
         self.assertEqual(h.states[-1], "CONFUSED")
         h.feed(speech("calm", 40.0, wpm=150.0))
         self.assertEqual(h.states[-1], "INTERESTED")
+
+    def test_held_rule_cites_only_triggering_observations(self):
+        h = Harness()
+        for t in (5.0, 10.0, 15.0):
+            h.feed(speech(f"fast-{t}", t, wpm=200.0), vision(f"look-{t}", t, facing=0.8))
+        self.assertEqual(h.states[-1], "CONFUSED")
+        for t in range(16, 27):
+            # Pace stays inside the hysteresis band while the speaker turns away.
+            h.feed(
+                speech(f"band-{t}", float(t), wpm=175.0), vision(f"away-{t}", float(t), facing=0.1)
+            )
+        self.assertEqual(h.states[-1], "BORED")
+        reasons = {r.code: r.source_event_ids for r in h.events[-1].payload.reasons}
+        self.assertEqual(set(reasons), {"pace_high", "facing_away_sustained"})
+        self.assertTrue(all(i.startswith("fast-") for i in reasons["pace_high"]))
+        self.assertTrue(all(i.startswith("away-") for i in reasons["facing_away_sustained"]))
 
     def test_stale_speech_is_dropped_not_held_against_the_speaker(self):
         h = Harness()
@@ -291,6 +309,20 @@ class EngineRuleTests(TestCase):
             h2.at(float(t))
         self.assertFalse(set(h2.states) & NEGATIVE)
 
+    def test_recovery_status_alone_does_not_revive_pre_outage_evidence(self):
+        h = Harness()
+        for t in range(1, 5):
+            h.feed(vision(f"away-{t}", float(t), facing=0.1))
+        h.feed(status("cam-lost", "vision", 4.5))
+        h.feed(status("cam-back", "vision", 5.0, availability="available"))
+        h.at(8.0)
+        self.assertFalse(h.engine.usable("vision", 8.0))
+        self.assertEqual(h.states, ["NEUTRAL"])
+        h.feed(vision("away-new", 9.0, facing=0.1))
+        self.assertTrue(h.engine.usable("vision", 9.0))
+        # The run restarts after the outage: the new window alone is not sustained.
+        self.assertEqual(h.states, ["NEUTRAL"])
+
     def test_sustained_facing_away_needs_duration(self):
         h = Harness()
         for t in range(1, 6):
@@ -320,6 +352,116 @@ class EngineRuleTests(TestCase):
         self.assertEqual(h.states[-1], "BORED")
         self.assertEqual(h.events[-1].payload.reasons[0].code, "silence_prolonged")
 
+    def test_engaged_needs_uninterrupted_positive_evidence(self):
+        h = Harness()
+        for t in range(1, 12):
+            h.feed(speech(f"sp-{t}", float(t), wpm=150.0, window=1.0), vision(f"vi-{t}", float(t)))
+        interested = next(e for e in h.events if e.payload.state == "INTERESTED")
+        engaged = next(e for e in h.events if e.payload.state == "ENGAGED")
+        self.assertEqual(interested.timestamp_s, 3.0)  # First positive at 1 s, then dwell.
+        self.assertEqual(engaged.timestamp_s, 6.0)  # Positive since 1 s for engaged_after_s.
+        self.assertGreaterEqual(engaged.timestamp_s - 1.0, h.engine.config.engaged_after_s)
+
+    def test_mixed_evidence_restarts_the_engaged_timer(self):
+        h = Harness()
+        for t in range(1, 20):
+            facing = 0.5 if t % 4 == 0 else 0.8  # Every fourth window is outside both bands.
+            h.feed(vision(f"vi-{t}", float(t), facing=facing))
+        self.assertIn("INTERESTED", h.states)
+        self.assertNotIn("ENGAGED", h.states)
+
+    def test_mixed_evidence_drifts_back_to_neutral(self):
+        h = Harness()
+        for t in range(1, 5):
+            h.feed(vision(f"good-{t}", float(t), facing=0.8))
+        self.assertEqual(h.states[-1], "INTERESTED")
+        for t in range(5, 12):
+            h.feed(vision(f"mid-{t}", float(t), facing=0.5))
+        self.assertEqual(h.states[-1], "NEUTRAL")
+        self.assertEqual(h.events[-1].timestamp_s, 10.0)  # Mixed since 5 s, plus 5 s.
+        self.assertEqual(h.events[-1].payload.reasons, [])
+
+    def test_trailing_silence_does_not_count_as_a_steady_pace(self):
+        # Lane 2's observation (issue #6): after fast speech stops, 10 s trailing windows
+        # fall through the comfortable band while already reporting an active pause.
+        h = Harness()
+        for t in range(10, 26):
+            h.feed(speech(f"fast-{t}", float(t), wpm=200.0, window=10.0))
+        self.assertEqual(h.states[-1], "CONFUSED")
+        for t in range(26, 34):
+            active = {"state": "active", "duration_s": t - 25.5, "start_s": 25.5, "end_s": None}
+            wpm = max(0.0, 200.0 - 24.0 * (t - 25))
+            h.feed(speech(f"quiet-{t}", float(t), wpm=wpm, window=10.0, pause=active))
+        self.assertNotIn("INTERESTED", h.states)
+        self.assertEqual(h.states[-1], "BORED")
+        codes = [r.code for r in h.events[-1].payload.reasons]
+        self.assertEqual(codes, ["pace_high", "silence_prolonged"])
+
+    def test_completed_pause_does_not_hide_a_steady_pace(self):
+        h = Harness()
+        done = {"state": "completed", "duration_s": 1.2, "start_s": 3.8, "end_s": 5.0}
+        h.feed(speech("breath", 5.0, wpm=140.0, pause=done))
+        self.assertEqual(h.states, ["NEUTRAL", "INTERESTED"])
+        reason = h.events[-1].payload.reasons[0]
+        self.assertEqual(reason.code, "pace_steady")
+        self.assertIn("breath", reason.source_event_ids)
+
+    def test_active_pause_is_not_positive_pace(self):
+        h = Harness()
+        pausing = {"state": "active", "duration_s": 1.5, "start_s": 3.5, "end_s": None}
+        h.feed(speech("pausing", 5.0, wpm=150.0, pause=pausing))
+        h.at(10.0)
+        self.assertEqual(h.states, ["NEUTRAL"])
+        h2 = Harness()
+        h2.feed(speech("speaking", 5.0, wpm=150.0))
+        self.assertEqual(h2.states, ["NEUTRAL", "INTERESTED"])
+
+    def test_pausing_speech_gives_no_verdict_so_facing_can_carry_engagement(self):
+        h = Harness()
+        for t in range(2, 13):
+            pausing = {"state": "active", "duration_s": 1.5, "start_s": t - 1.5, "end_s": None}
+            h.feed(
+                speech(f"sp-{t}", float(t), wpm=150.0, window=1.0, pause=pausing),
+                vision(f"vi-{t}", float(t), facing=0.8),
+            )
+        self.assertEqual(h.states[-1], "ENGAGED")
+        self.assertEqual([r.code for r in h.events[-1].payload.reasons], ["facing_audience"])
+
+    def test_active_pause_holds_pace_rules(self):
+        h = Harness()
+        for t in (5.0, 10.0, 15.0):
+            h.feed(speech(f"fast-{t}", t, wpm=200.0))
+        self.assertEqual(h.states[-1], "CONFUSED")
+        pausing = {"state": "active", "duration_s": 1.5, "start_s": 18.5, "end_s": None}
+        h.feed(speech("pausing", 20.0, wpm=150.0, pause=pausing))
+        self.assertEqual(h.states[-1], "CONFUSED")  # Silence does not prove a calmer pace.
+        h.feed(speech("calm", 25.0, wpm=150.0))
+        self.assertEqual(h.states[-1], "INTERESTED")
+
+    def test_stale_on_arrival_observation_is_not_used_or_cited(self):
+        h = Harness()
+        h.clock.advance_to(30.0)
+        # 16 s old on arrival (beyond the 15 s speech stale age); its window ends 3 s
+        # before the fresh one starts, so only the stale-on-arrival check keeps it from
+        # joining and lengthening the fast-pace run.
+        h.engine.on_event(speech("ancient", 14.0, wpm=200.0, window=10.0))
+        h.feed(speech("fresh", 27.0, wpm=200.0, window=10.0))
+        self.assertEqual(h.states, ["NEUTRAL"])  # 10 s of usable evidence is below 15 s.
+        h.feed(speech("fresh-2", 32.0, wpm=200.0, window=10.0))
+        self.assertEqual(h.states[-1], "CONFUSED")
+        for event in h.events:
+            for reason in event.payload.reasons:
+                self.assertNotIn("ancient", reason.source_event_ids)
+
+    def test_history_limit_bounds_how_long_a_run_can_be_measured(self):
+        short = Harness(RuleConfig(history_limit=2))
+        full = Harness()
+        for h in (short, full):
+            for t in range(1, 8):
+                h.feed(vision(f"away-{t}", float(t), facing=0.1))
+        self.assertEqual(full.states[-1], "BORED")  # 7 s of looking away.
+        self.assertEqual(short.states, ["NEUTRAL"])  # Only 2 s of windows are kept.
+
     def test_restart_and_stop(self):
         h = Harness()
         for t in (5.0, 10.0, 15.0):
@@ -345,6 +487,12 @@ class EngineRuleTests(TestCase):
             RuleConfig(pace_high_wpm=150.0)
         with self.assertRaises(ValidationError):
             RuleConfig(facing_away_below=0.7)
+        with self.assertRaises(ValidationError):
+            RuleConfig(filler_rate_clear_per_min=12.0)
+        with self.assertRaises(ValidationError):
+            RuleConfig(pause_hold_s=7.0)
+        with self.assertRaises(ValidationError):
+            RuleConfig(history_limit=1)
 
 
 class LiveTickTests(IsolatedAsyncioTestCase):
