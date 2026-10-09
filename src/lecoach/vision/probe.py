@@ -232,10 +232,19 @@ async def repeat_sessions(args, sessions: int, seconds: float = REPEAT_SESSION_S
     """Back-to-back short sessions, each with a fresh adapter as the app would create.
 
     Checks that the camera reopens after every release, produces windows and is
-    released again on stop (Stage I stop/release/repeat check). Headless; no media saved.
+    released again on stop (Stage I stop/release/repeat check). Shows the preview
+    window with a countdown when ``args.show`` (display only); no media saved.
     """
     results = []
     config = VisionConfig(max_inference_fps=args.max_fps)
+    viewer = None
+    if getattr(args, "show", False):
+        try:
+            from .viewer import ProbeViewer
+
+            viewer = ProbeViewer(config)
+        except ImportError:
+            viewer = None
     for index in range(1, sessions + 1):
         windows: list[dict] = []
         statuses: list[str] = []
@@ -249,14 +258,28 @@ async def repeat_sessions(args, sessions: int, seconds: float = REPEAT_SESSION_S
                 windows.append(event.payload.model_dump())
             return True
 
-        adapter = build_local_adapter(args.model, args.camera, config)
+        adapter = build_local_adapter(
+            args.model, args.camera, config, on_frame=viewer.on_frame if viewer else None
+        )
         context = SessionContext(f"vision-repeat-{index}", clock, emit, SessionConfig(mode="live"))
+        print(f"\n>>> Repeat {index}/{sessions}: camera reopening; stay in frame", flush=True)
         clock.reset()
         started = time.perf_counter()
         await adapter.start(context)
         startup_s = time.perf_counter() - started
         if adapter.stats.capture_started_s is not None:
-            await asyncio.sleep(seconds)
+            ends = clock.now() + seconds
+            while (left := ends - clock.now()) > 0:
+                if viewer is not None:
+                    shown = viewer.show(
+                        [
+                            f"Repeat {index}/{sessions}: stay in frame  ({left:4.1f} s)",
+                            f"windows so far: {len(windows)}",
+                        ]
+                    )
+                    if not shown:
+                        break
+                await asyncio.sleep(DISPLAY_INTERVAL_S if viewer else min(left, 0.5))
         stop_started = time.perf_counter()
         await adapter.stop_capture(clock.now())
         release_s = time.perf_counter() - stop_started
@@ -283,6 +306,8 @@ async def repeat_sessions(args, sessions: int, seconds: float = REPEAT_SESSION_S
             flush=True,
         )
         results.append(result)
+    if viewer is not None:
+        viewer.close()
     return results
 
 
