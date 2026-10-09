@@ -6,29 +6,18 @@ This file is the canonical interface reference for all five roles. [GUIDE.md](..
 
 ### Current language and validation policy — 2026-10-09
 
-The maintainer selects Mandarin rehearsal and native Taiwan Traditional Chinese
-product content (zh-TW). Recognition language and display locale are distinct.
-Speech/integration/realtime/coaching must agree supported Mandarin pace units,
-counting/coverage, contextual fillers and consumer semantics in
-[#6](https://github.com/crasni/LeCoach/issues/6) and the proposed
-[Mandarin delta](../openspec/changes/mandarin-first-stage1/proposal.md) before
-shared fields/rules change. That delta is pending affected-owner review; it does
-not authorize a new schema or silently waive P0 measurements.
-
-Existing v0 `wpm` remains finalized English word count per minute for its
-documented tokenizer. Chinese character counts/rates must not populate it.
-Unsupported Mandarin pace/filler observations are null, not zero; independently
-supported transcript/pause/facing observations remain usable. A future Mandarin
-rate needs an explicit agreed unit/representation and consumer rules. English
-thresholds or filler lexicons are not automatically valid for Mandarin. Product
-errors/reasons/coaching need zh-TW presentation; internal fields/codes retain their
-identifiers. This supersedes the prior English-only configuration baseline.
+English is the product/rehearsal and speech-analysis baseline. The maintainer
+canceled the unaccepted Mandarin/zh-TW delta; existing v0 English units, tokenizer,
+filler rules and consumer semantics remain unchanged. Unsupported measurements
+remain null/unknown. [#6](https://github.com/crasni/LeCoach/issues/6) records the
+speech-owned configuration and optional dependency handoff; no new shared schema
+or engine rule is introduced.
 
 Stage I live acceptance targets the confirmed ordinary demo computer using local
-CPU inference. UGen300 is unavailable before qualification and is a later Stage II
-validation milestone, never a Stage I blocker or a tested platform. Lucas is the
-likely operator; host/OS/CPU/RAM/devices remain to be confirmed. Event clocks,
-lifecycle, evidence and private-data rules below are unchanged.
+CPU inference. UGen300 is unavailable before qualification and remains a later
+Stage II validation milestone. Lucas is the likely operator; actual host and
+recording arrangements remain unconfirmed. Clocks, lifecycle and evidence rules
+below are unchanged.
 
 Python 3.12.14 with uv hosts the controller, in-process event bus, and local FastAPI API. React/TypeScript with Vite renders outputs. Core lockfiles exclude model/capture packages; request modality dependency additions through integration. One backend process runs on `127.0.0.1:8000`; development Vite runs on loopback port 5173 with an API/WebSocket proxy. The backend can serve the built frontend for the demo. No remote inference or media service is used.
 

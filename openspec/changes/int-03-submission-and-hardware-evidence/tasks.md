@@ -50,14 +50,14 @@ Groups 1–4 can proceed with local artifacts and available evidence. Group 5's 
 ## Maintainer refinement — 2026-10-09
 
 The historical boxes above remain preserved, not a live board. Current #12
-acceptance now targets confirmed-host local CPU Stage I evidence with Mandarin
-rehearsal/zh-TW UI and compliant English competition explanation. Hardware-only
+acceptance targets confirmed-host local CPU Stage I evidence with English
+rehearsal/UI/coaching and compliant English competition explanation. Hardware-only
 measurements remain Stage II obligations; absence does not block Stage I work.
-Reconcile the owner-provided Mandarin script, actual supported measurements,
-localized screens and final timing before accepting tasks 5.1–5.3. Confirm the
-actual computer/recording arrangement; Lucas's likely operation is only a plan.
-The linked `mandarin-first-stage1` change specifies the cross-lane delta; it does
-not restart completed scaffold/submission work or assume owner agreement.
+Reconcile the owner-provided English script, actual supported measurements,
+screens and final timing before accepting tasks 5.1–5.3. Confirm the actual
+computer/recording arrangement; Lucas's likely operation is only a plan.
+The unaccepted Mandarin/zh-TW proposal is canceled; existing assignments and
+completed scaffold/submission work remain preserved.
 
 ## Workflow follow-up
 

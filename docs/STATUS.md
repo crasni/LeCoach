@@ -6,9 +6,24 @@ This file preserves dated implementation evidence. [GitHub Issues](https://githu
 
 **Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
 
-## Mandarin-first Stage I direction and synthetic conformance — 2026-10-09
+## English restoration — 2026-10-09
 
-Maintainer direction supersedes the earlier English-only analysis decision:
+The maintainer canceled Mandarin/zh-TW preparation. English product, speech
+analysis, UI/coaching and rehearsal guidance are restored. The unaccepted Mandarin
+OpenSpec delta, authored fixtures/copy and six dedicated checks were removed;
+commit `4580eee` preserves their history. Runtime source, v0 contracts and existing
+assignments are unchanged. Stage I CPU validation, confirmed-host rehearsal setup
+and eventual Stage II accelerator validation remain required.
+
+Checks on Linux/CPython 3.12.14: 130 tests / 69 subtests; Ruff, unchanged-schema
+parity, nine synthetic fixture cases / ten sessions, both retained strict OpenSpec
+validations and whitespace pass. No microphone/camera, model inference, final
+recording or accelerator validation was performed in this restoration.
+
+## Historical Mandarin preparation — canceled 2026-10-09
+
+This direction was subsequently canceled by the maintainer. The following is
+historical evidence for commit `4580eee`, not current guidance. At that checkpoint:
 Mandarin rehearsal, native Taiwan Traditional Chinese product content and local
 CPU Stage I validation. No UGen300 before qualification; actual accelerator
 compatibility/performance is retained as later Stage II validation. Lucas is the

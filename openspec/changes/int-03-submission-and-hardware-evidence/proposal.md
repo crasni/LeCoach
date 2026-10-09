@@ -35,5 +35,5 @@ Implementation belongs to Lane 1 on `agent/integration`. Expected changes are th
 No application dependency or API change is planned. Live evidence requires INT-02 and owner handoffs; accelerator measurements additionally require a compatible device/runtime/model setup. The maintainer confirms no UGen300 before qualification. Stage I implementation
 and real validation run on the confirmed ordinary computer with local CPU
 inference; actual target validation is retained for Stage II. Product rehearsal
-is Mandarin and client content native zh-TW; competition explanation remains
-English where required. Lucas is likely operator, not confirmed recording. Private media, transcripts, session exports, credentials, and weights stay out of Git. Scoped role-branch publication follows AGENTS; final recording, external publication/submission and broader actions require separate applicable authorization.
+and client content remain English, as does competition explanation where
+required; the Mandarin/zh-TW proposal is canceled. Lucas is likely operator, not confirmed recording. Private media, transcripts, session exports, credentials, and weights stay out of Git. Scoped role-branch publication follows AGENTS; final recording, external publication/submission and broader actions require separate applicable authorization.

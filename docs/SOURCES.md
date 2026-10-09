@@ -72,7 +72,7 @@ The prerequisites link to Hailo-8/PCIe-oriented installation guidance, despite t
 
 The speech path's windowing and both producers' device contention need measurement before tuning engagement staleness. Shared capture-time and adapter cleanup contracts stay in [ARCHITECTURE.md](ARCHITECTURE.md); this research changes no contracts or producer implementation.
 
-## Rules recheck for Mandarin/CPU direction — 2026-10-09
+## Rules recheck for Stage I CPU direction — 2026-10-09
 
 Official source: https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/
 Direct `curl --fail --location` response retrieved and embedded JSON-LD rules
@@ -81,11 +81,11 @@ content inspected after web extraction failed with 404. Response SHA-256:
 The temporary response stays outside Git; it contains public rules, not private
 registration data. Sections V/VI retain ordinary Stage I hosts, later selected
 platform validation, English deck (20 main pages) and mainly English video
-explanation (three minutes recommended). Mandarin UI/rehearsal is not prohibited
-in the inspected sections. Caption/narration planning remains a recommendation;
-no final video, authenticated form, announcement or receipt was validated here.
+explanation (three minutes recommended). No final video, authenticated form,
+announcement or receipt was validated in this recheck.
 The October 14 deadline is unchanged; exact form cutoff remains unconfirmed.
 
 Maintainer direction is separate provenance: no team UGen300 access before
-qualification; Lucas likely operator; Mandarin rehearsal/native zh-TW client copy.
+qualification; Lucas likely operator; English product/rehearsal after canceling
+the Mandarin/zh-TW proposal.
 It does not establish actual CPU/model performance or override official rules.

@@ -3,30 +3,18 @@
 
 ## Shared team entry point
 
-**Current direction — 2026-10-09:** Mandarin is the spoken product/rehearsal
-default. All client-facing product copy must be native Traditional Chinese for
-Taiwan (zh-TW): controls, onboarding, device/errors, audience reasons, metrics,
-timeline, coaching, empty states and default examples. Keep LeCoach's name;
-developer identifiers/docs need not be translated. This supersedes earlier
-English-only product/analysis assumptions.
-
-Speech/integration/realtime/coaching must agree Mandarin transcription, pace
-units/counting, contextual fillers and feedback through #6 and linked OpenSpec
-before shared consumers change. Unsupported measurements stay null/unknown;
-English word/filler rules and WPM bands do not apply unchanged to Mandarin.
-Chinese character rates must never be labeled English WPM. Unknown fallback
-does not silently waive unverified P0 measurement acceptance.
+**Current direction — 2026-10-09:** English is the product, speech-analysis and
+rehearsal language. The maintainer canceled the Mandarin/zh-TW proposal; retain
+existing English UI, speech rules and coaching work. #6 owns the configuration
+handoff; unsupported measurements remain null/unknown rather than fabricated.
 
 Stage I uses an ordinary computer with local CPU inference where practical.
-The maintainer confirms no UGen300 before qualification; absence must not block
-implementation or CPU validation. UGen300 remains a Stage II integration target
-requiring eventual actual compatibility/performance validation. Lucas (@crasni)
-is the likely operator; confirm the actual computer and recording arrangement
-before final validation. Recording/publication authorization remains separate.
-
-Product and competition languages differ: rules rechecked 2026-10-09 retain an
-English deck and mainly English video explanation. Keep Mandarin rehearsal/zh-TW
-UI and plan compliant English narration/captions; recheck before submission.
+No UGen300 is available before qualification; absence must not block Stage I.
+Actual accelerator compatibility/performance validation remains required for
+Stage II. Lucas (@crasni) is the likely operator; confirm the actual computer and
+recording arrangement before final validation. The English deck and mainly
+English video explanation follow the official rules; final recording/publication
+and submission still require their separate authorization.
 
 Product name: **LeCoach**. Use this exact spelling and capitalization in product copy, UI, proposal, demo, and project documentation. Technical identifiers and existing repository URLs follow their actual names.
 
@@ -346,8 +334,8 @@ Required outputs:
 - timestamps
 
 Preferred target:
-A multilingual Whisper model running locally on the Stage I CPU computer where
-practical; Mandarin speech must not use an English-only model such as `base.en`.
+Whisper running locally on the Stage I CPU computer where practical; the
+initial English baseline is `base.en`/CPU/int8, pending actual-host measurement.
 
 Architecture should allow later UGen300 acceleration.
 

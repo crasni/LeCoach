@@ -49,13 +49,10 @@ ordinary computers for Stage I and requires selected-platform validation later.
 Browser extraction failed, so this check used the direct response and content
 inspection, not that failed extraction. Provenance/hash are in SOURCES.
 
-Mandarin spoken rehearsal and native zh-TW product UI remain the maintainer's
-product direction. Recommendation: show the actual Mandarin rehearsal/zh-TW UI
-with mainly English explanatory narration and English captions explaining the
-Mandarin shots. The rules do not specify a required product UI or rehearsal
-language in the inspected sections. This is a compliant planning recommendation,
-not organizer approval of a final edit. Final narration/subtitles and artifact
-checks remain Lane 5/integration review; recheck before submission.
+The maintainer has restored English for the product, UI, coaching and rehearsal,
+canceling the Mandarin/zh-TW proposal. Continue the English deck and mainly English
+video explanation. Final narration/artifact checks remain Lane 5/integration
+review; recheck official requirements before submission.
 
 No UGen300 before qualification is a maintainer-confirmed team constraint. Stage I
 must validate the ordinary-computer CPU path; actual accelerator operation remains

@@ -11,12 +11,11 @@ LeCoach is a local, multimodal presentation coach for the ASUS UGen AI League Ha
 - A deterministic engagement engine with smooth audience reactions.
 - A synchronized session timeline and concise, actionable feedback.
 
-Product direction: Mandarin rehearsals and native Traditional Chinese content
-for Taiwan (zh-TW). Stage I validates local CPU inference on an ordinary computer;
-UGen300 will not be available before qualification. It remains the intended
-Battlefield Lightning accelerator for later Stage II validation. Existing English
-UI/examples are preserved preparation awaiting owner localization, not the final
-Mandarin product. See [GUIDE](GUIDE.md) and the [Mandarin delta](openspec/changes/mandarin-first-stage1/proposal.md).
+Product and rehearsal language: English. Stage I validates local CPU inference
+on an ordinary computer; UGen300 will not be available before qualification.
+Target track: Workplace AI / Battlefield Lightning, with UGen300 retained as the
+intended accelerator for actual Stage II validation. See [GUIDE](GUIDE.md) and
+[demo host preparation](docs/DEMO_HOST.md).
 
 ## Project status
 

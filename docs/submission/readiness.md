@@ -1,20 +1,16 @@
 # Stage I package readiness
 
-## Direction reconciliation pending artifact revision — 2026-10-09
+## Stage I CPU direction — 2026-10-09
 
-The maintainer now requires Mandarin rehearsal and native zh-TW client content,
-with local CPU Stage I validation on the confirmed ordinary computer. No UGen300
-is available before qualification; actual target validation is retained for
-Stage II. Lucas is likely operator, not confirmed recording arrangements.
+The product, rehearsal and submission preparation remain English. The maintainer
+canceled Mandarin/zh-TW work. Stage I validates local CPU behavior on the confirmed
+ordinary computer; no UGen300 before qualification, with actual target validation
+retained for Stage II. Lucas is likely operator, not a confirmed recording plan.
 
-Official language rules were rechecked: keep the English proposal and mainly
-English explanatory video narration, showing Mandarin rehearsal/zh-TW UI with
-explanatory captions. Existing proposal/PDF/script hashes below describe the old
-reviewed draft; the deck was not re-exported or visually revalidated in this
-reconciliation. Its English UI/scenario illustrations and claim map require
-owner-provided localized/accepted live evidence before final review. Do not treat
-historical English-only checks as Mandarin support or final package acceptance.
-
+Existing proposal/PDF hashes below describe the reviewed draft; no deck export or
+visual revalidation was performed in this direction update. Final claim-map and
+script review still require accepted live evidence, actual-host checks and timing.
+Official rules retain an English deck and mainly English video explanation.
 
 Package evidence record, updated 2026-10-08 (Asia/Taipei). The proposal/evidence range merged through [PR #8](https://github.com/crasni/LeCoach/pull/8). Current remaining work, dependencies and task acceptance live only in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12); follow [AGENTS](../../AGENTS.md) for scoped publication. This document records artifact versions, checks and claim provenance, not assignments, a live status board or a submission receipt. Older check/disposition entries are dated package evidence, not acceptance of the final task. [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) preserves observed behavior.
 

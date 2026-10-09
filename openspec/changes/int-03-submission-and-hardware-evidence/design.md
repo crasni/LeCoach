@@ -30,13 +30,11 @@ Do not limit independent work to model-free preparation or treat accelerator
 absence as a Stage I blocker. CPU speech/vision/UI responsiveness, failures,
 release and repeated-session behavior still require actual evidence.
 
-Product/rehearsal language is Mandarin and every client surface native zh-TW.
-The previous English-only measurement/model decision is superseded. The proposed
-`mandarin-first-stage1` delta and #6 coordinate measurement/script/reason changes;
-this submission change does not invent them. English deck and mainly English
-explanatory video narration remain compliant after the 2026-10-09 official
-recheck; show Mandarin/zh-TW behavior with explanatory captions. Existing English
-script/screens are historical preparation pending revision, not final acceptance.
+Product, rehearsal, UI and coaching remain English. The maintainer canceled the
+unaccepted Mandarin/zh-TW delta; #6's English configuration/dependency handoff and
+existing shared v0 semantics remain applicable. The English deck and mainly
+English explanatory video remain consistent with the 2026-10-09 official recheck.
+Existing script/screens remain preparation pending actual live acceptance.
 Lucas is likely operator; confirm computer/configuration and recording arrangement
 before final validation. Existing owners, branches, completed evidence and final
 authorization gates remain preserved.
