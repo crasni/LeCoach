@@ -317,9 +317,9 @@ PROPOSAL: The integration owner reviews PR #7, especially the reason codes and t
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
 
-## AUD-01 speech adapter core — local, pending publication and review
+## AUD-01 speech adapter core
 
-FACT: On `agent/audio-streaming`, based on main `ebdf421`, Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/aud-01-live-speech-adapter/tasks.md) in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+FACT: On `agent/audio-streaming` (published at `cea23e2`, then merged with main `558f56f`), Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/aud-01-live-speech-adapter/tasks.md) in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
 
 - `SpeechConfig` with the defaults proposed in [issue #6](https://github.com/crasni/LeCoach/issues/6);
 - the English tokenizer and filler lexicon, kept equal to `checks/speech/speech_text.py` by a parity test;
@@ -339,7 +339,7 @@ python3 checks/speech/make_fixtures.py --check
 openspec validate aud-01-live-speech-adapter --strict
 ```
 
-Observed result: 128 tests and 254 subtests pass, with the existing Starlette/httpx deprecation warning; 31 of the tests are new speech tests. Ruff passes. The 10 speech cases / 11 sessions match their oracles, the 37 standalone speech tests pass, the fixtures match the scenario scripts, and the change validates. `numpy`, `sounddevice`, and `faster_whisper` are not installed, and importing `lecoach.speech` loads none of them.
+Observed result after merging main `558f56f`: 161 tests and 286 subtests pass, with the existing Starlette/httpx deprecation warning; 31 of the tests are new speech tests (128 tests and 254 subtests before the merge). Ruff passes. The 10 speech cases / 11 sessions match their oracles, the 37 standalone speech tests pass, the fixtures match the scenario scripts, and the change validates. `numpy`, `sounddevice`, and `faster_whisper` are not installed, and importing `lecoach.speech` loads none of them.
 
 The new tests show:
 
@@ -353,11 +353,24 @@ The new tests show:
   - the microphone is closed exactly once on repeated stop and cancelled drain, and a slow final leaves speech in `incomplete_sources`;
   - `SessionManager` composes the adapter per session.
 - Every recorded session stream passes `check_speech.py`, every emission runs on the event-loop thread, and the controller rejects none.
-- The adapter tests passed 40 consecutive runs and 30 runs under parallel load. Removing the clock cap, the capture-end flooring, the outage-start rule, the unmeasurable-final rule, or the utterance backstop each made its targeted test fail.
+- Before the merge, the adapter tests passed 40 consecutive runs and 30 runs under parallel load. Removing the clock cap, the capture-end flooring, the outage-start rule, the unmeasurable-final rule, or the utterance backstop each made its targeted test fail.
 
 FACT: Rounding capture times to the nearest millisecond can stamp an observation up to 0.5 ms after the controller's capture end, and the controller drops it. In the cut-at-stop test, a stop at 6.0006 s without capture-end flooring lost the capture-end window, so that session had no speech metrics at all. A monotonic clock gives a sub-millisecond fraction of 0.5 ms or more on about half of stops, and finals cut at stop have the same exposure. The adapter therefore floors capture times. The committed fixtures use whole milliseconds, so they could not show this.
 
 IMPACT: The speech rules and session lifecycle are ready for the production seams, and the issue #6 outcomes become configuration edits. Any producer that rounds capture times to the nearest unit risks the same dropped capture-end observations. AUD-01 is not complete: there is no live microphone capture, voice activity detection, or transcription yet, and no latency, drain-time, filler-recall, or UGen300 evidence. Degraded mode does not recover within a session.
+
+FACT: After the merge, an ad-hoc script (kept outside the repository) composed the speech adapter with scripted seams, the LIVE-01 `RuleEngine`, and the COACH-01 `InMemorySessionRecorder` through `SessionController` in live mode with a fake clock. Fast scripted speech ran from 0.5 to 25.5 s, followed by silence until stop at 40 s. In three identical runs, the audience went:
+
+- NEUTRAL at 0 s;
+- CONFUSED at 18 s (`pace_high`, citing `metrics-8.9`, `metrics-13`, `metrics-13.1`, `metrics-17.3`);
+- INTERESTED at 29 s (`pace_steady`, citing `metrics-29`: 162 WPM with an `active` pause of 3.5 s);
+- BORED at 32 s (`silence_prolonged`, citing `metrics-32`: active pause of 6.5 s).
+
+The recorder completed with every event, no source was incomplete, and no emission failed.
+
+IMPACT: The adapter's output is consumable by the merged engine and recorder. After speech stops, the 10 s trailing window's WPM falls through the comfortable band (162, 138, 114) while the window already reports an active pause. `pace_steady` therefore cites windows that are mostly silence, and the audience shows INTERESTED for 3 s before BORED.
+
+PROPOSAL: Lane 4 decides whether `pace_steady` should require no active pause in the cited window. Lane 2 changed no engine code.
 
 PROPOSAL: The integration owner reviews the package layout and the speech-owned configuration and answers issue #6: analysis language, defaults, configuration location, and the optional `speech` dependency group. It may also add "round capture times down" to the producer guidance in ARCHITECTURE. Lane 2 then implements task group 4: the PortAudio source, the model provider, and the faster-whisper transcriber with voice activity detection. A live rehearsal is checked with `check_speech.py --stream`, and AUD-02 measures latency and filler recall.
 
