@@ -655,3 +655,45 @@ class ProbeRepeatTests(TestCase):
         self.assertTrue(all(r["pass"] for r in results), results)
         self.assertTrue(all(r["windows"] >= 1 and r["camera_released"] for r in results))
         self.assertEqual([(s.opened, s.closed) for s in sources], [(1, 1), (1, 1)])
+
+
+class CameraListTests(TestCase):
+    def test_list_cameras_reports_openable_indices_and_releases(self):
+        from unittest import mock
+
+        from lecoach.vision import local_backend, probe
+
+        released = []
+
+        class FakeFrame:
+            shape = (720, 1280, 3)
+
+        class FakeCapture:
+            def __init__(self, index, backend):
+                self.index = index
+
+            def isOpened(self):
+                return self.index in (0, 1)  # e.g. iPhone at 0, built-in webcam at 1
+
+            def read(self):
+                return True, FakeFrame()
+
+            def get(self, prop):
+                return 30.0
+
+            def release(self):
+                released.append(self.index)
+
+        fake_cv2 = mock.Mock(
+            VideoCapture=FakeCapture, CAP_AVFOUNDATION=1200, CAP_ANY=0, CAP_PROP_FPS=5
+        )
+        with mock.patch.object(local_backend, "_import_cv2", return_value=fake_cv2):
+            cameras = probe.list_cameras(max_index=4)
+        self.assertEqual(
+            cameras,
+            [
+                {"index": 0, "frame": "1280x720", "fps": 30.0},
+                {"index": 1, "frame": "1280x720", "fps": 30.0},
+            ],
+        )
+        self.assertEqual(released, [0, 1, 2, 3])  # every probed index is released

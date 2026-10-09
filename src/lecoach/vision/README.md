@@ -125,7 +125,10 @@ Composition is integration-owned; this lane does not edit `pyproject.toml`,
    knob integration is likely to need is `max_inference_fps` (CPU cap, default 10).
    On the session side, give live mode a `startup_timeout_s` of ~10 s (see evidence
    below).
-   Camera index: `LECOACH_CAMERA_INDEX` (default 0).
+   Camera index: `LECOACH_CAMERA_INDEX` (default 0). OpenCV selects cameras by
+   index only; on macOS an iPhone (Continuity Camera) can take index 0, so check
+   with `python -m lecoach.vision.probe --list-cameras` (or turn Continuity Camera
+   off on the phone) and pin the intended webcam's index on the demo host.
 5. **Framing:** the presenter's elbows/wrists must be in frame for `activity_score`;
    with a laptop head-and-shoulders crop it is `null` (facing still works).
 6. **Status reasons the UI should show:** `capture_started`, `camera_unavailable`

@@ -32,7 +32,7 @@ from lecoach.runtime.clock import MonotonicClock
 
 from .config import VisionConfig
 from .features import ARM_JOINTS, FrameFeatures
-from .local_backend import DEFAULT_MODEL_PATH, MODEL_ENV, build_local_adapter
+from .local_backend import CAMERA_ENV, DEFAULT_MODEL_PATH, MODEL_ENV, build_local_adapter
 
 SCRIPT = (
     ("toward_still", "Face the camera and stay still."),
@@ -214,6 +214,9 @@ async def run(args) -> dict:
             "python": sys.version.split()[0],
         },
         "model": str(args.model or os.environ.get(MODEL_ENV) or DEFAULT_MODEL_PATH),
+        "camera_index": int(
+            args.camera if args.camera is not None else os.environ.get(CAMERA_ENV, 0)
+        ),
         "config": {"window_s": config.window_s, "max_inference_fps": config.max_inference_fps},
         "startup_s": round(startup_s, 3),
         "camera_release_s": round(release_s, 3),
@@ -283,6 +286,55 @@ async def repeat_sessions(args, sessions: int, seconds: float = REPEAT_SESSION_S
     return results
 
 
+def list_cameras(max_index: int = 5) -> list[dict]:
+    """Open camera indices 0..max_index-1 once and report what each returns.
+
+    OpenCV addresses cameras by index only. On macOS an iPhone (Continuity Camera)
+    can take index 0, so check which index is the intended webcam, then pass
+    ``--camera N`` or set ``LECOACH_CAMERA_INDEX``. Nothing is saved.
+    """
+    from .local_backend import _import_cv2
+
+    cv2 = _import_cv2()
+    backend = cv2.CAP_AVFOUNDATION if sys.platform == "darwin" else cv2.CAP_ANY
+    found = []
+    for index in range(max_index):
+        capture = cv2.VideoCapture(index, backend)
+        try:
+            if not capture.isOpened():
+                continue
+            ok, frame = capture.read()
+            found.append(
+                {
+                    "index": index,
+                    "frame": f"{frame.shape[1]}x{frame.shape[0]}" if ok else None,
+                    "fps": round(capture.get(cv2.CAP_PROP_FPS) or 0, 1) or None,
+                }
+            )
+        finally:
+            capture.release()
+    return found
+
+
+def macos_camera_names() -> list[str]:
+    """Camera names macOS reports (order may differ from OpenCV indices)."""
+    if sys.platform != "darwin":
+        return []
+    import subprocess
+
+    try:
+        out = subprocess.run(
+            ["system_profiler", "SPCameraDataType"], capture_output=True, text=True, timeout=10
+        ).stdout
+    except (OSError, subprocess.SubprocessError):
+        return []
+    return [
+        line.strip().rstrip(":")
+        for line in out.splitlines()
+        if line.startswith("    ") and not line.startswith("      ") and line.strip().endswith(":")
+    ]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--model", default=None, help="Pose Landmarker .task path")
@@ -300,7 +352,24 @@ def main(argv: list[str] | None = None) -> int:
         default=0,
         help="after the guided run, open/stop the camera N more times (repeat check)",
     )
+    parser.add_argument(
+        "--list-cameras", action="store_true", help="list camera indices that open, then exit"
+    )
     args = parser.parse_args(argv)
+    if args.list_cameras:
+        names = macos_camera_names()
+        if names:
+            print("macOS cameras (order may differ from indices): " + ", ".join(names))
+        for camera in list_cameras():
+            print(f"index {camera['index']}: frame {camera['frame']}, fps {camera['fps']}")
+        print("Use --camera N (or LECOACH_CAMERA_INDEX=N) for the intended webcam.")
+        return 0
+    camera = args.camera if args.camera is not None else os.environ.get(CAMERA_ENV, "0")
+    print(
+        f"Using camera index {camera}. If the preview shows another device (e.g. an "
+        "iPhone via Continuity Camera), stop and run --list-cameras.",
+        flush=True,
+    )
     summary = asyncio.run(run(args))
     if args.repeat > 0 and summary.get("camera_released"):
         print(f"\n>>> Repeat check: {args.repeat} short sessions; stay in frame", flush=True)
