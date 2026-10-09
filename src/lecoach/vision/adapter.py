@@ -49,6 +49,8 @@ class VisionStats:
         self.emit_lag_s_max = 0.0
         self.capture_started_s: float | None = None
         self.capture_stopped_s: float | None = None
+        # Wall time spent releasing camera + model (macOS AVFoundation varies).
+        self.camera_close_s: float | None = None
 
     def as_dict(self) -> dict:
         inferred = max(self.frames_inferred, 1)
@@ -68,6 +70,9 @@ class VisionStats:
             "windows_emitted": self.windows_emitted,
             "emit_lag_ms_mean": round(1000 * self.emit_lag_s_total / windows, 2),
             "emit_lag_ms_max": round(1000 * self.emit_lag_s_max, 2),
+            "camera_close_ms": (
+                round(1000 * self.camera_close_s, 2) if self.camera_close_s is not None else None
+            ),
         }
 
 
@@ -157,6 +162,8 @@ class LocalVisionAdapter:
             if self._worker_done is not None:
                 await asyncio.wrap_future(self._worker_done)
             self._drained = True
+            # Normally already closed by the worker; covers a worker that ended on a
+            # camera failure before stop_capture supplied the capture end.
             if self._worker is not None and self._capture_end_s is not None:
                 for summary in self._aggregator.finish(self._capture_end_s):
                     self._emit_window(summary)
@@ -258,7 +265,19 @@ class LocalVisionAdapter:
             self._post(self._status, "error", "vision_capture_failed")
         finally:
             self.stats.capture_stopped_s = clock.now()
+            with self._lock:
+                end = self._capture_end_s
+            if end is not None:
+                # Close the trailing window now, not after the (slow) camera release
+                # in drain(): it was the remaining max emit lag on real hardware.
+                try:
+                    for summary in self._aggregator.finish(end):
+                        self._post(self._emit_window, summary)
+                except Exception:
+                    log.exception("vision trailing window failed")
+            started = time.perf_counter()
             self._close(source, estimator)
+            self.stats.camera_close_s = time.perf_counter() - started
             self._preview = None
             self._worker_done.set_result(None)
 

@@ -567,3 +567,29 @@ class StartupAndThrottleTests(IsolatedAsyncioTestCase):
             if loop.time() > deadline:
                 self.fail("timed out")
             await asyncio.sleep(0.005)
+
+
+class TrailingWindowTests(IsolatedAsyncioTestCase):
+    async def test_trailing_window_emitted_before_drain_and_close_timed(self):
+        clock = FakeClock()
+        frames = [frontal(0.05 + i / 10) for i in range(18)]  # 0.05 .. 1.75 s
+        source = ReplaySource(clock, frames)
+        emitted = []
+        adapter = LocalVisionAdapter(lambda: source, PassThroughPose)
+        from lecoach.contracts.interfaces import SessionContext
+
+        context = SessionContext("s", clock, emitted.append, SessionConfig(mode="live"))
+        await adapter.start(context)
+        loop = asyncio.get_running_loop()
+        deadline = loop.time() + 5
+        while source.position < len(frames) and loop.time() < deadline:
+            await asyncio.sleep(0.005)
+        await adapter.stop_capture(1.8)
+        windows = [e for e in emitted if e["type"] == "vision.metrics"]
+        # Both windows, including the clipped 1.0-1.8 s tail, exist before drain().
+        self.assertEqual([w["timestamp_s"] for w in windows], [1.0, 1.8])
+        self.assertEqual(source.closed, 1)
+        self.assertIsNotNone(adapter.stats.as_dict()["camera_close_ms"])
+        await adapter.drain()
+        await adapter.drain()
+        self.assertEqual(len([e for e in emitted if e["type"] == "vision.metrics"]), 2)
