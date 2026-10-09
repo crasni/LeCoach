@@ -119,7 +119,10 @@ Composition is integration-owned; this lane does not edit `pyproject.toml`,
            return Components(vision=build_local_adapter(), engagement=..., ...)
    ```
 
-   One adapter instance per session (it is single-use). `GET /api/sessions/{id}/preview`
+   One adapter instance per session (it is single-use). Building it starts a
+   once-per-process background import of OpenCV/MediaPipe (`prewarm()`), and since
+   the session factory runs at prepare time, that ~0.6 s+ import is usually done
+   before start. Pass `warm=False` to opt out. `GET /api/sessions/{id}/preview`
    then streams `preview_jpeg()`; the browser must not open a second camera stream.
 4. **Configuration:** `VisionConfig` (`config.py`) holds every default. The only
    knob integration is likely to need is `max_inference_fps` (CPU cap, default 10).

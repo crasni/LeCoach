@@ -389,6 +389,13 @@ def main(argv: list[str] | None = None) -> int:
             print(f"index {camera['index']}: frame {camera['frame']}, fps {camera['fps']}")
         print("Use --camera N (or LECOACH_CAMERA_INDEX=N) for the intended webcam.")
         return 0
+    # The app prewarms the runtime when it prepares a session (before start); do the
+    # same so startup_s matches the app, and report the import cost separately.
+    from .local_backend import prewarm
+
+    import_started = time.perf_counter()
+    prewarm().join()
+    runtime_import_s = round(time.perf_counter() - import_started, 3)
     camera = args.camera if args.camera is not None else os.environ.get(CAMERA_ENV, "0")
     print(
         f"Using camera index {camera}. If the preview shows another device (e.g. an "
@@ -396,6 +403,7 @@ def main(argv: list[str] | None = None) -> int:
         flush=True,
     )
     summary = asyncio.run(run(args))
+    summary["runtime_import_s"] = runtime_import_s
     if args.repeat > 0 and summary.get("camera_released"):
         print(f"\n>>> Repeat check: {args.repeat} short sessions; stay in frame", flush=True)
         summary["repeat"] = asyncio.run(repeat_sessions(args, args.repeat))

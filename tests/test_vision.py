@@ -697,3 +697,37 @@ class CameraListTests(TestCase):
             ],
         )
         self.assertEqual(released, [0, 1, 2, 3])  # every probed index is released
+
+
+class StartupWarmupTests(IsolatedAsyncioTestCase):
+    def test_prewarm_runs_once_per_process(self):
+        from lecoach.vision import local_backend
+
+        first = local_backend.prewarm()
+        self.assertIs(local_backend.prewarm(), first)
+        first.join(30)
+        self.assertFalse(first.is_alive())
+
+    def test_build_without_warm_does_not_start_prewarm(self):
+        from unittest import mock
+
+        from lecoach.vision import local_backend
+
+        with mock.patch.object(local_backend, "prewarm") as prewarm:
+            local_backend.build_local_adapter(warm=False)
+            prewarm.assert_not_called()
+            local_backend.build_local_adapter()
+            prewarm.assert_called_once()
+
+    async def test_startup_breakdown_is_recorded(self):
+        from lecoach.contracts.interfaces import SessionContext
+
+        clock = FakeClock()
+        source = ReplaySource(clock, [frontal(0.05)])
+        adapter = LocalVisionAdapter(lambda: source, PassThroughPose)
+        await adapter.start(SessionContext("s", clock, lambda e: True, SessionConfig(mode="live")))
+        await adapter.stop_capture(0.1)
+        await adapter.drain()
+        stats = adapter.stats.as_dict()
+        self.assertIsNotNone(stats["model_open_ms"])
+        self.assertIsNotNone(stats["camera_open_ms"])
