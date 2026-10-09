@@ -351,6 +351,38 @@ PROPOSAL: The integration owner reviews PR #7, especially the reason codes and t
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
 
+## AUD-01 production speech seams — 2026-10-09
+
+FACT: On `agent/audio-streaming`, based on main `91f6e63`, Lane 2 added the production speech seams in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+
+- `PortAudioSource` and `WavFileSource`;
+- streaming Silero voice activity detection (`SileroSegmenter`, `SpeechGate`);
+- a process-wide faster-whisper `WhisperTranscriber` with `warm_up`;
+- `python -m lecoach.speech.model --download / --check`;
+- `build_local_adapter()` and the guided `python -m lecoach.speech.probe`.
+
+Optional packages load lazily; the core install and suite are unchanged.
+
+Validation, core environment: `uv run pytest -q` passes 202 tests with 12 skipped (speech runtime and optional vision tests) and 342 subtests; ruff and the speech checks pass.
+
+Validation, speech environment: PR #23's `speech` group in a scratch environment, with `libportaudio2` 19.6.0, espeak-ng 1.51, and `base.en` int8, on Linux with 4 CPUs and no audio device. Every speech test passes, including:
+- Silero streaming equal to whole-file probabilities;
+- silence giving an empty final;
+- synthesized English transcribed with word times;
+- a synthesized talk through the adapter and session controller that passes `check_speech.py`.
+
+Real PortAudio without a device reports `microphone_not_found`.
+
+FACT: The probe replayed a 27 s espeak-ng English talk in real time.
+- It produced 4 accurate finals, and the checker passes: 53 words, 1 filler, and completed pauses at 2.76–5.02 s and 18.50–21.44 s.
+- Finals arrived 2.5 s median and 3.4 s max after speech ended; windows arrived 0.36 s median after their end. Stop and drain took 2 ms.
+- "Umm" was kept as a filler, but "uh" was dropped.
+- On 2 s of silence, `base.en` produced "You" with a no-speech probability of 0.81; the transcriber now drops such segments.
+
+IMPACT: Integration can compose live speech with `warm_up` and `build_local_adapter()` once PR #23's group is on main. These are synthetic-speech results on a container CPU, not microphone, recognition-quality, or demo-host evidence. The cold model load (14.7 s once) must happen before sessions.
+
+PROPOSAL: Run the probe on the development computer and the demo host for #13's live acceptance and #14's measurements. Remaining work is tracked in [Issue #13](https://github.com/crasni/LeCoach/issues/13).
+
 ## AUD-01 speech adapter core — 2026-10-09
 
 FACT: On `agent/audio-streaming` (first published at `cea23e2`, then merged with main `558f56f` and with the coordination migration `57aab92`), Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/aud-01-live-speech-adapter/tasks.md) in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
