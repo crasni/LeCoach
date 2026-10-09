@@ -44,7 +44,7 @@ def _import_cv2():
     try:
         import cv2
     except ImportError as error:
-        raise VisionUnavailable("pose_runtime_missing", "opencv-python not installed") from error
+        raise VisionUnavailable("pose_runtime_missing", "OpenCV (cv2) not installed") from error
     return cv2
 
 

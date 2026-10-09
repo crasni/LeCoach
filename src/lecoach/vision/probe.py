@@ -8,6 +8,7 @@ optional ``--out`` summary contains only window metrics and counters.
 
     python -m lecoach.vision.probe --model models/pose_landmarker_lite.task
     python -m lecoach.vision.probe --segment-s 8 --out sessions/vision-probe.json
+    python -m lecoach.vision.probe --repeat 3     # plus 3 back-to-back sessions
 
 A preview window (mirrored camera + detected skeleton + prompt/countdown + latest
 window metrics) opens by default; ``--no-show`` disables it. Press q/Esc to abort.
@@ -45,6 +46,8 @@ SETTLE_S = 2.0
 # Unjudged lead-in so the presenter can frame themselves in the preview.
 READY_S = 5.0
 DISPLAY_INTERVAL_S = 1 / 30
+# Length of each extra --repeat session (seconds of capture).
+REPEAT_SESSION_S = 5.0
 
 
 def _fmt(value) -> str:
@@ -222,6 +225,64 @@ async def run(args) -> dict:
     }
 
 
+async def repeat_sessions(args, sessions: int, seconds: float = REPEAT_SESSION_S) -> list[dict]:
+    """Back-to-back short sessions, each with a fresh adapter as the app would create.
+
+    Checks that the camera reopens after every release, produces windows and is
+    released again on stop (Stage I stop/release/repeat check). Headless; no media saved.
+    """
+    results = []
+    config = VisionConfig(max_inference_fps=args.max_fps)
+    for index in range(1, sessions + 1):
+        windows: list[dict] = []
+        statuses: list[str] = []
+        clock = MonotonicClock()
+
+        def emit(value, windows=windows, statuses=statuses):
+            event = parse_event(value)
+            if event.type == "signal.status":
+                statuses.append(event.payload.reason)
+            else:
+                windows.append(event.payload.model_dump())
+            return True
+
+        adapter = build_local_adapter(args.model, args.camera, config)
+        context = SessionContext(f"vision-repeat-{index}", clock, emit, SessionConfig(mode="live"))
+        clock.reset()
+        started = time.perf_counter()
+        await adapter.start(context)
+        startup_s = time.perf_counter() - started
+        if adapter.stats.capture_started_s is not None:
+            await asyncio.sleep(seconds)
+        stop_started = time.perf_counter()
+        await adapter.stop_capture(clock.now())
+        release_s = time.perf_counter() - stop_started
+        await adapter.drain()
+        present = [w for w in windows if w["person_present"] is True]
+        result = {
+            "session": index,
+            "startup_s": round(startup_s, 3),
+            "camera_release_s": round(release_s, 3),
+            "camera_released": adapter.released,
+            "statuses": statuses,
+            "windows": len(windows),
+            "person_present_windows": len(present),
+        }
+        result["pass"] = (
+            statuses[:1] == ["capture_started"]
+            and adapter.released
+            and len(windows) >= max(1, int(seconds) - 1)
+        )
+        print(
+            f"[repeat {index}/{sessions}] startup {result['startup_s']} s, "
+            f"{result['windows']} windows, release {result['camera_release_s']} s, "
+            f"{'ok' if result['pass'] else 'FAIL'}",
+            flush=True,
+        )
+        results.append(result)
+    return results
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--model", default=None, help="Pose Landmarker .task path")
@@ -233,8 +294,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--no-show", dest="show", action="store_false", help="do not open the preview window"
     )
+    parser.add_argument(
+        "--repeat",
+        type=int,
+        default=0,
+        help="after the guided run, open/stop the camera N more times (repeat check)",
+    )
     args = parser.parse_args(argv)
     summary = asyncio.run(run(args))
+    if args.repeat > 0 and summary.get("camera_released"):
+        print(f"\n>>> Repeat check: {args.repeat} short sessions; stay in frame", flush=True)
+        summary["repeat"] = asyncio.run(repeat_sessions(args, args.repeat))
+        summary["ok"] = summary["ok"] and all(r["pass"] for r in summary["repeat"])
     text = json.dumps(summary, indent=2)
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)

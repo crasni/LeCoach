@@ -413,6 +413,9 @@ class ProbeJudgeTests(TestCase):
 class ProbeViewerTests(TestCase):
     def setUp(self):
         try:
+            # viewer.py imports cv2 lazily, so guard it explicitly: an environment can
+            # have numpy (e.g. the speech group) without OpenCV.
+            import cv2  # noqa: F401
             import numpy  # noqa: F401
 
             from lecoach.vision.viewer import ProbeViewer
@@ -626,3 +629,29 @@ class ActivityScaleTests(TestCase):
         features = FrameFeatures(frontal(), VisionConfig())
         # Nose 100 px above the shoulder line: 1.5 x 100 < 160 px span.
         self.assertEqual(features.body_scale(), features.shoulder_width())
+
+
+class ProbeRepeatTests(TestCase):
+    def test_repeat_sessions_reopen_and_release_each_time(self):
+        from unittest import mock
+
+        from lecoach.vision import probe
+
+        sources = []
+
+        class WallSource(ReplaySource):
+            def read(self):
+                threading.Event().wait(0.02)
+                return frontal(0.05)
+
+        def fake_build(model, camera, config, on_frame=None):
+            source = WallSource(FakeClock(), [])
+            sources.append(source)
+            return LocalVisionAdapter(lambda: source, PassThroughPose, config=config)
+
+        with mock.patch.object(probe, "build_local_adapter", fake_build):
+            results = asyncio.run(probe.repeat_sessions(probe_args(), 2, seconds=2.2))
+        self.assertEqual([r["session"] for r in results], [1, 2])
+        self.assertTrue(all(r["pass"] for r in results), results)
+        self.assertTrue(all(r["windows"] >= 1 and r["camera_released"] for r in results))
+        self.assertEqual([(s.opened, s.closed) for s in sources], [(1, 1), (1, 1)])
