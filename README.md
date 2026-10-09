@@ -134,6 +134,16 @@ do not contact external inference services.
 
 ### Subsystem handoff
 
+Optional speech and vision runtimes are installed separately from the core app:
+
+```sh
+uv sync --frozen --group speech --group vision
+```
+
+See [local runtime setup](docs/LOCAL_RUNTIME.md) for configuration decisions,
+system libraries, model preparation and the distinction between runtime setup
+and accepted live composition. Installing these groups does not enable live mode.
+
 [ARCHITECTURE.md](docs/ARCHITECTURE.md#int-01-implementation-decisions-and-handoff)
 defines directories, protocols, clock/capture semantics, and transport boundaries.
 Import executable types from `lecoach.contracts` and public seams from

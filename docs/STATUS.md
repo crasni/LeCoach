@@ -1,10 +1,46 @@
 # LeCoach implementation status
 
-Last updated: 2026-10-08 (Asia/Taipei).
+Last updated: 2026-10-09 (Asia/Taipei).
 
 This file preserves dated implementation evidence. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) alone own current assignments, branches, progress, blockers, remaining work and acceptance; product scope lives in [GUIDE.md](../GUIDE.md).
 
 **Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
+
+## Optional runtime setup and independent component review — 2026-10-09
+
+Linux x86_64, CPython 3.12.14. Added integration-owned optional `speech` and
+`vision` dependency groups; all pre-existing core/dev lockfile versions are
+preserved. `uv sync --frozen --group speech --group vision` installs the runtimes;
+`uv sync --frozen --dry-run` confirms default setup excludes the 32 optional
+packages. Selected one OpenCV provider (`opencv-contrib-python`) because
+MediaPipe requires it and OpenCV wheel variants share `cv2`.
+
+Resolved/runtime imports: faster-whisper 1.2.1, sounddevice 0.5.6, numpy 2.5.3,
+MediaPipe 0.10.35 and OpenCV contrib 4.14.0.94. Whisper imports, bundled VAD factory
+imports, MediaPipe Tasks Pose APIs and in-memory JPEG encoding pass. Sounddevice
+cannot import on this host because the PortAudio system library is absent;
+`docs/LOCAL_RUNTIME.md` documents `libportaudio2` and host setup. No devices were
+opened and no weights were downloaded or loaded.
+
+Independent detached-checkout reviews against the existing core/dev environment:
+
+| Revision | Check | Result |
+| --- | --- | --- |
+| Speech PR #26 `4c184c9` | `PYTHONPATH=src <project-venv>/bin/python -m pytest -q` | 161 tests / 286 subtests |
+| Coaching PR #24 `9850ae0` | Same command in its checkout | 148 tests / 106 subtests |
+| Speech PR #26 | `checks/speech/check_speech.py`; standalone unittest discovery | 10 cases / 11 sessions; 37 tests |
+| Coaching PR #24 | `checks/coaching/feedback_replay.py`; `record_replay.py` | Each: 9 cases / 10 sessions |
+| Integration dependency increment | `.venv/bin/python -m pytest -q` | 130 tests / 69 subtests |
+
+The independent PR suites passed with the existing Starlette/httpx deprecation
+warning. Async/loopback runs required execution outside the restricted sandbox.
+Integration lint, schema parity, fixture validation, both existing strict
+OpenSpec validations and whitespace checks pass. Approval was recorded for each
+submitted component scope; no feature PR was merged. These are synthetic checks,
+not browser E2E, actual speech/vision inference, intended-host performance or
+UGen300 evidence. Existing authored default feedback and application composition
+were not changed. Current decisions, remaining review and acceptance stay in
+Issues #6/#11/#15/#16/#18/#20/#21.
 
 ## Coordination migration audit — 2026-10-08
 
