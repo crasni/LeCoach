@@ -4,9 +4,9 @@
 
 Closure decision (2026-10-07): the implementation is merged via PR #4, and the maintainer explicitly accepted completion and instructed archiving. The remaining peer-review/downstream signoff gate is waived for this scaffold; the historical implementation and migration decisions below are unchanged.
 
-See [proposal.md](proposal.md#why) for motivation. This is a migration of the existing INT-01 plan, not a proposal to replace the locally implemented scaffold. The implementation baseline is commits `b7a42cd` and `802042e`; [STATUS.md](../../../docs/STATUS.md#int-01-local-scaffold-validation) records its checks and limitations. No main OpenSpec capability specs existed before migration, so the four delta specs establish initial acceptance descriptions.
+See [proposal.md](proposal.md#why) for motivation. This is a migration of the existing INT-01 plan, not a proposal to replace the locally implemented scaffold. The implementation baseline is commits `b7a42cd` and `802042e`; [STATUS.md](../../../../docs/STATUS.md#int-01-local-scaffold-validation) records its checks and limitations. No main OpenSpec capability specs existed before migration, so the four delta specs establish initial acceptance descriptions.
 
-[ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) remains the semantic contract reference. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership, branch assignment, task state and acceptance. The OpenSpec checklist preserves historical execution evidence, not live task tracking, and does not reassign other lanes.
+[ARCHITECTURE.md](../../../../docs/ARCHITECTURE.md) remains the semantic contract reference. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership, branch assignment, task state and acceptance. The OpenSpec checklist preserves historical execution evidence, not live task tracking, and does not reassign other lanes.
 
 ## Goals / Non-Goals
 

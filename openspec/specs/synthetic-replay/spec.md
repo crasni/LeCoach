@@ -1,10 +1,10 @@
-# Spec Delta
+# synthetic-replay Specification
 
 ## Purpose
 
-Let subsystem owners exercise shared contracts and lifecycle without devices or models, using reproducible synthetic inputs. [STATUS.md](../../../../../docs/STATUS.md#int-01-local-scaffold-validation) records the fixture provenance and validation evidence.
+Let subsystem owners exercise shared contracts and lifecycle without devices or models, using reproducible synthetic inputs. [STATUS.md](../../../docs/STATUS.md#int-01-local-scaffold-validation) records the fixture provenance and validation evidence.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Preserve fixture delivery semantics
 Headless acceptance replay SHALL preserve fixture event IDs, capture timestamps, and delivery order, including late observations. Its fake clock SHALL never move backward. Explicit test delivery schedules SHALL NOT rewrite capture timestamps.

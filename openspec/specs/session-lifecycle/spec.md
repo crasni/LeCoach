@@ -1,10 +1,10 @@
-# Spec Delta
+# session-lifecycle Specification
 
 ## Purpose
 
-Let independently implemented rehearsal components share one session identity and capture clock, with predictable startup, routing, and shutdown. [ARCHITECTURE.md](../../../../../docs/ARCHITECTURE.md#session-lifecycle) defines the shared lifecycle contract.
+Let independently implemented rehearsal components share one session identity and capture clock, with predictable startup, routing, and shutdown. [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md#session-lifecycle) defines the shared lifecycle contract.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Prepare before capture
 Preparing a session SHALL allocate its identity without starting capture. Starting SHALL attach consumers before producers, use one shared monotonic clock, and emit the start boundary at capture time zero. Repeated start requests SHALL NOT reopen capture.

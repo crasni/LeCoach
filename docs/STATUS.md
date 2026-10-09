@@ -6,6 +6,18 @@ This file preserves dated implementation evidence. [GitHub Issues](https://githu
 
 **Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
 
+## Accepted scaffold archive — 2026-10-09
+
+Archived INT-01 to `openspec/changes/archive/2026-10-09-int-01-local-integration-scaffold`.
+Synced four capability specs (22 requirements) into `openspec/specs/`: event
+contracts, local transport, session lifecycle and synthetic replay. Requirement
+bodies are unchanged; relative references follow their new locations. Preserved
+all 20 completed tasks, original authorship/evidence and the prior maintainer
+acceptance/peer-review waiver. No runtime, event schema or live acceptance changes.
+
+Strict spec/remaining-change validation and local archive/spec/reference targets
+pass. This documentation archive does not claim new device, model or browser runs.
+
 ## English restoration — 2026-10-09
 
 The maintainer canceled Mandarin/zh-TW preparation. English product, speech
@@ -374,7 +386,7 @@ PROPOSAL: Publish the reviewed role-branch commits only after explicit user push
 
 FACT: On 2026-10-07, `openspec --version` reported 1.14.1. `openspec list --json` and `openspec context --json` resolved this repository as the nearest OpenSpec root, with the installed Codex skills and `spec-driven` configuration. No reinitialization was needed.
 
-FACT: Migrated the separate INT-01 plan into [int-01-local-integration-scaffold](../openspec/changes/int-01-local-integration-scaffold/proposal.md), with proposal, design, four capability delta specs, and an evidence-backed task checklist. `openspec status` reports 4/4 planning artifacts complete; strict validation passes with no issues, and `openspec doctor --json` reports a healthy root. The old plan is a compatibility pointer. Application code and contracts were not changed or retested during this documentation migration.
+FACT: Migrated the separate INT-01 plan into [int-01-local-integration-scaffold](../openspec/changes/archive/2026-10-09-int-01-local-integration-scaffold/proposal.md), with proposal, design, four capability delta specs, and an evidence-backed task checklist. `openspec status` reports 4/4 planning artifacts complete; strict validation passes with no issues, and `openspec doctor --json` reports a healthy root. The old plan is a compatibility pointer. Application code and contracts were not changed or retested during this documentation migration.
 
 IMPACT: OpenSpec now tracks the existing local implementation and three remaining publication/review gates. TASKS retains ownership/progress, ARCHITECTURE retains contract semantics, and this file retains observed evidence. Main OpenSpec specs are not synced yet; the active change is not archived.
 
