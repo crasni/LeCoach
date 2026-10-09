@@ -1,0 +1,194 @@
+{
+  "name": "mandarin_short",
+  "provenance": "synthetic_authored_mandarin_no_devices_or_inference",
+  "duration_s": 3,
+  "events": [
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "00-start",
+      "source": "session",
+      "type": "session.started",
+      "timestamp_s": 0,
+      "payload": {}
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "speech-1",
+      "source": "speech",
+      "type": "speech.metrics",
+      "timestamp_s": 1,
+      "payload": {
+        "window_start_s": 0,
+        "window_end_s": 1,
+        "availability": "available",
+        "wpm": null,
+        "filler_count": null,
+        "filler_rate_per_min": null,
+        "pause": {
+          "state": "none",
+          "duration_s": 0,
+          "start_s": null,
+          "end_s": null
+        }
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "vision-1",
+      "source": "vision",
+      "type": "vision.metrics",
+      "timestamp_s": 1,
+      "payload": {
+        "window_start_s": 0,
+        "window_end_s": 1,
+        "availability": "available",
+        "person_present": true,
+        "pose_available": true,
+        "facing_score": 0.2,
+        "activity_score": null
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "u1-r1",
+      "source": "speech",
+      "type": "speech.transcript",
+      "timestamp_s": 1.5,
+      "payload": {
+        "utterance_id": "u1",
+        "revision": 1,
+        "is_final": false,
+        "start_s": 1,
+        "end_s": 1.5,
+        "text": "今天先試一下。"
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "u1-r2",
+      "source": "speech",
+      "type": "speech.transcript",
+      "timestamp_s": 2,
+      "payload": {
+        "utterance_id": "u1",
+        "revision": 2,
+        "is_final": true,
+        "start_s": 1,
+        "end_s": 2,
+        "text": "今天先試一下。"
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "speech-2",
+      "source": "speech",
+      "type": "speech.metrics",
+      "timestamp_s": 2,
+      "payload": {
+        "window_start_s": 0,
+        "window_end_s": 2,
+        "availability": "available",
+        "wpm": null,
+        "filler_count": null,
+        "filler_rate_per_min": null,
+        "pause": {
+          "state": "none",
+          "duration_s": 0,
+          "start_s": null,
+          "end_s": null
+        }
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "vision-2",
+      "source": "vision",
+      "type": "vision.metrics",
+      "timestamp_s": 2,
+      "payload": {
+        "window_start_s": 1,
+        "window_end_s": 2,
+        "availability": "available",
+        "person_present": true,
+        "pose_available": true,
+        "facing_score": 0.2,
+        "activity_score": null
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "speech-3",
+      "source": "speech",
+      "type": "speech.metrics",
+      "timestamp_s": 3,
+      "payload": {
+        "window_start_s": 0,
+        "window_end_s": 3,
+        "availability": "available",
+        "wpm": null,
+        "filler_count": null,
+        "filler_rate_per_min": null,
+        "pause": {
+          "state": "none",
+          "duration_s": 0,
+          "start_s": null,
+          "end_s": null
+        }
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "vision-3",
+      "source": "vision",
+      "type": "vision.metrics",
+      "timestamp_s": 3,
+      "payload": {
+        "window_start_s": 2,
+        "window_end_s": 3,
+        "availability": "available",
+        "person_present": true,
+        "pose_available": true,
+        "facing_score": 0.2,
+        "activity_score": null
+      }
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "90-stop",
+      "source": "session",
+      "type": "session.stopping",
+      "timestamp_s": 3,
+      "payload": {}
+    },
+    {
+      "schema_version": 0,
+      "session_id": "synthetic-mandarin_short",
+      "event_id": "99-completed",
+      "source": "session",
+      "type": "session.completed",
+      "timestamp_s": 3,
+      "payload": {
+        "duration_s": 3,
+        "incomplete_sources": []
+      }
+    }
+  ],
+  "authored_feedback": {
+    "session_id": "synthetic-mandarin_short",
+    "duration_s": 3,
+    "moments": [],
+    "limitations": [
+      "這是合成示例，尚未驗證麥克風辨識或中文語速與贅詞偵測。"
+    ]
+  }
+}

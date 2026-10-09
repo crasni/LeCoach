@@ -70,3 +70,17 @@ The package SHALL include no private voice, video, transcripts, session exports,
 #### Scenario: Package prepared for a commit
 - **WHEN** local deliverables are staged for review
 - **THEN** the staged files contain the proposal and sanitized evidence documents, and exclude private rehearsal artifacts, credentials, receipts, and downloaded weights
+
+### Requirement: Distinguish product and competition languages
+The demonstrated product SHALL retain Mandarin rehearsal and native zh-TW client content. Submission artifacts SHALL follow independently verified competition-language rules, using compliant explanatory narration/captions without restoring an English product default. Final accepted footage SHALL reflect actual supported Mandarin measurements and input/inference provenance.
+
+#### Scenario: Competition explanation remains English
+- **WHEN** current official rules require an English deck and mainly English video explanation
+- **THEN** the submission retains compliant explanation while showing Mandarin rehearsal and zh-TW UI with explanatory captions
+
+### Requirement: Confirm the actual Stage I demo environment
+Final Stage I validation SHALL identify the actual ordinary computer, OS/CPU/architecture/RAM, devices, local model/configuration and exact setup/launch. A likely operator SHALL NOT establish a confirmed computer, narrator or recording arrangement. UGen300 absence SHALL NOT block this CPU validation.
+
+#### Scenario: Lucas likely operates the demo
+- **WHEN** Lucas is the planned operator but the computer and recording arrangement are unconfirmed
+- **THEN** setup/scenario preparation continues and final actual-host live and recording acceptance remain pending

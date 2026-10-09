@@ -1,5 +1,21 @@
 # Stage I demo preparation
 
+## Current Mandarin CPU demonstration direction — 2026-10-09
+
+Lucas (@crasni) is the likely operator/presenter, not a confirmed recording
+arrangement. [Demo host preparation](DEMO_HOST.md) records the setup and host
+confirmation handoff. Stage I uses actual local CPU microphone/camera inference
+on that confirmed ordinary computer; UGen300 is a later Stage II validation target.
+
+The product/rehearsal is Mandarin with native zh-TW UI/coaching. Keep competition
+explanation mainly English under the freshly checked rules (CONTEST), with
+English captions explaining Mandarin shots. The earlier English-only script
+and authored English examples are historical preparation requiring Lane 5/UI
+revision; they are not final Mandarin evidence. Mandarin pace/fillers stay unknown
+until the #6 owner method/unit agreement is implemented and measured. Do not
+present facing-only recovery as proof of Mandarin pace/filler recognition.
+
+
 Proposed 2:55 shot plan for INT-03, checked against [CONTEST.md](CONTEST.md). The official three-minute guidance is a recommendation; 2:55 is the team's planning target. This is not a recorded or published demo. Lane 5 owns the rehearsal scenarios and final script; integration maintains launch, evidence and claim checks here. [Issue #12](https://github.com/crasni/LeCoach/issues/12) owns package acceptance and current dependencies; [STATUS.md](STATUS.md) preserves dated observations.
 
 ## Run the current prototype

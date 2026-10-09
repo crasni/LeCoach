@@ -19,29 +19,26 @@ live app composition or UGen300 compatibility.
 
 ## Speech configuration handoff
 
-Integration accepts Lane 2's proposed English analysis baseline for the Stage I
-demo. Keep the existing `SpeechConfig` in `lecoach.speech.config`; the composition
-root will construct/pass that configuration, with no second definition in shared
-contracts. The existing adapter constructor accepts it. This follows the
-[speech design](https://github.com/crasni/LeCoach/blob/agent/audio-streaming/openspec/changes/aud-01-live-speech-adapter/design.md)
-and preserves the v0 event interface.
+The maintainer's 2026-10-09 Mandarin-first decision supersedes the English
+baseline recorded in `929f727`. Product rehearsal language is Mandarin; product
+presentation is native Taiwan Traditional Chinese (`zh-TW`). Keep the existing
+speech-owned configuration and optional packages, but do not interpret a language
+flag change as completed Mandarin support.
 
-| Setting | Baseline |
-| --- | --- |
-| Analysis language | `en` |
-| Trailing metrics window / update hop | 10 s / 1 s |
-| Minimum observation / pause minimum | 5 s / 1 s |
-| Finalized coverage wait / maximum utterance | 3 s / 8 s |
-| Partial transcript interval / capture rate | 1 s / 16,000 Hz |
-| Initial model / device / compute type | `base.en` / `cpu` / `int8` |
+Speech/integration/realtime/coaching must agree transcription, pace units/counting,
+contextual fillers, coverage/revisions and coaching in [#6](https://github.com/crasni/LeCoach/issues/6)
+and the [proposed delta](../openspec/changes/mandarin-first-stage1/proposal.md).
+Use a multilingual local model; `base.en` is an English-only regression baseline,
+not the Mandarin demo model. Multilingual `base` on CPU/int8 is a candidate pending
+actual host recognition/performance checks. Traditional script handling also needs
+owner review. Unsupported pace/fillers remain null; Chinese character rates cannot
+populate v0 English WPM. Existing timing knobs are preserved for testing, not
+validated Mandarin settings. No engine thresholds or 2 s drain bound change here.
 
-These are configurable demo heuristics, awaiting actual speech measurements.
-Unsupported analysis languages retain null WPM/filler observations. Engagement
-pace bands and pause interpretation stay with Lane 4. The proposed 1 s hop is
-within the existing engine's 5 s maximum gap; the reported scripted composition
-is evidence of interface compatibility, not inference latency. In particular,
-`pace_steady` during an active pause still needs Lane 4's behavior review in #6/#18.
-The current 2 s drain bound remains unchanged pending real finalization evidence.
+The owner [speech design](https://github.com/crasni/LeCoach/blob/agent/audio-streaming/openspec/changes/aud-01-live-speech-adapter/design.md)
+requires a follow-up reconciliation on that owner's branch. Do not create another
+config or producer. The existing active-pause/`pace_steady` finding remains #18's
+handoff; it cannot establish a supported Mandarin pace observation.
 
 The `speech` group provides `faster-whisper`, `sounddevice` and `numpy`. Linux
 requires the PortAudio system library (on Debian/Ubuntu, `libportaudio2`); see

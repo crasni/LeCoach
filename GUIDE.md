@@ -3,6 +3,31 @@
 
 ## Shared team entry point
 
+**Current direction — 2026-10-09:** Mandarin is the spoken product/rehearsal
+default. All client-facing product copy must be native Traditional Chinese for
+Taiwan (zh-TW): controls, onboarding, device/errors, audience reasons, metrics,
+timeline, coaching, empty states and default examples. Keep LeCoach's name;
+developer identifiers/docs need not be translated. This supersedes earlier
+English-only product/analysis assumptions.
+
+Speech/integration/realtime/coaching must agree Mandarin transcription, pace
+units/counting, contextual fillers and feedback through #6 and linked OpenSpec
+before shared consumers change. Unsupported measurements stay null/unknown;
+English word/filler rules and WPM bands do not apply unchanged to Mandarin.
+Chinese character rates must never be labeled English WPM. Unknown fallback
+does not silently waive unverified P0 measurement acceptance.
+
+Stage I uses an ordinary computer with local CPU inference where practical.
+The maintainer confirms no UGen300 before qualification; absence must not block
+implementation or CPU validation. UGen300 remains a Stage II integration target
+requiring eventual actual compatibility/performance validation. Lucas (@crasni)
+is the likely operator; confirm the actual computer and recording arrangement
+before final validation. Recording/publication authorization remains separate.
+
+Product and competition languages differ: rules rechecked 2026-10-09 retain an
+English deck and mainly English video explanation. Keep Mandarin rehearsal/zh-TW
+UI and plan compliant English narration/captions; recheck before submission.
+
 Product name: **LeCoach**. Use this exact spelling and capitalization in product copy, UI, proposal, demo, and project documentation. Technical identifiers and existing repository URLs follow their actual names.
 
 Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) own assignments, branches, progress, blockers and task acceptance; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
@@ -113,7 +138,7 @@ Our CURRENT chosen direction is:
 > +
 > Workplace AI
 
-Primary target hardware:
+Stage II target hardware (Stage I uses an ordinary local CPU computer):
 
 > ASUS UGen300 8GB / USB AI Accelerator
 
@@ -321,7 +346,8 @@ Required outputs:
 - timestamps
 
 Preferred target:
-Whisper running locally where practical.
+A multilingual Whisper model running locally on the Stage I CPU computer where
+practical; Mandarin speech must not use an English-only model such as `base.en`.
 
 Architecture should allow later UGen300 acceleration.
 
@@ -532,7 +558,8 @@ The product principle is:
 
 > Your presentation never needs to leave your device.
 
-UGen300 enables:
+Intended UGen300 capabilities for future Stage II integration (vendor-supported
+plan, not measured LeCoach compatibility/performance):
 
 - local AI inference
 - low latency
@@ -693,7 +720,8 @@ camera + microphone + speech processing remain local.
 
 5. ASUS UGen300
 
-Clearly demonstrate or explain how UGen300 enables the local AI pipeline.
+For Stage I, explain the intended UGen300 adapter path alongside the actual CPU
+demo. Demonstrate hardware operation only after measured Stage II validation.
 
 ---
 

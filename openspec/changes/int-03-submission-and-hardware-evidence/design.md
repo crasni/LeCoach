@@ -21,6 +21,26 @@ These findings support a deliverable/evidence workflow without application chang
 
 **Non-Goals:** No runtime instrumentation/schema changes, model installation, alternate subsystem implementation, automatic publishing, or legal eligibility conclusion. This change does not resolve speech-language/timing configuration decisions by embedding fixture assumptions in the deck.
 
+## Current maintainer refinement — 2026-10-09
+
+No UGen300 is available before qualification. Stage I implementation and actual
+live acceptance use local CPU inference on the confirmed ordinary computer;
+accelerator compatibility/performance moves to the retained Stage II milestone.
+Do not limit independent work to model-free preparation or treat accelerator
+absence as a Stage I blocker. CPU speech/vision/UI responsiveness, failures,
+release and repeated-session behavior still require actual evidence.
+
+Product/rehearsal language is Mandarin and every client surface native zh-TW.
+The previous English-only measurement/model decision is superseded. The proposed
+`mandarin-first-stage1` delta and #6 coordinate measurement/script/reason changes;
+this submission change does not invent them. English deck and mainly English
+explanatory video narration remain compliant after the 2026-10-09 official
+recheck; show Mandarin/zh-TW behavior with explanatory captions. Existing English
+script/screens are historical preparation pending revision, not final acceptance.
+Lucas is likely operator; confirm computer/configuration and recording arrangement
+before final validation. Existing owners, branches, completed evidence and final
+authorization gates remain preserved.
+
 ## Decisions
 
 ### 1. Reconcile branch history before changing shared records
@@ -94,5 +114,7 @@ Rollback is a scoped revert of the new deliverables and this change's documentat
 
 - What exact cutoff time/timezone and upload limits does the submission form specify? The local package structure does not depend on the answer; final submission checks do.
 - Which registration format did the team select, and is there a receipt? Record team-provided confirmation privately and reference only a sanitized outcome.
-- Can the team provide UGen300 hardware and the owner adapter/runtime handoffs in time for a measured run? The procedure supports either an observed run or a documented unavailable outcome.
+- Which confirmed CPU demo computer/configuration will Lucas use? UGen300
+  availability is no longer an open Stage I question: target-device validation
+  remains a later Stage II requirement when hardware is supplied.
 - Has the team clarified the organizer's original-work terms for this development repository? Keep that final submission gate unresolved until the team provides a supported interpretation.

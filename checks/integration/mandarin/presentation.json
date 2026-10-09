@@ -1,0 +1,50 @@
+{
+  "provenance": "authored_zh-TW_review_samples_not_installed_product_copy",
+  "navigation": {
+    "practice": "練習簡報",
+    "review": "練習回顧"
+  },
+  "controls": {
+    "start": "開始練習",
+    "stop": "結束練習",
+    "again": "再練一次",
+    "example": "試看示例"
+  },
+  "onboarding": "先讓鏡頭拍到臉部與手肘，確認麥克風可用，再開始說話。",
+  "device_status": {
+    "camera_unavailable": "目前無法使用攝影機，請確認權限，並關閉其他使用鏡頭的程式。",
+    "microphone_permission_denied": "尚未允許使用麥克風，請到系統設定開啟權限後再試一次。",
+    "speech_model_unavailable": "本機語音模型尚未準備好，請先完成模型設定。",
+    "unknown_reason": "這次無法取得完整觀察，請確認裝置與設定後再試一次。"
+  },
+  "audience": {
+    "NEUTRAL": "正在聆聽",
+    "INTERESTED": "開始有興趣",
+    "ENGAGED": "聽得很投入",
+    "CONFUSED": "有點跟不上",
+    "BORED": "注意力開始分散"
+  },
+  "reasons": {
+    "facing_away_sustained": "你有一段時間沒有朝向鏡頭",
+    "facing_audience": "你開始朝向鏡頭說話",
+    "silence_prolonged": "這裡停頓了一段時間"
+  },
+  "metrics": {
+    "pace_unknown": "目前尚無可用的中文語速觀察",
+    "fillers_unknown": "目前尚無可用的中文贅詞觀察",
+    "facing": "朝向鏡頭的程度；不是眼神追蹤"
+  },
+  "timeline": "練習中的關鍵時刻",
+  "coaching": {
+    "observation": "這段時間你較少朝向鏡頭，模擬觀眾的注意力也開始分散。",
+    "action": "把筆記放在鏡頭附近，下一句重點先抬頭再說，看看觀眾的反應。",
+    "strength": "這段時間你持續朝向鏡頭。下次說重點時，也可以維持這個方向。"
+  },
+  "empty": "這次的觀察還不夠，先確認裝置，再多練一小段。",
+  "example_scenarios": {
+    "title": "從看筆記到抬頭說重點",
+    "description": "先低頭看筆記，再抬頭說明重點，觀察模擬觀眾的反應。",
+    "mode": "合成示例：沒有啟用麥克風或攝影機。",
+    "limitation": "中文語速與贅詞尚未驗證，本示例只檢查已知的朝向與停頓訊號。"
+  }
+}

@@ -1,5 +1,21 @@
 # Stage I package readiness
 
+## Direction reconciliation pending artifact revision — 2026-10-09
+
+The maintainer now requires Mandarin rehearsal and native zh-TW client content,
+with local CPU Stage I validation on the confirmed ordinary computer. No UGen300
+is available before qualification; actual target validation is retained for
+Stage II. Lucas is likely operator, not confirmed recording arrangements.
+
+Official language rules were rechecked: keep the English proposal and mainly
+English explanatory video narration, showing Mandarin rehearsal/zh-TW UI with
+explanatory captions. Existing proposal/PDF/script hashes below describe the old
+reviewed draft; the deck was not re-exported or visually revalidated in this
+reconciliation. Its English UI/scenario illustrations and claim map require
+owner-provided localized/accepted live evidence before final review. Do not treat
+historical English-only checks as Mandarin support or final package acceptance.
+
+
 Package evidence record, updated 2026-10-08 (Asia/Taipei). The proposal/evidence range merged through [PR #8](https://github.com/crasni/LeCoach/pull/8). Current remaining work, dependencies and task acceptance live only in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12); follow [AGENTS](../../AGENTS.md) for scoped publication. This document records artifact versions, checks and claim provenance, not assignments, a live status board or a submission receipt. Older check/disposition entries are dated package evidence, not acceptance of the final task. [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) preserves observed behavior.
 
 **Refreshed after the main pull:** the deck and claim map now reflect merged engine/rehearsal-screen and recorder work, with application source `8345c98` (main `c88386a`). [Fresh backend and browser evidence](../STATUS.md#int-03-refreshed-package-and-browser-validation) distinguishes computed reactions, injected recording and authored coaching. Live input and final recording remain pending.

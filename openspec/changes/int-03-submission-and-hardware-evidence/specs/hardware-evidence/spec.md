@@ -18,11 +18,13 @@ Every evidence record SHALL identify its source revision, observation date, host
 - **THEN** the record identifies that live CPU path and does not claim UGen300 execution
 
 ### Requirement: Preserve an explicit readiness outcome
-The hardware record SHALL report observed device/runtime availability and the commands used to inspect it. An absent device or incompatible runtime/model SHALL produce a dated limitation and next action. It SHALL NOT imply hardware is unavailable elsewhere or stop model-free local preparation; target inference SHALL remain unverified.
+The hardware record SHALL report observed device/runtime availability and the commands used to inspect it. An absent device or incompatible runtime/model SHALL produce a dated limitation and next action. A maintainer-confirmed team availability constraint SHALL be distinguished from
+host inspection. Missing UGen300 SHALL NOT stop Stage I implementation or local CPU
+validation; target inference SHALL remain unverified until measured in Stage II.
 
 #### Scenario: Target device absent
 - **WHEN** host inspection finds no identifiable UGen300
-- **THEN** the record names the inspected host, states target execution is unverified, and permits proposal/replay preparation to continue without a fabricated measurement
+- **THEN** the record names the inspected host, states target execution is unverified, and permits Stage I implementation and actual local CPU validation to continue without a fabricated accelerator measurement
 
 #### Scenario: Device present but inference cannot start
 - **WHEN** driver, firmware, runtime, model, or host compatibility prevents execution
@@ -67,3 +69,10 @@ Hardware validation SHALL use the approved subsystem implementations and canonic
 #### Scenario: Run retained for reproduction
 - **WHEN** a development run generates private media or session output
 - **THEN** those files remain in ignored local storage and the committed summary contains configuration, procedure, aggregate observations, and limitations only
+
+### Requirement: Separate Stage I CPU and Stage II accelerator milestones
+Stage I SHALL validate actual local CPU behavior on the confirmed ordinary demo computer without depending on UGen300 access. Eventual target runtime/model/interface compatibility and isolated/concurrent performance SHALL remain Stage II requirements. A missing-device disposition SHALL NOT establish either live CPU acceptance or accelerator execution.
+
+#### Scenario: No accelerator before qualification
+- **WHEN** the maintainer confirms no UGen300 will be available before Stage II
+- **THEN** Stage I speech/vision/application work proceeds on CPU and hardware-only measurements remain an explicit later milestone

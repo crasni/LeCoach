@@ -6,6 +6,58 @@ This file preserves dated implementation evidence. [GitHub Issues](https://githu
 
 **Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
 
+## Mandarin-first Stage I direction and synthetic conformance — 2026-10-09
+
+Maintainer direction supersedes the earlier English-only analysis decision:
+Mandarin rehearsal, native Taiwan Traditional Chinese product content and local
+CPU Stage I validation. No UGen300 before qualification; actual accelerator
+compatibility/performance is retained as later Stage II validation. Lucas is the
+likely operator; the actual computer/recording arrangement remains unconfirmed.
+Current Issues were updated without reassigning owners or accepting unmet gates.
+
+Reconciled GUIDE/ARCHITECTURE/runtime/demo/host/hardware/submission guidance and
+the existing INT-03 planning artifacts. Added the `mandarin-first-stage1` proposal,
+design, two capability deltas and task breakdown for affected-owner agreement.
+No v0 schema, producer, engine, frontend or coaching-template behavior changed.
+Speech's English-only model/tokenizer and current English product copy remain
+implementation gaps in their owning lanes; this preparation does not localize
+the application or establish Mandarin speech support.
+
+Added five authored synthetic Mandarin fixture cases and native zh-TW handoff
+copy in `checks/integration/mandarin/`. Six conformance tests exercise the existing
+sole engine/controller/recorder: facing deterioration/recovery, Taiwan vocabulary
+and mixed-script content, missing camera, a known active pause, short observations
+and repeated-session isolation. WPM/filler fields stay null; computed reasons
+cite only supported synthetic facing/pause observations. Recorder-only composition
+does not present authored sample advice as computed coaching. Copy review covers
+all requested surfaces, but actual localized browser fonts/wrapping and native
+coaching templates remain owner acceptance work.
+
+Linux x86_64, CPython 3.12.14:
+
+```sh
+.venv/bin/python -m pytest -q
+.venv/bin/ruff check src scripts tests examples
+.venv/bin/python scripts/export_schema.py --check
+.venv/bin/python scripts/validate_fixtures.py
+openspec validate mandarin-first-stage1 --strict
+openspec validate int-03-submission-and-hardware-evidence --strict
+git diff --check
+```
+
+Result: **136 tests / 69 subtests**, including six new Mandarin conformance tests.
+Lint, unchanged-schema parity, historical English fixtures and both strict
+OpenSpec checks pass. Local file-target checks pass for reviewed guidance/new
+artifacts. Synthetic data only; no microphones, cameras, weights, model inference,
+recording, localized browser E2E or accelerator execution. Existing proposal/PDF
+and narration drafts were preserved, not re-exported or accepted as final footage.
+
+Official rules were re-fetched directly and their JSON-LD content inspected after
+browser extraction failed. Sections V/VI retain ordinary Stage I hosts, English
+deck and mainly English video explanation. CONTEST/SOURCES record response hash,
+provenance and the Mandarin-product/English-explanation recommendation; exact form
+cutoff and final recording/submission checks remain pending.
+
 ## Optional runtime setup and independent component review — 2026-10-09
 
 Linux x86_64, CPython 3.12.14. Added integration-owned optional `speech` and
