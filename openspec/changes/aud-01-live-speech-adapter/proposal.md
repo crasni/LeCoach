@@ -44,4 +44,4 @@ None. The change uses the v0 event shapes and session lifecycle from INT-01 with
 - **Coordination:**
   - Issue #6 decides language, defaults, and dependencies.
   - Integration composes `Components(speech=...)` for live mode.
-  - TASKS.md and STATUS.md record ownership and evidence.
+  - Issue #13 records ownership, status, and acceptance; STATUS.md keeps dated evidence.

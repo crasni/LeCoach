@@ -1,6 +1,6 @@
 # Tasks
 
-Groups 1–3 are model-free and device-free, and can proceed while issue #6 is open. Group 4 starts only after issue #6 records the language and default decisions and integration adds the optional speech dependency group. [TASKS.md](../../../TASKS.md) remains authoritative for ownership and progress. Every push follows the approval rule in [AGENTS.md](../../../AGENTS.md#required-user-approval-before-every-push).
+Groups 1–3 are model-free and device-free, and can proceed while issue #6 is open. Group 4 starts only after issue #6 records the language and default decisions and integration adds the optional speech dependency group. [Issue #13](https://github.com/crasni/LeCoach/issues/13) owns status, blockers, remaining work, and acceptance; this checklist is a work breakdown. Publication follows [AGENTS.md](../../../AGENTS.md#scoped-autonomous-branch-publication).
 
 ## 1. Configuration and text rules
 
@@ -55,8 +55,8 @@ Groups 1–3 are model-free and device-free, and can proceed while issue #6 is o
 ## 5. Integration handoff
 
 - [ ] 5.1 Provide the live composition instructions for `Components(speech=SpeechAdapter(...))`, including model warm-up before session start. Verify that a test composes `SessionManager` with the adapter and scripted sources, and receives speech events end to end.
-- [ ] 5.2 Update the AUD-01 row in TASKS.md and the STATUS evidence with commands, results, and limitations: fixture versus live, CPU only, and the filler undercount risk. Verify that every claim matches the latest check output.
-- [ ] 5.3 Prepare reviewable commits authored by the owner and request push approval naming the exact commits and `agent/audio-streaming`. Verify approval before publishing, then open a scoped PR without @mentions and link it on the board.
+- [ ] 5.2 Update Issue #13 and the dated STATUS evidence with commands, results, and limitations: fixture versus live, CPU only, and the filler undercount risk. Verify that every claim matches the latest check output.
+- [ ] 5.3 Prepare reviewable commits authored by the owner and publish them to `agent/audio-streaming` under the AGENTS.md scoped publication policy. Open a scoped PR that refs #13, and record it on Issue #13.
 
 ## Workflow follow-up
 
