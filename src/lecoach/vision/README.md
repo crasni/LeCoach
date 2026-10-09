@@ -41,9 +41,11 @@ Test evidence: `tests/test_vision.py` and the synthetic labeled fixture in
   can only lower it. No nose → `null`, so a back turned to the camera reads as
   *unknown*, never as "away". It is head/body orientation toward the camera, **not
   eye contact, attention or emotion**.
-* **activity_score** (≥ 2 frame pairs): mean elbow/wrist speed in shoulder-widths
-  per second, minus a 0.15 noise floor, reaching 1 at 2.0. More movement is not
-  better; low movement is never a negative rule on its own.
+* **activity_score** (≥ 2 frame pairs): mean elbow/wrist speed in body-scale units
+  per second, minus a 0.15 noise floor, reaching 1 at 2.0. Body scale is the
+  shoulder span, floored by 1.5 × the nose-to-shoulder-midpoint distance, so turning
+  sideways (narrower apparent shoulders) does not inflate activity. More movement is
+  not better; low movement is never a negative rule on its own.
 * **Unavailable input**: no frames in a window → `availability: "unavailable"`.
   No person, undecided detection or unusable pose → available window with `null`
   scores. Device/model problems emit `signal.status` with reasons

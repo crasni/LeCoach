@@ -593,3 +593,36 @@ class TrailingWindowTests(IsolatedAsyncioTestCase):
         await adapter.drain()
         await adapter.drain()
         self.assertEqual(len([e for e in emitted if e["type"] == "vision.metrics"]), 2)
+
+
+class ActivityScaleTests(TestCase):
+    def jitter_activity(self, shoulder_half):
+        """Same ±2 px wrist jitter for 1 s at 10 fps; only the apparent shoulder span varies."""
+        aggregator = WindowAggregator()
+        for i in range(10):
+            dx = 2 if i % 2 else -2
+            frame = frontal(
+                0.05 + i / 10,
+                left_shoulder=(320 - shoulder_half, 250),
+                right_shoulder=(320 + shoulder_half, 250),
+                left_wrist=(320 - shoulder_half - 10 + dx, 400),
+                right_wrist=(320 + shoulder_half + 10 - dx, 400),
+                left_hip=(None, None),
+                right_hip=(None, None),
+            )
+            aggregator.add(frame)
+        [window] = aggregator.finish(1.0)
+        return window.activity_score
+
+    def test_turning_sideways_does_not_inflate_activity(self):
+        front = self.jitter_activity(80)  # 160 px shoulder span
+        side = self.jitter_activity(20)  # 40 px span: shoulders seen edge-on
+        self.assertLess(front, 0.1)
+        # Shoulder-span scaling alone made this ~0.46 ("active" while holding still).
+        self.assertLess(side, 0.15)
+        self.assertLess(abs(side - front), 0.1)
+
+    def test_front_on_scale_is_still_shoulder_span(self):
+        features = FrameFeatures(frontal(), VisionConfig())
+        # Nose 100 px above the shoulder line: 1.5 x 100 < 160 px span.
+        self.assertEqual(features.body_scale(), features.shoulder_width())

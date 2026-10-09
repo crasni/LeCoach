@@ -40,10 +40,15 @@ class VisionConfig:
     shoulder_ratio_side: float = 0.25
 
     # --- activity mapping ----------------------------------------------------------
-    # Mean wrist/elbow speed in shoulder-widths per second. Speeds below the noise
+    # Mean wrist/elbow speed in body-scale units per second. Speeds below the noise
     # floor count as still (keypoint jitter); activity reaches 1 at activity_full.
     activity_noise_floor: float = 0.15
     activity_full: float = 2.0
+    # Body scale for activity = max(shoulder span, neck_scale_ratio x nose-to-shoulder
+    # midpoint distance). Shoulder span alone shrinks when the presenter turns
+    # sideways (~30 % in profile), which inflated activity while turned away; the
+    # neck length barely changes with yaw. Front-on, shoulder span still dominates.
+    neck_scale_ratio: float = 1.5
 
     # --- capture / load caps ---------------------------------------------------------
     # Pose inference is throttled to this rate so the audience UI stays responsive.
@@ -61,6 +66,7 @@ class VisionConfig:
             "min_final_window_s",
             "head_yaw_full",
             "activity_full",
+            "neck_scale_ratio",
             "max_inference_fps",
             "preview_fps",
         )
