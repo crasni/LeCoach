@@ -117,6 +117,8 @@ Composition is integration-owned; this lane does not edit `pyproject.toml`,
    then streams `preview_jpeg()`; the browser must not open a second camera stream.
 4. **Configuration:** `VisionConfig` (`config.py`) holds every default. The only
    knob integration is likely to need is `max_inference_fps` (CPU cap, default 10).
+   On the session side, give live mode a `startup_timeout_s` of ~10 s (see evidence
+   below).
    Camera index: `LECOACH_CAMERA_INDEX` (default 0).
 5. **Framing:** the presenter's elbows/wrists must be in frame for `activity_score`;
    with a laptop head-and-shoulders crop it is `null` (facing still works).
@@ -126,10 +128,13 @@ Composition is integration-owned; this lane does not edit `pyproject.toml`,
 
 **Measured evidence (not target hardware):** actual camera, MacBook Air (arm64,
 macOS 26.6.2), Python 3.12.14, Pose Landmarker lite on CPU, 23 fps webcam, 2026-10-09
-(VIS-02 #16, run 4): inference 19.5 ms/frame mean (28 ms max) at 9.99/s, 1 s windows
-emitted 79 ms after their end on average, startup 1.8 s, camera release 0.15–0.42 s.
-No UGen300 or intended-host numbers yet; UI responsiveness with vision composed
-into the app is not measured yet.
+(VIS-02 #16, runs 5–6): inference 19.5 ms/frame mean (≤ 31 ms) at 9.99/s; 1 s
+windows emitted 67–75 ms after their end on average (max 104–109 ms); camera + model
+close 0.19–0.40 s. Startup (model + camera open) was 1.8–2.1 s in five runs but
+**5.9 s once**, which is above the default `SessionConfig.startup_timeout_s` of 5 s.
+Live mode should allow ~10 s, otherwise such a session runs without vision
+(`adapter_start_failed`; the camera is still released). No UGen300 or intended-host
+numbers yet; UI responsiveness with vision composed into the app is not measured yet.
 
 ## Known limitations
 
