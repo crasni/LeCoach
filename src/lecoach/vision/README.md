@@ -24,10 +24,14 @@ Test evidence: `tests/test_vision.py` and the synthetic labeled fixture in
 ## Mapping (approximate; tuned in VIS-02)
 
 * **Windows**: non-overlapping 1 s capture windows on the shared session clock;
-  `timestamp_s = window_end_s`. A trailing window shorter than 0.5 s at stop is
-  dropped; the last window is clipped to the capture end. Event IDs `vision-<n>`.
+  `timestamp_s = window_end_s`. The first window starts when the camera actually
+  opened (the startup gap is not reported as unavailable windows) and is extended
+  to the next boundary if it would be shorter than 0.5 s. A trailing window
+  shorter than 0.5 s at stop is dropped; the last window is clipped to the capture
+  end. Event IDs `vision-<n>`, where `n` is the window's slot on the 1 s grid.
 * **Frames** are stamped with `context.clock.now()` right after capture. Pose
-  inference is throttled to `max_inference_fps` (10/s) to cap CPU load.
+  inference runs on a fixed-rate schedule capped at `max_inference_fps` (10/s) to
+  cap CPU load; every camera frame is still read so timestamps stay fresh.
 * **person_present / pose_available**: majority (≥ 50 %) of frames in the window
   must agree, otherwise `null` (cannot decide). Pose requires both shoulders at
   visibility ≥ 0.5.

@@ -489,3 +489,81 @@ def probe_args(**overrides):
     )
     values.update(overrides)
     return argparse.Namespace(**values)
+
+
+class StartupAndThrottleTests(IsolatedAsyncioTestCase):
+    def test_begin_skips_pre_capture_windows_and_clips_first(self):
+        aggregator = WindowAggregator()
+        aggregator.begin(2.18)
+        windows = [w for i in range(14) for w in aggregator.add(frontal(2.2 + i / 10))]
+        windows += aggregator.finish(3.5)
+        self.assertEqual(
+            [(w.index, w.window_start_s, w.window_end_s) for w in windows],
+            [(2, 2.18, 3.0), (3, 3.0, 3.5)],
+        )
+        self.assertTrue(all(w.availability == "available" for w in windows))
+
+    def test_begin_extends_a_too_short_first_window(self):
+        aggregator = WindowAggregator()
+        aggregator.begin(2.6)  # only 0.4 s left before 3.0 -> first window is 2.6-4.0
+        windows = [w for i in range(16) for w in aggregator.add(frontal(2.65 + i / 10))]
+        windows += aggregator.finish(4.2)
+        self.assertEqual([(w.index, w.window_start_s) for w in windows], [(3, 2.6)])
+        with self.assertRaises(RuntimeError):
+            aggregator.begin(5.0)
+
+    async def test_late_camera_start_emits_no_startup_windows(self):
+        clock = FakeClock()
+        frames = [frontal(2.65 + i / 10) for i in range(30)]
+
+        class SlowCamera(ReplaySource):
+            def open(self):
+                super().open()
+                self.clock.advance_to(2.6)  # camera takes 2.6 s to open
+
+        source = SlowCamera(clock, frames)
+        adapter = LocalVisionAdapter(lambda: source, PassThroughPose)
+        events = []
+        controller = SessionController(
+            SessionConfig(mode="live", drain_timeout_s=2.0, startup_timeout_s=2.0),
+            Components(vision=adapter),
+            session_id="late-start",
+            clock=clock,
+        )
+        controller.bus.subscribe(events.append)
+        await controller.start()
+        await self.wait_for(lambda: source.position >= len(frames))
+        await controller.stop()
+        metrics = [e for e in events if e.type == "vision.metrics"]
+        self.assertTrue(metrics)
+        self.assertEqual(metrics[0].event_id, "vision-3")
+        # First window starts at capture start (2.6) and runs to 4.0 (0.4 s was too short).
+        self.assertEqual((metrics[0].payload.window_start_s, metrics[0].timestamp_s), (2.6, 4.0))
+        self.assertEqual(len({e.event_id for e in metrics}), len(metrics))
+        self.assertTrue(all(e.payload.availability == "available" for e in metrics))
+
+    async def test_throttle_reaches_configured_rate_on_faster_camera(self):
+        clock = FakeClock()
+        frames = [frontal(0.01 + i / 23) for i in range(23 * 4)]  # 4 s at 23 fps
+        source = ReplaySource(clock, frames)
+        adapter = LocalVisionAdapter(
+            lambda: source, PassThroughPose, config=VisionConfig(max_inference_fps=10)
+        )
+        from lecoach.contracts.interfaces import SessionContext
+
+        context = SessionContext("s", clock, lambda e: True, SessionConfig(mode="live"))
+        await adapter.start(context)
+        await self.wait_for(lambda: source.position >= len(frames))
+        await adapter.stop_capture(clock.now())
+        await adapter.drain()
+        # 4 s at 10/s; the old last-frame throttle managed only ~31 here (7.7/s).
+        self.assertGreaterEqual(adapter.stats.frames_inferred, 38)
+        self.assertLessEqual(adapter.stats.frames_inferred, 41)
+
+    async def wait_for(self, predicate, timeout=5.0):
+        loop = asyncio.get_running_loop()
+        deadline = loop.time() + timeout
+        while not predicate():
+            if loop.time() > deadline:
+                self.fail("timed out")
+            await asyncio.sleep(0.005)

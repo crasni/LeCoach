@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Mapping
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from statistics import median
 
 from .config import VisionConfig
@@ -165,6 +165,7 @@ class WindowSummary:
     facing_score: float | None
     activity_score: float | None
     frames: int
+    index: int = -1  # window number on the session clock grid (stable event ID)
 
     def payload(self) -> dict:
         return {
@@ -223,9 +224,11 @@ def summarize(
 class WindowAggregator:
     """Groups capture-stamped frames into fixed, non-overlapping windows.
 
-    ``add`` returns the windows a newer frame has completed (including empty,
-    unavailable windows if capture stalled); ``finish`` closes the trailing window at
-    the capture end. Frames must arrive in capture order; older frames are ignored.
+    ``begin`` (optional) sets when capture actually started, so the startup gap
+    before the camera opened is not reported as unavailable windows. ``add`` returns
+    the windows a newer frame has completed (including empty, unavailable windows if
+    capture stalled); ``finish`` closes the trailing window at the capture end.
+    Frames must arrive in capture order; older frames are ignored.
     """
 
     def __init__(self, config: VisionConfig | None = None) -> None:
@@ -235,10 +238,32 @@ class WindowAggregator:
         self._speeds: list[float] = []
         self._previous: FrameFeatures | None = None
         self._closed = False
+        self._first: tuple[int, float] | None = None  # (index, clipped start)
+
+    def begin(self, capture_start_s: float) -> None:
+        """Start the first window at ``capture_start_s`` instead of session time 0.
+
+        The first window is clipped to start there; if that would leave less than
+        ``min_final_window_s`` before the next grid boundary, it extends to the
+        following boundary instead. Must be called before the first frame.
+        """
+        if self._frames or self._previous is not None or self._closed:
+            raise RuntimeError("begin must precede the first frame")
+        if not (math.isfinite(capture_start_s) and capture_start_s >= 0):
+            raise ValueError("capture start must be finite and non-negative")
+        w = self.config.window_s
+        index = int(capture_start_s // w)
+        if (index + 1) * w - capture_start_s < self.config.min_final_window_s:
+            index += 1
+        self._index = index
+        self._first = (index, capture_start_s)
 
     def _bounds(self, index: int) -> tuple[float, float]:
         w = self.config.window_s
-        return round(index * w, 6), round((index + 1) * w, 6)
+        start = round(index * w, 6)
+        if self._first is not None and index == self._first[0]:
+            start = self._first[1]
+        return start, round((index + 1) * w, 6)
 
     def _close_current(self, end_s: float | None = None) -> WindowSummary:
         start, natural_end = self._bounds(self._index)
@@ -249,6 +274,7 @@ class WindowAggregator:
             self._speeds,
             self.config,
         )
+        summary = replace(summary, index=self._index)
         self._index += 1
         self._frames, self._speeds = [], []
         return summary

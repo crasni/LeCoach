@@ -129,6 +129,8 @@ class LocalVisionAdapter:
             return
         self._devices_claimed = True
         self.stats.capture_started_s = context.clock.now()
+        # Windows before the camera opened are startup, not missing input.
+        self._aggregator.begin(self.stats.capture_started_s)
         self._status("available", "capture_started")
         self._worker_done = Future()
         self._worker = threading.Thread(
@@ -212,7 +214,9 @@ class LocalVisionAdapter:
     def _run(self, source: FrameSource, estimator: PoseEstimator) -> None:
         clock, config = self._context.clock, self.config
         failures = 0
-        last_preview = last_inference = float("-inf")
+        last_preview = float("-inf")
+        interval = 1 / config.max_inference_fps
+        next_inference = float("-inf")
         try:
             while not self._stop.is_set():
                 frame = source.read()
@@ -232,10 +236,15 @@ class LocalVisionAdapter:
                 if self._encoder is not None and now - last_preview >= 1 / config.preview_fps:
                     last_preview = now
                     self._update_preview(frame)
-                # 5 ms tolerance so frames exactly one interval apart are not dropped.
-                if now - last_inference < 1 / config.max_inference_fps - 0.005:
+                # Fixed-rate schedule: measuring from the last processed frame would
+                # undershoot (a 23 fps camera gave ~7.7/s at a 10/s cap). 5 ms slack
+                # keeps frames exactly one interval apart.
+                if now < next_inference - 0.005:
                     continue
-                last_inference = now
+                if now - next_inference < interval:
+                    next_inference += interval
+                else:  # first frame or after a stall: restart the schedule
+                    next_inference = now + interval
                 pose = self._estimate(estimator, frame, now)
                 if self._on_frame is not None:
                     try:
@@ -298,7 +307,7 @@ class LocalVisionAdapter:
         self.stats.windows_emitted += 1
         self.stats.emit_lag_s_total += lag
         self.stats.emit_lag_s_max = max(self.stats.emit_lag_s_max, lag)
-        index = round(summary.window_start_s / self.config.window_s)
+        index = summary.index
         self._emit(
             {
                 "schema_version": 0,
