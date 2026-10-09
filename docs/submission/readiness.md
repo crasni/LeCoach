@@ -1,10 +1,10 @@
 # Stage I package readiness
 
-Local review draft, updated 2026-10-08 (Asia/Taipei). INT-03 is **in progress**, with the claim and new deliverables unpublished. This records package checks and evidence references, not team assignments or a submission receipt. [TASKS.md](../../TASKS.md) owns progress; [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) owns observed behavior.
+Package evidence record, updated 2026-10-08 (Asia/Taipei). The proposal/evidence range merged through [PR #8](https://github.com/crasni/LeCoach/pull/8). Current remaining work, dependencies and task acceptance live only in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12); follow [AGENTS](../../AGENTS.md) for scoped publication. This document records artifact versions, checks and claim provenance, not assignments, a live status board or a submission receipt. Older check/disposition entries are dated package evidence, not acceptance of the final task. [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) preserves observed behavior.
 
 **Refreshed after the main pull:** the deck and claim map now reflect merged engine/rehearsal-screen and recorder work, with application source `8345c98` (main `c88386a`). [Fresh backend and browser evidence](../STATUS.md#int-03-refreshed-package-and-browser-validation) distinguishes computed reactions, injected recording and authored coaching. Live input and final recording remain pending.
 
-## Artifact versions and current gates
+## Artifact versions and dated dispositions
 
 | Item | Version / outcome | Remaining action |
 | --- | --- | --- |
@@ -13,7 +13,7 @@ Local review draft, updated 2026-10-08 (Asia/Taipei). INT-03 is **in progress**,
 | Demo | [DEMO.md](../DEMO.md) is a proposed 2:55 shot plan with synthetic replay instructions. No final recording, final narration, or video hash exists. | Lane 5 script/scenario and accepted INT-02 evidence, then reviewed local recording. |
 | Evidence baseline | Deck uses application source `8345c98`, main `c88386a`; 130 tests / 69 subtests and four browser checks pass. | Live producers and generated coaching remain pending; update claims after accepted live evidence. |
 | Hardware | [Observed host outcome](../STATUS.md#int-03-apply-hardware-readiness) and [procedure](../HARDWARE.md). | No identifiable target device/runtime on this host; obtain supported setup and owner handoffs for measurements. |
-| Git publication | New local work on `agent/integration`; no INT-03 push or PR yet. | Review exact local commit set, receive separate push approval, then role-branch PR/review. |
+| Git publication | Eight-commit range published at `b9e4cff`; [PR #8](https://github.com/crasni/LeCoach/pull/8) subsequently merged as `558f56f`. | Publication/merge evidence, not final INT-03 acceptance; new scoped role-branch work follows AGENTS. |
 | YouTube | No upload or URL. | Separate publication authorization, unlisted upload and link verification after recording review. |
 | Registration/submission | Team format, registration receipt, precise cutoff/timezone, upload limits and final receipt unknown. | Team/form confirmation; retain private details outside Git. |
 
@@ -53,7 +53,7 @@ Each row covers all material claims on the named page(s), including headline/bod
 | 8: no identifiable UGen300 on development host | [Read-only host inspection](../STATUS.md#int-03-apply-hardware-readiness). | One Linux host observation; does not establish hardware access elsewhere. |
 | 9: 130 tests, 69 subtests, nine fixture cases/ten sessions, UI checks | Exact backend commands/results in [STATUS](../STATUS.md#latest-main-reconciliation--2026-10-08), application source `8345c98`; [browser checks](../STATUS.md#int-03-refreshed-package-and-browser-validation). | Synthetic fixtures/fake adapters, Linux x86_64/Python 3.12.14; no live accuracy, latency or accelerator measurements. |
 | 10: intuitive reactions, actionable practice loop, workplace pilot | Intended value in GUIDE; proposed pilot/evaluation in this deck. | Hypotheses and future evaluation, with no claimed study, ROI, adoption or accuracy benefit. |
-| 11: implementation milestones and separate Stage I/II hardware requirements | TASKS/STATUS for project state; [official rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/), recorded in CONTEST. | Synthetic baseline observed; live loop and target measurements pending. Host validation is allowed in Stage I; it does not complete live P0. |
+| 11: implementation milestones and separate Stage I/II hardware requirements | [INT-03 Issue](https://github.com/crasni/LeCoach/issues/12) for current task state and STATUS for dated evidence; [official rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/), recorded in CONTEST. | Synthetic baseline observed; live loop and target measurements pending. Host validation is allowed in Stage I; it does not complete live P0. |
 | 12: source/repository access and pending delivery | [Repository](https://github.com/crasni/LeCoach), SOURCES, this readiness record. | Reference links checked in the exported PDF; no submitted package or video exists. |
 
 ## Export and visual review
@@ -90,7 +90,7 @@ Local package review for the refreshed draft passed: 106 local Markdown targets/
 | Submission: synthetic example / live replacement | Synthetic input/authored coaching and computed engine output are separately labeled, with exact replay times. Replacement with accepted INT-02 evidence is pending. |
 | Submission: demonstration ready / live unavailable | Live-unavailable gate exposed in DEMO/readiness; final script and recording review pending. |
 | Submission: local readiness with external dependencies | Registration, cutoff, form, originality interpretation, live/video and external receipt gates remain explicit. |
-| Submission: local-only authorization / authorized delivery | Local artifacts prepared; authorized upload/submission and receipt scenarios remain pending. No new push was performed. |
+| Submission: local-only authorization / authorized delivery | Initial preparation stayed local; the separately approved Git range is now published in PR #8. Authorized video/submission and receipt scenarios remain pending. |
 | Submission: commit contains no private rehearsal artifacts | Ignore patterns and staged files checked; the staged diff contains only sanitized documents, OpenSpec artifacts and the authored deck, with no private recordings, receipts, credentials or model weights. |
 | Hardware: synthetic validation / CPU rehearsal | Synthetic validation observed; live CPU rehearsal pending. |
 | Hardware: target absent / target prerequisites fail | No identifiable UGen300/CLI/module on inspected host; absent outcome recorded. An actual present-device failure is not exercised. |
@@ -99,13 +99,6 @@ Local package review for the refreshed draft passed: 106 local Markdown targets/
 | Hardware: concurrent rehearsal / isolated model | Both actual run scenarios pending; no integrated or isolated target-inference claim. |
 | Hardware: missing adapter / private run retained | Adapter/INT-02 dependency explicit; local data rules and storage procedure checked, without creating a private measured run. |
 
-## Final gates and next actions
+## Live task follow-up
 
-- Team: confirm registration format/status and retain its private receipt; inspect the actual form for cutoff/timezone, accepted formats and upload limits, and review unresolved original-work terms.
-- Lane 5: provide/review the final English script and scenario. The checked-in preparation fixture is usable for development but is not a finished narration handoff.
-- Lane 5 / integration: reconcile computed audience times with authored coaching; the deck now reflects merged PRs #5/#7. Deliver and accept the live INT-02 run before claims/footage change to live processing.
-- Hardware owner / integration: provide supported target setup and adapters for measured evidence, or preserve the explicit unavailable-device disposition and deferred milestone.
-- Maintainer: review the local deck/records and exact role-branch commit set, then separately authorize a push if ready to share.
-- Team: separately authorize final video publication and competition submission, verify unlisted access, and obtain a real receipt before claiming submission complete.
-
-No final gate is satisfied by silence, an apply request, a local PDF, or earlier branch deletion approval. INT-01 archival remains a separate workflow.
+Remaining decisions, owner handoffs, final review/recording, authorization and delivery acceptance are maintained exclusively in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12). Read that Issue and its native dependencies rather than maintaining a parallel checklist here. The artifact checks and unresolved scenario dispositions above are historical package evidence, not a submission receipt or a live task board. INT-01 archival is a separate Issue/workflow.

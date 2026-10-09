@@ -1,6 +1,6 @@
 # LeCoach architecture and shared contracts
 
-This file is the canonical interface reference for all five roles. [GUIDE.md](../GUIDE.md) defines product scope; [TASKS.md](../TASKS.md) assigns work. INT-01 implements the MVP v0 shapes below, is merged through PR #4, and is accepted by the maintainer with the remaining peer-review/downstream signoff gate waived. Current implementation evidence lives in [STATUS.md](STATUS.md). Model choices remain with the producer owners. The [OpenSpec implementation checklist](../openspec/changes/int-01-local-integration-scaffold/tasks.md) records execution order.
+This file is the canonical interface reference for all five roles. [GUIDE.md](../GUIDE.md) defines product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) assign work and own live acceptance. INT-01 implements the MVP v0 shapes below, is merged through PR #4, and is accepted by the maintainer with the remaining peer-review/downstream signoff gate waived. Current implementation evidence lives in [STATUS.md](STATUS.md). Model choices remain with the producer owners. The [OpenSpec implementation checklist](../openspec/changes/int-01-local-integration-scaffold/tasks.md) records execution order.
 
 ## INT-01 implementation decisions and handoff
 

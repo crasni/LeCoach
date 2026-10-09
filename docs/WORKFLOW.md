@@ -1,34 +1,33 @@
-# Internal development workflow
+# Behavior specification and task workflow
 
-This document is for collaborators and coding agents. Start with
-[AGENTS.md](../AGENTS.md) for branch, ownership, and approval requirements.
+[AGENTS.md](../AGENTS.md) is the session/publication entry point. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) exclusively own assignments, branches, live status, blockers, remaining work and task acceptance. `TASKS.md` is a compatibility pointer, not a second board.
 
-## OpenSpec workflow
+## OpenSpec's role
 
-OpenSpec is initialized here with the `spec-driven` schema. The active
-[INT-01 proposal](../openspec/changes/int-01-local-integration-scaffold/proposal.md)
-contains the migrated plan, design, capability specs, and execution checklist.
-Its 20 tasks are closed through implementation, publication and explicit maintainer
-acceptance; the waived review gate is recorded rather than claimed as performed.
-INT-01 has not yet been archived. The active [INT-03 change](../openspec/changes/int-03-submission-and-hardware-evidence/proposal.md)
-tracks proposal/submission preparation and hardware evidence, including external
-dependencies and publication gates. The shared task board continues to own
-assignments and overall progress.
+Use existing `openspec/` proposal/design/capability specs to agree behavior and interface deltas **before** changing producers/consumers. Architecture and executable contracts remain the canonical shared semantics. Routine implementation or test work against an agreed contract does not require a fresh proposal. Link the change from the Issue and PR; don't duplicate owner/status/blocker/acceptance fields in OpenSpec.
 
-Verify repository setup and the change from the root:
+Existing implementation checklists are historical evidence/work breakdown, not a competing live tracker. Resolve conflicts against the Issue and actual commits/checks; do not infer acceptance from an artifact's completion count. Preserve earlier contributor implementation and acceptance exceptions. Archive only after agreed acceptance; publication still follows AGENTS scope.
+
+## Existing CLI / agent workflow
+
+From the repository root, use the installed OpenSpec workflow rather than reinitializing the project:
 
 ```sh
-openspec --version
-openspec list
-openspec status --change int-01-local-integration-scaffold
-openspec validate int-01-local-integration-scaffold --strict
+openspec list --json
+openspec status --change <change-name> --json
+openspec validate <change-name> --strict
+openspec doctor --json
 ```
 
-In Codex, use `$openspec-propose` for a new change,
-`$openspec-update-change` to revise planning artifacts, and
-`$openspec-apply-change int-01-local-integration-scaffold` to continue this change.
-After completed tasks and accepted review, use `$openspec-archive-change`.
-To continue submission preparation, use
-`$openspec-apply-change int-03-submission-and-hardware-evidence`.
-These are agent skill commands entered in chat; terminal verification uses the
-CLI commands above. Pushes still require the explicit approval in [AGENTS.md](../AGENTS.md#required-user-approval-before-every-push).
+Agent commands already used in this repository:
+
+```text
+$openspec-apply-change <change-name>
+$openspec-archive-change <change-name>
+```
+
+The apply workflow reads the existing artifacts and implements the assigned Issue scope. The archive workflow preserves agreed capability specs and evidence after acceptance. If an agent/CLI version exposes different commands, inspect its help/installed skills before use; do not invent flags or silently restart scaffolding.
+
+## Working order
+
+Read the assigned Issue/comments/native dependencies, inspect its existing branch and relevant spec/contracts, update the Issue, implement/check useful unblocked work, publish a scoped assigned-branch PR, record exact checks and handoffs, and request integration review. Agree shared behavior changes through the relevant Issue/OpenSpec first. A component PR uses `Refs #N` unless it actually satisfies every task acceptance gate.
