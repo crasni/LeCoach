@@ -41,9 +41,11 @@ Test evidence: `tests/test_vision.py` and the synthetic labeled fixture in
   can only lower it. No nose → `null`, so a back turned to the camera reads as
   *unknown*, never as "away". It is head/body orientation toward the camera, **not
   eye contact, attention or emotion**.
-* **activity_score** (≥ 2 frame pairs): mean elbow/wrist speed in shoulder-widths
-  per second, minus a 0.15 noise floor, reaching 1 at 2.0. More movement is not
-  better; low movement is never a negative rule on its own.
+* **activity_score** (≥ 2 frame pairs): mean elbow/wrist speed in body-scale units
+  per second, minus a 0.15 noise floor, reaching 1 at 2.0. Body scale is the
+  shoulder span, floored by 1.5 × the nose-to-shoulder-midpoint distance, so turning
+  sideways (narrower apparent shoulders) does not inflate activity. More movement is
+  not better; low movement is never a negative rule on its own.
 * **Unavailable input**: no frames in a window → `availability: "unavailable"`.
   No person, undecided detection or unusable pose → available window with `null`
   scores. Device/model problems emit `signal.status` with reasons
@@ -68,10 +70,13 @@ decision requested in #15. Until then, install them locally without editing
 `pyproject.toml`/`uv.lock`:
 
 ```sh
-uv pip install opencv-python mediapipe      # inside the project venv
 mkdir -p models && curl -L -o models/pose_landmarker_lite.task \
   https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task
-uv run python -m lecoach.vision.probe -v --out sessions/vision-probe.json
+# --with adds the packages for this run only (a later `uv sync` would remove a
+# `uv pip install`); without uv: a venv with pydantic, opencv-python, mediapipe
+# and `PYTHONPATH=src python -m lecoach.vision.probe ...`.
+uv run --with opencv-python --with mediapipe \
+  python -m lecoach.vision.probe -v --out sessions/vision-probe.json
 ```
 
 A preview window opens with the mirrored camera, the detected skeleton (green
@@ -85,6 +90,51 @@ saved.
 access (System Settings → Privacy & Security → Camera) — OpenCV cannot tell a denied
 permission from a missing camera, so both report `camera_unavailable`. Override
 with `LECOACH_POSE_MODEL` / `LECOACH_CAMERA_INDEX`.
+
+## Integration handoff (Lane 1)
+
+Composition is integration-owned; this lane does not edit `pyproject.toml`,
+`uv.lock`, `api/app.py` or `cli.py`.
+
+1. **Dependencies (proposed, not added):** `opencv-python` (capture, JPEG preview)
+   and `mediapipe` (Pose Landmarker), e.g. as an optional `vision` group. Both were
+   exercised with Python 3.12.14 on macOS arm64. Without them the adapter still
+   imports and reports `signal.status unavailable/pose_runtime_missing`.
+2. **Model asset:** `pose_landmarker_lite.task` (download above) in the ignored
+   `models/` directory, or point `LECOACH_POSE_MODEL` at it. A missing file →
+   `pose_model_missing`, while speech keeps working.
+3. **Compose for live mode** in the session factory passed to `create_app`:
+
+   ```python
+   from lecoach.vision.local_backend import build_local_adapter
+
+   def factory(config):
+       if config.mode == "live":
+           return Components(vision=build_local_adapter(), engagement=..., ...)
+   ```
+
+   One adapter instance per session (it is single-use). `GET /api/sessions/{id}/preview`
+   then streams `preview_jpeg()`; the browser must not open a second camera stream.
+4. **Configuration:** `VisionConfig` (`config.py`) holds every default. The only
+   knob integration is likely to need is `max_inference_fps` (CPU cap, default 10).
+   On the session side, give live mode a `startup_timeout_s` of ~10 s (see evidence
+   below).
+   Camera index: `LECOACH_CAMERA_INDEX` (default 0).
+5. **Framing:** the presenter's elbows/wrists must be in frame for `activity_score`;
+   with a laptop head-and-shoulders crop it is `null` (facing still works).
+6. **Status reasons the UI should show:** `capture_started`, `camera_unavailable`
+   (missing, busy or permission denied), `pose_model_missing`, `pose_runtime_missing`,
+   `camera_start_failed`, `camera_read_failed`, `vision_capture_failed`.
+
+**Measured evidence (not target hardware):** actual camera, MacBook Air (arm64,
+macOS 26.6.2), Python 3.12.14, Pose Landmarker lite on CPU, 23 fps webcam, 2026-10-09
+(VIS-02 #16, runs 5–6): inference 19.5 ms/frame mean (≤ 31 ms) at 9.99/s; 1 s
+windows emitted 67–75 ms after their end on average (max 104–109 ms); camera + model
+close 0.19–0.40 s. Startup (model + camera open) was 1.8–2.1 s in five runs but
+**5.9 s once**, which is above the default `SessionConfig.startup_timeout_s` of 5 s.
+Live mode should allow ~10 s, otherwise such a session runs without vision
+(`adapter_start_failed`; the camera is still released). No UGen300 or intended-host
+numbers yet; UI responsiveness with vision composed into the app is not measured yet.
 
 ## Known limitations
 

@@ -138,6 +138,10 @@ async def run(args) -> dict:
 
     adapter = build_local_adapter(args.model, args.camera, config, on_frame=on_frame)
     context = SessionContext("vision-probe", clock, emit, SessionConfig(mode="live"))
+    # Session time 0 = start of capture, as in the app (the controller resets its
+    # clock at session start). Otherwise import/model-build time inflates every
+    # timestamp and makes capture_started look later than in a real session.
+    clock.reset()
     started = time.perf_counter()
     await adapter.start(context)
     startup_s = time.perf_counter() - started

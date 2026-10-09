@@ -72,21 +72,34 @@ class FrameFeatures:
     def __init__(self, frame: PoseFrame, config: VisionConfig) -> None:
         self.frame = frame
         self.config = config
+        # Filter once per frame; every cue below reads these.
+        threshold = config.min_keypoint_visibility
+        self._visible = {
+            name: point
+            for name, point in frame.keypoints.items()
+            if point.visibility >= threshold and math.isfinite(point.x) and math.isfinite(point.y)
+        }
+        left, right = self._visible.get("left_shoulder"), self._visible.get("right_shoulder")
+        width = _dist(left, right) if left is not None and right is not None else 0.0
+        self._shoulder_width = width if width > 1e-6 else None
 
     def visible(self, name: str) -> Keypoint | None:
-        point = self.frame.keypoints.get(name)
-        if point is None or not point.visibility >= self.config.min_keypoint_visibility:
-            return None
-        if not (math.isfinite(point.x) and math.isfinite(point.y)):
-            return None
-        return point
+        return self._visible.get(name)
 
     def shoulder_width(self) -> float | None:
-        left, right = self.visible("left_shoulder"), self.visible("right_shoulder")
-        if left is None or right is None:
+        return self._shoulder_width
+
+    def body_scale(self) -> float | None:
+        """Yaw-robust body size: shoulder span, floored by the scaled neck length."""
+        width = self._shoulder_width
+        if width is None:
             return None
-        width = _dist(left, right)
-        return width if width > 1e-6 else None
+        nose = self._visible.get("nose")
+        if nose is None:
+            return width
+        left, right = self._visible["left_shoulder"], self._visible["right_shoulder"]
+        neck = math.hypot(nose.x - (left.x + right.x) / 2, nose.y - (left.y + right.y) / 2)
+        return max(width, self.config.neck_scale_ratio * neck)
 
     @property
     def pose_usable(self) -> bool:
@@ -140,11 +153,11 @@ class FrameFeatures:
 
 
 def arm_speed(previous: FrameFeatures, current: FrameFeatures) -> float | None:
-    """Mean elbow/wrist speed in shoulder-widths per second between two frames."""
+    """Mean elbow/wrist speed in body-scale units per second between two frames."""
     dt = current.frame.timestamp_s - previous.frame.timestamp_s
     if not 0 < dt <= MAX_PAIR_GAP_S or not (previous.pose_usable and current.pose_usable):
         return None
-    scale = (previous.shoulder_width() + current.shoulder_width()) / 2
+    scale = (previous.body_scale() + current.body_scale()) / 2
     speeds = [
         _dist(a, b) / scale / dt
         for name in ARM_JOINTS
