@@ -51,6 +51,10 @@ class VisionStats:
         self.capture_stopped_s: float | None = None
         # Wall time spent releasing camera + model (macOS AVFoundation varies).
         self.camera_close_s: float | None = None
+        # Startup breakdown: model load (incl. runtime import if not prewarmed) and
+        # camera open, so slow starts can be attributed.
+        self.model_open_s: float | None = None
+        self.camera_open_s: float | None = None
 
     def as_dict(self) -> dict:
         inferred = max(self.frames_inferred, 1)
@@ -70,10 +74,14 @@ class VisionStats:
             "windows_emitted": self.windows_emitted,
             "emit_lag_ms_mean": round(1000 * self.emit_lag_s_total / windows, 2),
             "emit_lag_ms_max": round(1000 * self.emit_lag_s_max, 2),
-            "camera_close_ms": (
-                round(1000 * self.camera_close_s, 2) if self.camera_close_s is not None else None
-            ),
+            "camera_close_ms": _ms(self.camera_close_s),
+            "model_open_ms": _ms(self.model_open_s),
+            "camera_open_ms": _ms(self.camera_open_s),
         }
+
+
+def _ms(seconds: float | None) -> float | None:
+    return round(1000 * seconds, 2) if seconds is not None else None
 
 
 class LocalVisionAdapter:
@@ -178,11 +186,15 @@ class LocalVisionAdapter:
         """Runs in an executor thread. Opens the model first (cheap failure)."""
         estimator = source = None
         try:
+            started = time.perf_counter()
             estimator = self._estimator_factory()
             estimator.open()
+            self.stats.model_open_s = time.perf_counter() - started
             source = self._source_factory()
             self.released = False
+            started = time.perf_counter()
             source.open()
+            self.stats.camera_open_s = time.perf_counter() - started
         except VisionUnavailable:
             self._close(source, estimator)
             raise

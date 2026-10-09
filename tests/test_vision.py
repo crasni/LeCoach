@@ -413,6 +413,9 @@ class ProbeJudgeTests(TestCase):
 class ProbeViewerTests(TestCase):
     def setUp(self):
         try:
+            # viewer.py imports cv2 lazily, so guard it explicitly: an environment can
+            # have numpy (e.g. the speech group) without OpenCV.
+            import cv2  # noqa: F401
             import numpy  # noqa: F401
 
             from lecoach.vision.viewer import ProbeViewer
@@ -626,3 +629,105 @@ class ActivityScaleTests(TestCase):
         features = FrameFeatures(frontal(), VisionConfig())
         # Nose 100 px above the shoulder line: 1.5 x 100 < 160 px span.
         self.assertEqual(features.body_scale(), features.shoulder_width())
+
+
+class ProbeRepeatTests(TestCase):
+    def test_repeat_sessions_reopen_and_release_each_time(self):
+        from unittest import mock
+
+        from lecoach.vision import probe
+
+        sources = []
+
+        class WallSource(ReplaySource):
+            def read(self):
+                threading.Event().wait(0.02)
+                return frontal(0.05)
+
+        def fake_build(model, camera, config, on_frame=None):
+            source = WallSource(FakeClock(), [])
+            sources.append(source)
+            return LocalVisionAdapter(lambda: source, PassThroughPose, config=config)
+
+        with mock.patch.object(probe, "build_local_adapter", fake_build):
+            results = asyncio.run(probe.repeat_sessions(probe_args(), 2, seconds=2.2))
+        self.assertEqual([r["session"] for r in results], [1, 2])
+        self.assertTrue(all(r["pass"] for r in results), results)
+        self.assertTrue(all(r["windows"] >= 1 and r["camera_released"] for r in results))
+        self.assertEqual([(s.opened, s.closed) for s in sources], [(1, 1), (1, 1)])
+
+
+class CameraListTests(TestCase):
+    def test_list_cameras_reports_openable_indices_and_releases(self):
+        from unittest import mock
+
+        from lecoach.vision import local_backend, probe
+
+        released = []
+
+        class FakeFrame:
+            shape = (720, 1280, 3)
+
+        class FakeCapture:
+            def __init__(self, index, backend):
+                self.index = index
+
+            def isOpened(self):
+                return self.index in (0, 1)  # e.g. iPhone at 0, built-in webcam at 1
+
+            def read(self):
+                return True, FakeFrame()
+
+            def get(self, prop):
+                return 30.0
+
+            def release(self):
+                released.append(self.index)
+
+        fake_cv2 = mock.Mock(
+            VideoCapture=FakeCapture, CAP_AVFOUNDATION=1200, CAP_ANY=0, CAP_PROP_FPS=5
+        )
+        with mock.patch.object(local_backend, "_import_cv2", return_value=fake_cv2):
+            cameras = probe.list_cameras(max_index=4)
+        self.assertEqual(
+            cameras,
+            [
+                {"index": 0, "frame": "1280x720", "fps": 30.0},
+                {"index": 1, "frame": "1280x720", "fps": 30.0},
+            ],
+        )
+        self.assertEqual(released, [0, 1, 2, 3])  # every probed index is released
+
+
+class StartupWarmupTests(IsolatedAsyncioTestCase):
+    def test_prewarm_runs_once_per_process(self):
+        from lecoach.vision import local_backend
+
+        first = local_backend.prewarm()
+        self.assertIs(local_backend.prewarm(), first)
+        first.join(30)
+        self.assertFalse(first.is_alive())
+
+    def test_build_without_warm_does_not_start_prewarm(self):
+        from unittest import mock
+
+        from lecoach.vision import local_backend
+
+        with mock.patch.object(local_backend, "prewarm") as prewarm:
+            local_backend.build_local_adapter(warm=False)
+            prewarm.assert_not_called()
+            local_backend.build_local_adapter()
+            prewarm.assert_called_once()
+
+    async def test_startup_breakdown_is_recorded(self):
+        from lecoach.contracts.interfaces import SessionContext
+
+        clock = FakeClock()
+        source = ReplaySource(clock, [frontal(0.05)])
+        adapter = LocalVisionAdapter(lambda: source, PassThroughPose)
+        await adapter.start(SessionContext("s", clock, lambda e: True, SessionConfig(mode="live")))
+        await adapter.stop_capture(0.1)
+        await adapter.drain()
+        stats = adapter.stats.as_dict()
+        self.assertIsNotNone(stats["model_open_ms"])
+        self.assertIsNotNone(stats["camera_open_ms"])

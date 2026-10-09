@@ -65,19 +65,25 @@ still releases anything opened. The preview keeps only the latest JPEG (≤ 512 
 
 ## Running the real backend (owner's machine)
 
-Runtime packages are **not** in the shared manifest yet — that is an integration
-decision requested in #15. Until then, install them locally without editing
-`pyproject.toml`/`uv.lock`:
+Runtime packages come from the optional `vision` dependency group proposed by
+integration in PR #23 (`docs/LOCAL_RUNTIME.md`): `mediapipe` plus a **single**
+OpenCV distribution, `opencv-contrib-python`, which MediaPipe already depends on.
+Do not add `opencv-python` (or a headless variant) alongside it; both provide `cv2`.
 
 ```sh
 mkdir -p models && curl -L -o models/pose_landmarker_lite.task \
   https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task
-# --with adds the packages for this run only (a later `uv sync` would remove a
-# `uv pip install`); without uv: a venv with pydantic, opencv-python, mediapipe
-# and `PYTHONPATH=src python -m lecoach.vision.probe ...`.
-uv run --with opencv-python --with mediapipe \
-  python -m lecoach.vision.probe -v --out sessions/vision-probe.json
+# Once the vision group is on main:
+uv sync --frozen --group vision
+uv run python -m lecoach.vision.probe -v --repeat 3 --out sessions/vision-probe.json
+# Before that, the same versions for one run (MediaPipe pulls in the contrib OpenCV):
+uv run --with "mediapipe==0.10.35" --with "opencv-contrib-python==4.14.0.94" \
+  python -m lecoach.vision.probe -v --repeat 3 --out sessions/vision-probe.json
 ```
+
+`--repeat N` adds N back-to-back 5 s sessions after the guided run, each with a
+fresh adapter, and checks that the camera reopens, produces windows and is
+released every time.
 
 A preview window opens with the mirrored camera, the detected skeleton (green
 lines; orange dot = nose), the current prompt with a countdown, and the latest 1 s
@@ -96,10 +102,10 @@ with `LECOACH_POSE_MODEL` / `LECOACH_CAMERA_INDEX`.
 Composition is integration-owned; this lane does not edit `pyproject.toml`,
 `uv.lock`, `api/app.py` or `cli.py`.
 
-1. **Dependencies (proposed, not added):** `opencv-python` (capture, JPEG preview)
-   and `mediapipe` (Pose Landmarker), e.g. as an optional `vision` group. Both were
-   exercised with Python 3.12.14 on macOS arm64. Without them the adapter still
-   imports and reports `signal.status unavailable/pose_runtime_missing`.
+1. **Dependencies:** the optional `vision` group from PR #23: `mediapipe`
+   (Pose Landmarker Tasks API) and `opencv-contrib-python` (capture, JPEG preview,
+   probe window; needs the non-headless build for the probe window). Without them
+   the adapter still imports and reports `signal.status unavailable/pose_runtime_missing`.
 2. **Model asset:** `pose_landmarker_lite.task` (download above) in the ignored
    `models/` directory, or point `LECOACH_POSE_MODEL` at it. A missing file →
    `pose_model_missing`, while speech keeps working.
@@ -113,13 +119,19 @@ Composition is integration-owned; this lane does not edit `pyproject.toml`,
            return Components(vision=build_local_adapter(), engagement=..., ...)
    ```
 
-   One adapter instance per session (it is single-use). `GET /api/sessions/{id}/preview`
+   One adapter instance per session (it is single-use). Building it starts a
+   once-per-process background import of OpenCV/MediaPipe (`prewarm()`), and since
+   the session factory runs at prepare time, that ~0.6 s+ import is usually done
+   before start. Pass `warm=False` to opt out. `GET /api/sessions/{id}/preview`
    then streams `preview_jpeg()`; the browser must not open a second camera stream.
 4. **Configuration:** `VisionConfig` (`config.py`) holds every default. The only
    knob integration is likely to need is `max_inference_fps` (CPU cap, default 10).
    On the session side, give live mode a `startup_timeout_s` of ~10 s (see evidence
    below).
-   Camera index: `LECOACH_CAMERA_INDEX` (default 0).
+   Camera index: `LECOACH_CAMERA_INDEX` (default 0). OpenCV selects cameras by
+   index only; on macOS an iPhone (Continuity Camera) can take index 0, so check
+   with `python -m lecoach.vision.probe --list-cameras` (or turn Continuity Camera
+   off on the phone) and pin the intended webcam's index on the demo host.
 5. **Framing:** the presenter's elbows/wrists must be in frame for `activity_score`;
    with a laptop head-and-shoulders crop it is `null` (facing still works).
 6. **Status reasons the UI should show:** `capture_started`, `camera_unavailable`

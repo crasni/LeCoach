@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import os
 import sys
+import threading
 from pathlib import Path
 
 from .backend import VisionUnavailable
@@ -44,7 +45,7 @@ def _import_cv2():
     try:
         import cv2
     except ImportError as error:
-        raise VisionUnavailable("pose_runtime_missing", "opencv-python not installed") from error
+        raise VisionUnavailable("pose_runtime_missing", "OpenCV (cv2) not installed") from error
     return cv2
 
 
@@ -161,14 +162,53 @@ class MediaPipePose:
             landmarker.close()
 
 
+_prewarm_lock = threading.Lock()
+_prewarm_thread: threading.Thread | None = None
+
+
+def _import_runtime() -> None:
+    try:
+        import cv2  # noqa: F401
+        import mediapipe  # noqa: F401
+        from mediapipe.tasks.python import vision  # noqa: F401
+    except Exception:  # missing runtime is reported later by open(), as a status
+        pass
+
+
+def prewarm() -> threading.Thread:
+    """Import OpenCV/MediaPipe in a background thread, once per process.
+
+    Importing them takes ~0.6 s+ and dominated the first session's startup (1.8 s
+    first vs 0.5 s for later sessions on the owner's Mac). The app's session factory
+    runs at prepare time, before start, so warming here takes that cost off start.
+    A concurrent open() simply waits on Python's import lock; nothing else is shared.
+    """
+    global _prewarm_thread
+    with _prewarm_lock:
+        if _prewarm_thread is None:
+            _prewarm_thread = threading.Thread(
+                target=_import_runtime, name="lecoach-vision-prewarm", daemon=True
+            )
+            _prewarm_thread.start()
+        return _prewarm_thread
+
+
 def build_local_adapter(
     model_path: str | Path | None = None,
     camera_index: int | None = None,
     config=None,
     on_frame=None,
+    warm: bool = True,
 ):
-    """Composition helper for integration: the default local camera/pose adapter."""
+    """Composition helper for integration: the default local camera/pose adapter.
+
+    Creating it (at session prepare time in the app) starts the background runtime
+    import unless ``warm=False``.
+    """
     from .adapter import LocalVisionAdapter
+
+    if warm:
+        prewarm()
 
     return LocalVisionAdapter(
         source_factory=lambda: OpenCVCamera(camera_index),

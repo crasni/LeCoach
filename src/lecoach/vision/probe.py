@@ -8,6 +8,7 @@ optional ``--out`` summary contains only window metrics and counters.
 
     python -m lecoach.vision.probe --model models/pose_landmarker_lite.task
     python -m lecoach.vision.probe --segment-s 8 --out sessions/vision-probe.json
+    python -m lecoach.vision.probe --repeat 3     # plus 3 back-to-back sessions
 
 A preview window (mirrored camera + detected skeleton + prompt/countdown + latest
 window metrics) opens by default; ``--no-show`` disables it. Press q/Esc to abort.
@@ -31,7 +32,7 @@ from lecoach.runtime.clock import MonotonicClock
 
 from .config import VisionConfig
 from .features import ARM_JOINTS, FrameFeatures
-from .local_backend import DEFAULT_MODEL_PATH, MODEL_ENV, build_local_adapter
+from .local_backend import CAMERA_ENV, DEFAULT_MODEL_PATH, MODEL_ENV, build_local_adapter
 
 SCRIPT = (
     ("toward_still", "Face the camera and stay still."),
@@ -45,6 +46,8 @@ SETTLE_S = 2.0
 # Unjudged lead-in so the presenter can frame themselves in the preview.
 READY_S = 5.0
 DISPLAY_INTERVAL_S = 1 / 30
+# Length of each extra --repeat session (seconds of capture).
+REPEAT_SESSION_S = 5.0
 
 
 def _fmt(value) -> str:
@@ -211,6 +214,9 @@ async def run(args) -> dict:
             "python": sys.version.split()[0],
         },
         "model": str(args.model or os.environ.get(MODEL_ENV) or DEFAULT_MODEL_PATH),
+        "camera_index": int(
+            args.camera if args.camera is not None else os.environ.get(CAMERA_ENV, 0)
+        ),
         "config": {"window_s": config.window_s, "max_inference_fps": config.max_inference_fps},
         "startup_s": round(startup_s, 3),
         "camera_release_s": round(release_s, 3),
@@ -220,6 +226,138 @@ async def run(args) -> dict:
         "segments": segments,
         "windows": windows if args.out else len(windows),
     }
+
+
+async def repeat_sessions(args, sessions: int, seconds: float = REPEAT_SESSION_S) -> list[dict]:
+    """Back-to-back short sessions, each with a fresh adapter as the app would create.
+
+    Checks that the camera reopens after every release, produces windows and is
+    released again on stop (Stage I stop/release/repeat check). Shows the preview
+    window with a countdown when ``args.show`` (display only); no media saved.
+    """
+    results = []
+    config = VisionConfig(max_inference_fps=args.max_fps)
+    viewer = None
+    if getattr(args, "show", False):
+        try:
+            from .viewer import ProbeViewer
+
+            viewer = ProbeViewer(config)
+        except ImportError:
+            viewer = None
+    for index in range(1, sessions + 1):
+        windows: list[dict] = []
+        statuses: list[str] = []
+        clock = MonotonicClock()
+
+        def emit(value, windows=windows, statuses=statuses):
+            event = parse_event(value)
+            if event.type == "signal.status":
+                statuses.append(event.payload.reason)
+            else:
+                windows.append(event.payload.model_dump())
+            return True
+
+        adapter = build_local_adapter(
+            args.model, args.camera, config, on_frame=viewer.on_frame if viewer else None
+        )
+        context = SessionContext(f"vision-repeat-{index}", clock, emit, SessionConfig(mode="live"))
+        print(f"\n>>> Repeat {index}/{sessions}: camera reopening; stay in frame", flush=True)
+        clock.reset()
+        started = time.perf_counter()
+        await adapter.start(context)
+        startup_s = time.perf_counter() - started
+        if adapter.stats.capture_started_s is not None:
+            ends = clock.now() + seconds
+            while (left := ends - clock.now()) > 0:
+                if viewer is not None:
+                    shown = viewer.show(
+                        [
+                            f"Repeat {index}/{sessions}: stay in frame  ({left:4.1f} s)",
+                            f"windows so far: {len(windows)}",
+                        ]
+                    )
+                    if not shown:
+                        break
+                await asyncio.sleep(DISPLAY_INTERVAL_S if viewer else min(left, 0.5))
+        stop_started = time.perf_counter()
+        await adapter.stop_capture(clock.now())
+        release_s = time.perf_counter() - stop_started
+        await adapter.drain()
+        present = [w for w in windows if w["person_present"] is True]
+        result = {
+            "session": index,
+            "startup_s": round(startup_s, 3),
+            "camera_release_s": round(release_s, 3),
+            "camera_released": adapter.released,
+            "statuses": statuses,
+            "windows": len(windows),
+            "person_present_windows": len(present),
+        }
+        result["pass"] = (
+            statuses[:1] == ["capture_started"]
+            and adapter.released
+            and len(windows) >= max(1, int(seconds) - 1)
+        )
+        print(
+            f"[repeat {index}/{sessions}] startup {result['startup_s']} s, "
+            f"{result['windows']} windows, release {result['camera_release_s']} s, "
+            f"{'ok' if result['pass'] else 'FAIL'}",
+            flush=True,
+        )
+        results.append(result)
+    if viewer is not None:
+        viewer.close()
+    return results
+
+
+def list_cameras(max_index: int = 5) -> list[dict]:
+    """Open camera indices 0..max_index-1 once and report what each returns.
+
+    OpenCV addresses cameras by index only. On macOS an iPhone (Continuity Camera)
+    can take index 0, so check which index is the intended webcam, then pass
+    ``--camera N`` or set ``LECOACH_CAMERA_INDEX``. Nothing is saved.
+    """
+    from .local_backend import _import_cv2
+
+    cv2 = _import_cv2()
+    backend = cv2.CAP_AVFOUNDATION if sys.platform == "darwin" else cv2.CAP_ANY
+    found = []
+    for index in range(max_index):
+        capture = cv2.VideoCapture(index, backend)
+        try:
+            if not capture.isOpened():
+                continue
+            ok, frame = capture.read()
+            found.append(
+                {
+                    "index": index,
+                    "frame": f"{frame.shape[1]}x{frame.shape[0]}" if ok else None,
+                    "fps": round(capture.get(cv2.CAP_PROP_FPS) or 0, 1) or None,
+                }
+            )
+        finally:
+            capture.release()
+    return found
+
+
+def macos_camera_names() -> list[str]:
+    """Camera names macOS reports (order may differ from OpenCV indices)."""
+    if sys.platform != "darwin":
+        return []
+    import subprocess
+
+    try:
+        out = subprocess.run(
+            ["system_profiler", "SPCameraDataType"], capture_output=True, text=True, timeout=10
+        ).stdout
+    except (OSError, subprocess.SubprocessError):
+        return []
+    return [
+        line.strip().rstrip(":")
+        for line in out.splitlines()
+        if line.startswith("    ") and not line.startswith("      ") and line.strip().endswith(":")
+    ]
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -233,8 +371,43 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--no-show", dest="show", action="store_false", help="do not open the preview window"
     )
+    parser.add_argument(
+        "--repeat",
+        type=int,
+        default=0,
+        help="after the guided run, open/stop the camera N more times (repeat check)",
+    )
+    parser.add_argument(
+        "--list-cameras", action="store_true", help="list camera indices that open, then exit"
+    )
     args = parser.parse_args(argv)
+    if args.list_cameras:
+        names = macos_camera_names()
+        if names:
+            print("macOS cameras (order may differ from indices): " + ", ".join(names))
+        for camera in list_cameras():
+            print(f"index {camera['index']}: frame {camera['frame']}, fps {camera['fps']}")
+        print("Use --camera N (or LECOACH_CAMERA_INDEX=N) for the intended webcam.")
+        return 0
+    # The app prewarms the runtime when it prepares a session (before start); do the
+    # same so startup_s matches the app, and report the import cost separately.
+    from .local_backend import prewarm
+
+    import_started = time.perf_counter()
+    prewarm().join()
+    runtime_import_s = round(time.perf_counter() - import_started, 3)
+    camera = args.camera if args.camera is not None else os.environ.get(CAMERA_ENV, "0")
+    print(
+        f"Using camera index {camera}. If the preview shows another device (e.g. an "
+        "iPhone via Continuity Camera), stop and run --list-cameras.",
+        flush=True,
+    )
     summary = asyncio.run(run(args))
+    summary["runtime_import_s"] = runtime_import_s
+    if args.repeat > 0 and summary.get("camera_released"):
+        print(f"\n>>> Repeat check: {args.repeat} short sessions; stay in frame", flush=True)
+        summary["repeat"] = asyncio.run(repeat_sessions(args, args.repeat))
+        summary["ok"] = summary["ok"] and all(r["pass"] for r in summary["repeat"])
     text = json.dumps(summary, indent=2)
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
