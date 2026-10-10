@@ -12,7 +12,7 @@ visual revalidation was performed in this direction update. Final claim-map and
 script review still require accepted live evidence, actual-host checks and timing.
 Official rules retain an English deck and mainly English video explanation.
 
-Package evidence record, updated 2026-10-08 (Asia/Taipei). The proposal/evidence range merged through [PR #8](https://github.com/crasni/LeCoach/pull/8). Current remaining work, dependencies and task acceptance live only in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12); follow [AGENTS](../../AGENTS.md) for scoped publication. This document records artifact versions, checks and claim provenance, not assignments, a live status board or a submission receipt. Older check/disposition entries are dated package evidence, not acceptance of the final task. [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) preserves observed behavior.
+Package evidence record, updated 2026-10-10 (Asia/Taipei). The proposal/evidence range merged through [PR #8](https://github.com/crasni/LeCoach/pull/8). Current remaining work, dependencies and task acceptance live only in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12); follow [AGENTS](../../AGENTS.md) for scoped publication. This document records artifact versions, checks and claim provenance, not assignments, a live status board or a submission receipt. Older check/disposition entries are dated package evidence, not acceptance of the final task. [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) preserves observed behavior.
 
 **Refreshed after the main pull:** the deck and claim map now reflect merged engine/rehearsal-screen and recorder work, with application source `8345c98` (main `c88386a`). [Fresh backend and browser evidence](../STATUS.md#int-03-refreshed-package-and-browser-validation) distinguishes computed reactions, injected recording and authored coaching. Live input and final recording remain pending.
 
@@ -22,7 +22,7 @@ Package evidence record, updated 2026-10-08 (Asia/Taipei). The proposal/evidence
 | --- | --- | --- |
 | Editable English deck | [proposal.fodp](proposal.fodp), 12 slides, no appendices; SHA-256 `454ff035a8859bc5517b336239d2ad1c656246ac12edd97286d26d0c90fc4f71`. | Team content review and any revisions after live evidence lands. |
 | PDF | [proposal.pdf](proposal.pdf), 12 pages; SHA-256 `74dadc3ca5665d1ec20ae0800ca182ef2a70a82bdff20ec497e29dc22ce0238e`. | Confirm accepted file format/upload limits in the actual form. |
-| Demo | [DEMO.md](../DEMO.md) is a proposed 2:55 shot plan with synthetic replay instructions. No final recording, final narration, or video hash exists. | Lane 5 script/scenario and accepted INT-02 evidence, then reviewed local recording. |
+| Demo | [DEMO.md](../DEMO.md#versioned-lane-5-preview-handoff) pairs the 2:55 shot plan with Lane 5's 316-word English preview at `03028dd` in PR #24, synthetic commands and generated-coaching evidence anchors. No final live narration, recording, measured duration or video hash exists. | Adapt the preview to accepted INT-02 evidence on the confirmed CPU host, time/review the final script and local recording. |
 | Evidence baseline | Deck uses application source `8345c98`, main `c88386a`; 130 tests / 69 subtests and four browser checks pass. | Live producers and generated coaching remain pending; update claims after accepted live evidence. |
 | Hardware | [Observed host outcome](../STATUS.md#int-03-apply-hardware-readiness) and [procedure](../HARDWARE.md). | No identifiable target device/runtime on this host; obtain supported setup and owner handoffs for measurements. |
 | Git publication | Eight-commit range published at `b9e4cff`; [PR #8](https://github.com/crasni/LeCoach/pull/8) subsequently merged as `558f56f`. | Publication/merge evidence, not final INT-03 acceptance; new scoped role-branch work follows AGENTS. |
@@ -122,3 +122,10 @@ Fresh package-only checks pass: both recorded artifact SHA-256 values match; `pd
 ## Live task follow-up
 
 Remaining decisions, owner handoffs, final review/recording, authorization and delivery acceptance are maintained exclusively in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12). Read that Issue and its native dependencies rather than maintaining a parallel checklist here. The artifact checks and unresolved scenario dispositions above are historical package evidence, not a submission receipt or a live task board. INT-01 archival is a separate Issue/workflow.
+
+
+## Lane 5 preview reconciliation — 2026-10-10
+
+Reviewed Lane 5 PR #24 at `03028dd` in an isolated source snapshot. Both `feedback_replay.py` and `record_replay.py` pass all nine synthetic cases / ten sessions. Generated improvement/strength anchors match the narration at 10/25/40 s; recount gives 316 words in six blocks. [DEMO](../DEMO.md#versioned-lane-5-preview-handoff) now pairs this version with the shot plan, exact PR-scoped commands, terminal/browser provenance and CPU/Stage II captions. All 31 local file targets in DEMO/readiness resolve; strict all-spec OpenSpec validation and whitespace pass. No deck/PDF regeneration or recording was performed.
+
+This completes independent preview reconciliation only. INT-03 task 5.1 remains unchecked under the current maintainer refinement until the final script/screens agree with accepted actual CPU evidence and measured timing. Existing live, final recording, form/team and external-delivery gates remain open in Issue #12.

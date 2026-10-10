@@ -31,7 +31,24 @@ uv run lecoach replay --case weak_to_improved --audience authored
 uv run python scripts/validate_fixtures.py
 ```
 
-Default replay computes engagement with the sole engine; feedback stays authored and the recorder is not enabled by the default composition. The explicit authored option reproduces the older deck's audience times. Lane 5 must reconcile example coaching timestamps with computed transitions before a final demo review. An early stop leaves the full authored summary unavailable.
+Default replay computes engagement with the sole engine; feedback stays authored and the recorder is not enabled by the default composition. The explicit authored option reproduces the older deck's audience times. An early stop leaves the full authored summary unavailable.
+
+## Versioned Lane 5 preview handoff
+
+Lane 5 supplied the [English narration](https://github.com/crasni/LeCoach/blob/03028dd42a751c22d28c98889d17ba442e5da84f/checks/coaching/demo/narration.md) and [scenario/runbook](https://github.com/crasni/LeCoach/blob/03028dd42a751c22d28c98889d17ba442e5da84f/checks/coaching/demo/README.md) in [PR #24](https://github.com/crasni/LeCoach/pull/24), reviewed here at `03028dd`. Keep these owner-maintained sources rather than copying the script into this guide. This revision is a synthetic development preview, not an accepted final live script. Its six spoken segments align with the slots below.
+
+The generated-coaching commands require that PR's checkout; they are not available in this integration preparation revision:
+
+```sh
+uv run python checks/coaching/feedback_replay.py --case weak_to_improved --show-feedback
+uv run python checks/coaching/feedback_replay.py --case camera_unavailable --show-feedback
+uv run python checks/coaching/feedback_replay.py --case drain_timeout --show-feedback
+uv run python checks/coaching/record_replay.py
+```
+
+Show the generated summary in the terminal separately from the browser's authored card. The verified synthetic moments are improvements at capture times 10 s (200–205 WPM) and 25 s (approximate facing 0.2), plus a strength at 40 s (144 WPM and cited facing 0.85). Those capture anchors differ from the smoothed audience decisions at 20/30/35/40 s. The same-time `vision-40` event is not cited by the 40 s decision; use its actual evidence IDs rather than adding a convenient observation.
+
+The revised narration totals 316 words, with per-slot counts 35/28/95/76/51/31. At an assumed 135 WPM, speech takes about 140.4 s, leaving 34.6 s for screen holds in the 175 s plan. This is a calculation, not measured narration or edited-video duration. Retain visible **Synthetic development preview** and 5× replay labels. Actual read-through and recording require their applicable authorization.
 
 ## Proposed recording sequence
 
@@ -40,8 +57,8 @@ Default replay computes engagement with the sole engine; feedback stays authored
 | 0:00–0:20 | Explain the problem: practicing alone gives little sense of audience response. | Product intent from GUIDE. |
 | 0:20–0:35 | Show LeCoach and session controls. Identify the demonstrated mode. | Current shell can show synthetic mode; live mode requires INT-02. |
 | 0:35–1:35 | Show weak delivery and recovery through visible audience changes. | Today: synthetic observations and computed audience reactions. Later: Lane 5 scenario with actual speech/vision and the same engine. |
-| 1:35–2:15 | End the session and explain a few timestamped observations and actions. | Today: authored example. Later: recorder/generator outputs with traceable evidence. |
-| 2:15–2:40 | Show local architecture and the intended UGen300 adapter path. | Architecture plus SOURCES; label hardware work according to STATUS. |
+| 1:35–2:15 | Explain generated moments, observations, actions and evidence in the Lane 5 terminal viewer. | PR #24 computes coaching from synthetic observations; the default browser card remains authored. Actual live generated feedback still requires accepted composition. |
+| 2:15–2:40 | Show local architecture, Stage I CPU target and Stage II UGen300 plan. | Architecture plus SOURCES; synthetic checks do not establish CPU inference or accelerator execution. |
 | 2:40–2:55 | State the intended practical value and next validated milestone. | Avoid invented user outcomes or performance figures. |
 
 Use English narration for the final video. Keep mode/provenance visible in edited shots. Do not replace replay labels with claims of live recognition. A CPU-based live rehearsal, once verified, can demonstrate Stage I behavior without implying accelerator execution.
@@ -70,4 +87,4 @@ Before substituting live shots or revising deck claims, compare the run's source
 
 The [local English proposal](submission/proposal.pdf) is paired with a [readiness/claim map](submission/readiness.md). Headless reproduction was repeated during INT-03 apply; [STATUS](STATUS.md#int-03-apply-local-validation) records synthetic inputs, exact state times and authored outputs. This does not establish a recorded demo or live behavior.
 
-Lane 5's checked-in [scenario preparation](../checks/coaching/README.md) covers weak-to-improved delivery and limitation cases, but a final English narration/script has not been provided in the inspected handoff. Recorder [PR #5](https://github.com/crasni/LeCoach/pull/5) is now merged and its synthetic injection checks pass; it does not supply generated coaching or final footage here. Keep the script/scenario, accepted INT-02 run and final local recording gates pending. The deck now reflects the merged engine and injected-recorder checks, with computed audience times and explicitly authored example coaching. No synthetic-only final submission exception has been approved.
+The versioned Lane 5 preview handoff above supplies narration, scenario commands and computed coaching anchors. Recorder [PR #5](https://github.com/crasni/LeCoach/pull/5) is merged; generated coaching remains in PR #24 and is not enabled in this checkout's default browser composition. Before final script acceptance, replace fixture-specific statements with the accepted INT-02 run's actual host/input/configuration, timestamps, supported moments and viewer, then measure narration/edit timing. Keep accepted live evidence and reviewed local footage pending. The deck still reflects merged synthetic functionality and explicitly authored example coaching; this handoff does not update its claims or approve a synthetic-only final submission.
