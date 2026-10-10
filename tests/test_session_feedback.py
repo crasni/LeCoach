@@ -37,7 +37,7 @@ def test_text_timeline_excludes_private_transcript_text(tmp_path, capsys):
     assert "PRIVATE TRANSCRIPT" not in output
     assert "speech.transcript" in output
     assert "session.completed" in output
-    assert "not enough supported" in output
+    assert "not enough reliable information" in output
     assert sorted(p.name for p in tmp_path.iterdir()) == ["private.json"]
 
 
@@ -55,7 +55,7 @@ def test_drain_timeout_is_preserved(tmp_path, capsys):
     sessions, reports, _ = asyncio.run(evaluate("drain_timeout"))
     main([save(tmp_path, sessions[0]), "--format", "json"])
     assert Feedback.model_validate_json(capsys.readouterr().out) == reports[0]
-    assert any("drain timeout" in text for text in reports[0].limitations)
+    assert any("did not finish" in text for text in reports[0].limitations)
 
 
 def test_actual_engine_freshness_config_is_used(tmp_path, capsys):
@@ -65,7 +65,7 @@ def test_actual_engine_freshness_config_is_used(tmp_path, capsys):
     main([save(tmp_path, session), "--rules", str(rules), "--format", "json"])
     report = Feedback.model_validate_json(capsys.readouterr().out)
     assert report.moments == []
-    assert any("omitted" in text for text in report.limitations)
+    assert any("left out" in text for text in report.limitations)
 
 
 def test_invalid_foreign_or_unfinished_log_fails_without_echoing_input(tmp_path, capsys):

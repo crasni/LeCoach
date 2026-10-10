@@ -103,3 +103,59 @@ in the existing 175 s shot plan, estimated 140.4 s reading at 135 WPM and 34.6 s
 holds. Actual read-through/edit duration and the accepted real-input run remain
 required before final demo claims change. Raw recording remains off by default;
 recording/media publication/competition delivery retain separate authorization.
+
+## Plain advice and delivered CPU script checks — 2026-10-10
+
+Base source: merged main `b419a617c96ac6e8a28bdc6767ffb905e522d933`, safely
+fast-forwarded into the existing assigned role branch. The preceding `03028dd`
+continuation received integration approval and merged in PR #24 (`5000c23`).
+PR #23 delivers the public local CPU composition. #17 is accepted (no rollback;
+abandoned scratch branch retained). Historical observations above retain their
+original revision/host attribution; live acceptance belongs to Issues.
+
+The maintainer's [requested advice refinement](https://github.com/crasni/LeCoach/issues/20#issuecomment-6095551081)
+is implemented as plain observations plus one concrete practice action. User copy
+no longer exposes cited-window terminology or normalized facing scores. The
+selector/recorder/engine, quotas, capture anchors and canonical citations are
+unchanged. Active pauses report the longest supported elapsed duration as a
+lower bound with unknown intent. Camera-only strengths make no pace claim.
+Filler observations are attributed to the transcript; no measured filler recall
+or filler-driven demo story is claimed.
+
+Local macOS arm64 / CPython 3.12.14, existing core/dev environment:
+
+```sh
+env -u DISPLAY -u WAYLAND_DISPLAY .venv/bin/python -m pytest -q
+# 258 passed / 392 subtests; 12 optional-runtime tests skipped
+.venv/bin/python -m pytest -q tests/test_feedback.py tests/test_session_feedback.py tests/test_live_composition.py
+# 32 passed / 43 subtests
+.venv/bin/ruff check src scripts tests examples checks/coaching/feedback_replay.py checks/coaching/session_feedback.py
+.venv/bin/python checks/coaching/feedback_replay.py --show-feedback
+.venv/bin/python checks/coaching/record_replay.py
+.venv/bin/python scripts/export_schema.py --check
+.venv/bin/python scripts/validate_fixtures.py
+git diff --check
+```
+
+All pass; the existing Starlette/httpx deprecation warning remains. Ten speech
+runtime tests and two optional OpenCV tests skip because this environment has
+no corresponding optional runtime stack/assets. No model/package installation,
+real-device capture, inference performance, browser E2E or recording is claimed.
+Both replay paths pass nine synthetic cases / ten sessions. All transition and
+moment time/kind/ID baselines are unchanged; only a plain unfinished-results
+limitation phrase changes in the computed oracle. The new active-pause regression
+checks that advice does not invent a final duration or an intentional pause.
+
+[The revised narration](demo/narration.md) contains six blocks
+`[35, 32, 90, 76, 43, 33]`, **309 words**: estimated 137.3 s at 135 WPM plus
+37.7 s holds within 175 s, with each slot fitting that assumed pace. These are
+estimates. The maintainer-reported approximately 2:20 read-through belongs to
+the earlier 316-word `03028dd` draft, not this revision or the edited video.
+
+The script/runbook now reflect delivered live browser coaching and the confirmed
+Ubuntu/Bluetooth operator handoff. The [passed reliability batch](https://github.com/crasni/LeCoach/issues/11#issuecomment-6095334266)
+is attributed operator evidence; no repetition is requested. Exact moment
+time/text/citations and sanitized run/configuration provenance still need reviewer
+confirmation before live advice acceptance and final footage. Revised read-through,
+per-slot/edit timing and recording/publication/submission authorization are separate
+remaining pickups. Stage II accelerator validation is unmeasured.
