@@ -1,6 +1,6 @@
 # Competition requirements and submission preparation
 
-Content rechecked 2026-10-09 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
+Content rechecked 2026-10-10 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
 
 ## Verified requirements
 
@@ -19,7 +19,7 @@ Content rechecked 2026-10-09 against the [official competition rules](https://co
 
 The local [English deck](submission/proposal.pdf) and [editable source](submission/proposal.fodp) now follow the 12-slide structure: problem; intended user; rehearsal journey; live audience response; demonstrated prototype; local architecture; event timing and failure handling; hardware adapter approach; validation evidence; practical value; delivery milestones; references and repository. [Readiness](submission/readiness.md) records local page/language/content/visual checks and the claim map. This is a review draft, not a finished submission or a change to the MVP; current prototype claims remain synthetic.
 
-Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The current shell can demonstrate synthetic playback only. Replace those shots with actual rehearsal behavior after INT-02 passes; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeCoach has already run on that hardware.
+Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The default shell demonstrates synthetic playback; opt-in `lecoach serve --live` composes local speech/vision and generated coaching. Its final integrated rehearsal acceptance remains pending in INT-02. Replace example shots with accepted actual rehearsal behavior; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeCoach has already run on that hardware.
 
 ## Unresolved submission details
 

@@ -1,6 +1,6 @@
 # Competition and hardware source provenance
 
-Competition content rechecked 2026-10-08; hardware sources reviewed 2026-10-07 for INT-03. The source hierarchy is defined in [GUIDE.md](../GUIDE.md#0-source-of-truth). [CONTEST.md](CONTEST.md) records verified external requirements; [STATUS.md](STATUS.md) records LeCoach's observed implementation and hardware readiness. Reference information does not establish working LeCoach inference.
+Competition rules content rechecked 2026-10-10; hardware sources reviewed 2026-10-07 for INT-03. The source hierarchy is defined in [GUIDE.md](../GUIDE.md#0-source-of-truth). [CONTEST.md](CONTEST.md) records verified external requirements; [STATUS.md](STATUS.md) records LeCoach's observed implementation and hardware readiness. Reference information does not establish working LeCoach inference.
 
 ## Competition source
 
@@ -89,3 +89,23 @@ Maintainer direction is separate provenance: no team UGen300 access before
 qualification; Lucas likely operator; English product/rehearsal after canceling
 the Mandarin/zh-TW proposal.
 It does not establish actual CPU/model performance or override official rules.
+
+## Public rules recheck — 2026-10-10
+
+Direct HTTPS retrieval of the official home page produced HTML SHA-256
+`ac46e9644ad46887e4ca49bdc9004abce815496173392acf1de8c5a495a21524`.
+The HTML-unescaped Event description in its JSON-LD graph still hashes to
+`5097d79890c35b3020cc654609f93f757bb5422ed5f449a0309205e2561e1fcb`.
+Sections III–VII, IX and XI were inspected; recorded Stage I date, English
+deck/video requirements, page budget and Stage II distinction are unchanged.
+The web extractor could not access the home/news/FAQ pages; that failure was
+not treated as source verification. This direct rules check does not inspect
+authenticated submission fields, confirm registration or resolve precise cutoff
+time/timezone and originality interpretation. Temporary retrieval files remain
+outside Git.
+
+A separate unauthenticated Chromium inspection reached the rendered public
+announcements and FAQ pages. Announcements displayed none at inspection; the FAQ
+provides generic editing/receipt/support guidance and does not resolve the cutoff,
+upload-limit or originality questions. No registration button was activated and
+no account, submission form or receipt was accessed.

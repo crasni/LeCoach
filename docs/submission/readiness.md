@@ -141,3 +141,26 @@ computed audience and authored coaching. Composition implementation and syntheti
 generated-feedback checks do not replace actual-host live evidence, measured
 narration/edit timing, reviewed recording or external submission gates in #12.
 The deck/PDF and their recorded hashes remain unchanged.
+
+## Package verification after integration delivery — 2026-10-10
+
+PR #23 is merged as `fae1553`; speech follow-up PR #31 as `b419a61`. This is
+implementation delivery, not final integrated live acceptance. The speech
+follow-up was reviewed on a current-main isolated source overlay: 41 focused
+tests / 12 subtests, ten speech cases / eleven sessions, Ruff and whitespace
+pass. A concurrent documentation-only update was inspected before the exact-head
+merge. Owner-reported Windows capture/missing-device evidence remains scoped to
+that host; filler undercount and stop-while-speaking measurements remain open.
+
+Fresh package checks: the 12-page proposal source's 245 paragraphs match their
+corresponding raw-extracted PDF pages; the recorded FODP/PDF hashes remain
+`454ff035a8859bc5517b336239d2ad1c656246ac12edd97286d26d0c90fc4f71` /
+`74dadc3ca5665d1ec20ae0800ca182ef2a70a82bdff20ec497e29dc22ce0238e`.
+Changed setup/provenance file targets resolve, frozen lock consistency and seven
+strict OpenSpec items pass. No PDF regeneration or fresh all-page visual review
+was needed because the deck is unchanged.
+
+[SOURCES](../SOURCES.md#public-rules-recheck--2026-10-10) records the unchanged
+public rules content and rendered announcements/FAQ inspection. Authenticated
+registration/form facts, accepted integrated CPU rehearsal, measured narration,
+reviewed video and external receipts remain pending in Issue #12.
