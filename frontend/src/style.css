@@ -77,8 +77,9 @@ footer i { width: 5px; height: 5px; margin-right: 5px; }
 .state.state-bored { background: #e6e6ef; color: #4c4f6a; }
 .room { display: grid; gap: 0; padding: 22px 12px 0; background: linear-gradient(#f3f1e8, #ebe9de); border-radius: 12px; margin-top: 18px; }
 .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4%; }
-.row.back { padding: 0 9%; gap: 6%; opacity: .92; }
-.row.front { margin-top: -6%; }
+/* Keep animated SVG parts within their row's depth, including the faded back row. */
+.row.back { padding: 0 9%; gap: 6%; opacity: .92; z-index: 0; }
+.row.front { margin-top: -6%; z-index: 1; }
 .seat svg { width: 100%; height: auto; display: block; overflow: visible; }
 .seat .chair { fill: #c9c4b2; }
 .seat .person, .seat .head { transition: transform .9s cubic-bezier(.3, .7, .3, 1); transform-box: fill-box; }
