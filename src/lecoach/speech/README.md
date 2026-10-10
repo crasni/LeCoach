@@ -4,9 +4,9 @@
 
 **Current state.**
 - The model-free core and the adapter lifecycle are merged (PR #26).
-- The production pieces are implemented: the PortAudio microphone, streaming Silero voice activity detection, a shared faster-whisper transcriber, model preparation commands, a WAV replay source, and a guided probe.
-- They were checked with the real packages and synthesized English speech (espeak-ng) on a Linux container that has **no microphone**.
-- No real microphone capture has been verified yet; that live rehearsal is the remaining acceptance in #13.
+- The production pieces are merged (PR #28): the PortAudio microphone, streaming Silero voice activity detection, a shared faster-whisper transcriber, model preparation commands, a WAV replay source, and a guided probe.
+- They were checked with the real packages and synthesized English speech (espeak-ng) on a Linux container that has no microphone.
+- One guided take with a real microphone on a Windows laptop passes the shared checks (see below). The demo host is untested; #13 tracks the remaining acceptance.
 
 ## Layout
 
@@ -40,7 +40,7 @@ Importing `lecoach.speech` or any module above loads no optional package. `sound
    uv run --group speech python -m lecoach.speech.model --check      # load time, silent run
    ```
 
-4. Check the microphone with the guided probe below. The operating system may ask for microphone permission on the first run.
+4. Check the microphone with the guided probe below. The operating system may ask for microphone permission on the first run. On Windows, also check Settings > Privacy & security > Microphone: microphone access, and access for desktop apps, must be on.
 
 ## Seams and production implementations
 
@@ -90,6 +90,15 @@ def factory(session_config):
 - Each adapter instance is single-use. `SessionManager` calls the factory once per session; `tests/test_speech_adapter.py` composes it that way with scripted seams.
 - `adapter.delays` keeps, per emitted event, the shared clock at emission minus the event's capture time, for AUD-02 measurement.
 
+## Choose the microphone
+
+`build_local_adapter()` opens the system default input. To use another one, set `LECOACH_SPEECH_DEVICE` to an index or a name from `python -m lecoach.speech.probe --list-devices`. `build_local_adapter()` reads it at every call, so it also applies to `lecoach serve --live`. The probe's `--device` overrides it.
+
+- A name is a query that `sounddevice` matches: space-separated, case-insensitive substrings, in order, against "device name, host API name".
+- On Windows, the same microphone appears under several host APIs (MME, DirectSound, WASAPI, WDM-KS). Add the host API to the name, for example `USB MME`, or use the index.
+- Indices can change when devices are added or removed.
+- A selection that does not exist or is not an input reports `microphone_not_found`. A name that matches several inputs reports `microphone_unavailable`.
+
 ## Guided live check
 
 ```sh
@@ -108,7 +117,7 @@ The probe runs the production adapter through the real session controller.
   - stop-and-drain time and incomplete sources;
   - per-part WPM, fillers, and pauses.
 - **Saved files:** `--out` saves the event stream for `check_speech.py` and a `.summary.json`. Both contain transcripts, so keep them in the ignored `sessions/` directory. No audio is written.
-- **Options:** `--device` selects an input by index or name. `--drain-timeout` changes the stop bound (default 2 s, like the app).
+- **Options:** `--device` selects an input by index or name, overriding `LECOACH_SPEECH_DEVICE`. `--drain-timeout` changes the stop bound (default 2 s, like the app).
 
 ## Configuration
 
@@ -147,8 +156,8 @@ The probe runs the production adapter through the real session controller.
 | `speech_model_unavailable` | `error` | The transcriber is missing or not ready at start; the microphone is not opened |
 | `speech_vad_unavailable` | `error` | No segmenter (the Silero runtime is missing) |
 | `microphone_permission_denied` | `unavailable` | The device reported a permission error when opening |
-| `microphone_not_found` | `unavailable` | No input device, or no source is configured |
-| `microphone_unavailable` | `unavailable` | Another device error, or PortAudio or the speech group is missing |
+| `microphone_not_found` | `unavailable` | No input device, a selected device that does not exist or is not an input, or no source is configured |
+| `microphone_unavailable` | `unavailable` | Another device error, such as a name that matches several inputs, or PortAudio or the speech group is missing |
 | `microphone_no_signal` | `unavailable` | The first 2 s were exact digital silence: access denied (macOS) or a muted device |
 | `microphone_disconnected` | `error` | The stream stopped or stalled for 2 s; the utterance in progress ends at that time |
 | `audio_queue_overflow` | `error` | Segmentation fell more than `max_backlog_chunks` behind; the utterance in progress ends at the last processed audio |
@@ -175,11 +184,24 @@ These figures come from a Linux container with 4 CPUs, `base.en`/int8, and the s
 
 Real voices, rooms, microphones, and the demo computer will differ; AUD-02 (#14) measures them.
 
+## Observed with a laptop microphone (one take)
+
+On 2026-10-10 the owner ran the guided probe once on a Windows 11 laptop: Intel Core i7-13620H, 16 GB RAM, CPU inference only. The input was a wireless headset microphone, with `base.en`/int8 and the default configuration. [STATUS](../../../docs/STATUS.md) has the details.
+- **Checks:** the saved stream passes `check_speech.py`. There was no status, no null window, and no incomplete source.
+- **Timing:**
+  - model load and warm-up took 1.8 s, and session start 0.23 s;
+  - finals arrived 1.8 s median and 3.2 s max after speech ended;
+  - windows arrived 0.26 s median after their end;
+  - stop and drain took 0.95 s.
+- **Accuracy:** the scripted passage was mostly right; for example, "pauses" became "pulse".
+- **Fillers:** none were counted. The deliberate-filler part produced no "um" or "uh"; its only interjection was "Aww.", which the rules do not count.
+- **Missing device:** with `--device nosuchmic`, the probe reported `microphone_not_found` at once. Later windows were `unavailable` with null values.
+
 ## Limitations
 
-- **Live evidence:** no real microphone capture or recognition quality has been verified yet. Only the missing-device path ran against real PortAudio.
+- **Live evidence:** one take by one speaker, on one Windows laptop with a headset microphone. It is not a recognition-quality or latency benchmark, and the demo host is untested.
 - **Language:** analysis is English only. Other languages get transcripts and pauses, with null WPM and fillers.
-- **Fillers:** Whisper drops some fillers ("uh" above), so filler counts are likely undercounts until AUD-02 measures recall.
+- **Fillers:** Whisper drops fillers: "uh" in the synthetic replay, and every "um" and "uh" in the live take. Filler counts are undercounts until AUD-02 improves recall.
 - **Permission detection:** detecting denied access through digital silence is a heuristic. A device that opens but stays near-silent without exact zeros is treated as quiet speech.
 - **Recovery:** degraded mode does not recover; after a failure, speech stays unavailable until the session ends.
 - **Timing:**

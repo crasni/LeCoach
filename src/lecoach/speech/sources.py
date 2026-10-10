@@ -25,8 +25,8 @@ from .seams import (
 BLOCK_S = 0.032  # one 512-sample voice-activity frame per block at 16 kHz
 
 _PERMISSION_HINTS = ("permission", "not permitted", "access denied", "unauthorized")
-_MISSING_HINTS = ("querying device -1", "no default input", "no input device", "invalid device",
-                  "device not found", "no such device")
+_MISSING_HINTS = ("error querying device", "no default input", "no input device", "invalid device",
+                  "not an input device", "device not found", "no such device")
 
 
 def classify(error: BaseException) -> MicrophoneError:

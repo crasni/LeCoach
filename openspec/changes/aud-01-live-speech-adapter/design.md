@@ -79,6 +79,7 @@ A small speech-owned module (`python -m lecoach.speech.model --download`) pre-do
 - `PortAudioSource` captures at 16 kHz in 32 ms blocks, or at the device's default rate with streaming linear resampling.
   - It reports a stream that stops by itself, or stalls for 2 s, as lost.
   - It reports exact digital silence for the first 2 s as `microphone_no_signal`. macOS delivers zeros instead of an error when access is denied.
+  - It opens the system default input, or the device that `LECOACH_SPEECH_DEVICE` names by index or name. The application's composition therefore needs no device option; the probe's `--device` overrides the variable.
 - `WavFileSource` replays a recording in real time through the same seam, so one take can be compared across models and settings.
 - `python -m lecoach.speech.probe` runs the production adapter through the session controller with guided prompts. It reports delays and drain timing, and saves a stream for `check_speech.py`. It writes no audio.
 

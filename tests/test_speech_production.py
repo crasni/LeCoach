@@ -5,6 +5,7 @@ real Silero, faster-whisper, and PortAudio code when the `speech` group exists.
 """
 
 import asyncio
+import os
 import sys
 import tempfile
 import types
@@ -22,7 +23,7 @@ from lecoach.speech import (
     whisper,
 )
 from lecoach.speech import model as model_cli
-from lecoach.speech.local import build_local_adapter
+from lecoach.speech.local import DEVICE_VARIABLE, build_local_adapter
 from lecoach.speech.probe import describe, summarize
 from lecoach.speech.seams import Boundary
 from lecoach.speech.sources import PortAudioSource, classify
@@ -84,7 +85,11 @@ class ErrorMappingTests(TestCase):
     def test_portaudio_messages_map_to_specific_reasons(self):
         cases = {
             "Error querying device -1": MicrophoneNotFound,
+            "Error querying device 99": MicrophoneNotFound,
             "No input device matching 'USB'": MicrophoneNotFound,
+            "Not an input device: 'Speakers (Realtek(R) Audio)'": MicrophoneNotFound,
+            "Multiple input devices found for 'usb':\n[1] USB, MME\n[7] USB, Windows WASAPI":
+                MicrophoneError,
             "Invalid device [PaErrorCode -9996]": MicrophoneNotFound,
             "Error opening InputStream: Permission denied": MicrophonePermissionDenied,
             "Error opening InputStream: Device unavailable [PaErrorCode -9985]": MicrophoneError,
@@ -190,6 +195,26 @@ class LocalCompositionTests(IsolatedAsyncioTestCase):
                     if event.source == "speech" and event.type == "signal.status"]
         self.assertEqual(statuses, [("error", "speech_model_unavailable")])
         await asyncio.sleep(0)
+
+
+class DeviceSelectionTests(TestCase):
+    def device(self, value, **options):
+        with mock.patch.dict(os.environ), \
+                mock.patch("lecoach.speech.local.SileroSegmenter", return_value=None):
+            os.environ.pop(DEVICE_VARIABLE, None)
+            if value is not None:
+                os.environ[DEVICE_VARIABLE] = value
+            return build_local_adapter(SpeechConfig(), transcriber=None, **options).source.device
+
+    def test_the_variable_names_the_microphone_by_index_or_name(self):
+        self.assertIsNone(self.device(None))
+        self.assertIsNone(self.device("  "))
+        self.assertEqual(self.device("3"), 3)
+        self.assertEqual(self.device(" USB MME "), "USB MME")
+
+    def test_an_explicit_device_overrides_the_variable(self):
+        self.assertEqual(self.device("3", device=5), 5)
+        self.assertEqual(self.device("3", device="Headset"), "Headset")
 
 
 class ProbeHelperTests(TestCase):
