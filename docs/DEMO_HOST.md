@@ -28,25 +28,41 @@ Linux sounddevice needs PortAudio (`libportaudio2` on Debian/Ubuntu); verify dev
 permissions on other systems. Include the groups on subsequent sync/run commands.
 [Runtime setup](LOCAL_RUNTIME.md) records #6's English defaults and dependencies.
 
-Speech owner supplies the exact model preparation/load command after #13's live
-implementation. Initial English `base.en`/CPU/int8 remains an unmeasured baseline.
-Prepare ignored model assets before sessions; do not download/load expensive
-models during session start. No command is invented for an unimplemented speech
-module. Vision's merged README documents `pose_landmarker_lite.task`, camera
-selection and probe; use its public factory after composition acceptance.
+Prepare the speech owner's local model outside sessions:
+
+```sh
+uv run --group speech python -m lecoach.speech.model --download
+uv run --group speech python -m lecoach.speech.model --check
+```
+
+Initial English `base.en`/CPU/int8 remains a baseline pending actual-host
+measurements. Weights live in ignored `models/`; inference never downloads them.
+Vision's merged README documents `pose_landmarker_lite.task`, camera selection,
+`LECOACH_POSE_MODEL` and `LECOACH_CAMERA_INDEX`. Prepare that asset separately.
 
 ## Launch and identify the mode
 
-The currently runnable launch is:
+Launch the opt-in local CPU composition:
 
 ```sh
-uv run --group speech --group vision lecoach serve
+uv run --group speech --group vision lecoach serve --live
 ```
 
-Open `http://127.0.0.1:8000`. This preparation revision serves the synthetic fixture
-app with computed audience and authored feedback; it is not the accepted live
-CPU demo. Installing runtimes does not supply missing production speech.
-Integration will record the exact live launch after owner handoffs are accepted.
+Open `http://127.0.0.1:8000` and select **Live microphone and camera**. Speech
+warm-up and VAD preparation happen before serving; camera runtime imports warm
+in the background. Devices open only after preparing, subscribing and starting
+the rehearsal. Each live session uses fresh speech/vision adapters, the sole
+engine/recorder and generated template coaching. Missing models/runtimes/devices
+remain input limitations; composition availability does not certify usable input.
+Use `--speech-model-dir /path/to/models` for a different prepared speech directory.
+
+Plain `lecoach serve` retains the synthetic replay app; its audience is computed
+and its coaching authored. The same synthetic examples remain available in the
+opt-in app and do not acquire devices. This implementation is not an accepted
+actual-host live demo; capture/model quality, browser responsiveness and final
+rehearsal evidence still need verification in #11. Startup/drain/feedback bounds
+remain 5/2/5 s. Vision's proposed longer startup bound is not silently applied;
+an API client can explicitly supply `startup_timeout_s: 10.0` for a reviewed run.
 
 For independent synthetic checks with devices off:
 

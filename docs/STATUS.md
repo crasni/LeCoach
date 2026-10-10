@@ -749,3 +749,48 @@ Current integration alone passes 196 tests / 337 subtests;
 strict validation passes all six OpenSpec items. No browser E2E, real capture,
 model-weight inference, demo-host timings, recording or accelerator validation
 was performed. Review/merge readiness and final acceptance remain in Issues.
+
+## Opt-in CPU composition and authorized component delivery — 2026-10-10
+
+The maintainer explicitly authorized merging reviewed component PRs #24, #28 and
+#29. GitHub merge receipts are `5000c23`, `a9fe503` and `5d2bcd0`; their branches
+were retained. Assigned `agent/integration` reconciles main `5d2bcd0` in clean merge
+`8800971`, preserving existing integration fixes/setup/archive/evidence.
+
+`lecoach serve --live` now composes the owners' public local speech/vision
+factories, sole RuleEngine/InMemorySessionRecorder and TemplateFeedbackGenerator.
+Coaching reads the same public rule freshness ages. Speech/model/VAD preparation
+runs before serving; camera runtime imports warm in the background. Models are
+local-files-only, with explicit preparation/download outside sessions. Each live
+session gets fresh adapter/engine/recorder/generator state; fixture sessions keep
+computed audience and authored coaching. No schema, thresholds or timeout defaults
+change. Prepared-session cancellation/shutdown completes an empty lifecycle
+without opening devices; this corrects a controller path that previously called
+capture start in order to stop a prepared session.
+
+Linux x86_64 / CPython 3.12.14, existing environment:
+
+```sh
+env -u DISPLAY -u WAYLAND_DISPLAY .venv/bin/python -m pytest -q
+# 264 passed, 3 weight-dependent skips, 389 subtests
+.venv/bin/ruff check src scripts tests examples
+.venv/bin/python scripts/export_schema.py --check
+.venv/bin/python scripts/validate_fixtures.py
+openspec validate --all --strict  # 7 items
+git diff --check
+```
+
+All checks pass. New composition tests use synthetic capture seams with the real
+engine/recorder/coach: repeat sessions compute the supported 10/25/40 s moments;
+both failed inputs remain NEUTRAL and return empty moments/limitations; preparation
+alone and prepared-session shutdown never start capture. A real launch smoke check
+of `serve --live --speech-model-dir /tmp/lecoach-no-models` reached loopback health
+ready with `live_integrated: true` and shut down cleanly. No session was prepared
+or started in that smoke check; no devices were acquired or weights downloaded.
+
+Composition availability does not establish real microphone/camera inference,
+quality, measured host latency/browser responsiveness, final recording, Stage II
+accelerator compatibility or task acceptance. The actual demo host remains
+unconfirmed; live validation and component downstream acceptance remain in #11.
+PR #23 still requires collaborator review; it was not merged under the separate
+three-component authorization.

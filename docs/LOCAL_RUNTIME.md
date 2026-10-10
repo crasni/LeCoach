@@ -40,7 +40,8 @@ Unsupported analysis languages retain null WPM/filler observations. Engagement
 pace bands and pause interpretation stay with Lane 4. The proposed 1 s hop is
 within the existing engine's 5 s maximum gap; the reported scripted composition
 is evidence of interface compatibility, not inference latency. In particular,
-`pace_steady` during an active pause still needs Lane 4's behavior review in #6/#18.
+the reviewed engine in PR #29 holds pace/filler rules during an active pause and
+does not treat silence-filled windows as positive pace evidence.
 The current 2 s drain bound remains unchanged pending real finalization evidence.
 
 The `speech` group provides `faster-whisper`, `sounddevice` and `numpy`. Linux
@@ -54,9 +55,12 @@ sudo apt-get install libportaudio2
 
 On macOS/Windows, the sounddevice wheels normally bundle PortAudio. Device
 permissions and availability must still be checked on the actual rehearsal host.
-The production source/VAD/transcriber remains Lane 2's work in
-[#13](https://github.com/crasni/LeCoach/issues/13). Model download/loading must
-finish before session start; no setup command here starts capture or downloads weights.
+The production source/VAD/transcriber is delivered by Lane 2 in PR #28; actual
+microphone acceptance remains [#13](https://github.com/crasni/LeCoach/issues/13).
+Follow [demo host preparation](DEMO_HOST.md) for explicit model preparation and
+`lecoach serve --live`. Model loading finishes before serving; neither package
+setup nor serving alone acquires devices. Downloads require the explicit model
+preparation command, never a session start.
 
 ## Vision runtime handoff
 

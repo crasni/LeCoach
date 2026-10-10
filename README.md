@@ -95,6 +95,22 @@ npm --prefix frontend run dev
 The development UI is at http://127.0.0.1:5173 and proxies the local API. The eventual
 demo uses the built UI served directly from the backend.
 
+### Opt-in local CPU rehearsal
+
+After preparing the optional runtimes and model assets in
+[demo host setup](docs/DEMO_HOST.md), launch:
+
+```sh
+uv run --group speech --group vision lecoach serve --live
+```
+
+Select **Live microphone and camera** in the browser. Starting the session opens
+the devices; stopping drains observations and generates evidence-linked template
+coaching. Models warm before the API starts, with no automatic weight download or
+raw recording. Missing inputs produce notices and coaching limitations. Actual
+demo-host input/model quality and responsiveness remain to be verified.
+Plain `lecoach serve` retains synthetic replay with authored example coaching.
+
 ### Headless replay and checks
 
 ```sh

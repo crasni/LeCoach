@@ -129,3 +129,15 @@ Remaining decisions, owner handoffs, final review/recording, authorization and d
 Reviewed Lane 5 PR #24 at `03028dd` in an isolated source snapshot. Both `feedback_replay.py` and `record_replay.py` pass all nine synthetic cases / ten sessions. Generated improvement/strength anchors match the narration at 10/25/40 s; recount gives 316 words in six blocks. [DEMO](../DEMO.md#versioned-lane-5-preview-handoff) now pairs this version with the shot plan, exact PR-scoped commands, terminal/browser provenance and CPU/Stage II captions. All 31 local file targets in DEMO/readiness resolve; strict all-spec OpenSpec validation and whitespace pass. No deck/PDF regeneration or recording was performed.
 
 This completes independent preview reconciliation only. INT-03 task 5.1 remains unchecked under the current maintainer refinement until the final script/screens agree with accepted actual CPU evidence and measured timing. Existing live, final recording, form/team and external-delivery gates remain open in Issue #12.
+
+
+## Opt-in composition implementation — 2026-10-10
+
+The authorized component PRs #24/#28/#29 are merged. Integration now provides
+`lecoach serve --live`, using the existing public speech/vision factories and
+sole engine/recorder/template coach. [Host setup](../DEMO_HOST.md) documents
+model preparation, launch and missing-input behavior. Default replay retains
+computed audience and authored coaching. Composition implementation and synthetic
+generated-feedback checks do not replace actual-host live evidence, measured
+narration/edit timing, reviewed recording or external submission gates in #12.
+The deck/PDF and their recorded hashes remain unchanged.

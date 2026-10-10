@@ -53,6 +53,7 @@ class SessionController:
         self._start_task: asyncio.Task | None = None
         self._stop_task: asyncio.Task | None = None
         self._adapter_starts: list[asyncio.Task] = []
+        self._capture_requested = False
         self.playback: asyncio.Task | None = None
         self._consumer_unsubscribers: list[Callable[[], None]] = []
         self._consumer_failed = False
@@ -191,7 +192,7 @@ class SessionController:
         await asyncio.shield(self._start_task)
         return self.snapshot()
 
-    async def _start(self, fixture_started: Event | None) -> None:
+    async def _start(self, fixture_started: Event | None, *, capture: bool = True) -> None:
         self.clock.reset()
         self.phase = "running"
         recorder = self.components.recorder
@@ -213,7 +214,8 @@ class SessionController:
                 self._lifecycle("session.started", 0.0, {})
             if engine:
                 engine.start(self.context)
-            if self.config.mode == "live":
+            if self.config.mode == "live" and capture:
+                self._capture_requested = True
                 self._adapter_starts = [
                     asyncio.create_task(self._start_adapter(name, adapter))
                     for name, adapter in self._adapters()
@@ -250,7 +252,11 @@ class SessionController:
                 await asyncio.shield(self._stop_task)
             return self.snapshot()
         if self.phase == "prepared":
-            await self.start()
+            # Complete an empty lifecycle without opening devices on cancel or
+            # application shutdown. An already requested start still gets joined.
+            if self._start_task is None:
+                self._start_task = asyncio.create_task(self._start(None, capture=False))
+            await asyncio.shield(self._start_task)
         if self._stop_task is None:
             self._stop_task = asyncio.create_task(self._stop())
         await asyncio.shield(self._stop_task)
@@ -303,9 +309,10 @@ class SessionController:
             await asyncio.gather(*pending, return_exceptions=True)
             return failed
 
-        failed = await bounded("stop_capture", self._adapters())
+        adapters = self._adapters() if self._capture_requested else []
+        failed = await bounded("stop_capture", adapters)
         failed |= await bounded(
-            "drain", [(name, adapter) for name, adapter in self._adapters() if name not in failed]
+            "drain", [(name, adapter) for name, adapter in adapters if name not in failed]
         )
         self.incomplete_sources = sorted(failed)
         self._lifecycle(
