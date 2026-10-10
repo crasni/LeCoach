@@ -71,11 +71,11 @@ Use `--speech-model-dir /path/to/models` for a different prepared speech directo
 
 Plain `lecoach serve` retains the synthetic replay app; its audience is computed
 and its coaching authored. The same synthetic examples remain available in the
-opt-in app and do not acquire devices. This implementation is not an accepted
-actual-host live demo; capture/model quality, browser responsiveness and final
-rehearsal evidence still need verification in #11. Startup/drain/feedback bounds
-remain 5/2/5 s. Vision's proposed longer startup bound is not silently applied;
-an API client can explicitly supply `startup_timeout_s: 10.0` for a reviewed run.
+opt-in app and do not acquire devices. The maintainer reports the Ubuntu live
+functional/reliability batch passed in #11; exact coaching citations, quantified
+quality/timing and final owner acceptance remain separate. Startup/drain/feedback
+bounds remain 5/2/5 s. Check the actual Ubuntu camera startup before proposing any
+timeout change; no longer bound is silently applied.
 
 ## Rehearse without models
 
@@ -112,7 +112,37 @@ uv run python scripts/validate_fixtures.py
 
 These do not establish microphone/camera or local model inference acceptance.
 
-## Repeatable rehearsal after live handoff
+## Ubuntu camera timing handoff
+
+Vision accepts the reported qualitative live check in
+[#16](https://github.com/crasni/LeCoach/issues/16#issuecomment-6095630504).
+Its quantitative host request is camera-open/startup timing against the 5 s
+startup bound, inference rate and repeat/release. Integration supplied three real,
+isolated five-second sessions: startup 0.2044–0.3599 s, approximately 9.95–9.96
+inference FPS, clean release and no read/inference errors. See
+[dated method/results](STATUS.md#plain-advice-delivery-and-ubuntu-vision-timing--2026-10-10)
+and the [owner handoff](https://github.com/crasni/LeCoach/issues/16#issuecomment-6096632027).
+These samples do not measure concurrent speech/browser load or guided pose quality;
+owner acceptance remains in #16. No longer startup bound is indicated by them.
+
+For a later owner-requested guided check, the existing probe remains available.
+Use the prepared model/runtime and have the presenter follow the preview prompts:
+
+```sh
+uv run --group speech --group vision python -m lecoach.vision.probe --list-cameras
+uv run --group speech --group vision python -m lecoach.vision.probe -v --camera 0 --repeat 3 --out sessions/vision-probe.json
+```
+
+Use the intended index from the first command. The guided run asks the presenter
+to face forward, gesture, turn away, face forward again and step out of frame,
+then performs three short reopen/release checks. It saves window metrics and
+counters, with no frames or media recording. Review `stats.camera_open_ms`,
+`startup_s`, inference rate, `camera_released` and each repeat result with the
+vision owner. Keep the metrics file in ignored `sessions/`; report only a sanitized
+summary. This measurement does not repeat the integrated reliability batch or
+establish instrumented browser latency.
+
+## Rehearsal scenario and final evidence
 
 1. Confirm the accepted revision, English model/configuration and live launch.
    Frame face and elbows/wrists; verify microphone/camera status and permissions.
@@ -122,12 +152,14 @@ These do not establish microphone/camera or local model inference acceptance.
 3. Look toward notes, then face the camera and deliver the next key sentence.
    Check deterioration/recovery and evidence IDs. Facing-only reactions do not
    establish speech acceptance.
-4. Deliberately vary pace, use the agreed English fillers, then pause. Compare
+4. Deliberately vary pace and camera direction, then pause. Compare
    actual observations with the scenario; report recognition errors and missing
-   measurements rather than fabricated results.
-5. Stop and inspect timestamped coaching. Repeat to check bounded drain, device
-   release and isolation. Exercise short/empty sessions, missing devices/models
-   and no-person cases.
+   measurements rather than fabricated results. Filler recall evaluation remains
+   the speech owner's measurement; do not rely on filler reactions for the demo.
+5. Stop and inspect timestamped coaching. Match each selected moment's kind/time,
+   observation/action and cited IDs to its supporting measurements and the actual
+   source/configuration. The reported stop/repeat/release, short/no-person and
+   missing-microphone batch is complete; do not repeat it merely for this pickup.
 6. Record sanitized timing/load/failure evidence with owners, including browser
    responsiveness during concurrent CPU capture/inference. Time the actual script
    and edit; authored word count alone does not validate duration.

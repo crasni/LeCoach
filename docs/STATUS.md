@@ -869,3 +869,57 @@ Artifact hashes and exact export command are in submission/readiness.md.
 LIMITATIONS: Automated/weight tests and user-reported live checks do not establish
 instrumented real-input accuracy, latency or accelerator performance. No final
 video, registration/submission or external publication occurred in this refresh.
+
+## Plain-advice delivery and Ubuntu vision timing — 2026-10-10
+
+FACT: Maintainer instruction to do the listed integration work authorized delivery
+of reviewed PR #33 head `1f4607a`. It merged as `ff24d09`; assigned integration
+reconciled main as `81dead7`, preserving the unaccepted proposal draft. The delivered
+CPU live narration has 309 words; the earlier approximately 2:20 report belongs to
+the 316-word preview, not this revision. Demo guidance now uses the delivered
+script and distinguishes actual live feedback from authored fixture cards.
+
+FACT: On Ubuntu x86_64 / project CPython 3.12.14, application source `81dead7`:
+
+```sh
+env -u DISPLAY -u WAYLAND_DISPLAY .venv/bin/python -m pytest -q
+# 268 passed, 2 skipped, 392 subtests, 19.72 s
+.venv/bin/ruff check src scripts tests examples checks/coaching/feedback_replay.py
+.venv/bin/python scripts/export_schema.py --check
+.venv/bin/python scripts/validate_fixtures.py
+.venv/bin/python checks/coaching/feedback_replay.py
+.venv/bin/python checks/coaching/record_replay.py
+openspec validate --all --strict
+git diff --check
+```
+
+All checks pass: each coaching replay covers nine synthetic cases / ten sessions;
+all seven strict OpenSpec items pass. Updated guide file links and the six narration
+word counts were checked independently. No new download or raw-media recording.
+
+FACT: A separate **actual camera/MediaPipe CPU timing measurement** used camera
+index 0, prepared `pose_landmarker_lite.task` SHA-256
+`59929e1d1ee95287735ddd833b19cf4ac46d29bc7afddbbf6753c459690d574a`,
+and unchanged `VisionConfig`. After `prewarm().join()`, three fresh public
+`build_local_adapter(model_path=..., camera_index=0)` instances ran through
+`start(SessionContext)` / five seconds of capture / `stop_capture(clock.now())` /
+`drain()`. Every emitted event was contract-validated; metrics/counters only were
+saved under ignored `sessions/ubuntu-camera-timing.json`. The local measurement
+source is preserved as ignored `sessions/ubuntu-camera-timing-method.py`.
+
+| Session | Startup (s) | Camera open (ms) | Inference FPS | Stop/release (s) | Windows |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | 0.3599 | 282.48 | 9.96 | 0.0774 | 5 |
+| 2 | 0.2044 | 157.60 | 9.95 | 0.0708 | 5 |
+| 3 | 0.2118 | 158.41 | 9.95 | 0.0541 | 5 |
+
+All three reported `capture_started`, camera released, zero read failures and
+zero inference errors. Every startup was below the unchanged 5 s bound. No
+microphone was opened; no preview, frame, pose/keypoint or transcript file was saved.
+
+LIMITATIONS: This is isolated vision timing, with no guided posture judgement,
+concurrent speech/browser load or instrumented UI latency. It does not measure
+recognition quality, establish exact live coaching citations, accept a final demo,
+validate UGen300, or waive component owner review. The existing reported integrated
+reliability batch was not repeated. Proposal artifacts remain unaccepted pending
+the delegated rewrite and review.
