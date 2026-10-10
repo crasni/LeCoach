@@ -30,6 +30,12 @@ class MicrophoneLost(MicrophoneError):
     reason = "microphone_disconnected"
 
 
+class MicrophoneNoSignal(MicrophoneError):
+    """The device delivers exact digital silence, as macOS does when access is denied."""
+
+    reason = "microphone_no_signal"
+
+
 @dataclass(frozen=True)
 class Word:
     """A model word piece; times are seconds from the start of the segment audio."""

@@ -16,6 +16,7 @@ import asyncio
 import queue
 import threading
 from array import array
+from collections import deque
 from collections.abc import Callable, Sequence
 
 from lecoach.contracts.interfaces import SessionContext
@@ -63,6 +64,8 @@ class SpeechAdapter:
         self._max_utterance_frames = round(config.max_utterance_s * config.sample_rate)
         self.errors: list[str] = []  # emission and device-release failures, for diagnostics
         self.analyzed_s = 0.0  # capture time segmented so far; clock minus this is the lag
+        # (event type, shared clock at emission minus capture time) for AUD-02 measurement.
+        self.delays: deque[tuple[str, float]] = deque(maxlen=10_000)
         # Worker-thread state.
         self._audio: queue.SimpleQueue = queue.SimpleQueue()
         self._jobs: queue.SimpleQueue = queue.SimpleQueue()
@@ -100,7 +103,9 @@ class SpeechAdapter:
         now = floor_ms(context.clock.now())
         if self.transcriber is None or not self.transcriber.ready:
             return self._enter_degraded(now, "error", "speech_model_unavailable")
-        if self.source is None or self.segmenter is None:
+        if self.segmenter is None:
+            return self._enter_degraded(now, "error", "speech_vad_unavailable")
+        if self.source is None:
             return self._enter_degraded(now, "unavailable", "microphone_not_found")
         self._origin_s = now
         try:
@@ -156,7 +161,9 @@ class SpeechAdapter:
             return
         first = self._frames
         self._frames += len(samples)
-        self._audio.put(("audio", first, array("f", samples)))
+        if not (isinstance(samples, array) and samples.typecode == "f"):
+            samples = array("f", samples)  # production sources already hand over fresh arrays
+        self._audio.put(("audio", first, samples))
 
     def _on_device_error(self, error: MicrophoneError) -> None:
         if not self._stopped and not self._abort.is_set():
@@ -309,6 +316,8 @@ class SpeechAdapter:
         for event in function(*args) or ():
             try:
                 self._context.emit(event)
+                self.delays.append(
+                    (event["type"], self._context.clock.now() - event["timestamp_s"]))
             except Exception as error:  # a contract bug; keep the session alive
                 self.errors.append(f"{event.get('event_id')}: {error}")
 

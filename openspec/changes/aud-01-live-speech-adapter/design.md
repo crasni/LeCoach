@@ -67,13 +67,24 @@ Workers post their results to the loop captured in `start` with `loop.call_soon_
 
 A shared provider loads the Whisper model once per process, at composition time or through an explicit warm-up. `start` only opens the microphone and starts the worker. If the model is missing or failed to load, `start` emits `signal.status` error `speech_model_unavailable` and continues in unavailable mode.
 
-A small speech-owned module (`python -m lecoach.speech.model --download`) pre-downloads weights into the ignored `models/` directory. Downloads never happen during a session.
+A small speech-owned module (`python -m lecoach.speech.model --download`) pre-downloads weights into the ignored `models/` directory. Downloads never happen during a session: the provider loads only local files.
+
+- `warm_up(config)` loads the model and runs one silent transcription at application startup. A cold `base.en` load took 14.7 s once in testing.
+- `get_transcriber(config)` returns `None` when the runtime or model is missing, so composition still succeeds and the adapter reports the status.
 
 - **Alternative rejected:** loading per session. It exceeds the 5 s startup bound and repeats work, because the factory runs per session.
 
+### Production sources and checks
+
+- `PortAudioSource` captures at 16 kHz in 32 ms blocks, or at the device's default rate with streaming linear resampling.
+  - It reports a stream that stops by itself, or stalls for 2 s, as lost.
+  - It reports exact digital silence for the first 2 s as `microphone_no_signal`. macOS delivers zeros instead of an error when access is denied.
+- `WavFileSource` replays a recording in real time through the same seam, so one take can be compared across models and settings.
+- `python -m lecoach.speech.probe` runs the production adapter through the session controller with guided prompts. It reports delays and drain timing, and saves a stream for `check_speech.py`. It writes no audio.
+
 ### Degraded mode reports instead of raising
 
-For permission denial, a missing or lost device, an unavailable model, queue overflow, or a failed transcription or segmentation, the adapter emits a speech `signal.status` with a specific reason. Then it keeps emitting non-available windows with null values until stop, which matches the `microphone_denied` and `microphone_lost` fixtures. Degraded mode does not recover within a session.
+For permission denial, a missing or lost device, an unavailable model or voice activity runtime, digital-silence input, queue overflow, or a failed transcription or segmentation, the adapter emits a speech `signal.status` with a specific reason. Then it keeps emitting non-available windows with null values until stop, which matches the `microphone_denied` and `microphone_lost` fixtures. Degraded mode does not recover within a session.
 
 - Raising from `start` would replace the specific reason with the controller's generic `adapter_start_failed`.
 - The outage begins where segmentation stops, so no utterance is finalized after the reported outage start. After a transcription failure, finals without text are marked unmeasurable, and windows overlapping them report null rather than zero.
@@ -81,9 +92,14 @@ For permission denial, a missing or lost device, an unavailable model, queue ove
 
 ### Segmentation and partial revisions
 
-- **Segments.** Voice activity detection uses the Silero model bundled with faster-whisper, at 16 kHz in 32 ms frames. A segment ends after a short hangover of trailing silence. A segment longer than `max_utterance_s` is split at its quietest recent frame. As a backstop, the adapter itself ends any segment that reaches `max_utterance_s` and starts a new one at the same capture time, so memory and final transcription time stay bounded with any segmenter.
+- **Segments.** Voice activity detection uses the Silero model bundled with faster-whisper, at 16 kHz in 32 ms frames.
+  - The model state and frame context carry across chunks, so streaming gives exactly the whole-file probabilities.
+  - Speech starts at probability ≥ 0.5, padded back 0.1 s, and never before the previous segment's end.
+  - It ends 0.1 s after the first of 0.5 s of frames below 0.35.
+  - A segment about to reach `max_utterance_s` is split at its quietest frame in the last 2 s. As a backstop, the adapter itself ends any segment that reaches `max_utterance_s` and starts a new one at the same capture time, so memory and final transcription time stay bounded with any segmenter.
 - **Partials.** While a segment grows, it is re-transcribed every `partial_interval_s` to publish partial revisions (default 1.0 s; 0 disables partials). Finals come from one pass over the closed segment with word timestamps.
-- **Hallucination guards.** The no-speech threshold and empty results produce an empty final, which retracts any partial.
+- **Decoding.** Partials use beam 1 and text only; finals use beam 5 with word timestamps. Decoding is greedy at temperature 0 and does not carry context between segments.
+- **Hallucination guards.** Segments the model scores with `no_speech_prob ≥ 0.6` are dropped. On 2 s of silence, `base.en` produced "You" at 0.81, which Whisper's own combined log-probability rule keeps. An empty result is an empty final, which retracts any partial.
 - **Alternative rejected:** finals-only. The live transcript view (Lane 4) needs partials. The cost is bounded by the interval and can be disabled if AUD-02 shows CPU pressure.
 
 ### Metrics engine mirrors the fixture rules
