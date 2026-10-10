@@ -434,6 +434,40 @@ PROPOSAL: The integration owner reviews PR #7, especially the reason codes and t
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
 
+## AUD-01 first microphone rehearsal — 2026-10-10
+
+FACT: The owner ran the guided probe once with a real microphone on a Windows 11 laptop: build 26200, Intel Core i7-13620H with 16 logical CPUs, and 16 GB RAM. Inference ran on the CPU only; the laptop's GPU was not used.
+- **Revision:** `agent/integration` at `b415994`, with PR #23's `speech` group on uv-managed CPython 3.12.14. Its speech package equals main `5d2bcd0`.
+- **Model and configuration:** the #6 defaults, with `base.en` int8.
+- **Input:** the Windows default input, a wireless headset microphone. It opened at 16 kHz with no resampling, and reported 0 overflows.
+- **Commands:**
+
+  ```powershell
+  uv run --frozen --group speech python -m lecoach.speech.probe --out sessions\speech-probe.json
+  uv run --frozen --group speech python checks\speech\check_speech.py --stream sessions\speech-probe.json --summary
+  ```
+
+FACT: Results of the 71.4 s take:
+- **Checks:** `check_speech.py --stream` passes. No speech status was reported, and no window was null or unavailable.
+- **Events:** 12 finals, 116 finalized words, 0 fillers, and 4 completed pauses. The silence produced an active pause that reached 13.7 s.
+- **WPM:** windows read 114–132 WPM at normal reading pace, and reached 192 WPM over the fast reading.
+- **Timing:**
+  - model load and warm-up took 1.81 s; this was not the first run, so model files were not loaded cold;
+  - session start took 0.23 s;
+  - stop and drain took 0.95 s, with no incomplete sources;
+  - finals arrived 1.77 s median, 2.73 s p95, and 3.22 s max after their speech ended;
+  - windows arrived 0.26 s median, 2.15 s p95, and 3.23 s max after their end.
+- **Recognition:** the scripted passage was mostly correct, with errors such as "built" heard as "feels" and "pauses" as "pulse".
+- **Fillers:** the deliberate-filler part has no "um", "uh", "like", or "you know" in its finals. Its only interjection is "Aww.", which the English filler rules do not count.
+
+IMPACT: AUD-01's live capture works on an ordinary Windows laptop with local CPU inference, and its events pass the shared checks.
+- Filler counts from `base.en` are undercounts: the deliberate-filler part reported none.
+- Final delays reached 3.2 s, about the 3 s coverage wait, although no window went null.
+- The speaker started late in two parts. The stop-while-speaking case covered only about 1 s of speech, so the drain figure is not a worst case.
+- This is one take by one speaker with a headset microphone. It is not a recognition-quality or latency benchmark, nor demo-host evidence.
+
+PROPOSAL: AUD-02 (#14) measures and improves filler recall, retakes the stop-while-speaking case, and repeats the probe on the demo host. [Issue #13](https://github.com/crasni/LeCoach/issues/13) and [Issue #14](https://github.com/crasni/LeCoach/issues/14) track the remaining work.
+
 ## AUD-01 production speech seams — 2026-10-09
 
 FACT: On `agent/audio-streaming`, based on main `91f6e63`, Lane 2 added the production speech seams in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):

@@ -4,9 +4,9 @@
 
 **Current state.**
 - The model-free core and the adapter lifecycle are merged (PR #26).
-- The production pieces are implemented: the PortAudio microphone, streaming Silero voice activity detection, a shared faster-whisper transcriber, model preparation commands, a WAV replay source, and a guided probe.
-- They were checked with the real packages and synthesized English speech (espeak-ng) on a Linux container that has **no microphone**.
-- No real microphone capture has been verified yet; that live rehearsal is the remaining acceptance in #13.
+- The production pieces are merged (PR #28): the PortAudio microphone, streaming Silero voice activity detection, a shared faster-whisper transcriber, model preparation commands, a WAV replay source, and a guided probe.
+- They were checked with the real packages and synthesized English speech (espeak-ng) on a Linux container that has no microphone.
+- One guided take with a real microphone on a Windows laptop passes the shared checks (see below). The demo host is untested; #13 tracks the remaining acceptance.
 
 ## Layout
 
@@ -184,11 +184,23 @@ These figures come from a Linux container with 4 CPUs, `base.en`/int8, and the s
 
 Real voices, rooms, microphones, and the demo computer will differ; AUD-02 (#14) measures them.
 
+## Observed with a laptop microphone (one take)
+
+On 2026-10-10 the owner ran the guided probe once on a Windows 11 laptop: Intel Core i7-13620H, 16 GB RAM, CPU inference only. The input was a wireless headset microphone, with `base.en`/int8 and the default configuration. [STATUS](../../../docs/STATUS.md) has the details.
+- **Checks:** the saved stream passes `check_speech.py`. There was no status, no null window, and no incomplete source.
+- **Timing:**
+  - model load and warm-up took 1.8 s, and session start 0.23 s;
+  - finals arrived 1.8 s median and 3.2 s max after speech ended;
+  - windows arrived 0.26 s median after their end;
+  - stop and drain took 0.95 s.
+- **Accuracy:** the scripted passage was mostly right; for example, "pauses" became "pulse".
+- **Fillers:** none were counted. The deliberate-filler part produced no "um" or "uh"; its only interjection was "Aww.", which the rules do not count.
+
 ## Limitations
 
-- **Live evidence:** no real microphone capture or recognition quality has been verified yet. Only the missing-device path ran against real PortAudio.
+- **Live evidence:** one take by one speaker, on one Windows laptop with a headset microphone. It is not a recognition-quality or latency benchmark, and the demo host is untested.
 - **Language:** analysis is English only. Other languages get transcripts and pauses, with null WPM and fillers.
-- **Fillers:** Whisper drops some fillers ("uh" above), so filler counts are likely undercounts until AUD-02 measures recall.
+- **Fillers:** Whisper drops fillers: "uh" in the synthetic replay, and every "um" and "uh" in the live take. Filler counts are undercounts until AUD-02 improves recall.
 - **Permission detection:** detecting denied access through digital silence is a heuristic. A device that opens but stays near-silent without exact zeros is treated as quiet speech.
 - **Recovery:** degraded mode does not recover; after a failure, speech stays unavailable until the session ends.
 - **Timing:**
