@@ -28,6 +28,37 @@ async function api<T>(path: string, body?: object): Promise<T> {
   return result as T;
 }
 
+type Source = 'speech' | 'vision';
+
+// A source's displayed status: a status event wins a capture-time tie, and a later
+// non-available metrics window keeps the specific outage reason instead of a generic one.
+function inputState(snapshot: Snapshot, source: Source) {
+  const status = snapshot.latest_events[`signal.status:${source}`];
+  const metrics = snapshot.latest_events[`${source}.metrics`];
+  const st = status?.type === 'signal.status' ? status : undefined;
+  const mt = metrics?.type === 'speech.metrics' || metrics?.type === 'vision.metrics' ? metrics : undefined;
+  if (st && (!mt || st.timestamp_s >= mt.timestamp_s)) return { ...st.payload };
+  if (mt?.payload.availability === 'available') {
+    return { availability: 'available', reason: 'observation_available' };
+  }
+  if (mt) {
+    return { availability: mt.payload.availability,
+      reason: st && st.payload.availability !== 'available' ? st.payload.reason : 'observation_unavailable' };
+  }
+  return snapshot.input_status[source] ?? { availability: 'unavailable', reason: 'not_started' };
+}
+
+// Values are current only when captured after the source's latest status event, so
+// neither an outage nor a later recovery status brings back a pre-outage value.
+function freshMetrics<S extends Source>(snapshot: Snapshot | null, source: S) {
+  const metrics = snapshot?.latest_events[`${source}.metrics`];
+  const status = snapshot?.latest_events[`signal.status:${source}`];
+  if (!metrics || (metrics.type !== 'speech.metrics' && metrics.type !== 'vision.metrics')) return null;
+  if (metrics.payload.availability !== 'available') return null;
+  if (status && metrics.timestamp_s <= status.timestamp_s) return null;
+  return metrics.payload as Extract<Event, { type: `${S}.metrics` }>['payload'];
+}
+
 function Timeline({ transitions, end }: { transitions: EngagementEvent[]; end: number }) {
   if (!transitions.length) return null;
   const span = Math.max(end, transitions[transitions.length - 1].timestamp_s, 1);
@@ -60,6 +91,9 @@ function App() {
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [transitions, setTransitions] = useState<EngagementEvent[]>([]);
   const [previewOk, setPreviewOk] = useState(true);
+  const [previewAttempt, setPreviewAttempt] = useState(0);
+  const [previewLoaded, setPreviewLoaded] = useState(false);
+  const previewImage = useRef<HTMLImageElement | null>(null);
   const [busy, setBusy] = useState(false);
   const [connection, setConnection] = useState('Ready when you are');
   const [error, setError] = useState('');
@@ -94,7 +128,7 @@ function App() {
     if (event.session_id !== activeId.current) return;
     if (event.type === 'engagement.state') {
       setTransitions(current => current.some(e => e.event_id === event.event_id)
-        ? current : [...current, event].slice(-60));
+        ? current : [...current, event]);
     }
     setSnapshot(current => {
       if (!current || current.session_id !== event.session_id) return current;
@@ -102,10 +136,19 @@ function App() {
         input_status: { ...current.input_status }, transcript: [...current.transcript] };
       const key = event.type === 'signal.status' ? `signal.status:${event.source}` : event.type;
       const previous = next.latest_events[key];
+      // Like the backend, a source's input status follows its newest status or metrics
+      // event by capture time, whichever type it is.
+      const statusTime = (source: string) => Math.max(-1,
+        ...[`signal.status:${source}`, `${source}.metrics`].map(k => next.latest_events[k]?.timestamp_s ?? -1));
+      const sourceTime = event.source === 'speech' || event.source === 'vision'
+        ? statusTime(event.source) : -1;
       if (!previous || event.timestamp_s >= previous.timestamp_s) {
         next.latest_events[key] = event;
-        if (event.type === 'signal.status') next.input_status[event.source] = { ...event.payload };
-        if (event.type === 'speech.metrics' || event.type === 'vision.metrics') {
+        const current = event.timestamp_s >= sourceTime;
+        if (event.type === 'signal.status' && current) {
+          next.input_status[event.source] = { ...event.payload };
+        }
+        if ((event.type === 'speech.metrics' || event.type === 'vision.metrics') && current) {
           next.input_status[event.source] = { availability: event.payload.availability,
             reason: event.payload.availability === 'available'
               ? 'observation_available' : 'observation_unavailable' };
@@ -118,6 +161,8 @@ function App() {
         if (index < 0) next.transcript.push(event);
         else if (old.type === 'speech.transcript' && !old.payload.is_final
           && event.payload.revision > old.payload.revision) next.transcript[index] = event;
+        next.transcript.sort((a, b) => a.type === 'speech.transcript' && b.type === 'speech.transcript'
+          ? a.payload.start_s - b.payload.start_s : 0);
       }
       if (next.phase !== 'stopping' && next.phase !== 'completed') {
         next.elapsed_s = Math.max(next.elapsed_s, event.timestamp_s);
@@ -181,6 +226,7 @@ function App() {
   async function start() {
     if (busy) return;
     setBusy(true); setError(''); setFeedback(null); setTransitions([]); setPreviewOk(true);
+    setPreviewLoaded(false);
     activeId.current = null;
     if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
     socket.current?.close();
@@ -213,15 +259,41 @@ function App() {
   const engagement = audience?.type === 'engagement.state' ? audience : null;
   const state: AudienceState = engagement?.payload.state ?? 'NEUTRAL';
   const transcript = snapshot?.transcript.filter(e => e.type === 'speech.transcript') ?? [];
-  const speechEvent = snapshot?.latest_events['speech.metrics'];
-  const speech = speechEvent?.type === 'speech.metrics' ? speechEvent.payload : null;
-  const visionEvent = snapshot?.latest_events['vision.metrics'];
-  const vision = visionEvent?.type === 'vision.metrics' ? visionEvent.payload : null;
+  const sources = Object.keys(snapshot?.input_status || {}) as Source[];
+  const speech = freshMetrics(snapshot, 'speech');
+  const vision = freshMetrics(snapshot, 'vision');
   const facing = vision?.facing_score ?? null;
   const pause = speech?.pause.state === 'active' && speech.pause.duration_s != null
     ? `Pausing · ${speech.pause.duration_s.toFixed(1)} s` : null;
   const end = snapshot?.duration_s ?? snapshot?.elapsed_s ?? 0;
-  const inputs = Object.entries(snapshot?.input_status || {});
+  const inputs = sources.map(source => [source, inputState(snapshot!, source)] as const);
+  const anyInput = inputs.some(([, value]) => value.availability === 'available');
+  const cameraOk = !!snapshot && inputState(snapshot, 'vision').availability === 'available';
+  const showPreview = live && running && cameraOk;
+  const previewVisible = showPreview && previewOk && previewLoaded;
+
+  // When the preview is hidden (camera failed or session ended), prepare a fresh request
+  // for next time; a stream left from before a camera failure would show a frozen frame.
+  useEffect(() => {
+    if (showPreview) return;
+    setPreviewLoaded(false); setPreviewOk(true); setPreviewAttempt(n => n + 1);
+  }, [showPreview]);
+
+  // The camera may still be opening: retry the backend preview instead of giving up.
+  useEffect(() => {
+    if (previewOk || !showPreview) return;
+    const timer = setTimeout(() => { setPreviewAttempt(n => n + 1); setPreviewOk(true); }, 2000);
+    return () => clearTimeout(timer);
+  }, [previewOk, showPreview]);
+
+  // Show the stream only once a frame has arrived, so failed probes never flash an empty box.
+  useEffect(() => {
+    if (!showPreview || !previewOk || previewLoaded) return;
+    const timer = setInterval(() => {
+      if ((previewImage.current?.naturalWidth ?? 0) > 0) setPreviewLoaded(true);
+    }, 200);
+    return () => clearInterval(timer);
+  }, [showPreview, previewOk, previewLoaded, previewAttempt]);
 
   return <main>
     <header><a className="brand" href="/">LeCoach<span>Your Private AI Audience.</span></a>
@@ -264,7 +336,7 @@ function App() {
           <strong>{stateCopy[state].label}</strong>
           <span>{engagement?.payload.reasons.length
             ? engagement.payload.reasons.map(r => reasonText(r.code)).join(' · ')
-            : engagement && !engagement.payload.usable_sources.length && running
+            : running && !anyInput
               ? 'Waiting for usable speech or camera input.' : stateCopy[state].detail}</span>
         </div>
         <p className="muted">Simulated audience states from deterministic rules. They are not measured
@@ -273,12 +345,15 @@ function App() {
       </article>
       <article className="card observations"><div className="card-top"><h2>Rehearsal input</h2>
         <span className="muted">{live ? 'On this device' : 'Example data'}</span></div>
-        {live && running && previewOk
-          ? <img className="camera" alt="Camera preview" src={`/api/sessions/${snapshot!.session_id}/preview`}
-            onError={() => setPreviewOk(false)} />
-          : <div className="preview"><span aria-hidden="true">◉</span>
-            <p>{live ? (running ? 'Camera preview unavailable' : 'Camera starts with the rehearsal')
-              : 'Camera is off during replay'}</p><small>No video is recorded.</small></div>}
+        {showPreview && previewOk && <img className="camera" alt="Camera preview" key={previewAttempt}
+          ref={previewImage} hidden={!previewLoaded}
+          src={`/api/sessions/${snapshot!.session_id}/preview?attempt=${previewAttempt}`}
+          onLoad={() => setPreviewLoaded(true)}
+          onError={() => { setPreviewLoaded(false); setPreviewOk(false); }} />}
+        {!previewVisible && <div className="preview"><span aria-hidden="true">◉</span>
+          <p>{!live ? 'Camera is off during replay' : !running ? 'Camera starts with the rehearsal'
+            : showPreview && previewOk ? 'Waiting for the camera preview' : 'Camera preview unavailable'}</p>
+          <small>No video is recorded.</small></div>}
         <div className="inputs">{inputs.map(([name, value]) => <span key={name}
           className={`input input-${value.availability}`}>
           {name === 'speech' ? 'Microphone' : 'Camera'}: {statusText(value.reason)}</span>)}</div>
