@@ -923,3 +923,38 @@ recognition quality, establish exact live coaching citations, accept a final dem
 validate UGen300, or waive component owner review. The existing reported integrated
 reliability batch was not repeated. Proposal artifacts remain unaccepted pending
 the delegated rewrite and review.
+
+## Actual live coaching citation pickup — 2026-10-10
+
+FACT: Application source `225550f`, same Ubuntu host and prepared models, ran the
+existing `prepare_live_factory(SpeechConfig(), DEFAULT_RULES)` / `SessionManager`
+composition for one headless live session. The controller started actual local
+adapters, captured for 22 s, stopped/drained, generated feedback and shut down.
+Capture duration was 22.6512 s. No scripted speech/posture or browser was used.
+The unchanged default speech device selection reported `microphone_no_signal`;
+no usable speech observation was established in this run. This is not a
+retrospective description of the maintainer's earlier Bluetooth rehearsal.
+
+FACT: Generated feedback contained an improvement at capture time **4.0 s**:
+“You appeared to stay turned away from the camera during this passage.” Action:
+“Deliver your next key sentence facing the camera, with your notes beside it.”
+Citations are `vision-3`, `vision-4`, `vision-5`, `vision-6`, `engagement-1`.
+The four available vision windows ending at 4/5/6/7 s report person/pose present
+and facing scores 0 / 0.1248 / 0 / 0. The actual audience transition at 7.0249 s
+is NEUTRAL → BORED with `facing_away_sustained`, citing those same four windows.
+The moment's capture time is distinct from its audience decision time.
+
+Feedback correctly reports insufficient usable speech input and camera input
+unavailable for part of the session. Camera release is confirmed. Canonical
+Feedback, cited canonical metric/decision events, actual default RuleConfig and
+SpeechConfig, sanitized same-run provenance and a transcript-free text timeline
+are preserved under ignored `sessions/live-feedback-pickup/`; no raw media or
+transcript text file was saved. The exact local method is preserved there too.
+
+LIMITATIONS: This validates the actual vision-supported observation/action/ID
+chain, not a reviewed presenter scenario, spoken-delivery quality, recovery/
+strength quota, browser presentation, completed coaching acceptance or final
+demo evidence. Speech model preparation alone does not establish microphone
+signal. No new model download, media recording, external publication or target
+accelerator inference occurred. The completed operator reliability batch remains
+separate and was not requested again.
