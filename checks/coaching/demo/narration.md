@@ -71,17 +71,18 @@ estimates. When inputs are missing or evidence is insufficient, the coach report
 limitations and returns fewer suggestions.
 ```
 
-## 2:15–2:40 — Local processing and the hardware plan
+## 2:15–2:40 — Stage I CPU processing and the hardware plan
 
-Screen: existing architecture diagram and **UGen300: intended target;
-performance unmeasured** caption. This preview has no accelerator benchmark or
-live privacy validation.
+Screen: existing architecture diagram and **Stage I: local CPU target;
+Stage II: UGen300 validation pending** caption. This preview has no accelerator
+benchmark or live privacy validation.
 
 ```text
-LeCoach is designed to process rehearsal speech and camera signals on the user's
-device, with raw recording off by default. The current checks exercise local
-synthetic events. ASUS UGen300 is our intended accelerator target; its integration
-and performance still need measurement on the actual hardware.
+Stage I targets an ordinary computer using local CPU inference. The current
+checks exercise synthetic events; real microphone and camera validation is still
+pending. LeCoach is designed to keep rehearsal data on the device, with raw
+recording off by default. UGen300 integration and hardware measurements belong
+to Stage II after qualification.
 ```
 
 ## 2:40–2:55 — Next demonstrated milestone
@@ -113,7 +114,9 @@ Before adapting this narration to an accepted live run:
 - Retain the approximate-facing qualification. Missing input is a limitation;
   pause duration alone does not establish whether a pause was intentional.
 - Keep local processing as design intent until actual live data flow and
-  retention are reviewed. Replace hardware wording only with measured evidence.
+  retention are reviewed. Stage I uses the confirmed ordinary CPU host; Stage II
+  accelerator wording changes only with measured hardware evidence. See the
+  [English CPU direction](https://github.com/crasni/LeCoach/issues/21).
 - Re-time the revised narration and final edit. Supply commit/run references,
   actual duration and reviewer notes to integration.
 

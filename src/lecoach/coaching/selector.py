@@ -60,14 +60,22 @@ class EvidenceIndex:
                 self.metrics[event.source].append(event)
             elif event.type == "signal.status":
                 self.statuses[event.source].append(event)
+        self.outages = {
+            source: [e for e in history if e.payload.availability != "available"]
+            for source, history in self.statuses.items()
+        }
         self.times = {
             (kind, source): [e.timestamp_s for e in history[source]]
-            for kind, history in (("metrics", self.metrics), ("status", self.statuses))
+            for kind, history in (
+                ("metrics", self.metrics),
+                ("status", self.statuses),
+                ("outage", self.outages),
+            )
             for source in self.limits
         }
 
     def latest(self, source: str, kind: str, at: float) -> Event | None:
-        history = self.metrics if kind == "metrics" else self.statuses
+        history = {"metrics": self.metrics, "status": self.statuses, "outage": self.outages}[kind]
         position = bisect_right(self.times[kind, source], at) - 1
         return history[source][position] if position >= 0 else None
 
@@ -98,11 +106,11 @@ class EvidenceIndex:
             for timestamp in (newest.timestamp_s, max(e.timestamp_s for e in observations))
         ):
             return None
-        status = self.latest(source, "status", transition.timestamp_s)
-        if (
-            status is not None
-            and status.payload.availability != "available"
-            and newest.timestamp_s <= status.timestamp_s
+        # An available status cannot revive pre-outage observations. A new
+        # observation restores the source, but cannot make old citations usable.
+        outage = self.latest(source, "outage", transition.timestamp_s)
+        if outage is not None and any(
+            event.timestamp_s <= outage.timestamp_s for event in [newest, *observations]
         ):
             return None
         return observations

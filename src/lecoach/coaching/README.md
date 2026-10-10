@@ -64,6 +64,13 @@ conservative over capture timestamps; the canonical completed log has no arrival
 ordering for equal capture times. Only the engine's explicit citations become
 moment evidence; no uncited frame is attached to a reaction retroactively.
 
+An `available` status cannot restore observations from before an outage. Every
+cited measurement and the newest source observation must end strictly after the
+latest recorded `unavailable`/`error` status at that decision. Equal capture times
+are conservatively rejected. A new post-outage window restores the source but
+does not validate old citations. This matches the proposed LIVE-01 handoff in
+[PR #29](https://github.com/crasni/LeCoach/pull/29).
+
 Repeated causes within one continuous negative episode become one improvement.
 Episodes end at a nonnegative transition. Identical measurement evidence cannot
 be recycled across episodes as new advice. Candidates rank by cited-window span,
@@ -100,3 +107,33 @@ LIVE-01's evidence handoff ([issue #18](https://github.com/crasni/LeCoach/issues
 including the pending revert disposition, and default composition/UI handoff remain
 pending under [issue #20](https://github.com/crasni/LeCoach/issues/20). These synthetic
 checks do not complete COACH-01 or validate live devices, models or hardware.
+
+## Inspect a completed session locally
+
+The independent checker reads one existing canonical `CompletedSession`, invokes
+this generator, and prints the canonical `Feedback` or a text report with a
+timeline. It does not open devices, run another engine, export transcripts, or
+write files. Input can be a synthetic completed session now, or an authorized
+live run later; the checker cannot infer or certify that provenance from v0 events.
+
+```sh
+uv run python checks/coaching/session_feedback.py sessions/run/completed.json --timeline
+uv run python checks/coaching/session_feedback.py sessions/run/completed.json --rules sessions/run/rules.json --format json
+uv run pytest -q tests/test_session_feedback.py
+```
+
+These examples require an existing record in ignored `sessions/` supplied by its
+caller, not a new capture/export command. `--rules` reads the actual engine's
+`RuleConfig` JSON; omit it only when that session used `DEFAULT_RULES`. Freshness
+must match the run, including any custom speech/vision age. The command validates
+lifecycle, session isolation, ordering and canonical evidence links. Invalid
+input exits nonzero without echoing input values. Text timeline rows identify
+event type/ID and audience reasons; transcript contents are deliberately omitted.
+JSON output is exactly `Feedback`, without a competing report/event schema.
+
+The controller already calls `generate(completed_session)` through the published
+feedback protocol. Lane 1 supplies fresh recorder/generator instances together
+with the same engine config in its composition; Lane 4 consumes `Feedback` and
+the recorder's `CompletedSession.events` for the complete timeline, including
+transitions missed during a browser disconnect. No HTTP endpoint or default/live
+composition is added by this checker. See the dated [consumer handoff review](../../../checks/coaching/handoff-review.md).

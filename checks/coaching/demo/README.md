@@ -9,6 +9,12 @@ and acceptance. This supplies scenarios and evidence procedures, not another
 task board. Integration owns launch/composition; video recording and external
 publication require the applicable team authorization.
 
+The current English direction in [#21](https://github.com/crasni/LeCoach/issues/21)
+uses an ordinary computer with local CPU inference for Stage I. UGen300 hardware
+validation remains Stage II work after qualification. The actual demo host and
+recording arrangement must be confirmed by integration; this runbook does not
+claim a completed live CPU run or accelerator measurement.
+
 ## Reproduce the current synthetic preview
 
 Use the pinned setup in [README](../../../README.md#development). From the
@@ -114,11 +120,11 @@ not a new JSON contract. Raw media, transcripts and private outputs stay out of 
 
 ## Narration timing estimate
 
-The six spoken blocks total **310 words**. Count hyphenated words and words
+The revised six spoken blocks total **316 words**. Count hyphenated words and words
 with apostrophes as one; exclude directions and live pickup notes. At an assumed
-135 words/minute, reading takes about 137.8 seconds, leaving 37.2 seconds of screen
+135 words/minute, reading takes about 140.4 seconds, leaving 34.6 seconds of screen
 holds within the existing 175-second plan. Each slot fits this assumed pace.
-At 125–145 words/minute, reading alone is approximately 128.3–148.8 seconds;
+At 125–145 words/minute, reading alone is approximately 130.8–151.7 seconds;
 adjust holds after a timed read-through. None of these are measured durations.
 
 | Video slot | Words | Estimated speech at 135 WPM | Available screen hold |
@@ -127,7 +133,7 @@ adjust holds after a timed read-through. None of these are measured durations.
 | 0:20–0:35 | 28 | 12.4 s | 2.6 s |
 | 0:35–1:35 | 95 | 42.2 s | 17.8 s |
 | 1:35–2:15 | 76 | 33.8 s | 6.2 s |
-| 2:15–2:40 | 45 | 20.0 s | 5.0 s |
+| 2:15–2:40 | 51 | 22.7 s | 2.3 s |
 | 2:40–2:55 | 31 | 13.8 s | 1.2 s |
 
 Recount after editing, from the repository root:
@@ -175,3 +181,21 @@ resolved, and whitespace checks passed. No application code was changed by this
 draft; no new full-suite, browser, device, voiceover, live inference or hardware
 validation is claimed. Actual read-through and edited-video timing remain to be
 measured with the reviewed script.
+
+## Completed-run check and CPU revision — 2026-10-10
+
+The narration's hardware slot now distinguishes the ordinary-computer CPU
+Stage I target from Stage II UGen300 validation; other spoken blocks and the
+synthetic 10/25/40 s evidence anchors are preserved. Fresh recount is
+`[35, 28, 95, 76, 51, 31]`, **316 words**. Reading/holds remain estimates; no
+read-through or recording is claimed. Earlier 310-word validation above applies
+to the previous draft, not this revision.
+
+After integration supplies a canonical completed-session record and its actual
+engine configuration, [the local checker](../../../src/lecoach/coaching/README.md#inspect-a-completed-session-locally)
+can display the complete timeline and generated moments without transcript text.
+It also accepts current synthetic completed records. Record the input/inference
+provenance and accepted-run references separately; the checker does not certify
+device/model behavior. Use those outputs to replace fixture-specific narration
+only after the run is accepted. Integration still owns app/CLI composition and
+final DEMO/deck/readiness reconciliation.

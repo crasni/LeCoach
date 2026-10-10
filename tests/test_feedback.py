@@ -221,6 +221,77 @@ class FeedbackTests(IsolatedAsyncioTestCase):
         custom = RuleConfig(speech_stale_s=1.0)
         self.assertEqual((await generator(custom).generate(session)).moments, [])
 
+    async def test_available_status_cannot_revive_pre_outage_citations(self):
+        for source, code, metric in [
+            ("speech", "pace_high", speech()),
+            ("vision", "facing_away_sustained", vision()),
+        ]:
+            for availability in ["unavailable", "error"]:
+                with self.subTest(source=source, availability=availability):
+                    outage = parse_event(
+                        {
+                            "schema_version": 0,
+                            "session_id": "unit",
+                            "event_id": "outage",
+                            "source": source,
+                            "type": "signal.status",
+                            "timestamp_s": 11.0,
+                            "payload": {"availability": availability, "reason": "synthetic"},
+                        }
+                    )
+                    ready = parse_event(
+                        {
+                            **outage.model_dump(),
+                            "event_id": "ready",
+                            "timestamp_s": 12.0,
+                            "payload": {"availability": "available", "reason": "synthetic"},
+                        }
+                    )
+                    report = await generator().generate(
+                        completed(
+                            metric,
+                            outage,
+                            ready,
+                            transition(code, [metric.event_id], at=13.0),
+                        )
+                    )
+                    self.assertEqual(report.moments, [])
+                    self.assertTrue(any("omitted" in text for text in report.limitations))
+
+    async def test_post_outage_window_cannot_validate_old_citations_or_capture_time_ties(self):
+        outage = parse_event(
+            {
+                "schema_version": 0,
+                "session_id": "unit",
+                "event_id": "outage",
+                "source": "speech",
+                "type": "signal.status",
+                "timestamp_s": 11.0,
+                "payload": {"availability": "error", "reason": "synthetic"},
+            }
+        )
+        for captured_at in [10.0, 11.0]:
+            with self.subTest(captured_at=captured_at):
+                report = await generator().generate(
+                    completed(
+                        speech(captured_at, "old"),
+                        outage,
+                        speech(12.0, "new"),
+                        transition(refs=["old", "new"], at=12.0),
+                    )
+                )
+                self.assertEqual(report.moments, [])
+        recovered = await generator().generate(
+            completed(
+                speech(),
+                outage,
+                speech(12.0, "new"),
+                transition(refs=["new"], at=12.0),
+            )
+        )
+        self.assertEqual(len(recovered.moments), 1)
+        self.assertNotIn("speech", recovered.moments[0].evidence_event_ids)
+
     async def test_interested_or_uncited_engaged_not_a_supported_strength(self):
         for reaction in [
             transition("pace_steady", state="INTERESTED"),
