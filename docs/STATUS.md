@@ -567,3 +567,41 @@ FACT: The official SalesKit in `docs/` lists Whisper-Tiny, Whisper-Base and Whis
 IMPACT: Lanes 4 and 5 can develop against realistic speech streams before the live adapter exists, including pace, fillers, pauses, unavailable input, and null versus zero. AUD-01 remains blocked on INT-01's scaffold, configuration location, and executable contract and replay seam. No production speech adapter, capture code, or dependency was added. Filler counts from standard Whisper output may be undercounts, so filler-driven reactions depend on AUD-02 measurements.
 
 PROPOSAL: The integration owner reviews the claim, the fixture placement, and the proposed v0 speech rules and open questions in the README: pause-completion events, leading silence, null reasons, configuration, analysis language, and model-failure status. After INT-01 lands, Lane 2 implements microphone capture → voice activity detection → local Whisper with word timestamps in the approved layout. Recorded sessions are then checked with `check_speech.py --stream`, and AUD-02 measures latency and filler recall per model size before any claim is made.
+# Integration reconciliation and failure-notice regression — 2026-10-10
+
+With explicit maintainer authorization, `agent/integration` merged main
+`e5c0838` as `42bd657` without conflicts. Existing integration setup/archive/demo
+work and speech/vision contributor evidence are preserved. No feature PR was
+merged and no live acceptance is implied.
+
+Cross-component checks in `tests/test_integration_composition.py` use the merged
+speech and vision adapters, sole RuleEngine and InMemorySessionRecorder with
+scripted capture/model seams and a fake shared clock. They verify usable speech
+with missing pose, usable vision with missing microphone, both-missing neutral
+behavior, bounded completion/resource release and isolated repeated recordings.
+No feedback generator is supplied; feedback correctly remains unavailable.
+
+The first concurrent check reproduced a controller display bug: unavailable
+speech windows replaced `microphone_not_found` with `observation_unavailable`.
+The controller now retains a current explicit failure through degraded windows,
+clears it on available observations and does not resurrect old failures after
+recovery. Existing event fields, producer semantics, engine rules and timeout
+defaults are unchanged. Runtime regressions cover unavailable/error reasons,
+recovery and out-of-order status delivery.
+
+Linux x86_64 / pinned CPython 3.12.14, core frozen environment:
+
+```sh
+uv run --frozen python -m pytest -q  # 195 passed, 335 subtests
+uv run --frozen ruff check src scripts tests examples
+openspec validate --all --strict  # 6 items passed
+uv run --frozen python scripts/validate_fixtures.py  # 9 cases / 10 sessions
+python3 checks/vision/make_fixture.py --check
+git diff --check
+```
+
+All checks pass. The pre-fix merged baseline separately passed 191 tests / 333
+subtests. Inputs are synthetic; no microphone/camera, optional model inference,
+browser responsiveness, intended-host timing, accelerator or recording was
+exercised. Current live acceptance and required component delivery remain in
+[Issue #11](https://github.com/crasni/LeCoach/issues/11).
