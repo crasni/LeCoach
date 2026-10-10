@@ -849,3 +849,23 @@ instrumented timings/accuracy measurements. Exact run revision/model hashes,
 per-slot video timing and coaching moment text/evidence IDs were not supplied.
 Advice usefulness and client experience remain areas the maintainer wants improved.
 This record does not establish Stage II accelerator operation or final submission.
+
+## Current runtime and submission validation — 2026-10-10
+
+FACT: On application source `66d1c8e`, Ubuntu x86_64 / project Python 3.12.14,
+`env -u DISPLAY -u WAYLAND_DISPLAY .venv/bin/python -m pytest -q` passes
+**267 tests / 392 subtests**, with **two skips**, in 19.31 s. Speech/vision runtime
+versions are 1.2.1/0.5.6/0.10.35/4.14.0.94 (faster-whisper/sounddevice/MediaPipe/
+opencv-contrib-python). Prepared speech and pose files exist; sanitized model
+hashes are recorded in Issue #11. No model download or real capture in this check.
+
+FACT: Ruff, canonical schema parity, all nine synthetic fixture cases / ten
+sessions, seven strict OpenSpec items and whitespace pass. The refreshed
+12-page English proposal separates delivered CPU composition, user-reported
+functional checks, automated checks and deferred target measurements. All pages
+were visually inspected; all 245 source paragraphs and six PDF links match.
+Artifact hashes and exact export command are in submission/readiness.md.
+
+LIMITATIONS: Automated/weight tests and user-reported live checks do not establish
+instrumented real-input accuracy, latency or accelerator performance. No final
+video, registration/submission or external publication occurred in this refresh.

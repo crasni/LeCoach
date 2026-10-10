@@ -1,11 +1,12 @@
 # Stage I demo preparation
 
-## Current English CPU demonstration direction — 2026-10-09
+## Current English CPU demonstration direction — 2026-10-10
 
 Product, rehearsal, UI and coaching remain English. The maintainer canceled the
 Mandarin/zh-TW direction; existing English scenarios and component work continue.
-Lucas (@crasni) is the likely operator, with actual computer/recording arrangement
-unconfirmed. [Demo host preparation](DEMO_HOST.md) covers setup and rehearsal.
+The maintainer selected their Ubuntu computer and Bluetooth microphone and
+reports the first live functional/reliability checks passed. Final recording
+arrangement and reviewed footage remain pending. [Demo host preparation](DEMO_HOST.md) covers setup and rehearsal.
 Stage I requires actual local CPU microphone/camera behavior on that computer;
 UGen300 validation remains Stage II. Existing authored scenarios/replays are
 preparation, not final live evidence. Keep the English deck and mainly English
@@ -48,17 +49,17 @@ uv run python checks/coaching/record_replay.py
 
 Show the generated summary in the terminal separately from the browser's authored card. The verified synthetic moments are improvements at capture times 10 s (200–205 WPM) and 25 s (approximate facing 0.2), plus a strength at 40 s (144 WPM and cited facing 0.85). Those capture anchors differ from the smoothed audience decisions at 20/30/35/40 s. The same-time `vision-40` event is not cited by the 40 s decision; use its actual evidence IDs rather than adding a convenient observation.
 
-The revised narration totals 316 words, with per-slot counts 35/28/95/76/51/31. At an assumed 135 WPM, speech takes about 140.4 s, leaving 34.6 s for screen holds in the 175 s plan. This is a calculation, not measured narration or edited-video duration. Retain visible **Synthetic development preview** and 5× replay labels. Actual read-through and recording require their applicable authorization.
+The revised narration totals 316 words, with per-slot counts 35/28/95/76/51/31. At an assumed 135 WPM, speech takes about 140.4 s, leaving 34.6 s for screen holds in the 175 s plan. The maintainer subsequently reports a comfortable 2:20 read-through (about 135 WPM), leaving approximately 35 s within the proposed 2:55 plan. Per-slot timing and the final edited video are not measured. Retain visible **Synthetic development preview** and 5× replay labels for this preview; final real recording requires its applicable authorization.
 
 ## Proposed recording sequence
 
 | Video time | Shot / purpose | Evidence needed |
 | --- | --- | --- |
 | 0:00–0:20 | Explain the problem: practicing alone gives little sense of audience response. | Product intent from GUIDE. |
-| 0:20–0:35 | Show LeCoach and session controls. Identify the demonstrated mode. | Current shell can show synthetic mode; live mode requires INT-02. |
-| 0:35–1:35 | Show weak delivery and recovery through visible audience changes. | Today: synthetic observations and computed audience reactions. Later: Lane 5 scenario with actual speech/vision and the same engine. |
-| 1:35–2:15 | Explain generated moments, observations, actions and evidence in the Lane 5 terminal viewer. | PR #24 computes coaching from synthetic observations; the default browser card remains authored. Actual live generated feedback still requires accepted composition. |
-| 2:15–2:40 | Show local architecture, Stage I CPU target and Stage II UGen300 plan. | Architecture plus SOURCES; synthetic checks do not establish CPU inference or accelerator execution. |
+| 0:20–0:35 | Show LeCoach and session controls. Identify the demonstrated mode. | Opt-in live composition is delivered; final live footage needs accepted INT-02 evidence. |
+| 0:35–1:35 | Show weak delivery and recovery through visible audience changes. | Preview: synthetic observations and computed reactions. Live footage: actual speech/vision and the same engine, with real observed timestamps. |
+| 1:35–2:15 | Explain generated moments, observations, actions and evidence in the Lane 5 terminal viewer. | PR #24 computes coaching from synthetic observations; the default browser card remains authored. Opt-in live mode generates browser feedback; final footage requires actual supported moments and owner review. |
+| 2:15–2:40 | Show local architecture, Stage I CPU target and Stage II UGen300 plan. | Architecture and SOURCES distinguish automated checks, maintainer-reported live behavior and unmeasured accelerator plans. |
 | 2:40–2:55 | State the intended practical value and next validated milestone. | Avoid invented user outcomes or performance figures. |
 
 Use English narration for the final video. Keep mode/provenance visible in edited shots. Do not replace replay labels with claims of live recognition. A CPU-based live rehearsal, once verified, can demonstrate Stage I behavior without implying accelerator execution.

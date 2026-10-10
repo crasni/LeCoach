@@ -1,7 +1,9 @@
 # Stage I CPU demo host and rehearsal preparation
 
-Lucas (@crasni) will probably operate/present. Confirm the actual computer and
-recording arrangement before final validation. No UGen300 before qualification;
+The maintainer selected their Ubuntu computer with a Bluetooth microphone for
+Stage I and reports a successful first live functional/reliability check. See
+[#11](https://github.com/crasni/LeCoach/issues/11) for the actual host/configuration
+record; final recording arrangement remains pending. No UGen300 before qualification;
 actual accelerator validation remains required for Stage II. Product, rehearsal,
 UI and coaching remain English. See [GUIDE](../GUIDE.md).
 
