@@ -29,7 +29,7 @@ Replay SHALL reuse the reviewed preparation cases without editing their original
 - **THEN** replay rejects it rather than loading an arbitrary file
 
 ### Requirement: Separate authored and computed consumers
-Default complete-stream replay SHALL identify audience transitions and feedback as authored. An injected engagement implementation SHALL replace authored reactions, and injected recorder/generator outputs SHALL be validated through the shared contracts. Replay SHALL NOT add a competing production logger or coaching selector.
+Complete-stream replay without injected consumers SHALL identify audience transitions and feedback as authored. The app and CLI's engine-computed replay SHALL identify synthetic inputs, computed audience reactions and authored example coaching separately. An injected engagement implementation SHALL replace authored reactions, and injected recorder/generator outputs SHALL be validated through the shared contracts. Replay SHALL NOT add a competing production logger or coaching selector.
 
 #### Scenario: Authored example
 - **WHEN** a fixture runs without real consumers

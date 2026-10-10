@@ -605,3 +605,32 @@ subtests. Inputs are synthetic; no microphone/camera, optional model inference,
 browser responsiveness, intended-host timing, accelerator or recording was
 exercised. Current live acceptance and required component delivery remain in
 [Issue #11](https://github.com/crasni/LeCoach/issues/11).
+
+## Integration component agreement and status ties — 2026-10-10
+
+Reviewed temporary combined sources: integration `8ebb5c3`, production speech
+PR #28 `c84fce4`, coaching PR #24 `03028dd`, and engine/UI PR #29 `d76d373`.
+No feature branch was merged. Integration agrees the existing reason vocabulary,
+explicit trigger citations, public stale ages, pause hold, uninterrupted-positive
+ENGAGED and post-outage observation boundaries; Lane 5's affected-consumer review
+is separately recorded on PR #29. Component approvals do not accept live tasks.
+
+The controller now lets explicit status win a metric capture-time tie in either
+arrival order, with later available metrics still indicating recovery. This
+matches PR #29's display semantics. Canonical replay specs clarify the already
+implemented distinction: no-factory replay is authored; app/CLI replay injects
+the sole engine and labels synthetic input, computed audience and authored
+coaching separately. The coarse v0 provenance field and historical archive are
+preserved; no new event fields or default runtime are introduced.
+
+The pre-tie combined snapshot passed 259 tests / 387 subtests with three
+weight-dependent skips. Both display environment variables were unset for the
+Linux probe tests; inherited `DISPLAY=:0` / `WAYLAND_DISPLAY=wayland-0` had
+stalled the unrelated OpenCV viewer check. Frontend build and generated types
+pass using Node 24.11.0; Ruff, schema parity and all nine coaching cases / ten
+sessions pass. With the final controller tie regression overlaid, the combined
+snapshot passes 260 tests / 389 subtests with three weight-dependent skips.
+Current integration alone passes 196 tests / 337 subtests;
+strict validation passes all six OpenSpec items. No browser E2E, real capture,
+model-weight inference, demo-host timings, recording or accelerator validation
+was performed. Review/merge readiness and final acceptance remain in Issues.

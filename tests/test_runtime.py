@@ -273,6 +273,31 @@ class RuntimeTests(IsolatedAsyncioTestCase):
                 finally:
                     await controller.stop()
 
+    async def test_status_wins_metric_capture_time_tie_in_both_delivery_orders(self):
+        for metrics_first in (True, False):
+            with self.subTest(metrics_first=metrics_first):
+                controller, clock = self.controller()
+                await controller.start()
+                try:
+                    clock.advance_to(1.0)
+                    status = {
+                        "schema_version": 0, "session_id": controller.session_id,
+                        "event_id": "outage", "source": "speech", "type": "signal.status",
+                        "timestamp_s": 1.0,
+                        "payload": {"availability": "error", "reason": "microphone_disconnected"},
+                    }
+                    metric = event(event_id="same-time", timestamp=1.0)
+                    for observation in ((metric, status) if metrics_first else (status, metric)):
+                        controller.emit(observation)
+                    self.assertEqual(
+                        controller.snapshot().input_status["speech"], status["payload"],
+                    )
+                    clock.advance_to(2.0)
+                    controller.emit(event(event_id="after-outage", timestamp=2.0))
+                    self.assertEqual(controller.input_status["speech"]["availability"], "available")
+                finally:
+                    await controller.stop()
+
     async def test_all_capture_stops_before_drain(self):
         speech, vision = Capture(), Capture()
         controller, _ = self.controller(speech=speech, vision=vision)

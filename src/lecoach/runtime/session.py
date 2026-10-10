@@ -85,12 +85,20 @@ class SessionController:
         if previous is None or event.timestamp_s >= previous.timestamp_s:
             self.latest[key] = event
             if event.type in ("signal.status", "speech.metrics", "vision.metrics"):
-                if event.timestamp_s >= self._input_status_time.get(event.source, -1.0):
+                status = self.latest.get(f"signal.status:{event.source}")
+                status_wins_tie = (
+                    event.type != "signal.status"
+                    and status is not None
+                    and status.timestamp_s == event.timestamp_s
+                )
+                if (
+                    event.timestamp_s >= self._input_status_time.get(event.source, -1.0)
+                    and not status_wins_tie
+                ):
                     self._input_status_time[event.source] = event.timestamp_s
                     if event.type == "signal.status":
                         self.input_status[event.source] = event.payload.model_dump()
                     else:
-                        status = self.latest.get(f"signal.status:{event.source}")
                         # Degraded metric windows add no device/model diagnosis.
                         # Keep the current explicit failure until recovery; an old
                         # status must not reappear after a newer available window.
