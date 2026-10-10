@@ -1,4 +1,4 @@
-# In-memory session recording
+# Session recording and deterministic coaching
 
 `InMemorySessionRecorder` implements the published recorder protocol in
 `lecoach.contracts.interfaces`; event and completed-session types come from
@@ -8,8 +8,9 @@ The integration owner can inject a fresh recorder per session with
 `Components(recorder=InMemorySessionRecorder())`. The existing controller starts
 the subscriber before capture, delivers lifecycle and normalized observations,
 and calls `complete(duration_s, incomplete_sources)` after producers drain.
-The returned canonical `CompletedSession` is suitable for the future feedback
-generator and timeline consumer. Recording alone leaves feedback unavailable.
+The returned canonical `CompletedSession` supplies the feedback generator and
+timeline consumer. Recording alone leaves feedback unavailable. The recorder
+was published and merged in [PR #5](https://github.com/crasni/LeCoach/pull/5).
 
 The recorder preserves speech, vision, audience, status and lifecycle events,
 including original capture times, transcript revisions and evidence IDs. It
@@ -41,7 +42,98 @@ adapters, drain timeout and cancellation, immediate stop, and a recorder reused
 across sessions. These checks establish consumer behavior with synthetic data;
 they do not establish actual microphone/camera capture or inference performance.
 
-Moment selection and template feedback still require LIVE-01's actual
-transition/reason evidence, particularly positive reasons. They are not supplied
-by this recorder. Lane 1 owns default API composition; this implementation is
-injected through the existing seam for verification, not enabled globally here.
+## Feedback generator
+
+`TemplateFeedbackGenerator(stale_after_s={"speech": ..., "vision": ...})` implements
+`await generate(CompletedSession) -> Feedback`. Composition supplies freshness
+limits from the engine's public `RuleConfig`; this consumer adds no engagement
+thresholds, clock, shared contract or audience engine. See the canonical
+[architecture](../../../docs/ARCHITECTURE.md) and
+[engine handoff](../engagement/README.md) for reason semantics.
+
+The selector consumes recorded negative transitions (`CONFUSED` / `BORED`) and
+supported `ENGAGED` transitions. `INTERESTED` alone is insufficient for a strength.
+Templates describe the published pace, filler, active-pause and approximate-facing
+reasons with actual cited numbers and a practical action. They do not infer intent,
+emotion, eye contact or delivery quality from unavailable inputs. Unknown reason
+codes, missing references, future observations, wrong modalities, null values,
+superseding outages and stale evidence are omitted with a limitation. The latest
+cited observation and latest source observation must be fresh at the transition;
+older cited windows may still document a sustained incident. These checks are
+conservative over capture timestamps; the canonical completed log has no arrival
+ordering for equal capture times. Only the engine's explicit citations become
+moment evidence; no uncited frame is attached to a reaction retroactively.
+
+An `available` status cannot restore observations from before an outage. Every
+cited measurement and the newest source observation must end strictly after the
+latest recorded `unavailable`/`error` status at that decision. Equal capture times
+are conservatively rejected. A new post-outage window restores the source but
+does not validate old citations. This matches the proposed LIVE-01 handoff in
+[PR #29](https://github.com/crasni/LeCoach/pull/29).
+
+Repeated causes within one continuous negative episode become one improvement.
+Episodes end at a nonnegative transition. Identical measurement evidence cannot
+be recycled across episodes as new advice. Candidates rank by cited-window span,
+then earliest capture timestamp and reason code; at most three are selected.
+The one strength prefers support from both modalities, then cited-window span,
+earlier capture time and stable transition IDs. These ranking choices are demo
+heuristics, not validated quality scores. Improvements anchor at the earliest
+cited measurement's capture time; strengths at the latest cited measurement's
+capture time. Evidence IDs include the direct metrics and audience transitions.
+Moments and evidence are deterministically ordered by capture time. There is no
+minimum quota: no usable evidence means no invented moments. Source availability
+and drain timeout limitations accompany the feedback.
+
+## Optional integration composition
+
+`lecoach.coaching.compose.replay_with_coaching(rules=None)` returns a component
+factory supplying the existing `RuleEngine`, sole `InMemorySessionRecorder` and
+`TemplateFeedbackGenerator`. It can be injected into `replay_case` or
+`create_app(factory)`; each session receives fresh components. Live requests
+explicitly fail as unavailable. Default app/CLI composition is unchanged and still
+needs integration-owner review before enabling computed coaching globally.
+
+```sh
+uv run python checks/coaching/feedback_replay.py
+uv run python checks/coaching/feedback_replay.py --case weak_to_improved --show-feedback
+uv run pytest -q tests/test_feedback.py
+```
+
+The computed-engine baseline is separate from the historical authored feedback
+fixtures; it checks all nine synthetic cases / ten sessions. The API test verifies
+that injected computed feedback reaches the existing endpoint and that live mode
+is unavailable. No persistent rehearsal output is written. Final acceptance of
+LIVE-01's evidence handoff ([issue #18](https://github.com/crasni/LeCoach/issues/18)),
+including the pending revert disposition, and default composition/UI handoff remain
+pending under [issue #20](https://github.com/crasni/LeCoach/issues/20). These synthetic
+checks do not complete COACH-01 or validate live devices, models or hardware.
+
+## Inspect a completed session locally
+
+The independent checker reads one existing canonical `CompletedSession`, invokes
+this generator, and prints the canonical `Feedback` or a text report with a
+timeline. It does not open devices, run another engine, export transcripts, or
+write files. Input can be a synthetic completed session now, or an authorized
+live run later; the checker cannot infer or certify that provenance from v0 events.
+
+```sh
+uv run python checks/coaching/session_feedback.py sessions/run/completed.json --timeline
+uv run python checks/coaching/session_feedback.py sessions/run/completed.json --rules sessions/run/rules.json --format json
+uv run pytest -q tests/test_session_feedback.py
+```
+
+These examples require an existing record in ignored `sessions/` supplied by its
+caller, not a new capture/export command. `--rules` reads the actual engine's
+`RuleConfig` JSON; omit it only when that session used `DEFAULT_RULES`. Freshness
+must match the run, including any custom speech/vision age. The command validates
+lifecycle, session isolation, ordering and canonical evidence links. Invalid
+input exits nonzero without echoing input values. Text timeline rows identify
+event type/ID and audience reasons; transcript contents are deliberately omitted.
+JSON output is exactly `Feedback`, without a competing report/event schema.
+
+The controller already calls `generate(completed_session)` through the published
+feedback protocol. Lane 1 supplies fresh recorder/generator instances together
+with the same engine config in its composition; Lane 4 consumes `Feedback` and
+the recorder's `CompletedSession.events` for the complete timeline, including
+transitions missed during a browser disconnect. No HTTP endpoint or default/live
+composition is added by this checker. See the dated [consumer handoff review](../../../checks/coaching/handoff-review.md).
