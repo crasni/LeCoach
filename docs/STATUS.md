@@ -460,6 +460,8 @@ FACT: Results of the 71.4 s take:
 - **Recognition:** the scripted passage was mostly correct, with errors such as "built" heard as "feels" and "pauses" as "pulse".
 - **Fillers:** the deliberate-filler part has no "um", "uh", "like", or "you know" in its finals. Its only interjection is "Aww.", which the English filler rules do not count.
 
+FACT: On the same laptop, `python -m lecoach.speech.probe --device nosuchmic` reported `unavailable / microphone_not_found` 0.1 s into the session. Later windows reported `unavailable` with null WPM and fillers until the run was stopped with Ctrl+C.
+
 IMPACT: AUD-01's live capture works on an ordinary Windows laptop with local CPU inference, and its events pass the shared checks.
 - Filler counts from `base.en` are undercounts: the deliberate-filler part reported none.
 - Final delays reached 3.2 s, about the 3 s coverage wait, although no window went null.

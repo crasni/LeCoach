@@ -195,6 +195,7 @@ On 2026-10-10 the owner ran the guided probe once on a Windows 11 laptop: Intel 
   - stop and drain took 0.95 s.
 - **Accuracy:** the scripted passage was mostly right; for example, "pauses" became "pulse".
 - **Fillers:** none were counted. The deliberate-filler part produced no "um" or "uh"; its only interjection was "Aww.", which the rules do not count.
+- **Missing device:** with `--device nosuchmic`, the probe reported `microphone_not_found` at once. Later windows were `unavailable` with null values.
 
 ## Limitations
 
