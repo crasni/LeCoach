@@ -40,7 +40,7 @@ Importing `lecoach.speech` or any module above loads no optional package. `sound
    uv run --group speech python -m lecoach.speech.model --check      # load time, silent run
    ```
 
-4. Check the microphone with the guided probe below. The operating system may ask for microphone permission on the first run.
+4. Check the microphone with the guided probe below. The operating system may ask for microphone permission on the first run. On Windows, also check Settings > Privacy & security > Microphone: microphone access, and access for desktop apps, must be on.
 
 ## Seams and production implementations
 
@@ -90,6 +90,15 @@ def factory(session_config):
 - Each adapter instance is single-use. `SessionManager` calls the factory once per session; `tests/test_speech_adapter.py` composes it that way with scripted seams.
 - `adapter.delays` keeps, per emitted event, the shared clock at emission minus the event's capture time, for AUD-02 measurement.
 
+## Choose the microphone
+
+`build_local_adapter()` opens the system default input. To use another one, set `LECOACH_SPEECH_DEVICE` to an index or a name from `python -m lecoach.speech.probe --list-devices`. `build_local_adapter()` reads it at every call, so it also applies to `lecoach serve --live`. The probe's `--device` overrides it.
+
+- A name is a query that `sounddevice` matches: space-separated, case-insensitive substrings, in order, against "device name, host API name".
+- On Windows, the same microphone appears under several host APIs (MME, DirectSound, WASAPI, WDM-KS). Add the host API to the name, for example `USB MME`, or use the index.
+- Indices can change when devices are added or removed.
+- A selection that does not exist or is not an input reports `microphone_not_found`. A name that matches several inputs reports `microphone_unavailable`.
+
 ## Guided live check
 
 ```sh
@@ -108,7 +117,7 @@ The probe runs the production adapter through the real session controller.
   - stop-and-drain time and incomplete sources;
   - per-part WPM, fillers, and pauses.
 - **Saved files:** `--out` saves the event stream for `check_speech.py` and a `.summary.json`. Both contain transcripts, so keep them in the ignored `sessions/` directory. No audio is written.
-- **Options:** `--device` selects an input by index or name. `--drain-timeout` changes the stop bound (default 2 s, like the app).
+- **Options:** `--device` selects an input by index or name, overriding `LECOACH_SPEECH_DEVICE`. `--drain-timeout` changes the stop bound (default 2 s, like the app).
 
 ## Configuration
 
@@ -147,8 +156,8 @@ The probe runs the production adapter through the real session controller.
 | `speech_model_unavailable` | `error` | The transcriber is missing or not ready at start; the microphone is not opened |
 | `speech_vad_unavailable` | `error` | No segmenter (the Silero runtime is missing) |
 | `microphone_permission_denied` | `unavailable` | The device reported a permission error when opening |
-| `microphone_not_found` | `unavailable` | No input device, or no source is configured |
-| `microphone_unavailable` | `unavailable` | Another device error, or PortAudio or the speech group is missing |
+| `microphone_not_found` | `unavailable` | No input device, a selected device that does not exist or is not an input, or no source is configured |
+| `microphone_unavailable` | `unavailable` | Another device error, such as a name that matches several inputs, or PortAudio or the speech group is missing |
 | `microphone_no_signal` | `unavailable` | The first 2 s were exact digital silence: access denied (macOS) or a muted device |
 | `microphone_disconnected` | `error` | The stream stopped or stalled for 2 s; the utterance in progress ends at that time |
 | `audio_queue_overflow` | `error` | Segmentation fell more than `max_backlog_chunks` behind; the utterance in progress ends at the last processed audio |

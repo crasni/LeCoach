@@ -30,7 +30,7 @@ from lecoach.runtime.clock import MonotonicClock
 from lecoach.runtime.session import SessionController
 
 from .config import SpeechConfig
-from .local import build_local_adapter
+from .local import build_local_adapter, parse_device
 from .whisper import ModelUnavailable, warm_up
 
 PASSAGE = ("Thank you all for coming today. I want to show you how our team built a faster "
@@ -180,7 +180,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m lecoach.speech.probe",
                                      description="Guided live speech check.")
     parser.add_argument("--list-devices", action="store_true", help="list audio devices")
-    parser.add_argument("--device", help="input device index or name (default: system)")
+    parser.add_argument("--device", help="input device index or name (default: "
+                                         "LECOACH_SPEECH_DEVICE, else the system default)")
     parser.add_argument("--wav", help="replay a 16-bit PCM WAV instead of the microphone")
     parser.add_argument("--out", help="save the event stream (JSON array) to this path")
     parser.add_argument("--model", help="model name (default: SpeechConfig.model)")
@@ -188,8 +189,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--drain-timeout", type=float, default=2.0,
                         help="stop/drain bound in seconds (session default: 2)")
     args = parser.parse_args(argv)
-    if args.device is not None and args.device.isdigit():
-        args.device = int(args.device)
+    args.device = parse_device(args.device)
     if args.list_devices:
         try:
             import sounddevice
