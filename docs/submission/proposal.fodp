@@ -192,7 +192,7 @@
         </draw:frame>
         <draw:frame draw:name="Object6" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
           <draw:text-box>
-            <text:p text:style-name="P4">Proposal draft • 8 October 2026 • Synthetic inputs, computed audience, authored coaching</text:p>
+            <text:p text:style-name="P4">Proposal draft • 10 October 2026 • Local CPU implementation; first live checks reported</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object7" draw:style-name="G1" svg:x="1.45cm" svg:y="5.5cm" svg:width="20cm" svg:height="3.9cm">
@@ -329,7 +329,7 @@
         <draw:rect draw:name="Object44" draw:style-name="G0" svg:x="1.2cm" svg:y="1.08cm" svg:width="0.14cm" svg:height="0.55cm" draw:corner-radius="0.18cm" />
         <draw:frame draw:name="Object45" draw:style-name="G1" svg:x="1.65cm" svg:y="1.1cm" svg:width="28cm" svg:height="0.55cm">
           <draw:text-box>
-            <text:p text:style-name="P0">PLANNED REHEARSAL JOURNEY</text:p>
+            <text:p text:style-name="P0">THE REHEARSAL JOURNEY</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object46" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
@@ -355,7 +355,7 @@
         </draw:frame>
         <draw:frame draw:name="Object50" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
           <draw:text-box>
-            <text:p text:style-name="P4">Live input is planned. Current replay computes audience reactions; example coaching remains authored.</text:p>
+            <text:p text:style-name="P4">Live CPU input and generated coaching are implemented. Default replay retains authored example coaching.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object51" draw:style-name="G4" svg:x="1.4cm" svg:y="7.7cm" svg:width="7.1cm" svg:height="7.0cm" draw:corner-radius="0.18cm" />
@@ -475,7 +475,7 @@
         </draw:frame>
         <draw:frame draw:name="Object80" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
           <draw:text-box>
-            <text:p text:style-name="P4">Rules and smoothing are tested on synthetic observations; live capture, emotion and eye tracking are not demonstrated.</text:p>
+            <text:p text:style-name="P4">Rules and smoothing are tested; the maintainer reports working live input. Facing is approximate, not eye tracking.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object81" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="7.9cm" draw:corner-radius="0.18cm" />
@@ -677,7 +677,7 @@
         </draw:frame>
         <draw:frame draw:name="Object127" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
           <draw:text-box>
-            <text:p text:style-name="P4">Tested: engine, replay UI and injected recorder. Live producers and generated coaching await handoffs.</text:p>
+            <text:p text:style-name="P4">Implemented: local speech/vision, engine, UI, recorder and generated coaching. Final acceptance is separate.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object128" draw:style-name="G4" svg:x="1.4cm" svg:y="7.35cm" svg:width="7.0cm" svg:height="2.2cm" draw:corner-radius="0.18cm" />
@@ -688,7 +688,7 @@
         </draw:frame>
         <draw:frame draw:name="Object130" draw:style-name="G1" svg:x="1.7cm" svg:y="8.73cm" svg:width="6.4cm" svg:height="0.7000000000000002cm">
           <draw:text-box>
-            <text:p text:style-name="P21">planned local inputs</text:p>
+            <text:p text:style-name="P21">live local inputs</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object131" draw:style-name="G4" svg:x="10.0cm" svg:y="7.35cm" svg:width="9.4cm" svg:height="2.2cm" draw:corner-radius="0.18cm" />
@@ -699,7 +699,7 @@
         </draw:frame>
         <draw:frame draw:name="Object133" draw:style-name="G1" svg:x="10.3cm" svg:y="8.73cm" svg:width="8.8cm" svg:height="0.7000000000000002cm">
           <draw:text-box>
-            <text:p text:style-name="P21">planned local inference</text:p>
+            <text:p text:style-name="P21">local CPU inference</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object134" draw:style-name="G4" svg:x="21.0cm" svg:y="7.35cm" svg:width="11.4cm" svg:height="2.2cm" draw:corner-radius="0.18cm" />
@@ -732,7 +732,7 @@
         </draw:frame>
         <draw:frame draw:name="Object142" draw:style-name="G1" svg:x="12.100000000000001cm" svg:y="12.530000000000001cm" svg:width="8.4cm" svg:height="1.9cm">
           <draw:text-box>
-            <text:p text:style-name="P21">computed replay reactions; live pending</text:p>
+            <text:p text:style-name="P21">live and computed replay reactions</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object143" draw:style-name="G4" svg:x="22.2cm" svg:y="11.15cm" svg:width="10.2cm" svg:height="3.4cm" draw:corner-radius="0.18cm" />
@@ -743,7 +743,7 @@
         </draw:frame>
         <draw:frame draw:name="Object145" draw:style-name="G1" svg:x="22.5cm" svg:y="12.530000000000001cm" svg:width="9.6cm" svg:height="1.9cm">
           <draw:text-box>
-            <text:p text:style-name="P21">recorder tested; advice still authored</text:p>
+            <text:p text:style-name="P21">generated live coaching; replay authored</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object146" draw:style-name="G1" svg:x="8.6cm" svg:y="7.9cm" svg:width="1.1cm" svg:height="1.0cm">
@@ -808,7 +808,7 @@
         </draw:frame>
         <draw:frame draw:name="Object158" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
           <draw:text-box>
-            <text:p text:style-name="P4">Contracts/fake-adapter lifecycle tested. Actual capture cleanup, live privacy and inference delay remain unmeasured.</text:p>
+            <text:p text:style-name="P4">Lifecycle tests and maintainer-reported live checks. Timing and privacy audit remain unmeasured.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object159" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
@@ -863,9 +863,9 @@
         </draw:frame>
         <draw:frame draw:name="Object170" draw:style-name="G1" svg:x="23.25cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
           <draw:text-box>
-            <text:p text:style-name="P10">No cloud inference planned.</text:p>
+            <text:p text:style-name="P10">Local CPU inference implemented.</text:p>
             <text:p text:style-name="P10">Raw recording off by default.</text:p>
-            <text:p text:style-name="P10">Live privacy checks still pending.</text:p>
+            <text:p text:style-name="P10">Independent privacy audit pending.</text:p>
           </draw:text-box>
         </draw:frame>
       </draw:page>
@@ -968,12 +968,12 @@
         </draw:frame>
         <draw:frame draw:name="Object195" draw:style-name="G1" svg:x="1.4cm" svg:y="2.15cm" svg:width="30.6cm" svg:height="2.7cm">
           <draw:text-box>
-            <text:p text:style-name="P1">A reproducible synthetic baseline.</text:p>
+            <text:p text:style-name="P1">Reproducible checks. First live run.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object196" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
           <draw:text-box>
-            <text:p text:style-name="P10">Local checks validate contracts and lifecycle; they do not establish live inference performance.</text:p>
+            <text:p text:style-name="P10">Automated results and maintainer-reported live checks have different evidence scopes.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object197" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
@@ -988,13 +988,13 @@
         </draw:frame>
         <draw:frame draw:name="Object199" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
           <draw:text-box>
-            <text:p text:style-name="P4">Observed 8 October 2026 / Linux x86_64 / Python 3.12.14 / application source 8345c98</text:p>
+            <text:p text:style-name="P4">Observed 10 October 2026 / Ubuntu x86_64 / Python 3.12.14 / application source 66d1c8e</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object200" draw:style-name="G4" svg:x="1.4cm" svg:y="7.25cm" svg:width="9.7cm" svg:height="4.3cm" draw:corner-radius="0.18cm" />
         <draw:frame draw:name="Object201" draw:style-name="G1" svg:x="1.9cm" svg:y="7.8cm" svg:width="8.7cm" svg:height="1.65cm">
           <draw:text-box>
-            <text:p text:style-name="P27">130</text:p>
+            <text:p text:style-name="P27">267</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object202" draw:style-name="G1" svg:x="1.9cm" svg:y="10.05cm" svg:width="8.7cm" svg:height="0.9cm">
@@ -1005,7 +1005,7 @@
         <draw:rect draw:name="Object203" draw:style-name="G4" svg:x="12.1cm" svg:y="7.25cm" svg:width="9.7cm" svg:height="4.3cm" draw:corner-radius="0.18cm" />
         <draw:frame draw:name="Object204" draw:style-name="G1" svg:x="12.6cm" svg:y="7.8cm" svg:width="8.7cm" svg:height="1.65cm">
           <draw:text-box>
-            <text:p text:style-name="P27">69</text:p>
+            <text:p text:style-name="P27">392</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object205" draw:style-name="G1" svg:x="12.6cm" svg:y="10.05cm" svg:width="8.7cm" svg:height="0.9cm">
@@ -1027,14 +1027,14 @@
         <draw:frame draw:name="Object209" draw:style-name="G1" svg:x="1.5cm" svg:y="12.3cm" svg:width="15.0cm" svg:height="2.5cm">
           <draw:text-box>
             <text:p text:style-name="P28">Checked: contracts, engine rules, recorder,</text:p>
-            <text:p text:style-name="P28">late/revised events and failure handling;</text:p>
-            <text:p text:style-name="P28">repeated synthetic sessions and UI checks.</text:p>
+            <text:p text:style-name="P28">coaching, revised events and failures;</text:p>
+            <text:p text:style-name="P28">repeat sessions; live checks reported.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object210" draw:style-name="G1" svg:x="18.0cm" svg:y="12.3cm" svg:width="14.3cm" svg:height="2.5cm">
           <draw:text-box>
-            <text:p text:style-name="P29">Pending: real input accuracy, live</text:p>
-            <text:p text:style-name="P29">adapters, generated coaching,</text:p>
+            <text:p text:style-name="P29">Pending: measured speech accuracy,</text:p>
+            <text:p text:style-name="P29">final coaching/UX review and video,</text:p>
             <text:p text:style-name="P29">UGen300 performance.</text:p>
           </draw:text-box>
         </draw:frame>
@@ -1141,7 +1141,7 @@
         </draw:frame>
         <draw:frame draw:name="Object233" draw:style-name="G1" svg:x="1.45cm" svg:y="5.6cm" svg:width="30.2cm" svg:height="1.3cm">
           <draw:text-box>
-            <text:p text:style-name="P10">Each milestone needs its own evidence; passing synthetic checks does not complete live P0.</text:p>
+            <text:p text:style-name="P10">Implementation and a first live check are delivered; owner acceptance and final demo review remain separate.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object234" draw:style-name="G1" svg:x="1.4cm" svg:y="17.7cm" svg:width="20cm" svg:height="0.5cm">
@@ -1162,43 +1162,43 @@
         <draw:rect draw:name="Object237" draw:style-name="G4" svg:x="1.4cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
         <draw:frame draw:name="Object238" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
           <draw:text-box>
-            <text:p text:style-name="P0">NOW / VERIFIED BASELINE</text:p>
+            <text:p text:style-name="P0">DELIVERED / FIRST LIVE CHECK</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object239" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
           <draw:text-box>
-            <text:p text:style-name="P11">Synthetic rehearsal</text:p>
+            <text:p text:style-name="P11">Local CPU rehearsal</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object240" draw:style-name="G1" svg:x="1.8499999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
           <draw:text-box>
-            <text:p text:style-name="P10">Engine, UI and recorder;</text:p>
-            <text:p text:style-name="P10">repeatable synthetic checks.</text:p>
+            <text:p text:style-name="P10">Speech, vision, engine and coach;</text:p>
+            <text:p text:style-name="P10">maintainer-reported live checks.</text:p>
             <text:p text:style-name="P10">English proposal draft.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object241" draw:style-name="G4" svg:x="12.1cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
         <draw:frame draw:name="Object242" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
           <draw:text-box>
-            <text:p text:style-name="P0">NEXT / INT-02</text:p>
+            <text:p text:style-name="P0">NEXT / FINAL REVIEW</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object243" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
           <draw:text-box>
-            <text:p text:style-name="P11">Live rehearsal</text:p>
+            <text:p text:style-name="P11">Accepted demo</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object244" draw:style-name="G1" svg:x="12.549999999999999cm" svg:y="10.85cm" svg:width="8.799999999999999cm" svg:height="4.05cm">
           <draw:text-box>
-            <text:p text:style-name="P10">Owner speech/vision adapters,</text:p>
-            <text:p text:style-name="P10">composition and coaching.</text:p>
-            <text:p text:style-name="P10">Record accepted real-input demo.</text:p>
+            <text:p text:style-name="P10">Owner handoffs and measurements.</text:p>
+            <text:p text:style-name="P10">Review final script and recording.</text:p>
+            <text:p text:style-name="P10">Prepare online submission.</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:rect draw:name="Object245" draw:style-name="G4" svg:x="22.8cm" svg:y="7.2cm" svg:width="9.7cm" svg:height="8.0cm" draw:corner-radius="0.18cm" />
         <draw:frame draw:name="Object246" draw:style-name="G1" svg:x="23.25cm" svg:y="7.55cm" svg:width="8.799999999999999cm" svg:height="0.55cm">
           <draw:text-box>
-            <text:p text:style-name="P0">TARGET / INT-03</text:p>
+            <text:p text:style-name="P0">STAGE II / HARDWARE</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object247" draw:style-name="G1" svg:x="23.25cm" svg:y="8.32cm" svg:width="8.799999999999999cm" svg:height="1.8cm">
@@ -1244,7 +1244,7 @@
         </draw:frame>
         <draw:frame draw:name="Object255" draw:style-name="G1" svg:x="1.4cm" svg:y="16.8cm" svg:width="30.5cm" svg:height="0.65cm">
           <draw:text-box>
-            <text:p text:style-name="P4">Draft for team review • final recording, registration confirmation, publication and receipt pending</text:p>
+            <text:p text:style-name="P4">Global Online Track • cutoff 14 Oct 2026, 17:00 Asia/Taipei • delivery pending</text:p>
           </draw:text-box>
         </draw:frame>
         <draw:frame draw:name="Object256" draw:style-name="G1" svg:x="1.45cm" svg:y="7.0cm" svg:width="30.8cm" svg:height="1.0cm">

@@ -1,12 +1,12 @@
 # Competition requirements and submission preparation
 
-Content rechecked 2026-10-09 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
+Content rechecked 2026-10-10 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
 
 ## Verified requirements
 
 | Item | Official requirement / section |
 | --- | --- |
-| Stage I deadline | 2026-10-14; sections V–VI. Exact cutoff time/timezone needs confirmation. |
+| Stage I deadline | **2026-10-14 17:00, Asia/Taipei (UTC+8)**; rendered public Submission period / Competition timezone fields checked 2026-10-10, with the date confirmed by sections V–VI. |
 | Deck | English throughout; at most 20 main pages, excluding appendix. Cover problem, solution, architecture, expected outcomes, references and GitHub source link; VI. |
 | Video | Mainly English; three minutes or less is recommended. Supply an unlisted YouTube link; VI. |
 | Stage I hardware | A laptop, SBC or virtual host may support initial validation; the selected accelerator is not mandatory yet; V. |
@@ -19,12 +19,12 @@ Content rechecked 2026-10-09 against the [official competition rules](https://co
 
 The local [English deck](submission/proposal.pdf) and [editable source](submission/proposal.fodp) now follow the 12-slide structure: problem; intended user; rehearsal journey; live audience response; demonstrated prototype; local architecture; event timing and failure handling; hardware adapter approach; validation evidence; practical value; delivery milestones; references and repository. [Readiness](submission/readiness.md) records local page/language/content/visual checks and the claim map. This is a review draft, not a finished submission or a change to the MVP; current prototype claims remain synthetic.
 
-Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The current shell can demonstrate synthetic playback only. Replace those shots with actual rehearsal behavior after INT-02 passes; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeCoach has already run on that hardware.
+Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The default shell demonstrates synthetic playback; opt-in `lecoach serve --live` composes local speech/vision and generated coaching. Its final integrated rehearsal acceptance remains pending in INT-02. Replace example shots with accepted actual rehearsal behavior; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeCoach has already run on that hardware.
 
 ## Unresolved submission details
 
-- Confirm the cutoff time/timezone and any upload limits in the actual submission form; the retrieved structured dates do not reliably establish them.
-- The team's online/onsite registration choice and completion receipt have not been checked.
+- Registration completion and submission receipt have not been checked. The maintainer selected Global Online Track on 2026-10-10; registration is not yet completed.
+- Any form-specific constraints will be addressed if they prevent the selected artifacts from being submitted; upload limits have not been inspected.
 - Review section IX's original-work and licensing terms with the team. Clarify the treatment of a public development repository alongside the required GitHub link; do not assume an eligibility interpretation.
 - Recheck the official rules immediately before submission. External upload, publication and submission follow the team's authorization requirements.
 
@@ -58,3 +58,12 @@ No UGen300 before qualification is a maintainer-confirmed team constraint. Stage
 must validate the ordinary-computer CPU path; actual accelerator operation remains
 required for Stage II rather than blocking Stage I. Lucas is likely operator,
 with actual demo computer and recording arrangement unconfirmed.
+
+## Exact cutoff verified — 2026-10-10
+
+The rendered official home page displays a submission period ending
+**2026-10-14 17:00** and explicitly identifies **Asia/Taipei** as the competition
+timezone. This resolves the earlier cutoff uncertainty; prior dated retrieval
+notes above describe earlier checks. The timezone-free JSON-LD value alone was
+not used to infer the time. The maintainer selected **Global Online Track**;
+registration and delivery receipts remain separate from that participation choice.

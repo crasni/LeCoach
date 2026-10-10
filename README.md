@@ -19,10 +19,12 @@ intended accelerator for actual Stage II validation. See [GUIDE](GUIDE.md) and
 
 ## Project status
 
-The current prototype has validated event contracts, session lifecycle, a loopback
-API, a deterministic engagement engine and a rehearsal screen driven by synthetic
-observations. An in-memory recorder is available through injection. Live microphone,
-camera and coaching generation await their assigned subsystem handoffs.
+The current prototype implements local speech/vision, a deterministic audience
+engine, session recording and generated template coaching through opt-in live mode.
+The default app retains labeled synthetic replay with authored example coaching.
+The maintainer reports a working live rehearsal and reliability checks on their
+Ubuntu computer with a Bluetooth microphone. Measured quality/performance and
+final owner acceptance remain separate; see the dated evidence in STATUS.
 
 Start at [AGENTS.md](AGENTS.md), the shared entry point for all five collaborators. Follow the canonical documents linked there:
 
