@@ -19,12 +19,27 @@ def main() -> None:
         default="engine",
         help="Compute audience states with the engagement engine, or keep authored ones",
     )
-    sub.add_parser("serve", help="Serve the loopback API and built frontend")
+    serve = sub.add_parser("serve", help="Serve the loopback API and built frontend")
+    serve.add_argument(
+        "--live", action="store_true", help="Compose local microphone/camera and coaching",
+    )
+    serve.add_argument(
+        "--speech-model-dir", type=Path, default=Path("models"),
+        help="Prepared speech model directory for --live (no automatic download)",
+    )
     args = parser.parse_args()
     if args.command == "serve":
         import uvicorn
 
-        uvicorn.run("lecoach.api.app:app", host="127.0.0.1", port=8000)
+        if args.live:
+            from lecoach.api.app import create_app
+            from lecoach.runtime.live import prepare_live_factory
+            from lecoach.speech import SpeechConfig
+
+            factory = prepare_live_factory(SpeechConfig(model_dir=str(args.speech_model_dir)))
+            uvicorn.run(create_app(factory), host="127.0.0.1", port=8000)
+        else:
+            uvicorn.run("lecoach.api.app:app", host="127.0.0.1", port=8000)
     else:
         try:
             result = asyncio.run(

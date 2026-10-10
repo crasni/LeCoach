@@ -16,6 +16,15 @@ dependencies = [
 
 [dependency-groups]
 dev = ["pytest>=8,<10", "httpx>=0.28,<1", "ruff>=0.11,<1"]
+speech = [
+    "faster-whisper>=1.2.1,<2",
+    "numpy>=2,<3",
+    "sounddevice>=0.5,<0.6",
+]
+vision = [
+    "mediapipe>=0.10.31,<0.11",
+    "opencv-contrib-python>=4.11,<5",
+]
 
 [project.scripts]
 lecoach = "lecoach.cli:main"

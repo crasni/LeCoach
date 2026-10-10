@@ -230,6 +230,74 @@ class RuntimeTests(IsolatedAsyncioTestCase):
         self.assertEqual(controller.input_status["speech"]["availability"], "available")
         await controller.stop()
 
+    async def test_degraded_metrics_keep_specific_failure_until_recovery(self):
+        for availability, reason in (
+            ("unavailable", "microphone_not_found"), ("error", "transcription_failed"),
+        ):
+            with self.subTest(reason=reason):
+                controller, clock = self.controller()
+                await controller.start()
+                try:
+                    clock.advance_to(1.0)
+                    failure = {
+                        "schema_version": 0, "session_id": controller.session_id,
+                        "event_id": "failure", "source": "speech", "type": "signal.status",
+                        "timestamp_s": 1.0,
+                        "payload": {"availability": availability, "reason": reason},
+                    }
+                    controller.emit(failure)
+                    unavailable = event(event_id="degraded", timestamp=2.0).model_dump()
+                    unavailable["payload"].update(
+                        availability="unavailable", wpm=None, filler_count=None,
+                        filler_rate_per_min=None,
+                        pause={"state": "unknown", "duration_s": None,
+                               "start_s": None, "end_s": None},
+                    )
+                    clock.advance_to(2.0)
+                    controller.emit(unavailable)
+                    self.assertEqual(controller.input_status["speech"], failure["payload"])
+                    clock.advance_to(3.0)
+                    controller.emit(event(event_id="recovered", timestamp=3.0))
+                    self.assertEqual(controller.input_status["speech"]["availability"], "available")
+                    # A later unknown observation cannot resurrect the old failure.
+                    clock.advance_to(4.0)
+                    unavailable["event_id"] = "unknown-again"
+                    unavailable["timestamp_s"] = unavailable["payload"]["window_end_s"] = 4.0
+                    controller.emit(unavailable)
+                    self.assertEqual(controller.input_status["speech"], {
+                        "availability": "unavailable", "reason": "observation_unavailable",
+                    })
+                    controller.emit({**failure, "event_id": "late-failure"})
+                    self.assertEqual(controller.input_status["speech"]["reason"],
+                                     "observation_unavailable")
+                finally:
+                    await controller.stop()
+
+    async def test_status_wins_metric_capture_time_tie_in_both_delivery_orders(self):
+        for metrics_first in (True, False):
+            with self.subTest(metrics_first=metrics_first):
+                controller, clock = self.controller()
+                await controller.start()
+                try:
+                    clock.advance_to(1.0)
+                    status = {
+                        "schema_version": 0, "session_id": controller.session_id,
+                        "event_id": "outage", "source": "speech", "type": "signal.status",
+                        "timestamp_s": 1.0,
+                        "payload": {"availability": "error", "reason": "microphone_disconnected"},
+                    }
+                    metric = event(event_id="same-time", timestamp=1.0)
+                    for observation in ((metric, status) if metrics_first else (status, metric)):
+                        controller.emit(observation)
+                    self.assertEqual(
+                        controller.snapshot().input_status["speech"], status["payload"],
+                    )
+                    clock.advance_to(2.0)
+                    controller.emit(event(event_id="after-outage", timestamp=2.0))
+                    self.assertEqual(controller.input_status["speech"]["availability"], "available")
+                finally:
+                    await controller.stop()
+
     async def test_all_capture_stops_before_drain(self):
         speech, vision = Capture(), Capture()
         controller, _ = self.controller(speech=speech, vision=vision)

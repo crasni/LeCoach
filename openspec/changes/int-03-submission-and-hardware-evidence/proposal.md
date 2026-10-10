@@ -32,4 +32,8 @@ None.
 
 Implementation belongs to Lane 1 on `agent/integration`. Expected changes are the existing [requirements](../../../docs/CONTEST.md), [sources](../../../docs/SOURCES.md), [demo plan](../../../docs/DEMO.md), [GitHub task Issue](https://github.com/crasni/LeCoach/issues/12), and [status](../../../docs/STATUS.md), plus `docs/submission/` deliverables and a hardware evidence guide. [GUIDE.md](../../../GUIDE.md) retains scope, and [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) retains contracts.
 
-No application dependency or API change is planned. Live evidence requires INT-02 and owner handoffs; accelerator measurements additionally require a compatible device/runtime/model setup. Missing target hardware does not prevent local Stage I preparation. Private media, transcripts, session exports, credentials, and weights stay out of Git. Scoped role-branch publication follows AGENTS; final recording, external publication/submission and broader actions require separate applicable authorization.
+No application dependency or API change is planned. Live evidence requires INT-02 and owner handoffs; accelerator measurements additionally require a compatible device/runtime/model setup. The maintainer confirms no UGen300 before qualification. Stage I implementation
+and real validation run on the confirmed ordinary computer with local CPU
+inference; actual target validation is retained for Stage II. Product rehearsal
+and client content remain English, as does competition explanation where
+required; the Mandarin/zh-TW proposal is canceled. Lucas is likely operator, not confirmed recording. Private media, transcripts, session exports, credentials, and weights stay out of Git. Scoped role-branch publication follows AGENTS; final recording, external publication/submission and broader actions require separate applicable authorization.

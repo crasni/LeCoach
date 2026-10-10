@@ -1,8 +1,8 @@
 # Tasks
 
-**Frozen execution record (coordination migration, 2026-10-08):** historical checklist states below preserve implementation/publication evidence as recorded before this migration. Do not update them as a live task board or treat an old publication/approval instruction as current policy. Live remaining work, dependencies and task acceptance belong exclusively to [Issue #10](https://github.com/crasni/LeCoach/issues/10); current publication follows [AGENTS](../../../AGENTS.md). Proposal/design/capability specs remain the agreed behavior reference.
+**Frozen execution record (coordination migration, 2026-10-08):** historical checklist states below preserve implementation/publication evidence as recorded before this migration. Do not update them as a live task board or treat an old publication/approval instruction as current policy. Live remaining work, dependencies and task acceptance belong exclusively to [Issue #10](https://github.com/crasni/LeCoach/issues/10); current publication follows [AGENTS](../../../../AGENTS.md). Proposal/design/capability specs remain the agreed behavior reference.
 
-Migrated from `docs/plans/INT-01.md` on 2026-10-07. Checked tasks reflect existing local implementation in `b7a42cd` and `802042e`, supported by [STATUS.md](../../../docs/STATUS.md#int-01-local-scaffold-validation); migration does not rerun or claim new application validation. On 2026-10-07 the maintainer explicitly instructed completion and archiving, accepting the merged scaffold and waiving the remaining peer-review/downstream signoff gate.
+Migrated from `docs/plans/INT-01.md` on 2026-10-07. Checked tasks reflect existing local implementation in `b7a42cd` and `802042e`, supported by [STATUS.md](../../../../docs/STATUS.md#int-01-local-scaffold-validation); migration does not rerun or claim new application validation. On 2026-10-07 the maintainer explicitly instructed completion and archiving, accepting the merged scaffold and waiving the remaining peer-review/downstream signoff gate.
 
 ## 1. Confirm the integration handoff
 
@@ -44,7 +44,7 @@ Migrated from `docs/plans/INT-01.md` on 2026-10-07. Checked tasks reflect existi
 
 ## Workflow follow-up
 
-Publication evidence (2026-10-07): the user explicitly approved publication of `b7a42cd`, `802042e`, `8ecacd4`, and `a7a91ef` to the role branch. SSH verified head `a7a91ef`; [PR #4](https://github.com/crasni/LeCoach/pull/4) subsequently merged as main `c0f6c68`. Its public reviews and comments were empty when checked. The maintainer subsequently instructed completion and archiving, replacing the original task 6.6 review gate with explicit maintainer acceptance. See [STATUS](../../../docs/STATUS.md#int-01-maintainer-acceptance).
+Publication evidence (2026-10-07): the user explicitly approved publication of `b7a42cd`, `802042e`, `8ecacd4`, and `a7a91ef` to the role branch. SSH verified head `a7a91ef`; [PR #4](https://github.com/crasni/LeCoach/pull/4) subsequently merged as main `c0f6c68`. Its public reviews and comments were empty when checked. The maintainer subsequently instructed completion and archiving, replacing the original task 6.6 review gate with explicit maintainer acceptance. See [STATUS](../../../../docs/STATUS.md#int-01-maintainer-acceptance).
 
 - All 20 tasks are closed through implemented evidence, publication and the maintainer-authorized acceptance exception. This does not establish live P0 integration or accelerator inference.
 - Archive with `$openspec-archive-change int-01-local-integration-scaffold`; verify the resulting main capability specs and archive record. The archive instruction does not grant push approval.
