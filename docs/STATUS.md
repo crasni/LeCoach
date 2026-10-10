@@ -134,6 +134,76 @@ IMPACT: File task boards/role prompts no longer duplicate live Issue fields. Ope
 Validation of the documentation migration on Linux/Python 3.12.14: `PYTHONPATH=src <reference-checkout>/.venv/bin/python -m pytest -q` passes 130 tests and 69 subtests with the existing Starlette/httpx deprecation warning. Both existing OpenSpec changes validate strictly; all 149 local Markdown targets/anchors resolve; Git whitespace checks pass. Read-back verification confirms 14 Issue records, their assignees/branches/status/acceptance and 19 native dependency relationships; the graph is acyclic. Application source, fixtures, dependencies, generated contracts and submission binary artifacts are unchanged.
 
 
+## COACH-01 computed coaching — synthetic validation
+
+FACT: On 2026-10-08, @WolflordR pulled the role branch safely and fast-forwarded
+`agent/session-analysis` from `main` at `558f56f` before implementation; then
+reconciled documentation-only migration `57aab92` before committing.
+Read-only GitHub inspection confirmed recorder PR #5 merged and issue #20 assigned
+to this owner. The merged LIVE-01 engine supplies usable reason codes now; final
+handoff acceptance in [issue #18](https://github.com/crasni/LeCoach/issues/18) and
+the referenced revert disposition remain pending.
+
+FACT: Implemented `TemplateFeedbackGenerator`, deterministic selection and plain
+templates in [the coaching module](../src/lecoach/coaching/README.md), consuming
+only canonical completed events and the existing engine's explicit reason
+citations. The optional `replay_with_coaching()` factory supplies the sole engine,
+accepted recorder and generator through existing component injection; it rejects
+live requests. Shared contracts, root configuration, default app/CLI composition,
+frontend and other lanes' implementations are unchanged.
+
+FACT: Added a separate hand-derived computed baseline and
+[`feedback_replay.py`](../checks/coaching/feedback_replay.py), retaining historical
+authored fixtures. In `weak_to_improved`, computed audience transitions are at
+0/20/30/35/40 seconds; direct-evidence feedback anchors are 10 seconds (pace),
+25 seconds (approximate facing), and 40 seconds (strength). The strength uses the
+engine-cited `vision-35`, not the uncited same-time `vision-40`. Repeated negative
+causes merge; missing/unknown/stale evidence is omitted with limitations, without
+filling quotas. The generator writes no files and retains no session state.
+
+Validation host: local macOS arm64, existing pinned CPython 3.12.14 environment
+and unchanged frozen dependency lockfile. Commands were run with `.venv/bin/python`
+and `.venv/bin/ruff`; equivalent project commands:
+
+```sh
+uv run pytest -q
+uv run python checks/coaching/feedback_replay.py
+uv run python checks/coaching/record_replay.py
+uv run python scripts/validate_fixtures.py
+uv run python scripts/export_schema.py --check
+uv run ruff check src scripts tests examples checks/coaching/feedback_replay.py
+git diff --check
+```
+
+Observed result: 148 tests and 106 subtests pass, including 18 new feedback/API
+tests and 37 subtests, with the existing Starlette/httpx deprecation warning.
+Computed engine/recorder/generator replay and recorder-only replay each pass all
+9 synthetic cases / 10 sessions. Fixture validation, schema parity, lint and
+whitespace checks pass. Checks cover direct reason templates, historical versus
+stale citations, future/wrong-source/missing evidence, absent person/pose/null
+metrics, outages, deduplication, quotas, custom shared freshness configuration,
+drain limitations, deterministic repeats, session isolation, and existing API
+transport with the factory injected. No browser E2E, live camera/microphone,
+inference model or UGen300 measurement was exercised.
+
+IMPACT: Issue #20's selector/template work can now be reviewed independently of
+live adapters. Default UI feedback is still authored; computed feedback is
+available only with the documented optional factory. This does not complete
+COACH-01 or close issue #20. The original PR #5 validation below remains historical
+and attributed, with its publication status corrected to merged.
+
+Publication-policy follow-up: @WolflordR supplied the migrated working agreement
+after local implementation commit `50fb3cb`, adopting scoped autonomous assigned-
+role-branch publication for this session. This supersedes the earlier wait for
+per-push approval. The current publication/PR and review state belongs in issue #20.
+
+PROPOSAL: Submit the validated increment through the assigned role branch and a
+scoped PR referencing issue #20 without closing it.
+Lane 1 reviews the optional composition and consumer baseline; Lane 4 confirms
+the evidence handoff and renders the canonical feedback. Resolve issue #18's
+pending decision and validate integrated behavior before final task acceptance.
+
+
 ## Verified
 
 - GitHub repository: https://github.com/crasni/LeCoach. Canonical SSH remote supplied by the maintainer: `git@github.com:crasni/LeCoach.git`.
@@ -292,7 +362,19 @@ IMPACT: Lane 5 can use these cases to check actual `CompletedSession` and `Feedb
 
 PROPOSAL: The integration owner reviews the claim and fixture placement, supplies the approved application layout and replay seam, and coordinates Lane 4's reason vocabulary/positive evidence. Lane 5 then implements the recorder, moment selector and template feedback in that layout, runs the cases against real consumer outputs, and records integration evidence before marking COACH-01 done.
 
-## COACH-01 recorder continuation — local, pending publication/review
+## COACH-01 recorder continuation — merged PR #5
+
+Current publication: [PR #5](https://github.com/crasni/LeCoach/pull/5), head
+`5991048`, was reviewed and merged on 2026-10-08. Recorder-only acceptance does
+not complete COACH-01; [issue #20](https://github.com/crasni/LeCoach/issues/20)
+tracks the remaining selection/template-feedback work. The dated macOS evidence
+below remains attributed to the original contributor run.
+
+The review supplied by the maintainer reports Linux / pinned CPython 3.12.14
+validation of the unchanged `5991048` head: 110 tests and 46 subtests pass,
+recorder replay matches 9 synthetic cases / 10 sessions, and fixture/schema/lint
+and whitespace checks pass, with the existing Starlette/httpx warning. This is
+reviewer-attributed evidence, not a new owner run or live-device validation.
 
 FACT: On 2026-10-07, read-only GitHub checks confirmed PRs #1, #3 and #4 merged.
 The remote role branch had been deleted following merge; a safe explicit pull
@@ -345,11 +427,12 @@ adapters. No real microphone/camera, engagement inference, computed feedback or
 UGen300 behavior is established. Positive coaching semantics and actual transition
 evidence still depend on LIVE-01, so COACH-01 remains incomplete.
 
-PROPOSAL: Present the exact local commit and role-branch destination for user push
-approval, then open a scoped continuation PR for integration-owner review. Lane 4
-supplies its transition/reason evidence before Lane 5 implements and verifies
-moment selection/template feedback. No new shared interface or second engagement
-engine was introduced, and no commits from this continuation have been pushed.
+PROPOSAL: Preserve the accepted recorder and implement the remaining moment
+selection/template feedback against the merged LIVE-01 reasons, with final
+handoff acceptance still pending. No new shared interface or second engagement
+engine was introduced by PR #5. New work follows the user's current approval
+requirements; the original recorder continuation has already been published
+and merged.
 
 ## INT-01 planning — local, not published
 
@@ -465,6 +548,38 @@ PROPOSAL: The integration owner reviews PR #7, especially the reason codes and t
 ## Evidence to add as work lands
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
+
+## AUD-01 production speech seams — 2026-10-09
+
+FACT: On `agent/audio-streaming`, based on main `91f6e63`, Lane 2 added the production speech seams in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+
+- `PortAudioSource` and `WavFileSource`;
+- streaming Silero voice activity detection (`SileroSegmenter`, `SpeechGate`);
+- a process-wide faster-whisper `WhisperTranscriber` with `warm_up`;
+- `python -m lecoach.speech.model --download / --check`;
+- `build_local_adapter()` and the guided `python -m lecoach.speech.probe`.
+
+Optional packages load lazily; the core install and suite are unchanged.
+
+Validation, core environment: `uv run pytest -q` passes 202 tests with 12 skipped (speech runtime and optional vision tests) and 342 subtests; ruff and the speech checks pass.
+
+Validation, speech environment: PR #23's `speech` group in a scratch environment, with `libportaudio2` 19.6.0, espeak-ng 1.51, and `base.en` int8, on Linux with 4 CPUs and no audio device. Every speech test passes, including:
+- Silero streaming equal to whole-file probabilities;
+- silence giving an empty final;
+- synthesized English transcribed with word times;
+- a synthesized talk through the adapter and session controller that passes `check_speech.py`.
+
+Real PortAudio without a device reports `microphone_not_found`.
+
+FACT: The probe replayed a 27 s espeak-ng English talk in real time.
+- It produced 4 accurate finals, and the checker passes: 53 words, 1 filler, and completed pauses at 2.76–5.02 s and 18.50–21.44 s.
+- Finals arrived 2.5 s median and 3.4 s max after speech ended; windows arrived 0.36 s median after their end. Stop and drain took 2 ms.
+- "Umm" was kept as a filler, but "uh" was dropped.
+- On 2 s of silence, `base.en` produced "You" with a no-speech probability of 0.81; the transcriber now drops such segments.
+
+IMPACT: Integration can compose live speech with `warm_up` and `build_local_adapter()` once PR #23's group is on main. These are synthetic-speech results on a container CPU, not microphone, recognition-quality, or demo-host evidence. The cold model load (14.7 s once) must happen before sessions.
+
+PROPOSAL: Run the probe on the development computer and the demo host for #13's live acceptance and #14's measurements. Remaining work is tracked in [Issue #13](https://github.com/crasni/LeCoach/issues/13).
 
 ## AUD-01 speech adapter core — 2026-10-09
 

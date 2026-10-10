@@ -1,8 +1,9 @@
 """Speech analysis configuration.
 
-Defaults follow the issue #6 proposal and remain demo heuristics until the team
-records its decision; AUD-02 recordings tune them. Pace bands, filler
-thresholds, and prolonged-silence durations belong to the engagement rules.
+Defaults are the English Stage I baseline accepted in issue #6
+(https://github.com/crasni/LeCoach/issues/6). They remain demo heuristics until
+AUD-02 recordings tune them. Pace bands, filler thresholds, and
+prolonged-silence durations belong to the engagement rules.
 """
 
 from typing import Annotated, Literal, Self
@@ -38,7 +39,8 @@ class SpeechConfig(Model):
     model: Name = "base.en"
     device: Literal["cpu", "cuda", "auto"] = "cpu"
     compute_type: Name = "int8"
-    model_dir: Name = "models"
+    # A filesystem path, relative to the working directory or absolute.
+    model_dir: str = Field(default="models", strict=True, min_length=1, max_length=4096)
 
     @model_validator(mode="after")
     def consistent_windows(self) -> Self:

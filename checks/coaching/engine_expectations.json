@@ -1,0 +1,276 @@
+{
+  "weak_to_improved": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ],
+        [
+          20,
+          "CONFUSED",
+          {
+            "pace_high": [
+              "speech-10",
+              "speech-20"
+            ]
+          }
+        ],
+        [
+          30,
+          "BORED",
+          {
+            "pace_high": [
+              "speech-10",
+              "speech-20"
+            ],
+            "facing_away_sustained": [
+              "vision-25",
+              "vision-30"
+            ]
+          }
+        ],
+        [
+          35,
+          "INTERESTED",
+          {
+            "pace_steady": [
+              "speech-35"
+            ],
+            "facing_audience": [
+              "vision-35"
+            ]
+          }
+        ],
+        [
+          40,
+          "ENGAGED",
+          {
+            "pace_steady": [
+              "speech-35",
+              "speech-40"
+            ],
+            "facing_audience": [
+              "vision-35"
+            ]
+          }
+        ]
+      ],
+      "moments": [
+        [
+          10,
+          "improvement",
+          [
+            "speech-10",
+            "engagement-1",
+            "speech-20",
+            "engagement-2"
+          ]
+        ],
+        [
+          25,
+          "improvement",
+          [
+            "vision-25",
+            "engagement-2",
+            "vision-30"
+          ]
+        ],
+        [
+          40,
+          "strength",
+          [
+            "speech-35",
+            "vision-35",
+            "engagement-4",
+            "speech-40"
+          ]
+        ]
+      ],
+      "limitations_contain": []
+    }
+  ],
+  "camera_unavailable": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ],
+        [
+          20,
+          "CONFUSED",
+          {
+            "pace_high": [
+              "speech-10",
+              "speech-20"
+            ]
+          }
+        ]
+      ],
+      "moments": [
+        [
+          10,
+          "improvement",
+          [
+            "speech-10",
+            "engagement-1",
+            "speech-20"
+          ]
+        ]
+      ],
+      "limitations_contain": [
+        "camera"
+      ]
+    }
+  ],
+  "no_usable_signals": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ]
+      ],
+      "moments": [],
+      "limitations_contain": [
+        "speech",
+        "camera",
+        "not enough"
+      ]
+    }
+  ],
+  "empty_session": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ]
+      ],
+      "moments": [],
+      "limitations_contain": [
+        "not enough"
+      ]
+    }
+  ],
+  "insufficient_window": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ]
+      ],
+      "moments": [],
+      "limitations_contain": [
+        "not enough"
+      ]
+    }
+  ],
+  "late_final_and_duplicates": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ]
+      ],
+      "moments": [],
+      "limitations_contain": [
+        "not enough"
+      ]
+    }
+  ],
+  "drain_timeout": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ]
+      ],
+      "moments": [],
+      "limitations_contain": [
+        "drain timeout"
+      ]
+    }
+  ],
+  "repeated_sessions": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ],
+        [
+          4,
+          "INTERESTED",
+          {
+            "facing_audience": [
+              "vision-shared-id"
+            ]
+          }
+        ]
+      ],
+      "moments": [],
+      "limitations_contain": [
+        "not enough"
+      ]
+    },
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ]
+      ],
+      "moments": [],
+      "limitations_contain": [
+        "not enough"
+      ]
+    }
+  ],
+  "adjacent_incidents": [
+    {
+      "transitions": [
+        [
+          0,
+          "NEUTRAL",
+          {}
+        ],
+        [
+          20,
+          "CONFUSED",
+          {
+            "pace_high": [
+              "speech-10",
+              "speech-20"
+            ]
+          }
+        ]
+      ],
+      "moments": [
+        [
+          10,
+          "improvement",
+          [
+            "speech-10",
+            "engagement-1",
+            "speech-20"
+          ]
+        ]
+      ],
+      "limitations_contain": []
+    }
+  ]
+}

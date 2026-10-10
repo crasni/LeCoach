@@ -76,3 +76,16 @@ test('a connection interruption resynchronizes without restarting playback', asy
   await expect(page.getByRole('region', { name: 'Example coaching' })).toBeVisible({ timeout: 15000 });
   expect(startRequests).toBe(1);
 });
+
+test('unavailable camera is reported plainly and never shows a facing value', async ({ page }) => {
+  await page.goto('/');
+  await page.getByLabel('Example', { exact: true }).selectOption('camera_unavailable');
+  await page.getByRole('button', { name: 'Start replay' }).click();
+  await expect(page.getByTestId('audience-state')).toHaveText('CONFUSED', { timeout: 12000 });
+  await expect(page.getByText('Camera: Camera permission denied')).toBeVisible();
+  await expect(page.getByText('Microphone: Receiving')).toBeVisible();
+  await expect(page.locator('.metrics')).toContainText('200 WPM');
+  await expect(page.getByRole('meter')).toHaveCount(0);
+  await expect(page.getByRole('list', { name: 'Audience transitions' }))
+    .not.toContainText('Turned away from the audience');
+});

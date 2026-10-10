@@ -36,6 +36,23 @@ const statusCopy: Record<string, string> = {
   microphone_permission_denied: 'Microphone permission denied',
   camera_disconnected: 'Camera disconnected',
   microphone_disconnected: 'Microphone disconnected',
+  // Vision adapter (src/lecoach/vision/README.md).
+  capture_started: 'Starting',
+  camera_unavailable: 'Camera unavailable (missing, busy or permission denied)',
+  camera_start_failed: 'Camera could not start',
+  camera_read_failed: 'Camera stopped sending frames',
+  vision_capture_failed: 'Camera processing failed',
+  pose_model_missing: 'Pose model not installed',
+  pose_runtime_missing: 'Pose software not installed',
+  // Speech adapter (src/lecoach/speech/README.md, "Failure reasons").
+  microphone_not_found: 'No microphone found',
+  microphone_no_signal: 'No sound from the microphone (muted or access denied)',
+  speech_vad_unavailable: 'Speech detection not installed',
+  microphone_unavailable: 'Microphone unavailable',
+  audio_queue_overflow: 'Audio processing fell behind',
+  speech_model_unavailable: 'Speech model unavailable',
+  speech_segmentation_failed: 'Speech detection failed',
+  transcription_failed: 'Transcription failed',
 };
 
 export function statusText(reason: string) {
