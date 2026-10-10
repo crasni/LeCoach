@@ -8,6 +8,9 @@ engagement engine. Application language and directories remain Lane 1's
 decision, and [ARCHITECTURE.md](../../docs/ARCHITECTURE.md) remains the
 contract authority.
 
+The model-free speech core in [`src/lecoach/speech/`](../../src/lecoach/speech/README.md)
+implements these rules, and a parity test replays every scenario below through it.
+
 `fixtures/*.json` are arrays of v0 events in **delivery order**, one event per
 line. Each fixture is a complete session (`session.started` to
 `session.completed`) carrying only speech and lifecycle events, so Lanes 4 and 5
