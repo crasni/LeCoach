@@ -1,6 +1,6 @@
 # LeCoach implementation status
 
-Last updated: 2026-10-09 (Asia/Taipei).
+Last updated: 2026-10-10 (Asia/Taipei).
 
 This file preserves dated implementation evidence. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) alone own current assignments, branches, progress, blockers, remaining work and acceptance; product scope lives in [GUIDE.md](../GUIDE.md).
 
@@ -567,7 +567,7 @@ FACT: The official SalesKit in `docs/` lists Whisper-Tiny, Whisper-Base and Whis
 IMPACT: Lanes 4 and 5 can develop against realistic speech streams before the live adapter exists, including pace, fillers, pauses, unavailable input, and null versus zero. AUD-01 remains blocked on INT-01's scaffold, configuration location, and executable contract and replay seam. No production speech adapter, capture code, or dependency was added. Filler counts from standard Whisper output may be undercounts, so filler-driven reactions depend on AUD-02 measurements.
 
 PROPOSAL: The integration owner reviews the claim, the fixture placement, and the proposed v0 speech rules and open questions in the README: pause-completion events, leading silence, null reasons, configuration, analysis language, and model-failure status. After INT-01 lands, Lane 2 implements microphone capture → voice activity detection → local Whisper with word timestamps in the approved layout. Recorded sessions are then checked with `check_speech.py --stream`, and AUD-02 measures latency and filler recall per model size before any claim is made.
-# Integration reconciliation and failure-notice regression — 2026-10-10
+## Integration reconciliation and failure-notice regression — 2026-10-10
 
 With explicit maintainer authorization, `agent/integration` merged main
 `e5c0838` as `42bd657` without conflicts. Existing integration setup/archive/demo
