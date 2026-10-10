@@ -38,7 +38,7 @@ class TemplateFeedbackGenerator:
             )
             if not usable:
                 limitations.append(
-                    f"No usable {label.lower()} delivery observations were recorded."
+                    f"There was not enough usable {label.lower()} input to assess delivery."
                 )
             elif any(e.payload.availability != "available" for e in index.statuses[source]) or any(
                 e.payload.availability != "available"
@@ -47,14 +47,18 @@ class TemplateFeedbackGenerator:
             ):
                 limitations.append(f"{label} input was unavailable for part of this session.")
             if source in session.incomplete_sources:
-                limitations.append(f"{label} processing did not finish before the drain timeout.")
+                limitations.append(
+                    f"Some {label.lower()} results did not finish before the session closed; "
+                    "feedback may be incomplete."
+                )
         if omitted:
             limitations.append(
-                "Some audience changes lacked supported, usable evidence and were omitted."
+                "Some audience changes could not be explained reliably "
+                "and were left out of this feedback."
             )
         if not moments:
             limitations.append(
-                "There is not enough supported audience evidence to select coaching moments."
+                "There is not enough reliable information to select coaching moments yet."
             )
         return validate_feedback(
             Feedback(

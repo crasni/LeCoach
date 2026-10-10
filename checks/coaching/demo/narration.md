@@ -1,21 +1,26 @@
-# English narration draft — 2:55 development preview
+# English narration — 2:55 CPU live draft
 
-Companion to [the Lane 5 runbook](README.md) and integration's existing
-[shot plan](../../../docs/DEMO.md). This text is for script review and timed
-read-through. It is not a final live-demo script, recording or submission.
-Live replacements depend on accepted runs in Issues
-[#20](https://github.com/crasni/LeCoach/issues/20) and
-[#11](https://github.com/crasni/LeCoach/issues/11).
+Companion to [the Lane 5 runbook](README.md) and integration's
+[shot plan](../../../docs/DEMO.md). This revises the merged `03028dd` preview for
+main's delivered live composition. It is a reviewable script, not a final recording
+or submission. Read only the six `text` blocks.
 
-Read only the six `text` blocks. Screen directions, timing notes and live pickups
-are not narration. Keep a visible **Synthetic development preview** label.
-Session timestamps and edited-video times are different clocks; the fixed numbers
-below belong to `weak_to_improved` only.
+The maintainer reported an approximately **2:20 spoken read-through of the previous
+316-word script** ([source](https://github.com/crasni/LeCoach/issues/12#issuecomment-6095163116)).
+That timing does not measure this revision, individual slots or the edited video.
+The confirmed host is the maintainer's Ubuntu PC using local CPU inference and a
+Bluetooth microphone. The operator reports that the live functional batch passed;
+exact coaching moments/citations and quantitative accuracy/latency remain separate.
+See [the functional handoff](https://github.com/crasni/LeCoach/issues/11#issuecomment-6095334266).
+
+Keep **Live · local CPU** visible for actual live footage and **Synthetic replay**
+for fixture footage. Session timestamps and edited-video times are different clocks.
+Do not substitute synthetic values for a live run. The spoken text makes no fixed
+live timestamp, insight-count or filler-recall claim.
 
 ## 0:00–0:20 — Why rehearse with an audience?
 
-Screen: title and rehearsal audience. Introduce intended value as a product goal;
-no user study or measured outcome is claimed.
+Screen: title and audience. Introduce intended value; no user-study result is claimed.
 
 ```text
 Practicing a presentation alone gives you few clues about how an audience might
@@ -25,100 +30,94 @@ connect delivery habits with visible reactions and practical rehearsal advice.
 
 ## 0:20–0:35 — Identify the demonstrated mode
 
-Screen: fixture selector and Start replay control; no live capture indicator.
-Generated coaching will be shown separately in the terminal.
+Screen: the live selector and local input notices on the confirmed CPU host.
+Use this paragraph with actual live footage only; the default fixture preview
+has authored example coaching and needs its own explicit replay label.
 
 ```text
-This development preview uses synthetic speech and camera measurements. The
-audience reactions are computed locally. We show generated coaching separately;
-the browser currently displays an authored example summary.
+The live prototype runs on an ordinary computer, using local speech and camera
+processing. Starting a rehearsal opens the inputs. Stopping it produces a summary
+from the observations collected during that session.
 ```
 
 ## 0:35–1:35 — Weak delivery and recovery
 
-Screen: play the synthetic audience sequence, then hold the timeline/reasons.
-Default 5× replay lasts about ten wall-clock seconds. Use the rest of the slot
-to explain the completed timeline; retain the mode and speed labels.
+Screen: the authorized pace/facing scenario from the runbook, followed by its
+actual timeline. Show the observed sequence; do not force a specific state or
+reuse the synthetic 20/30/35/40-second transitions as live results. If footage
+fails to support a sentence, revise that sentence before final review.
 
 ```text
-The example starts with fast speech and a sustained turn away from the audience.
-The recorded speech windows are around two hundred words per minute. The virtual
-listeners become confused at twenty seconds, then bored at thirty seconds.
+We practice the same short workplace update twice. First, we rush the key points
+and stay turned toward our notes. Then we repeat the passage at a steadier pace,
+facing the camera.
 
-As the example settles into a steadier pace and faces forward, the audience
-becomes interested, then engaged at forty seconds. These are session timestamps.
+The virtual audience responds to sustained delivery signals. Changes take time;
+one brief movement does not define the whole rehearsal. These reactions are a
+practice aid, not a measurement of real people's feelings.
 
-The reactions use sustained observations and smoothing, so a single movement
-does not define the whole rehearsal. The timeline makes the change visible and
-gives the speaker a place to review what happened.
+The timeline lets us revisit the moment when the audience changed. We can compare
+that reaction with the delivery observations instead of guessing what happened.
 ```
 
 ## 1:35–2:15 — Timestamp, observation, action
 
-Screen: terminal output from `feedback_replay.py --case weak_to_improved
---show-feedback`, paired with its generated moments and evidence IDs. Keep the
-browser's authored summary out of this shot or label it explicitly as authored.
-No generated-summary browser integration is claimed here.
+Screen: generated **live** feedback after stop, showing its actual timestamps.
+Match each visible card to its existing canonical evidence IDs before review.
+The final shot needs at least one supported example of the advice described below;
+show fewer cards when evidence is limited. Do not overlay synthetic advice on live footage.
 
 ```text
-The generated summary points to fast speech at ten seconds and approximate
-head or body facing at twenty-five seconds. It suggests pausing after key points
-and placing notes nearer the camera. At forty seconds, it highlights a supported
-strong moment with a steadier pace and forward orientation.
+The summary gives us a specific place to practice again. A fast passage can lead
+to a simple next step: repeat it more slowly, pausing after each key point. A
+camera-facing suggestion asks us to deliver the next sentence toward the camera.
 
-Each observation links to recorded evidence. Facing uses coarse head and body
-estimates. When inputs are missing or evidence is insufficient, the coach reports
-limitations and returns fewer suggestions.
+Supported strengths show what to repeat. Each suggestion keeps its timestamp and
+links to recorded observations. The camera estimates direction, not eye contact.
+Missing inputs or insufficient evidence produce limitations, rather than invented advice.
 ```
 
-## 2:15–2:40 — Stage I CPU processing and the hardware plan
+## 2:15–2:40 — Local CPU processing and the hardware plan
 
-Screen: existing architecture diagram and **Stage I: local CPU target;
-Stage II: UGen300 validation pending** caption. This preview has no accelerator
-benchmark or live privacy validation.
+Screen: existing architecture and **Stage I: local CPU · Stage II: UGen300
+unmeasured** caption. Local processing and raw-recording defaults are implemented
+properties; they are not a completed security audit or a performance benchmark.
 
 ```text
-Stage I targets an ordinary computer using local CPU inference. The current
-checks exercise synthetic events; real microphone and camera validation is still
-pending. LeCoach is designed to keep rehearsal data on the device, with raw
-recording off by default. UGen300 integration and hardware measurements belong
-to Stage II after qualification.
+Speech recognition and pose processing run locally on the Stage I computer.
+Rehearsal data stays local, and raw audio and video recording are off by default.
+We have not measured accelerator performance. UGen300 integration and hardware
+validation belong to Stage II after qualification.
 ```
 
-## 2:40–2:55 — Next demonstrated milestone
+## 2:40–2:55 — One useful next rehearsal
 
-Screen: audience and generated moments with the synthetic label retained. End
-on the next validation step, without a release-date promise.
+Screen: one reviewed observation/action card and the new-session control. No
+accuracy, learning-outcome or release-date promise.
 
 ```text
-Our next milestone is an accepted microphone and camera rehearsal with the same
-evidence-linked coaching. The goal is simple: help speakers connect delivery,
-audience response, and a useful next practice step.
+Choose one supported suggestion, then practice the passage again. LeCoach aims
+to make that next rehearsal more focused: connect a delivery habit with an
+audience response and a concrete action you can try.
 ```
 
-## Timing method and final live pickups
+## Final pickups
 
-The slots total 175 seconds. Word counts and estimated reading times are in the
-runbook; they are not measured voiceover or finished-video durations. Record
-actual per-slot times during an authorized read-through. Use screen holds for
-the timeline, reasons and evidence.
+The slots total 175 seconds. Before final script/footage acceptance:
 
-Before adapting this narration to an accepted live run:
+- Supply a sanitized run/revision/configuration reference and the actual visible
+  moment kind, timestamp, observation, action and supporting IDs for the advice shot.
+  #11's passed operator batch does not supply these exact values. Do not repeat
+  the completed functional batch just to establish the same general success.
+- Confirm that live footage shows generated coaching. Plain `lecoach serve` and
+  fixture selection still show authored example coaching; label that mode explicitly.
+- Review the actual outcome with #20/#11 owners. More silence is not necessarily
+  intentional; camera direction is not eye contact. Avoid filler-driven reactions
+  while #14's recall investigation is unresolved.
+- Time this revised read-through, actual per-slot holds and the final edit.
+  The earlier approximately 2:20 result belongs to `03028dd`, not this draft.
+- Retain CPU/hardware attribution and local-retention limits. Obtain separate
+  recording, publication and submission authorization before those actions.
 
-- Replace the mode paragraph with the actual host/input mode and accepted run
-  reference. Keep CPU and verified accelerator execution distinct.
-- Replace fixture values/times with actual capture timestamps, reasons and
-  supported moments. Describe the observed count; three is not a quota.
-- Show generated feedback in the UI only after its composition/rendering is
-  accepted. Otherwise identify the actual viewer used in the footage.
-- Retain the approximate-facing qualification. Missing input is a limitation;
-  pause duration alone does not establish whether a pause was intentional.
-- Keep local processing as design intent until actual live data flow and
-  retention are reviewed. Stage I uses the confirmed ordinary CPU host; Stage II
-  accelerator wording changes only with measured hardware evidence. See the
-  [English CPU direction](https://github.com/crasni/LeCoach/issues/21).
-- Re-time the revised narration and final edit. Supply commit/run references,
-  actual duration and reviewer notes to integration.
-
-These pickups prepare a later final script. Real rehearsal recording, video
-upload and competition delivery require their applicable authorization.
+Integration receives the versioned script, evidence references and measured edit
+through #21/#12. Final task acceptance remains in Issues.

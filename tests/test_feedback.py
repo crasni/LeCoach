@@ -109,7 +109,7 @@ class FeedbackTests(IsolatedAsyncioTestCase):
 
     async def test_templates_use_measured_values_and_practical_actions(self):
         observations = [
-            ("pace_high", speech(), "200", "Pause"),
+            ("pace_high", speech(), "200", "pausing"),
             ("pace_low", speech(wpm=70.0), "70", "phrases"),
             ("fillers_frequent", speech(filler_count=4, filler_rate_per_min=24.0), "24", "breath"),
             (
@@ -125,7 +125,7 @@ class FeedbackTests(IsolatedAsyncioTestCase):
                 "7 seconds",
                 "transition",
             ),
-            ("facing_away_sustained", vision(), "0.2", "camera"),
+            ("facing_away_sustained", vision(), "appeared", "camera"),
         ]
         for code, metric, observed, action in observations:
             with self.subTest(code=code):
@@ -137,6 +137,43 @@ class FeedbackTests(IsolatedAsyncioTestCase):
                 self.assertIn(observed, moment.observation)
                 self.assertIn(action, moment.suggestion)
                 self.assertEqual(moment.timestamp_s, metric.timestamp_s)
+                self.assertIn(metric.event_id, moment.evidence_event_ids)
+                self.assertIn("audience-10.0", moment.evidence_event_ids)
+                for jargon in ("cited", "windows", "out of 1", "ENGAGED", "head/body"):
+                    self.assertNotIn(jargon, moment.observation)
+                if code == "silence_prolonged":
+                    self.assertIn("at least", moment.observation)
+                    self.assertIn("cannot tell", moment.observation)
+                if code == "fillers_frequent":
+                    self.assertIn("transcript", moment.observation.lower())
+
+    async def test_active_pause_advice_does_not_invent_its_end_or_intent(self):
+        metrics = [
+            speech(
+                at,
+                f"pause-{at}",
+                pause={
+                    "state": "active",
+                    "duration_s": at - 3.0,
+                    "start_s": 3.0,
+                    "end_s": None,
+                },
+            )
+            for at in (10.0, 11.0)
+        ]
+        report = await generator().generate(
+            completed(
+                *metrics,
+                transition(
+                    "silence_prolonged", [m.event_id for m in metrics], at=11.0, state="BORED"
+                ),
+            )
+        )
+        moment = report.moments[0]
+        self.assertIn("at least 8 seconds", moment.observation)
+        self.assertIn("cannot tell whether it was planned", moment.observation)
+        self.assertEqual(moment.timestamp_s, 10.0)
+        self.assertTrue(all(m.event_id in moment.evidence_event_ids for m in metrics))
 
     async def test_invalid_unknown_future_wrong_source_and_lifecycle_evidence_omitted(self):
         cases = [
@@ -152,7 +189,7 @@ class FeedbackTests(IsolatedAsyncioTestCase):
             with self.subTest(reaction=reaction):
                 report = await generator().generate(completed(speech(), reaction))
                 self.assertEqual(report.moments, [])
-                self.assertTrue(any("omitted" in text for text in report.limitations))
+                self.assertTrue(any("left out" in text for text in report.limitations))
 
     async def test_unknown_null_unavailable_and_zero_pace_never_negative_advice(self):
         for metric in [speech(wpm=None), speech(wpm=0.0), speech(availability="unavailable")]:
@@ -256,7 +293,7 @@ class FeedbackTests(IsolatedAsyncioTestCase):
                         )
                     )
                     self.assertEqual(report.moments, [])
-                    self.assertTrue(any("omitted" in text for text in report.limitations))
+                    self.assertTrue(any("left out" in text for text in report.limitations))
 
     async def test_post_outage_window_cannot_validate_old_citations_or_capture_time_ties(self):
         outage = parse_event(
@@ -325,7 +362,8 @@ class FeedbackTests(IsolatedAsyncioTestCase):
         )
         self.assertEqual(len(report.moments), 1)
         self.assertEqual(report.moments[0].timestamp_s, 20.0)
-        self.assertIn("head/body", report.moments[0].observation)
+        self.assertIn("camera", report.moments[0].observation)
+        self.assertIn("145", report.moments[0].observation)
         for code, metric in [
             ("pace_steady", speech(wpm=144.0)),
             ("facing_audience", vision(facing_score=0.8)),
@@ -335,6 +373,15 @@ class FeedbackTests(IsolatedAsyncioTestCase):
                     completed(metric, transition(code, [metric.event_id], state="ENGAGED"))
                 )
                 self.assertEqual(len(report.moments), 1)
+                moment = report.moments[0]
+                self.assertIn(metric.event_id, moment.evidence_event_ids)
+                if code == "pace_steady":
+                    self.assertIn("144", moment.observation)
+                    self.assertNotIn("camera", moment.observation + moment.suggestion)
+                else:
+                    self.assertIn("appeared", moment.observation)
+                    self.assertNotIn("pace", moment.observation + moment.suggestion)
+                    self.assertNotIn("words per minute", moment.observation)
 
     async def test_repeated_causes_merge_and_reused_evidence_cannot_fill_quotas(self):
         report = await generator().generate(
@@ -384,7 +431,7 @@ class FeedbackTests(IsolatedAsyncioTestCase):
             completed(speech(), transition(), incomplete=["speech"])
         )
         self.assertEqual(len(report.moments), 1)
-        self.assertTrue(any("drain timeout" in text for text in report.limitations))
+        self.assertTrue(any("did not finish" in text for text in report.limitations))
 
     async def test_invalid_freshness_limits_fail_explicitly(self):
         for limits in [{}, {"speech": float("nan"), "vision": 1.0}, {"speech": 1.0, "vision": 0.0}]:

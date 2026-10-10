@@ -1,8 +1,8 @@
 # COACH-02 scenario and narration handoff
 
 This Lane 5 preparation connects the existing [2:55 shot plan](../../../docs/DEMO.md)
-to [an English narration draft](narration.md), computed coaching and a proposed
-live rehearsal. Issues [#21](https://github.com/crasni/LeCoach/issues/21),
+to [a CPU live narration draft](narration.md), computed coaching and a repeatable
+pace/facing rehearsal. Issues [#21](https://github.com/crasni/LeCoach/issues/21),
 [#20](https://github.com/crasni/LeCoach/issues/20) and
 [#11](https://github.com/crasni/LeCoach/issues/11) own current progress, blockers
 and acceptance. This supplies scenarios and evidence procedures, not another
@@ -11,9 +11,13 @@ publication require the applicable team authorization.
 
 The current English direction in [#21](https://github.com/crasni/LeCoach/issues/21)
 uses an ordinary computer with local CPU inference for Stage I. UGen300 hardware
-validation remains Stage II work after qualification. The actual demo host and
-recording arrangement must be confirmed by integration; this runbook does not
-claim a completed live CPU run or accelerator measurement.
+validation remains Stage II work after qualification. The confirmed demo host is
+the maintainer's Ubuntu 26.04.1 / Linux x86_64 PC (Ryzen AI 7 450, approximately 30 GiB RAM), with Bluetooth microphone.
+The [operator's live functional batch](https://github.com/crasni/LeCoach/issues/11#issuecomment-6095334266)
+reports transcription/camera/audience, stop/generated feedback, repeat isolation,
+release, short/no-person and missing-microphone checks passed. This is attributed
+operator evidence, not Lane 5's independent device test, quantified accuracy/latency
+or final coaching acceptance. Recording/publication arrangements remain separate.
 
 ## Reproduce the current synthetic preview
 
@@ -36,8 +40,9 @@ and the test-only [computed baseline](../engine_expectations.json).
 For the audience shot, follow integration's launch instructions in DEMO and
 select `weak_to_improved`. Default browser replay computes audience states and
 displays authored example coaching. Show the CLI's generated summary separately
-and retain the synthetic-mode label in both views. These demonstrations share
-the scenario, but are not an accepted live UI/coaching integration.
+and retain the synthetic-mode label in both views. The delivered opt-in live
+composition instead generates coaching in the browser after stopping a live session;
+a fixture selection in that app still uses authored coaching.
 
 ### Evidence anchors to point out
 
@@ -72,11 +77,26 @@ are not minimum insight quotas for arbitrary rehearsals.
 | `repeated_sessions` | Two isolated sessions, no moments; old-session events excluded |
 | `adjacent_incidents` | One pace improvement; repeated incident does not fill another slot |
 
-## Proposed live rehearsal after accepted integration
+## CPU live rehearsal and final evidence pickup
 
-Use the launch/configuration and producer handoffs accepted under INT-02. The
-current optional coaching factory rejects live mode. This preparation supplies
-no live command or model configuration.
+Use integration's delivered public composition and [host setup](../../../docs/DEMO_HOST.md).
+The already-prepared demo host needs no new model download merely for this handoff:
+
+```sh
+uv run --group speech --group vision lecoach serve --live
+```
+
+Select **Live microphone and camera**, rehearse, then stop to inspect generated
+feedback. If selecting a Bluetooth input, use the speech owner's documented
+`LECOACH_SPEECH_DEVICE`; integration owns launch/configuration decisions. The
+replay-only `replay_with_coaching()` factory does not enable live devices.
+
+The operator has already completed the reliability batch above. Do not request
+that same batch again. The remaining coaching pickup is the actual moment
+kind/time/observation/action/evidence IDs and a sanitized revision/run/configuration
+reference, so reviewers can check advice against its support. Do not export private
+transcript/media or claim that current model hashes retrospectively prove the prior
+run configuration. Recording still needs separate authorization.
 
 Have an authorized presenter use this invented, nonconfidential passage. It is
 synthetic rehearsal material, not a participant's transcript:
@@ -118,28 +138,33 @@ not a new JSON contract. Raw media, transcripts and private outputs stay out of 
 | Review | Reviewer/run reference for accepted integration/coaching; inaccurate-claim or missing-evidence notes |
 | Media, when authorized | Local artifact references, visible mode/speed labels, actual read-through/edit durations; publication approval separately |
 
-## Narration timing estimate
+## Narration timing and attribution
 
-The revised six spoken blocks total **316 words**. Count hyphenated words and words
-with apostrophes as one; exclude directions and live pickup notes. At an assumed
-135 words/minute, reading takes about 140.4 seconds, leaving 34.6 seconds of screen
-holds within the existing 175-second plan. Each slot fits this assumed pace.
-At 125–145 words/minute, reading alone is approximately 130.8–151.7 seconds;
-adjust holds after a timed read-through. None of these are measured durations.
+The maintainer reports an approximately **2:20 (140 s)** comfortable read-through
+of the earlier six-block, **316-word** script at `03028dd`
+([source](https://github.com/crasni/LeCoach/issues/12#issuecomment-6095163116)).
+It fits the 175 s shot plan with about 35 s remaining. This is operator-reported
+spoken duration, not measured slot timing or finished-video duration.
+
+The revised CPU live draft has **309 words**. At the earlier approximately 135 WPM
+pace, reading is estimated at 137.3 s, leaving 37.7 s for holds. This revision
+has not been read/timed by the operator; do not transfer the previous measured
+duration to it. At 125–145 WPM, estimated speech is 127.9–148.3 s; time each slot
+and adjust holds after review.
 
 | Video slot | Words | Estimated speech at 135 WPM | Available screen hold |
 | --- | ---: | ---: | ---: |
 | 0:00–0:20 | 35 | 15.6 s | 4.4 s |
-| 0:20–0:35 | 28 | 12.4 s | 2.6 s |
-| 0:35–1:35 | 95 | 42.2 s | 17.8 s |
+| 0:20–0:35 | 32 | 14.2 s | 0.8 s |
+| 0:35–1:35 | 90 | 40.0 s | 20.0 s |
 | 1:35–2:15 | 76 | 33.8 s | 6.2 s |
-| 2:15–2:40 | 51 | 22.7 s | 2.3 s |
-| 2:40–2:55 | 31 | 13.8 s | 1.2 s |
+| 2:15–2:40 | 43 | 19.1 s | 5.9 s |
+| 2:40–2:55 | 33 | 14.7 s | 0.3 s |
 
 Recount after editing, from the repository root:
 
 ```sh
-uv run python - <<'PY'
+uv run python - <<'PYCOUNT'
 import re
 from pathlib import Path
 text = Path("checks/coaching/demo/narration.md").read_text()
@@ -147,7 +172,7 @@ blocks = re.findall(r"```text\n(.*?)\n```", text, re.S)
 counts = [len(re.findall(r"\b[\w]+(?:[-'][\w]+)*\b", block)) for block in blocks]
 print("Per slot:", counts, "Total:", sum(counts))
 print("Estimated seconds at 135 WPM:", round(sum(counts) / 135 * 60, 1))
-PY
+PYCOUNT
 ```
 
 ## INT-03 handoff
@@ -157,8 +182,9 @@ generated-feedback anchors, actual run record and measured read-through/edit
 duration. Integration owns DEMO/deck/readiness updates; link current Issues/PRs
 instead of copying live task fields into these files.
 
-Replace fixture timestamps and the preview-mode paragraph using the accepted
-run's evidence, following the narration pickups. Review wording against actual
+Review the CPU live wording and actual visible moments using the accepted
+run's evidence, following the narration pickups. Keep synthetic 10/25/40 s
+anchors separate from live observations. Review wording against actual
 local retention/data flow and measured target behavior. An estimated read time
 or successful synthetic replay is not a live demo, accepted final script or
 permission for video/competition delivery.
@@ -188,8 +214,9 @@ The narration's hardware slot now distinguishes the ordinary-computer CPU
 Stage I target from Stage II UGen300 validation; other spoken blocks and the
 synthetic 10/25/40 s evidence anchors are preserved. Fresh recount is
 `[35, 28, 95, 76, 51, 31]`, **316 words**. Reading/holds remain estimates; no
-read-through or recording is claimed. Earlier 310-word validation above applies
-to the previous draft, not this revision.
+read-through or recording was claimed by that Lane 5 check. The subsequent
+operator read-through is attributed above. Earlier 310-word validation applies
+to the previous draft, not the 316-word revision or current CPU live draft.
 
 After integration supplies a canonical completed-session record and its actual
 engine configuration, [the local checker](../../../src/lecoach/coaching/README.md#inspect-a-completed-session-locally)
@@ -199,3 +226,17 @@ provenance and accepted-run references separately; the checker does not certify
 device/model behavior. Use those outputs to replace fixture-specific narration
 only after the run is accepted. Integration still owns app/CLI composition and
 final DEMO/deck/readiness reconciliation.
+
+## CPU live script revision — 2026-10-10
+
+PR #24 (`03028dd`) and integration PR #23 are approved and merged. This revision
+reconciles the script with delivered live browser coaching, the confirmed host
+and the operator functional/read-through evidence. It uses no fabricated live
+timestamps, no prescribed insight quota and no filler-driven demo claim.
+Synthetic anchors and historical validation remain versioned above.
+
+Exact remaining pickups: supported visible moment details/run provenance for
+#20/#11 review; this revised read-through; per-slot/finished-edit timing; and
+applicable recording/publication/submission authorization. Integration owns
+DEMO/deck/readiness changes. Proposal rewrite PR #32 does not gate runtime or
+this independent script preparation. Final acceptance belongs to Issues.
