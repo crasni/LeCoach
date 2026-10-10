@@ -109,3 +109,13 @@ announcements and FAQ pages. Announcements displayed none at inspection; the FAQ
 provides generic editing/receipt/support guidance and does not resolve the cutoff,
 upload-limit or originality questions. No registration button was activated and
 no account, submission form or receipt was accessed.
+
+## Rendered cutoff verification — 2026-10-10
+
+Unauthenticated Chromium inspection of the official home page, after network
+loading settled, displayed the Submission period as `2026-09-04 12:00` to
+`2026-10-14 17:00` and Competition timezone as `Asia/Taipei`. These explicit
+rendered fields establish the Stage I cutoff as 2026-10-14 17:00 UTC+8; they
+resolve the earlier uncertainty from timezone-free JSON-LD. The root Event's
+endDate still reflects retrieval time and was not used as the deadline.
+No registration button, account or submission form was used.

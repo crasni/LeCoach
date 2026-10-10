@@ -830,3 +830,22 @@ accelerator compatibility or task acceptance. The actual demo host remains
 unconfirmed; live validation and component downstream acceptance remain in #11.
 PR #23 still requires collaborator review; it was not merged under the separate
 three-component authorization.
+
+## Maintainer-reported integrated live checks — 2026-10-10
+
+FACT: The maintainer tested live mode on their Ubuntu 26.04.1 / Ryzen AI 7 450 /
+approximately 30 GiB RAM computer using a Bluetooth microphone. They report
+transcription, camera detection and audience reactions work; their UI screenshot
+shows BORED with “A long silence” after the audience lost focus.
+
+FACT: In response to the requested manual reliability batch, the maintainer
+confirmed all checks work: coaching after stop, repeat-session transcript reset
+and working inputs, camera indicator release, short/no-person handling and the
+missing-microphone scenario. They also report a comfortable approximately 2:20
+read-through of the 316-word preview narration.
+
+LIMITATIONS: These are user-reported checks, not independently observed or
+instrumented timings/accuracy measurements. Exact run revision/model hashes,
+per-slot video timing and coaching moment text/evidence IDs were not supplied.
+Advice usefulness and client experience remain areas the maintainer wants improved.
+This record does not establish Stage II accelerator operation or final submission.

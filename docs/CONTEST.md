@@ -6,7 +6,7 @@ Content rechecked 2026-10-10 against the [official competition rules](https://co
 
 | Item | Official requirement / section |
 | --- | --- |
-| Stage I deadline | 2026-10-14; sections V–VI. Exact cutoff time/timezone needs confirmation. |
+| Stage I deadline | **2026-10-14 17:00, Asia/Taipei (UTC+8)**; rendered public Submission period / Competition timezone fields checked 2026-10-10, with the date confirmed by sections V–VI. |
 | Deck | English throughout; at most 20 main pages, excluding appendix. Cover problem, solution, architecture, expected outcomes, references and GitHub source link; VI. |
 | Video | Mainly English; three minutes or less is recommended. Supply an unlisted YouTube link; VI. |
 | Stage I hardware | A laptop, SBC or virtual host may support initial validation; the selected accelerator is not mandatory yet; V. |
@@ -23,8 +23,8 @@ Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS.
 
 ## Unresolved submission details
 
-- Confirm the cutoff time/timezone and any upload limits in the actual submission form; the retrieved structured dates do not reliably establish them.
-- The team's online/onsite registration choice and completion receipt have not been checked.
+- Registration completion and submission receipt have not been checked. The maintainer selected Global Online Track on 2026-10-10; registration is not yet completed.
+- Any form-specific constraints will be addressed if they prevent the selected artifacts from being submitted; upload limits have not been inspected.
 - Review section IX's original-work and licensing terms with the team. Clarify the treatment of a public development repository alongside the required GitHub link; do not assume an eligibility interpretation.
 - Recheck the official rules immediately before submission. External upload, publication and submission follow the team's authorization requirements.
 
@@ -58,3 +58,12 @@ No UGen300 before qualification is a maintainer-confirmed team constraint. Stage
 must validate the ordinary-computer CPU path; actual accelerator operation remains
 required for Stage II rather than blocking Stage I. Lucas is likely operator,
 with actual demo computer and recording arrangement unconfirmed.
+
+## Exact cutoff verified — 2026-10-10
+
+The rendered official home page displays a submission period ending
+**2026-10-14 17:00** and explicitly identifies **Asia/Taipei** as the competition
+timezone. This resolves the earlier cutoff uncertainty; prior dated retrieval
+notes above describe earlier checks. The timezone-free JSON-LD value alone was
+not used to infer the time. The maintainer selected **Global Online Track**;
+registration and delivery receipts remain separate from that participation choice.
