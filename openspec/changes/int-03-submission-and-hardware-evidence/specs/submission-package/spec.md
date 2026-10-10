@@ -70,3 +70,10 @@ The package SHALL include no private voice, video, transcripts, session exports,
 #### Scenario: Package prepared for a commit
 - **WHEN** local deliverables are staged for review
 - **THEN** the staged files contain the proposal and sanitized evidence documents, and exclude private rehearsal artifacts, credentials, receipts, and downloaded weights
+
+### Requirement: Confirm the actual Stage I demo environment
+Final Stage I validation SHALL identify the actual ordinary computer, OS/CPU/architecture/RAM, devices, local model/configuration and exact setup/launch. A likely operator SHALL NOT establish a confirmed computer, narrator or recording arrangement. UGen300 absence SHALL NOT block this CPU validation.
+
+#### Scenario: Lucas likely operates the demo
+- **WHEN** Lucas is the planned operator but the computer and recording arrangement are unconfirmed
+- **THEN** setup/scenario preparation continues and final actual-host live and recording acceptance remain pending

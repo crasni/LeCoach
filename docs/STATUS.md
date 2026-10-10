@@ -1,10 +1,125 @@
 # LeCoach implementation status
 
-Last updated: 2026-10-09 (Asia/Taipei).
+Last updated: 2026-10-10 (Asia/Taipei).
 
 This file preserves dated implementation evidence. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) alone own current assignments, branches, progress, blockers, remaining work and acceptance; product scope lives in [GUIDE.md](../GUIDE.md).
 
 **Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
+
+## Accepted scaffold archive — 2026-10-09
+
+Archived INT-01 to `openspec/changes/archive/2026-10-09-int-01-local-integration-scaffold`.
+Synced four capability specs (22 requirements) into `openspec/specs/`: event
+contracts, local transport, session lifecycle and synthetic replay. Requirement
+bodies are unchanged; relative references follow their new locations. Preserved
+all 20 completed tasks, original authorship/evidence and the prior maintainer
+acceptance/peer-review waiver. No runtime, event schema or live acceptance changes.
+
+Strict spec/remaining-change validation and local archive/spec/reference targets
+pass. This documentation archive does not claim new device, model or browser runs.
+
+## English restoration — 2026-10-09
+
+The maintainer canceled Mandarin/zh-TW preparation. English product, speech
+analysis, UI/coaching and rehearsal guidance are restored. The unaccepted Mandarin
+OpenSpec delta, authored fixtures/copy and six dedicated checks were removed;
+commit `4580eee` preserves their history. Runtime source, v0 contracts and existing
+assignments are unchanged. Stage I CPU validation, confirmed-host rehearsal setup
+and eventual Stage II accelerator validation remain required.
+
+Checks on Linux/CPython 3.12.14: 130 tests / 69 subtests; Ruff, unchanged-schema
+parity, nine synthetic fixture cases / ten sessions, both retained strict OpenSpec
+validations and whitespace pass. No microphone/camera, model inference, final
+recording or accelerator validation was performed in this restoration.
+
+## Historical Mandarin preparation — canceled 2026-10-09
+
+This direction was subsequently canceled by the maintainer. The following is
+historical evidence for commit `4580eee`, not current guidance. At that checkpoint:
+Mandarin rehearsal, native Taiwan Traditional Chinese product content and local
+CPU Stage I validation. No UGen300 before qualification; actual accelerator
+compatibility/performance is retained as later Stage II validation. Lucas is the
+likely operator; the actual computer/recording arrangement remains unconfirmed.
+Current Issues were updated without reassigning owners or accepting unmet gates.
+
+Reconciled GUIDE/ARCHITECTURE/runtime/demo/host/hardware/submission guidance and
+the existing INT-03 planning artifacts. Added the `mandarin-first-stage1` proposal,
+design, two capability deltas and task breakdown for affected-owner agreement.
+No v0 schema, producer, engine, frontend or coaching-template behavior changed.
+Speech's English-only model/tokenizer and current English product copy remain
+implementation gaps in their owning lanes; this preparation does not localize
+the application or establish Mandarin speech support.
+
+Added five authored synthetic Mandarin fixture cases and native zh-TW handoff
+copy in `checks/integration/mandarin/`. Six conformance tests exercise the existing
+sole engine/controller/recorder: facing deterioration/recovery, Taiwan vocabulary
+and mixed-script content, missing camera, a known active pause, short observations
+and repeated-session isolation. WPM/filler fields stay null; computed reasons
+cite only supported synthetic facing/pause observations. Recorder-only composition
+does not present authored sample advice as computed coaching. Copy review covers
+all requested surfaces, but actual localized browser fonts/wrapping and native
+coaching templates remain owner acceptance work.
+
+Linux x86_64, CPython 3.12.14:
+
+```sh
+.venv/bin/python -m pytest -q
+.venv/bin/ruff check src scripts tests examples
+.venv/bin/python scripts/export_schema.py --check
+.venv/bin/python scripts/validate_fixtures.py
+openspec validate mandarin-first-stage1 --strict
+openspec validate int-03-submission-and-hardware-evidence --strict
+git diff --check
+```
+
+Result: **136 tests / 69 subtests**, including six new Mandarin conformance tests.
+Lint, unchanged-schema parity, historical English fixtures and both strict
+OpenSpec checks pass. Local file-target checks pass for reviewed guidance/new
+artifacts. Synthetic data only; no microphones, cameras, weights, model inference,
+recording, localized browser E2E or accelerator execution. Existing proposal/PDF
+and narration drafts were preserved, not re-exported or accepted as final footage.
+
+Official rules were re-fetched directly and their JSON-LD content inspected after
+browser extraction failed. Sections V/VI retain ordinary Stage I hosts, English
+deck and mainly English video explanation. CONTEST/SOURCES record response hash,
+provenance and the Mandarin-product/English-explanation recommendation; exact form
+cutoff and final recording/submission checks remain pending.
+
+## Optional runtime setup and independent component review — 2026-10-09
+
+Linux x86_64, CPython 3.12.14. Added integration-owned optional `speech` and
+`vision` dependency groups; all pre-existing core/dev lockfile versions are
+preserved. `uv sync --frozen --group speech --group vision` installs the runtimes;
+`uv sync --frozen --dry-run` confirms default setup excludes the 32 optional
+packages. Selected one OpenCV provider (`opencv-contrib-python`) because
+MediaPipe requires it and OpenCV wheel variants share `cv2`.
+
+Resolved/runtime imports: faster-whisper 1.2.1, sounddevice 0.5.6, numpy 2.5.3,
+MediaPipe 0.10.35 and OpenCV contrib 4.14.0.94. Whisper imports, bundled VAD factory
+imports, MediaPipe Tasks Pose APIs and in-memory JPEG encoding pass. Sounddevice
+cannot import on this host because the PortAudio system library is absent;
+`docs/LOCAL_RUNTIME.md` documents `libportaudio2` and host setup. No devices were
+opened and no weights were downloaded or loaded.
+
+Independent detached-checkout reviews against the existing core/dev environment:
+
+| Revision | Check | Result |
+| --- | --- | --- |
+| Speech PR #26 `4c184c9` | `PYTHONPATH=src <project-venv>/bin/python -m pytest -q` | 161 tests / 286 subtests |
+| Coaching PR #24 `9850ae0` | Same command in its checkout | 148 tests / 106 subtests |
+| Speech PR #26 | `checks/speech/check_speech.py`; standalone unittest discovery | 10 cases / 11 sessions; 37 tests |
+| Coaching PR #24 | `checks/coaching/feedback_replay.py`; `record_replay.py` | Each: 9 cases / 10 sessions |
+| Integration dependency increment | `.venv/bin/python -m pytest -q` | 130 tests / 69 subtests |
+
+The independent PR suites passed with the existing Starlette/httpx deprecation
+warning. Async/loopback runs required execution outside the restricted sandbox.
+Integration lint, schema parity, fixture validation, both existing strict
+OpenSpec validations and whitespace checks pass. Approval was recorded for each
+submitted component scope; no feature PR was merged. These are synthetic checks,
+not browser E2E, actual speech/vision inference, intended-host performance or
+UGen300 evidence. Existing authored default feedback and application composition
+were not changed. Current decisions, remaining review and acceptance stay in
+Issues #6/#11/#15/#16/#18/#20/#21.
 
 ## Coordination migration audit — 2026-10-08
 
@@ -17,6 +132,76 @@ FACT: Migrated existing assignments and task acceptance into GitHub Issues with 
 IMPACT: File task boards/role prompts no longer duplicate live Issue fields. OpenSpec remains the agreed behavior/interface workflow. Maintainer authorized scoped autonomous publication to assigned role branches; main pushes, destructive ref operations, merges, private-data publication and external competition delivery are outside that scope. This audit is not new live/model/target validation.
 
 Validation of the documentation migration on Linux/Python 3.12.14: `PYTHONPATH=src <reference-checkout>/.venv/bin/python -m pytest -q` passes 130 tests and 69 subtests with the existing Starlette/httpx deprecation warning. Both existing OpenSpec changes validate strictly; all 149 local Markdown targets/anchors resolve; Git whitespace checks pass. Read-back verification confirms 14 Issue records, their assignees/branches/status/acceptance and 19 native dependency relationships; the graph is acyclic. Application source, fixtures, dependencies, generated contracts and submission binary artifacts are unchanged.
+
+
+## COACH-01 computed coaching — synthetic validation
+
+FACT: On 2026-10-08, @WolflordR pulled the role branch safely and fast-forwarded
+`agent/session-analysis` from `main` at `558f56f` before implementation; then
+reconciled documentation-only migration `57aab92` before committing.
+Read-only GitHub inspection confirmed recorder PR #5 merged and issue #20 assigned
+to this owner. The merged LIVE-01 engine supplies usable reason codes now; final
+handoff acceptance in [issue #18](https://github.com/crasni/LeCoach/issues/18) and
+the referenced revert disposition remain pending.
+
+FACT: Implemented `TemplateFeedbackGenerator`, deterministic selection and plain
+templates in [the coaching module](../src/lecoach/coaching/README.md), consuming
+only canonical completed events and the existing engine's explicit reason
+citations. The optional `replay_with_coaching()` factory supplies the sole engine,
+accepted recorder and generator through existing component injection; it rejects
+live requests. Shared contracts, root configuration, default app/CLI composition,
+frontend and other lanes' implementations are unchanged.
+
+FACT: Added a separate hand-derived computed baseline and
+[`feedback_replay.py`](../checks/coaching/feedback_replay.py), retaining historical
+authored fixtures. In `weak_to_improved`, computed audience transitions are at
+0/20/30/35/40 seconds; direct-evidence feedback anchors are 10 seconds (pace),
+25 seconds (approximate facing), and 40 seconds (strength). The strength uses the
+engine-cited `vision-35`, not the uncited same-time `vision-40`. Repeated negative
+causes merge; missing/unknown/stale evidence is omitted with limitations, without
+filling quotas. The generator writes no files and retains no session state.
+
+Validation host: local macOS arm64, existing pinned CPython 3.12.14 environment
+and unchanged frozen dependency lockfile. Commands were run with `.venv/bin/python`
+and `.venv/bin/ruff`; equivalent project commands:
+
+```sh
+uv run pytest -q
+uv run python checks/coaching/feedback_replay.py
+uv run python checks/coaching/record_replay.py
+uv run python scripts/validate_fixtures.py
+uv run python scripts/export_schema.py --check
+uv run ruff check src scripts tests examples checks/coaching/feedback_replay.py
+git diff --check
+```
+
+Observed result: 148 tests and 106 subtests pass, including 18 new feedback/API
+tests and 37 subtests, with the existing Starlette/httpx deprecation warning.
+Computed engine/recorder/generator replay and recorder-only replay each pass all
+9 synthetic cases / 10 sessions. Fixture validation, schema parity, lint and
+whitespace checks pass. Checks cover direct reason templates, historical versus
+stale citations, future/wrong-source/missing evidence, absent person/pose/null
+metrics, outages, deduplication, quotas, custom shared freshness configuration,
+drain limitations, deterministic repeats, session isolation, and existing API
+transport with the factory injected. No browser E2E, live camera/microphone,
+inference model or UGen300 measurement was exercised.
+
+IMPACT: Issue #20's selector/template work can now be reviewed independently of
+live adapters. Default UI feedback is still authored; computed feedback is
+available only with the documented optional factory. This does not complete
+COACH-01 or close issue #20. The original PR #5 validation below remains historical
+and attributed, with its publication status corrected to merged.
+
+Publication-policy follow-up: @WolflordR supplied the migrated working agreement
+after local implementation commit `50fb3cb`, adopting scoped autonomous assigned-
+role-branch publication for this session. This supersedes the earlier wait for
+per-push approval. The current publication/PR and review state belongs in issue #20.
+
+PROPOSAL: Submit the validated increment through the assigned role branch and a
+scoped PR referencing issue #20 without closing it.
+Lane 1 reviews the optional composition and consumer baseline; Lane 4 confirms
+the evidence handoff and renders the canonical feedback. Resolve issue #18's
+pending decision and validate integrated behavior before final task acceptance.
 
 
 ## Verified
@@ -177,7 +362,19 @@ IMPACT: Lane 5 can use these cases to check actual `CompletedSession` and `Feedb
 
 PROPOSAL: The integration owner reviews the claim and fixture placement, supplies the approved application layout and replay seam, and coordinates Lane 4's reason vocabulary/positive evidence. Lane 5 then implements the recorder, moment selector and template feedback in that layout, runs the cases against real consumer outputs, and records integration evidence before marking COACH-01 done.
 
-## COACH-01 recorder continuation — local, pending publication/review
+## COACH-01 recorder continuation — merged PR #5
+
+Current publication: [PR #5](https://github.com/crasni/LeCoach/pull/5), head
+`5991048`, was reviewed and merged on 2026-10-08. Recorder-only acceptance does
+not complete COACH-01; [issue #20](https://github.com/crasni/LeCoach/issues/20)
+tracks the remaining selection/template-feedback work. The dated macOS evidence
+below remains attributed to the original contributor run.
+
+The review supplied by the maintainer reports Linux / pinned CPython 3.12.14
+validation of the unchanged `5991048` head: 110 tests and 46 subtests pass,
+recorder replay matches 9 synthetic cases / 10 sessions, and fixture/schema/lint
+and whitespace checks pass, with the existing Starlette/httpx warning. This is
+reviewer-attributed evidence, not a new owner run or live-device validation.
 
 FACT: On 2026-10-07, read-only GitHub checks confirmed PRs #1, #3 and #4 merged.
 The remote role branch had been deleted following merge; a safe explicit pull
@@ -230,11 +427,12 @@ adapters. No real microphone/camera, engagement inference, computed feedback or
 UGen300 behavior is established. Positive coaching semantics and actual transition
 evidence still depend on LIVE-01, so COACH-01 remains incomplete.
 
-PROPOSAL: Present the exact local commit and role-branch destination for user push
-approval, then open a scoped continuation PR for integration-owner review. Lane 4
-supplies its transition/reason evidence before Lane 5 implements and verifies
-moment selection/template feedback. No new shared interface or second engagement
-engine was introduced, and no commits from this continuation have been pushed.
+PROPOSAL: Preserve the accepted recorder and implement the remaining moment
+selection/template feedback against the merged LIVE-01 reasons, with final
+handoff acceptance still pending. No new shared interface or second engagement
+engine was introduced by PR #5. New work follows the user's current approval
+requirements; the original recorder continuation has already been published
+and merged.
 
 ## INT-01 planning — local, not published
 
@@ -271,7 +469,7 @@ PROPOSAL: Publish the reviewed role-branch commits only after explicit user push
 
 FACT: On 2026-10-07, `openspec --version` reported 1.14.1. `openspec list --json` and `openspec context --json` resolved this repository as the nearest OpenSpec root, with the installed Codex skills and `spec-driven` configuration. No reinitialization was needed.
 
-FACT: Migrated the separate INT-01 plan into [int-01-local-integration-scaffold](../openspec/changes/int-01-local-integration-scaffold/proposal.md), with proposal, design, four capability delta specs, and an evidence-backed task checklist. `openspec status` reports 4/4 planning artifacts complete; strict validation passes with no issues, and `openspec doctor --json` reports a healthy root. The old plan is a compatibility pointer. Application code and contracts were not changed or retested during this documentation migration.
+FACT: Migrated the separate INT-01 plan into [int-01-local-integration-scaffold](../openspec/changes/archive/2026-10-09-int-01-local-integration-scaffold/proposal.md), with proposal, design, four capability delta specs, and an evidence-backed task checklist. `openspec status` reports 4/4 planning artifacts complete; strict validation passes with no issues, and `openspec doctor --json` reports a healthy root. The old plan is a compatibility pointer. Application code and contracts were not changed or retested during this documentation migration.
 
 IMPACT: OpenSpec now tracks the existing local implementation and three remaining publication/review gates. TASKS retains ownership/progress, ARCHITECTURE retains contract semantics, and this file retains observed evidence. Main OpenSpec specs are not synced yet; the active change is not archived.
 
@@ -350,6 +548,74 @@ PROPOSAL: The integration owner reviews PR #7, especially the reason codes and t
 ## Evidence to add as work lands
 
 For each completed task, record the commit/PR, exact runnable command, whether inputs are fixtures or live, observed result, and remaining limitation. For hardware measurements also record device, runtime/model version, and measurement method. Record discoveries as FACT / IMPACT / PROPOSAL as GUIDE.md requires.
+
+## AUD-01 first microphone rehearsal — 2026-10-10
+
+FACT: The owner ran the guided probe once with a real microphone on a Windows 11 laptop: build 26200, Intel Core i7-13620H with 16 logical CPUs, and 16 GB RAM. Inference ran on the CPU only; the laptop's GPU was not used.
+- **Revision:** `agent/integration` at `b415994`, with PR #23's `speech` group on uv-managed CPython 3.12.14. Its speech package equals main `5d2bcd0`.
+- **Model and configuration:** the #6 defaults, with `base.en` int8.
+- **Input:** the Windows default input, a wireless headset microphone. It opened at 16 kHz with no resampling, and reported 0 overflows.
+- **Commands:**
+
+  ```powershell
+  uv run --frozen --group speech python -m lecoach.speech.probe --out sessions\speech-probe.json
+  uv run --frozen --group speech python checks\speech\check_speech.py --stream sessions\speech-probe.json --summary
+  ```
+
+FACT: Results of the 71.4 s take:
+- **Checks:** `check_speech.py --stream` passes. No speech status was reported, and no window was null or unavailable.
+- **Events:** 12 finals, 116 finalized words, 0 fillers, and 4 completed pauses. The silence produced an active pause that reached 13.7 s.
+- **WPM:** windows read 114–132 WPM at normal reading pace, and reached 192 WPM over the fast reading.
+- **Timing:**
+  - model load and warm-up took 1.81 s; this was not the first run, so model files were not loaded cold;
+  - session start took 0.23 s;
+  - stop and drain took 0.95 s, with no incomplete sources;
+  - finals arrived 1.77 s median, 2.73 s p95, and 3.22 s max after their speech ended;
+  - windows arrived 0.26 s median, 2.15 s p95, and 3.23 s max after their end.
+- **Recognition:** the scripted passage was mostly correct, with errors such as "built" heard as "feels" and "pauses" as "pulse".
+- **Fillers:** the deliberate-filler part has no "um", "uh", "like", or "you know" in its finals. Its only interjection is "Aww.", which the English filler rules do not count.
+
+FACT: On the same laptop, `python -m lecoach.speech.probe --device nosuchmic` reported `unavailable / microphone_not_found` 0.1 s into the session. Later windows reported `unavailable` with null WPM and fillers until the run was stopped with Ctrl+C.
+
+IMPACT: AUD-01's live capture works on an ordinary Windows laptop with local CPU inference, and its events pass the shared checks.
+- Filler counts from `base.en` are undercounts: the deliberate-filler part reported none.
+- Final delays reached 3.2 s, about the 3 s coverage wait, although no window went null.
+- The speaker started late in two parts. The stop-while-speaking case covered only about 1 s of speech, so the drain figure is not a worst case.
+- This is one take by one speaker with a headset microphone. It is not a recognition-quality or latency benchmark, nor demo-host evidence.
+
+PROPOSAL: AUD-02 (#14) measures and improves filler recall, retakes the stop-while-speaking case, and repeats the probe on the demo host. [Issue #13](https://github.com/crasni/LeCoach/issues/13) and [Issue #14](https://github.com/crasni/LeCoach/issues/14) track the remaining work.
+
+## AUD-01 production speech seams — 2026-10-09
+
+FACT: On `agent/audio-streaming`, based on main `91f6e63`, Lane 2 added the production speech seams in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+
+- `PortAudioSource` and `WavFileSource`;
+- streaming Silero voice activity detection (`SileroSegmenter`, `SpeechGate`);
+- a process-wide faster-whisper `WhisperTranscriber` with `warm_up`;
+- `python -m lecoach.speech.model --download / --check`;
+- `build_local_adapter()` and the guided `python -m lecoach.speech.probe`.
+
+Optional packages load lazily; the core install and suite are unchanged.
+
+Validation, core environment: `uv run pytest -q` passes 202 tests with 12 skipped (speech runtime and optional vision tests) and 342 subtests; ruff and the speech checks pass.
+
+Validation, speech environment: PR #23's `speech` group in a scratch environment, with `libportaudio2` 19.6.0, espeak-ng 1.51, and `base.en` int8, on Linux with 4 CPUs and no audio device. Every speech test passes, including:
+- Silero streaming equal to whole-file probabilities;
+- silence giving an empty final;
+- synthesized English transcribed with word times;
+- a synthesized talk through the adapter and session controller that passes `check_speech.py`.
+
+Real PortAudio without a device reports `microphone_not_found`.
+
+FACT: The probe replayed a 27 s espeak-ng English talk in real time.
+- It produced 4 accurate finals, and the checker passes: 53 words, 1 filler, and completed pauses at 2.76–5.02 s and 18.50–21.44 s.
+- Finals arrived 2.5 s median and 3.4 s max after speech ended; windows arrived 0.36 s median after their end. Stop and drain took 2 ms.
+- "Umm" was kept as a filler, but "uh" was dropped.
+- On 2 s of silence, `base.en` produced "You" with a no-speech probability of 0.81; the transcriber now drops such segments.
+
+IMPACT: Integration can compose live speech with `warm_up` and `build_local_adapter()` once PR #23's group is on main. These are synthetic-speech results on a container CPU, not microphone, recognition-quality, or demo-host evidence. The cold model load (14.7 s once) must happen before sessions.
+
+PROPOSAL: Run the probe on the development computer and the demo host for #13's live acceptance and #14's measurements. Remaining work is tracked in [Issue #13](https://github.com/crasni/LeCoach/issues/13).
 
 ## AUD-01 speech adapter core — 2026-10-09
 
@@ -452,3 +718,115 @@ FACT: The official SalesKit in `docs/` lists Whisper-Tiny, Whisper-Base and Whis
 IMPACT: Lanes 4 and 5 can develop against realistic speech streams before the live adapter exists, including pace, fillers, pauses, unavailable input, and null versus zero. AUD-01 remains blocked on INT-01's scaffold, configuration location, and executable contract and replay seam. No production speech adapter, capture code, or dependency was added. Filler counts from standard Whisper output may be undercounts, so filler-driven reactions depend on AUD-02 measurements.
 
 PROPOSAL: The integration owner reviews the claim, the fixture placement, and the proposed v0 speech rules and open questions in the README: pause-completion events, leading silence, null reasons, configuration, analysis language, and model-failure status. After INT-01 lands, Lane 2 implements microphone capture → voice activity detection → local Whisper with word timestamps in the approved layout. Recorded sessions are then checked with `check_speech.py --stream`, and AUD-02 measures latency and filler recall per model size before any claim is made.
+## Integration reconciliation and failure-notice regression — 2026-10-10
+
+With explicit maintainer authorization, `agent/integration` merged main
+`e5c0838` as `42bd657` without conflicts. Existing integration setup/archive/demo
+work and speech/vision contributor evidence are preserved. No feature PR was
+merged and no live acceptance is implied.
+
+Cross-component checks in `tests/test_integration_composition.py` use the merged
+speech and vision adapters, sole RuleEngine and InMemorySessionRecorder with
+scripted capture/model seams and a fake shared clock. They verify usable speech
+with missing pose, usable vision with missing microphone, both-missing neutral
+behavior, bounded completion/resource release and isolated repeated recordings.
+No feedback generator is supplied; feedback correctly remains unavailable.
+
+The first concurrent check reproduced a controller display bug: unavailable
+speech windows replaced `microphone_not_found` with `observation_unavailable`.
+The controller now retains a current explicit failure through degraded windows,
+clears it on available observations and does not resurrect old failures after
+recovery. Existing event fields, producer semantics, engine rules and timeout
+defaults are unchanged. Runtime regressions cover unavailable/error reasons,
+recovery and out-of-order status delivery.
+
+Linux x86_64 / pinned CPython 3.12.14, core frozen environment:
+
+```sh
+uv run --frozen python -m pytest -q  # 195 passed, 335 subtests
+uv run --frozen ruff check src scripts tests examples
+openspec validate --all --strict  # 6 items passed
+uv run --frozen python scripts/validate_fixtures.py  # 9 cases / 10 sessions
+python3 checks/vision/make_fixture.py --check
+git diff --check
+```
+
+All checks pass. The pre-fix merged baseline separately passed 191 tests / 333
+subtests. Inputs are synthetic; no microphone/camera, optional model inference,
+browser responsiveness, intended-host timing, accelerator or recording was
+exercised. Current live acceptance and required component delivery remain in
+[Issue #11](https://github.com/crasni/LeCoach/issues/11).
+
+## Integration component agreement and status ties — 2026-10-10
+
+Reviewed temporary combined sources: integration `8ebb5c3`, production speech
+PR #28 `c84fce4`, coaching PR #24 `03028dd`, and engine/UI PR #29 `d76d373`.
+No feature branch was merged. Integration agrees the existing reason vocabulary,
+explicit trigger citations, public stale ages, pause hold, uninterrupted-positive
+ENGAGED and post-outage observation boundaries; Lane 5's affected-consumer review
+is separately recorded on PR #29. Component approvals do not accept live tasks.
+
+The controller now lets explicit status win a metric capture-time tie in either
+arrival order, with later available metrics still indicating recovery. This
+matches PR #29's display semantics. Canonical replay specs clarify the already
+implemented distinction: no-factory replay is authored; app/CLI replay injects
+the sole engine and labels synthetic input, computed audience and authored
+coaching separately. The coarse v0 provenance field and historical archive are
+preserved; no new event fields or default runtime are introduced.
+
+The pre-tie combined snapshot passed 259 tests / 387 subtests with three
+weight-dependent skips. Both display environment variables were unset for the
+Linux probe tests; inherited `DISPLAY=:0` / `WAYLAND_DISPLAY=wayland-0` had
+stalled the unrelated OpenCV viewer check. Frontend build and generated types
+pass using Node 24.11.0; Ruff, schema parity and all nine coaching cases / ten
+sessions pass. With the final controller tie regression overlaid, the combined
+snapshot passes 260 tests / 389 subtests with three weight-dependent skips.
+Current integration alone passes 196 tests / 337 subtests;
+strict validation passes all six OpenSpec items. No browser E2E, real capture,
+model-weight inference, demo-host timings, recording or accelerator validation
+was performed. Review/merge readiness and final acceptance remain in Issues.
+
+## Opt-in CPU composition and authorized component delivery — 2026-10-10
+
+The maintainer explicitly authorized merging reviewed component PRs #24, #28 and
+#29. GitHub merge receipts are `5000c23`, `a9fe503` and `5d2bcd0`; their branches
+were retained. Assigned `agent/integration` reconciles main `5d2bcd0` in clean merge
+`8800971`, preserving existing integration fixes/setup/archive/evidence.
+
+`lecoach serve --live` now composes the owners' public local speech/vision
+factories, sole RuleEngine/InMemorySessionRecorder and TemplateFeedbackGenerator.
+Coaching reads the same public rule freshness ages. Speech/model/VAD preparation
+runs before serving; camera runtime imports warm in the background. Models are
+local-files-only, with explicit preparation/download outside sessions. Each live
+session gets fresh adapter/engine/recorder/generator state; fixture sessions keep
+computed audience and authored coaching. No schema, thresholds or timeout defaults
+change. Prepared-session cancellation/shutdown completes an empty lifecycle
+without opening devices; this corrects a controller path that previously called
+capture start in order to stop a prepared session.
+
+Linux x86_64 / CPython 3.12.14, existing environment:
+
+```sh
+env -u DISPLAY -u WAYLAND_DISPLAY .venv/bin/python -m pytest -q
+# 264 passed, 3 weight-dependent skips, 389 subtests
+.venv/bin/ruff check src scripts tests examples
+.venv/bin/python scripts/export_schema.py --check
+.venv/bin/python scripts/validate_fixtures.py
+openspec validate --all --strict  # 7 items
+git diff --check
+```
+
+All checks pass. New composition tests use synthetic capture seams with the real
+engine/recorder/coach: repeat sessions compute the supported 10/25/40 s moments;
+both failed inputs remain NEUTRAL and return empty moments/limitations; preparation
+alone and prepared-session shutdown never start capture. A real launch smoke check
+of `serve --live --speech-model-dir /tmp/lecoach-no-models` reached loopback health
+ready with `live_integrated: true` and shut down cleanly. No session was prepared
+or started in that smoke check; no devices were acquired or weights downloaded.
+
+Composition availability does not establish real microphone/camera inference,
+quality, measured host latency/browser responsiveness, final recording, Stage II
+accelerator compatibility or task acceptance. The actual demo host remains
+unconfirmed; live validation and component downstream acceptance remain in #11.
+PR #23 still requires collaborator review; it was not merged under the separate
+three-component authorization.

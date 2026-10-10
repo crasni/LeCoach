@@ -3,6 +3,19 @@
 
 ## Shared team entry point
 
+**Current direction — 2026-10-09:** English is the product, speech-analysis and
+rehearsal language. The maintainer canceled the Mandarin/zh-TW proposal; retain
+existing English UI, speech rules and coaching work. #6 owns the configuration
+handoff; unsupported measurements remain null/unknown rather than fabricated.
+
+Stage I uses an ordinary computer with local CPU inference where practical.
+No UGen300 is available before qualification; absence must not block Stage I.
+Actual accelerator compatibility/performance validation remains required for
+Stage II. Lucas (@crasni) is the likely operator; confirm the actual computer and
+recording arrangement before final validation. The English deck and mainly
+English video explanation follow the official rules; final recording/publication
+and submission still require their separate authorization.
+
 Product name: **LeCoach**. Use this exact spelling and capitalization in product copy, UI, proposal, demo, and project documentation. Technical identifiers and existing repository URLs follow their actual names.
 
 Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) own assignments, branches, progress, blockers and task acceptance; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
@@ -113,7 +126,7 @@ Our CURRENT chosen direction is:
 > +
 > Workplace AI
 
-Primary target hardware:
+Stage II target hardware (Stage I uses an ordinary local CPU computer):
 
 > ASUS UGen300 8GB / USB AI Accelerator
 
@@ -321,7 +334,8 @@ Required outputs:
 - timestamps
 
 Preferred target:
-Whisper running locally where practical.
+Whisper running locally on the Stage I CPU computer where practical; the
+initial English baseline is `base.en`/CPU/int8, pending actual-host measurement.
 
 Architecture should allow later UGen300 acceleration.
 
@@ -532,7 +546,8 @@ The product principle is:
 
 > Your presentation never needs to leave your device.
 
-UGen300 enables:
+Intended UGen300 capabilities for future Stage II integration (vendor-supported
+plan, not measured LeCoach compatibility/performance):
 
 - local AI inference
 - low latency
@@ -693,7 +708,8 @@ camera + microphone + speech processing remain local.
 
 5. ASUS UGen300
 
-Clearly demonstrate or explain how UGen300 enables the local AI pipeline.
+For Stage I, explain the intended UGen300 adapter path alongside the actual CPU
+demo. Demonstrate hardware operation only after measured Stage II validation.
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Give independent producers and consumers compatible, validated rehearsal data and evidence references. Field meanings, units, and event shapes remain defined by [ARCHITECTURE.md](../../../../../docs/ARCHITECTURE.md).
+Give independent producers and consumers compatible, validated rehearsal data and evidence references. Field meanings, units, and event shapes remain defined by [ARCHITECTURE.md](../../../../../../docs/ARCHITECTURE.md).
 
 ## ADDED Requirements
 

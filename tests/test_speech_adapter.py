@@ -226,6 +226,17 @@ class SpeechAdapterSessionTests(IsolatedAsyncioTestCase):
                     self.assertEqual((source.opened, source.closed), (1, 1))
                 self.assert_consistent()
 
+    async def test_missing_voice_activity_runtime_is_reported_without_opening_the_microphone(
+            self):
+        controller = self.session()
+        self.adapter.segmenter = None
+        await controller.start()
+        self.clock.advance_to(5.0)
+        await controller.stop()
+        self.assertEqual(self.statuses(), [(0.0, "error", "speech_vad_unavailable")])
+        self.assertEqual(self.source.opened, 0)
+        self.assert_consistent()
+
     async def test_unexpected_start_error_is_left_to_the_controller(self):
         source = ScriptedSource(fail=RuntimeError("driver crashed"))
         controller = self.session(source=source)

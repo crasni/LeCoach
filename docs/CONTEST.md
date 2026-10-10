@@ -1,6 +1,6 @@
 # Competition requirements and submission preparation
 
-Content rechecked 2026-10-08 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
+Content rechecked 2026-10-09 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
 
 ## Verified requirements
 
@@ -40,3 +40,21 @@ INT-03 apply rechecked the accessible public rules on 2026-10-07; no change to t
 These are submission checks for INT-03, not a second task ownership board.
 
 On 2026-10-08, the rules content was rechecked unchanged and the rendered public announcements page showed no announcements at inspection. This does not establish registration completion, form limits or the precise cutoff. Those team/form gates remain pending.
+
+## Product language versus submission language — 2026-10-09
+
+Direct official response/JSON-LD rules content was re-fetched: section VI still
+requires an English deck and mainly English video explanation; section V permits
+ordinary computers for Stage I and requires selected-platform validation later.
+Browser extraction failed, so this check used the direct response and content
+inspection, not that failed extraction. Provenance/hash are in SOURCES.
+
+The maintainer has restored English for the product, UI, coaching and rehearsal,
+canceling the Mandarin/zh-TW proposal. Continue the English deck and mainly English
+video explanation. Final narration/artifact checks remain Lane 5/integration
+review; recheck official requirements before submission.
+
+No UGen300 before qualification is a maintainer-confirmed team constraint. Stage I
+must validate the ordinary-computer CPU path; actual accelerator operation remains
+required for Stage II rather than blocking Stage I. Lucas is likely operator,
+with actual demo computer and recording arrangement unconfirmed.

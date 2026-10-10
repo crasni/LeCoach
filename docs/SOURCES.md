@@ -71,3 +71,21 @@ Re-fetched and inspected the five pinned documents on 2026-10-07. The candidate/
 The prerequisites link to Hailo-8/PCIe-oriented installation guidance, despite the selected Hailo-10H USB device. That is a compatibility gap to resolve with official USB-specific guidance, not permission to install those drivers here. [HARDWARE.md](HARDWARE.md) defines the readiness/run procedure; actual observations remain in STATUS.
 
 The speech path's windowing and both producers' device contention need measurement before tuning engagement staleness. Shared capture-time and adapter cleanup contracts stay in [ARCHITECTURE.md](ARCHITECTURE.md); this research changes no contracts or producer implementation.
+
+## Rules recheck for Stage I CPU direction — 2026-10-09
+
+Official source: https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/
+Direct `curl --fail --location` response retrieved and embedded JSON-LD rules
+content inspected after web extraction failed with 404. Response SHA-256:
+`48d4f5ce771f478f18b03faa947e5693ddbb44356777fc00215a8eef804813d3`.
+The temporary response stays outside Git; it contains public rules, not private
+registration data. Sections V/VI retain ordinary Stage I hosts, later selected
+platform validation, English deck (20 main pages) and mainly English video
+explanation (three minutes recommended). No final video, authenticated form,
+announcement or receipt was validated in this recheck.
+The October 14 deadline is unchanged; exact form cutoff remains unconfirmed.
+
+Maintainer direction is separate provenance: no team UGen300 access before
+qualification; Lucas likely operator; English product/rehearsal after canceling
+the Mandarin/zh-TW proposal.
+It does not establish actual CPU/model performance or override official rules.

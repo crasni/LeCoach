@@ -6,7 +6,8 @@ from lecoach.speech.config import SpeechConfig
 
 
 class SpeechConfigTests(TestCase):
-    def test_defaults_match_the_issue_6_proposal(self):
+    def test_defaults_match_the_issue_6_decision(self):
+        # English Stage I baseline accepted in https://github.com/crasni/LeCoach/issues/6
         config = SpeechConfig()
         self.assertEqual(
             (config.language, config.metrics_window_s, config.metrics_hop_s,
@@ -16,6 +17,14 @@ class SpeechConfigTests(TestCase):
         )
         self.assertTrue(config.analysis_supported)
         self.assertFalse(SpeechConfig(language="zh").analysis_supported)
+
+    def test_model_dir_accepts_ordinary_paths(self):
+        for path in ("models", "/home/presenter/" + "long-folder-name/" * 6 + "models",
+                     "C:\\Users\\Presenter\\LeCoach\\models", "~/My Models"):
+            with self.subTest(path=path):
+                self.assertEqual(SpeechConfig(model_dir=path).model_dir, path)
+        with self.assertRaises(ValidationError):
+            SpeechConfig(model_dir="")
 
     def test_partials_can_be_disabled(self):
         self.assertEqual(SpeechConfig(partial_interval_s=0).partial_interval_s, 0.0)

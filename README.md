@@ -11,7 +11,11 @@ LeCoach is a local, multimodal presentation coach for the ASUS UGen AI League Ha
 - A deterministic engagement engine with smooth audience reactions.
 - A synchronized session timeline and concise, actionable feedback.
 
-Target track: Workplace AI / Battlefield Lightning, with ASUS UGen300 as the intended accelerator. Hardware integration and performance remain to be validated.
+Product and rehearsal language: English. Stage I validates local CPU inference
+on an ordinary computer; UGen300 will not be available before qualification.
+Target track: Workplace AI / Battlefield Lightning, with UGen300 retained as the
+intended accelerator for actual Stage II validation. See [GUIDE](GUIDE.md) and
+[demo host preparation](docs/DEMO_HOST.md).
 
 ## Project status
 
@@ -91,6 +95,22 @@ npm --prefix frontend run dev
 The development UI is at http://127.0.0.1:5173 and proxies the local API. The eventual
 demo uses the built UI served directly from the backend.
 
+### Opt-in local CPU rehearsal
+
+After preparing the optional runtimes and model assets in
+[demo host setup](docs/DEMO_HOST.md), launch:
+
+```sh
+uv run --group speech --group vision lecoach serve --live
+```
+
+Select **Live microphone and camera** in the browser. Starting the session opens
+the devices; stopping drains observations and generates evidence-linked template
+coaching. Models warm before the API starts, with no automatic weight download or
+raw recording. Missing inputs produce notices and coaching limitations. Actual
+demo-host input/model quality and responsiveness remain to be verified.
+Plain `lecoach serve` retains synthetic replay with authored example coaching.
+
 ### Headless replay and checks
 
 ```sh
@@ -133,6 +153,16 @@ HTTP/WebSocket tests may require permission to run outside the sandbox; the chec
 do not contact external inference services.
 
 ### Subsystem handoff
+
+Optional speech and vision runtimes are installed separately from the core app:
+
+```sh
+uv sync --frozen --group speech --group vision
+```
+
+See [local runtime setup](docs/LOCAL_RUNTIME.md) for configuration decisions,
+system libraries, model preparation and the distinction between runtime setup
+and accepted live composition. Installing these groups does not enable live mode.
 
 [ARCHITECTURE.md](docs/ARCHITECTURE.md#int-01-implementation-decisions-and-handoff)
 defines directories, protocols, clock/capture semantics, and transport boundaries.

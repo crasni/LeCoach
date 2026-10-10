@@ -1,10 +1,10 @@
-# Spec Delta
+# local-rehearsal-transport Specification
 
 ## Purpose
 
-Expose rehearsal controls and observations to a local browser while keeping capture independent of browser delivery. [ARCHITECTURE.md](../../../../../docs/ARCHITECTURE.md#int-01-implementation-decisions-and-handoff) defines the routes and transport wrappers.
+Expose rehearsal controls and observations to a local browser while keeping capture independent of browser delivery. [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md#int-01-implementation-decisions-and-handoff) defines the routes and transport wrappers.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Keep rehearsal transport local
 The documented backend and development UI SHALL bind to loopback. Browser origins SHALL be restricted to the documented local UI, and the default replay UI SHALL use local assets and APIs without remote runtime services.
@@ -50,7 +50,7 @@ Snapshots and the shell SHALL distinguish fixture/live mode and authored/compute
 
 #### Scenario: Synthetic rehearsal
 - **WHEN** the default replay is running
-- **THEN** the shell visibly labels it synthetic and presents reactions/coaching as authored examples
+- **THEN** the shell visibly labels the observations synthetic, audience reactions computed by the engine and coaching an authored example
 
 #### Scenario: Early stop
 - **WHEN** the user stops fixture playback before its authored completion

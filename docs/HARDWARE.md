@@ -1,5 +1,21 @@
 # Hardware readiness and reproducible evidence
 
+## Stage I / Stage II boundary — 2026-10-09
+
+The maintainer confirms the team will not have UGen300 before qualification.
+Stage I implementation and actual live validation use the confirmed ordinary
+computer and local CPU inference; lack of accelerator hardware must not gate
+that work. The CPU host still needs runtime/model/device/lifecycle/responsiveness
+checks. Lucas is likely operator, with the actual computer not yet confirmed.
+
+Retain the target adapter boundary and the isolated/concurrent accelerator
+procedure below for Stage II after hardware arrives. Eventual driver/firmware,
+model/interface compatibility, measured performance, stop/restart and failure
+validation remain required. Do not report planned/vendor support as tested
+UGen300 operation. An absent-device disposition alone does not establish a
+working Stage I CPU rehearsal.
+
+
 This is INT-03's inspection and measurement procedure. [STATUS.md](STATUS.md#int-03-apply-hardware-readiness) records actual observations; [SOURCES.md](SOURCES.md) owns vendor provenance and pinned model candidates. [ARCHITECTURE.md](ARCHITECTURE.md) owns clocks, contracts and adapter boundaries. A procedure or model list is not evidence of a successful run.
 
 ## Inspect an available host

@@ -47,6 +47,18 @@ Groups 1–4 can proceed with local artifacts and available evidence. Group 5's 
 - [ ] 6.4 After separate applicable team authorization and resolved registration/form gates, publish the reviewed video and submit the approved package; verify unlisted link accessibility, submitted artifact versions, cutoff compliance, and actual receipt. Retain private registration/receipt details outside Git and record only a sanitized confirmation.
 - [ ] 6.5 Reconcile final INT-03 status and readiness with actual review/delivery outcomes; verify required task acceptance and external gates before marking done, preserve deferred target-device measurements explicitly, and prepare any new local status commit for its own separate push approval.
 
+## Maintainer refinement — 2026-10-09
+
+The historical boxes above remain preserved, not a live board. Current #12
+acceptance targets confirmed-host local CPU Stage I evidence with English
+rehearsal/UI/coaching and compliant English competition explanation. Hardware-only
+measurements remain Stage II obligations; absence does not block Stage I work.
+Reconcile the owner-provided English script, actual supported measurements,
+screens and final timing before accepting tasks 5.1–5.3. Confirm the actual
+computer/recording arrangement; Lucas's likely operation is only a plan.
+The unaccepted Mandarin/zh-TW proposal is canceled; existing assignments and
+completed scaffold/submission work remain preserved.
+
 ## Workflow follow-up
 
 - Begin implementation only after a new explicit apply request; proposing this change does not authorize implementation, publication, or submission.
