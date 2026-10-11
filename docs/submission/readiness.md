@@ -5,10 +5,11 @@
 The maintainer rejected the 12-page refreshed proposal described below. Its
 hashes/checks are historical evidence, not approval. PR #32 now covers
 integration documentation and the read-only artifact checker. Its final diff
-restores the proposal source/PDF to the existing main baseline and preserves rejected artifact history in earlier
-commits. Do not use those baseline files as the replacement submission.
+contains no proposal artifact changes relative to main. Earlier scope
+reconciliation restored the old main baseline while preserving rejected artifact
+history; PR #35 subsequently delivered the reviewed replacement to main.
 
-The replacement pair is reviewed separately in
+The replacement pair was reviewed separately in
 [PR #35](https://github.com/crasni/LeCoach/pull/35), author revision `d34a58c`:
 15 main pages, FODP SHA-256
 `7e62d79281fc69ef528650e1b6f4a7b48914889841dbcb1373930fe97e9b048e`,
@@ -17,10 +18,11 @@ PDF SHA-256
 Its proposal-specific export/parity/claim record is
 [versioned proposal-review.md](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal-review.md).
 Codex authoring was explicitly requested by the human collaborator; no Claude
-use is claimed. Integration content/layout review and final package acceptance
-are separate from authoring and artifact existence. Issues #12/#34 own their
-current dispositions. Final demo footage, revised script timing and external
-receipts are not supplied by this artifact review.
+use is claimed. The maintainer explicitly authorized merging the reviewed
+replacement on 2026-10-11; PR #35 merged as `319d274`. Integration reconciled
+that main commit without changing the reviewed artifact bytes. Proposal
+acceptance is recorded in #34; final live-demo/package acceptance stays in #12.
+Final demo footage, revised script timing and external receipts are not supplied by this artifact review.
 
 ## Reproduce artifact consistency checks
 
@@ -34,9 +36,9 @@ From the repository root, check the files in the current checkout:
 uv run python scripts/check_submission.py --json
 ```
 
-The default check identifies the actual pair on disk, which remains the older
-12-page main baseline until PR #35 merges. Passing parity does not accept that
-baseline for submission. To reproduce the reviewed replacement independently
+The default check now identifies the delivered 15-page replacement on disk.
+Passing parity establishes artifact consistency; final demo/package acceptance
+and submission remain separate. To reproduce the reviewed revision independently
 without changing branches or tracked artifacts, after fetching its branch:
 
 ```sh
@@ -68,8 +70,10 @@ On Ubuntu x86_64 / project CPython 3.12.14, the replacement at `d34a58c` passes
 links, and the exact source/PDF hashes pinned above. The independent
 LibreOffice 26.2.6.3 re-export also passes the checker with the same page/text/link
 content; its PDF byte hash differs as expected for a different exporter/run.
-The current checkout's older baseline passes 12-page artifact parity, which
-identifies consistency only and does not approve it as the final replacement.
+Before PR #35 delivery, the older baseline passed 12-page artifact parity; that
+historical result identified consistency only. After the authorized merge, the
+current checkout passes the reviewed 15-page identity checks and all seven
+focused tests against the delivered replacement.
 
 ```sh
 .venv/bin/python -m pytest -q tests/test_submission.py

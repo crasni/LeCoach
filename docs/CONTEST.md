@@ -17,15 +17,17 @@ Rules content rechecked 2026-10-11 against the [official competition rules](http
 
 ## Preparation for LeCoach
 
-The reviewed replacement in [PR #35](https://github.com/crasni/LeCoach/pull/35)
+The delivered replacement in [PR #35](https://github.com/crasni/LeCoach/pull/35)
 has 15 English main pages and no appendix: workplace problem, audience experience,
 rehearsal loop, local speech/camera limits, generated synthetic coaching,
 architecture/retention, limited actual vision advice, isolated camera timings,
 failures, proposed value/pilot, demo plan, Stage I/II and source references.
 Use its versioned [PDF](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.pdf)
 and [editable source](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.fodp)
-for replacement review. Until that PR merges, the local proposal files retain the
-older main baseline; the rejected refreshed draft is absent from PR #32's diff.
+for the reviewed artifact revision. PR #35 merged as `319d274` on 2026-10-11
+under explicit maintainer authorization; the local [PDF](submission/proposal.pdf)
+and [source](submission/proposal.fodp) are now that replacement. The rejected
+refreshed draft is absent from PR #32's final diff.
 [Readiness](submission/readiness.md) pins the replacement hashes and distinguishes
 artifact checks from final live/package acceptance. Synthetic coaching, actual
 CPU observations and unmeasured hardware plans retain their respective labels.
