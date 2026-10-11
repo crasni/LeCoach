@@ -3,9 +3,9 @@
 ## Artifact scope reconciliation — 2026-10-11
 
 The maintainer rejected the 12-page refreshed proposal described below. Its
-hashes/checks are historical evidence, not approval. PR #32 now covers only
-integration documentation: its final diff restores the proposal source/PDF to
-the existing main baseline and preserves rejected artifact history in earlier
+hashes/checks are historical evidence, not approval. PR #32 now covers
+integration documentation and the read-only artifact checker. Its final diff
+restores the proposal source/PDF to the existing main baseline and preserves rejected artifact history in earlier
 commits. Do not use those baseline files as the replacement submission.
 
 The replacement pair is reviewed separately in
@@ -21,6 +21,73 @@ use is claimed. Integration content/layout review and final package acceptance
 are separate from authoring and artifact existence. Issues #12/#34 own their
 current dispositions. Final demo footage, revised script timing and external
 receipts are not supplied by this artifact review.
+
+## Reproduce artifact consistency checks
+
+The integration-owned checker requires Python and Poppler's `pdfinfo` and
+`pdftotext` utilities (Ubuntu package `poppler-utils`). It does not add an app
+dependency, download models, open devices or modify source/PDF files.
+
+From the repository root, check the files in the current checkout:
+
+```sh
+uv run python scripts/check_submission.py --json
+```
+
+The default check identifies the actual pair on disk, which remains the older
+12-page main baseline until PR #35 merges. Passing parity does not accept that
+baseline for submission. To reproduce the reviewed replacement independently
+without changing branches or tracked artifacts, after fetching its branch:
+
+```sh
+mkdir -p /tmp/lecoach-replacement-review
+git show d34a58c:docs/submission/proposal.fodp > /tmp/lecoach-replacement-review/proposal.fodp
+git show d34a58c:docs/submission/proposal.pdf > /tmp/lecoach-replacement-review/proposal.pdf
+uv run python scripts/check_submission.py \
+  --source /tmp/lecoach-replacement-review/proposal.fodp \
+  --pdf /tmp/lecoach-replacement-review/proposal.pdf --json
+```
+
+The checker verifies matching page counts within a conservative 20-total-page
+budget, normalized visible-text tokens per page, hyperlink destinations and
+artifact SHA-256 identities. It excludes slide notes from visible text. Its
+receipt is artifact evidence only: human review still checks English language,
+required topics, visual layout, claims and appendix classification. The current
+replacement has no appendix. Live/demo acceptance and external delivery remain
+in the Issues.
+
+Regression checks deliberately change source text, a hyperlink and the page
+count and require failure against the unchanged PDF. Missing inputs/tools and a
+page-budget violation also fail. Checks use Poppler where available; optional
+PDF integration checks skip explicitly if those utilities are absent.
+
+## Independent artifact checks — 2026-10-11
+
+On Ubuntu x86_64 / project CPython 3.12.14, the replacement at `d34a58c` passes
+`scripts/check_submission.py`: 15 pages, 238 visible paragraphs, seven matching
+links, and the exact source/PDF hashes pinned above. The independent
+LibreOffice 26.2.6.3 re-export also passes the checker with the same page/text/link
+content; its PDF byte hash differs as expected for a different exporter/run.
+The current checkout's older baseline passes 12-page artifact parity, which
+identifies consistency only and does not approve it as the final replacement.
+
+```sh
+.venv/bin/python -m pytest -q tests/test_submission.py
+.venv/bin/ruff check src scripts tests examples checks/coaching/feedback_replay.py
+openspec validate --all --strict
+git diff --check
+```
+
+Seven focused tests pass, including deliberately stale text/link/page-count
+artifacts. Ruff and all seven strict OpenSpec items pass. Sixty-two local file
+targets in setup/package documents resolve. This increment adds no runtime,
+event, rule, model or device changes; no new actual rehearsal, narration/edit
+measurement, full app-suite rerun or external delivery was performed.
+
+## Historical proposal evidence (superseded)
+
+All sections below preserve the earlier 12-page artifact/review record. They
+are not a claim map or acceptance certificate for the 15-page replacement.
 
 ## Historical Stage I direction update — 2026-10-09
 

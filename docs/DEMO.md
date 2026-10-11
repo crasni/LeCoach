@@ -88,6 +88,12 @@ Before substituting live shots or revising deck claims, compare the run's source
 
 ## INT-03 package handoff
 
-The [local English proposal](submission/proposal.pdf) is paired with a [readiness/claim map](submission/readiness.md). Headless reproduction was repeated during INT-03 apply; [STATUS](STATUS.md#int-03-apply-local-validation) records synthetic inputs, exact state times and authored outputs. This does not establish a recorded demo or live behavior.
+The reviewed [replacement English proposal](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.pdf)
+is paired with its [versioned claim map](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal-review.md)
+and integration [artifact record](submission/readiness.md). Until PR #35 merges,
+the local proposal files are the older main baseline. Headless reproduction was
+repeated during INT-03 apply; [STATUS](STATUS.md#int-03-apply-local-validation)
+records synthetic inputs, exact state times and authored outputs. This does not
+establish a recorded demo or live behavior.
 
-The versioned Lane 5 handoff supplies the delivered CPU live narration and separate synthetic coaching anchors. Recorder [PR #5](https://github.com/crasni/LeCoach/pull/5), coaching PR #24 and plain-advice/script PR #33 are merged; opt-in live sessions generate browser coaching. Default replay browser cards remain authored examples. Before final script acceptance, match the visible advice to accepted actual evidence and measure revised narration/edit timing. The existing proposal is an unaccepted draft; its replacement is delegated in [#34](https://github.com/crasni/LeCoach/issues/34) for integration review. This guide does not accept the proposal or approve a synthetic-only final submission.
+The versioned Lane 5 handoff supplies the delivered CPU live narration and separate synthetic coaching anchors. Recorder [PR #5](https://github.com/crasni/LeCoach/pull/5), coaching PR #24 and plain-advice/script PR #33 are merged; opt-in live sessions generate browser coaching. Default replay browser cards remain authored examples. Before final script acceptance, match the visible advice to accepted actual evidence and measure revised narration/edit timing. The replacement in [#34](https://github.com/crasni/LeCoach/issues/34) has integration content/layout/artifact approval in PR #35; final maintainer/package disposition remains separate. This guide does not approve a synthetic-only final submission.

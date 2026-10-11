@@ -119,3 +119,21 @@ rendered fields establish the Stage I cutoff as 2026-10-14 17:00 UTC+8; they
 resolve the earlier uncertainty from timezone-free JSON-LD. The root Event's
 endDate still reflects retrieval time and was not used as the deadline.
 No registration button, account or submission form was used.
+
+## Public rules recheck — 2026-10-11
+
+Direct HTTPS retrieval of the [official home page](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/)
+produced HTML SHA-256
+`ef8af4e39d474f3b124b58886c81c3f1caf054cf811f3bb7534ecab4b1c41863`.
+The HTML-unescaped Event description still hashes to
+`5097d79890c35b3020cc654609f93f757bb5422ed5f449a0309205e2561e1fcb`.
+Sections III–VII, IX and XI were inspected: Stage I date, English proposal,
+20-main-page budget, video guidance and Stage II distinction are unchanged.
+The web extractor returned 404; direct response/content inspection supplied the
+verification. Temporary HTML/rules files remain outside Git.
+
+This recheck covers public rules prose. It does not refresh the rendered cutoff
+or announcements, inspect authenticated form limits, establish registration or
+resolve originality interpretation. The exact 17:00 Asia/Taipei cutoff retains
+its rendered 2026-10-10 provenance above; dynamic JSON-LD dates were not used to
+infer it. Registration/upload/submission actions were not performed.

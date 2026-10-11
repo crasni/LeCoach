@@ -1,6 +1,6 @@
 # Competition requirements and submission preparation
 
-Content rechecked 2026-10-10 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/). Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
+Rules content rechecked 2026-10-11 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/); the exact rendered cutoff retains its 2026-10-10 verification. Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
 
 ## Verified requirements
 
@@ -17,7 +17,18 @@ Content rechecked 2026-10-10 against the [official competition rules](https://co
 
 ## Preparation for LeCoach
 
-The local [English deck](submission/proposal.pdf) and [editable source](submission/proposal.fodp) now follow the 12-slide structure: problem; intended user; rehearsal journey; live audience response; demonstrated prototype; local architecture; event timing and failure handling; hardware adapter approach; validation evidence; practical value; delivery milestones; references and repository. [Readiness](submission/readiness.md) records local page/language/content/visual checks and the claim map. This is a review draft, not a finished submission or a change to the MVP; current prototype claims remain synthetic.
+The reviewed replacement in [PR #35](https://github.com/crasni/LeCoach/pull/35)
+has 15 English main pages and no appendix: workplace problem, audience experience,
+rehearsal loop, local speech/camera limits, generated synthetic coaching,
+architecture/retention, limited actual vision advice, isolated camera timings,
+failures, proposed value/pilot, demo plan, Stage I/II and source references.
+Use its versioned [PDF](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.pdf)
+and [editable source](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.fodp)
+for replacement review. Until that PR merges, the local proposal files retain the
+older main baseline; the rejected refreshed draft is absent from PR #32's diff.
+[Readiness](submission/readiness.md) pins the replacement hashes and distinguishes
+artifact checks from final live/package acceptance. Synthetic coaching, actual
+CPU observations and unmeasured hardware plans retain their respective labels.
 
 Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The default shell demonstrates synthetic playback; opt-in `lecoach serve --live` composes local speech/vision and generated coaching. Its final integrated rehearsal acceptance remains pending in INT-02. Replace example shots with accepted actual rehearsal behavior; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeCoach has already run on that hardware.
 
@@ -28,7 +39,11 @@ Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS.
 - Review section IX's original-work and licensing terms with the team. Clarify the treatment of a public development repository alongside the required GitHub link; do not assume an eligibility interpretation.
 - Recheck the official rules immediately before submission. External upload, publication and submission follow the team's authorization requirements.
 
-INT-03 apply rechecked the accessible public rules on 2026-10-07; no change to the table above was found. The public response is a client-loaded application shell with rules metadata, so final form/announcement inspection remains pending. No authenticated registration page or receipt was accessed. Team confirmation of format, cutoff and originality interpretation was requested; unanswered details remain unknown, not accepted by default.
+Earlier INT-03 checks on 2026-10-07 were superseded by the rules rechecks and
+rendered cutoff verification below. The public rules description is unchanged
+on 2026-10-11. No authenticated registration page or receipt was accessed.
+Registration/form details and team interpretation of originality remain unknown;
+the Global Online Track choice and rendered cutoff are already confirmed.
 
 ## Review before submission
 
