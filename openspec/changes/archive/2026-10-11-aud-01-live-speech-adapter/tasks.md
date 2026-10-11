@@ -1,6 +1,6 @@
 # Tasks
 
-Groups 1–3 are model-free and device-free, and can proceed while issue #6 is open. Group 4 starts only after issue #6 records the language and default decisions and integration adds the optional speech dependency group. [Issue #13](https://github.com/crasni/LeCoach/issues/13) owns status, blockers, remaining work, and acceptance; this checklist is a work breakdown. Publication follows [AGENTS.md](../../../AGENTS.md#scoped-autonomous-branch-publication).
+Groups 1–3 are model-free and device-free, and can proceed while issue #6 is open. Group 4 starts only after issue #6 records the language and default decisions and integration adds the optional speech dependency group. [Issue #13](https://github.com/crasni/LeCoach/issues/13) owns status, blockers, remaining work, and acceptance; this checklist is a work breakdown. Publication follows [AGENTS.md](../../../../AGENTS.md#scoped-autonomous-branch-publication).
 
 ## 1. Configuration and text rules
 
