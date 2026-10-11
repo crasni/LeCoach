@@ -81,7 +81,9 @@ export function Audience({ state, label }: { state: AudienceState; label: string
   }, [state]);
 
   return <div className="room" role="img" aria-label={`${label}: ${stateCopy[state].label.toLowerCase()}`}>
-    <div className="row back">{seats.slice(0, 4).map((value, i) => <Seat key={i} index={i} state={value} />)}</div>
-    <div className="row front">{seats.slice(4).map((value, i) => <Seat key={i + 4} index={i + 4} state={value} />)}</div>
+    <div className="crowd">
+      <div className="row back">{seats.slice(0, 4).map((value, i) => <Seat key={i} index={i} state={value} />)}</div>
+      <div className="row front">{seats.slice(4).map((value, i) => <Seat key={i + 4} index={i + 4} state={value} />)}</div>
+    </div>
   </div>;
 }
