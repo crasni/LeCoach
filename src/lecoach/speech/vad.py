@@ -119,6 +119,16 @@ class SileroSegmenter:
         self._c = np.zeros((1, 1, 128), dtype=np.float32)
         self._context = np.zeros(_CONTEXT, dtype=np.float32)
 
+    @property
+    def metrics_watermark_frame(self) -> int:
+        """Future padded onsets cannot precede this processed-audio frontier.
+
+        Pending samples have not been classified yet. The next classified
+        frame can also pad its onset backward, so metric windows must lag both
+        that incomplete frame and the gate's onset padding.
+        """
+        return max(0, (self._pending_start or 0) - self.gate.pad)
+
     def process(self, samples, first_frame: int) -> list[Boundary]:
         np = self._np
         if isinstance(samples, array):

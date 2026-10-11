@@ -8,6 +8,17 @@ This file preserves dated implementation evidence. [GitHub Issues](https://githu
 
 ## Stage I component verification and actual browser evidence — 2026-10-11
 
+The subsequent operator guided speech probe completed in 71.0943 s with zero
+overflows or incomplete sources: final delay median/p95/max 0.938/1.135/2.478 s
+(13 samples), window delay 0.160/1.026/2.478 s (41 samples), stop/drain 0.438 s.
+Its independent producer check exposed a real padded-onset/active-pause overlap
+at `metrics-51`. The original private stream remains unchanged and failing.
+The bounded scheduling correction waits for VAD's settled frame/padding frontier;
+its reproducing regression and production frontier test pass, and the updated
+full suite passes 283 tests / 392 subtests with two espeak-ng skips. No actual
+post-fix capture or latency result is inferred. The dated record below details
+both the measured baseline and the controlled defect verification.
+
 Runtime source `c4c4607` passes 281 tests / 392 subtests, with two synthesized-
 speech checks skipped for the missing espeak-ng executable. Frontend build/type
 parity, schemas, speech fixtures and both nine-case/ten-session coaching replays

@@ -133,6 +133,32 @@ class SpeechAdapterSessionTests(IsolatedAsyncioTestCase):
         self.assertEqual((self.source.opened, self.source.closed), (1, 1))
         self.assert_consistent()
 
+    async def test_padded_onset_cannot_overlap_an_already_published_pause(self):
+        class PaddedSegmenter(ScriptedSegmenter):
+            metrics_watermark_frame = 0
+
+            def process(self, samples, first_frame):
+                last = first_frame + len(samples)
+                # VAD discovers an onset after the frame it pads back into.
+                found = [b for b in self.boundaries
+                         if first_frame <= b.frame + round(0.1 * RATE) < last]
+                for boundary in found:
+                    self.open = boundary.kind == "start"
+                self.metrics_watermark_frame = max(0, last - round(0.1 * RATE))
+                return found
+
+        controller = self.session(
+            finals=["first sentence", "next sentence"],
+            segmenter=PaddedSegmenter([(1.0, 2.0), (4.94, 5.46)]),
+        )
+        await controller.start()
+        await self.run_to(5.0, step_s=0.25)
+        await self.run_to(6.5, step_s=0.25)
+        await controller.stop()
+        # The independent producer checker detects a pause crossing the later
+        # finalized onset at 4.94 s, even though VAD learned of it after 5 s.
+        self.assert_consistent()
+
     async def test_long_speech_is_split_at_the_maximum_utterance_length(self):
         controller = self.session([(1.0, 20.0)], ["first part", "second part", "third part"])
         await controller.start()
