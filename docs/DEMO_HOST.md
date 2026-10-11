@@ -144,6 +144,43 @@ vision owner. Keep the metrics file in ignored `sessions/`; report only a saniti
 summary. This measurement does not repeat the integrated reliability batch or
 establish instrumented browser latency.
 
+## Targeted browser coaching evidence
+
+For the remaining presenter/browser citation pickup, the integration diagnostic
+launcher uses the existing live factory, sole recorder and template generator:
+
+```sh
+uv run --group speech --group vision python scripts/live_evidence.py
+```
+
+Use the already prepared packages/models and built UI. Set the intended
+`LECOACH_SPEECH_DEVICE` before launch as above. This replaces the usual server
+command for the diagnostic run; it uses the same loopback address/port and does
+not download models. Open `http://127.0.0.1:8000`, select **Live microphone and
+camera**, follow the owner-provided workplace passage and pace/facing retry,
+then stop and inspect the actual browser advice. Devices open only on session
+start; the launcher does not start a rehearsal automatically.
+
+After stop, sanitized diagnostic JSON is saved per session under ignored
+`sessions/live-evidence/`. It includes the exact Feedback returned to the
+browser, its supporting canonical metrics/decisions, input status codes, source
+revision, session/speech/rule configuration and prepared model hashes. Transcript
+events are excluded; no raw audio/video, transcript text or model weights are
+saved. File I/O runs outside feedback generation and is drained at shutdown;
+export failures leave browser feedback unchanged. Fixture replay is unchanged
+and produces no diagnostic export. This tool adds no alternate recorder/engine
+or API/event changes. The file is a diagnostic projection, not a full canonical
+CompletedSession that can be fed to the coaching session checker.
+
+Match visible cards to the exported timestamp/observation/action and cited IDs.
+Report the sanitized moment(s), observed audience changes, run/configuration and
+input limitations to #11/#20; keep actual device identities and local paths
+private where needed. An export alone does not verify useful presenter delivery,
+speech quality, browser legibility or latency. Diagnostic overhead also makes
+this launch unsuitable as a performance benchmark. Read-through/per-slot/edit
+timing and separately authorized video recording/publication remain distinct.
+Do not repeat the already completed reliability batch for this pickup.
+
 ## Rehearsal scenario and final evidence
 
 1. Confirm the accepted revision, English model/configuration and live launch.
