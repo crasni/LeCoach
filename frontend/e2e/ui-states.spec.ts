@@ -119,7 +119,7 @@ test('live preview waits for the camera, retries, and hides a failed camera', as
   const send = (message: object) => socket!.send(JSON.stringify(message));
 
   await page.goto('/');
-  await page.getByLabel('Example', { exact: true }).selectOption({ label: 'Live microphone and camera' });
+  await page.getByLabel('Practice mode', { exact: true }).selectOption({ label: 'Live microphone and camera' });
   await page.getByRole('button', { name: 'Start rehearsal' }).click();
   await expect.poll(() => socket).toBeTruthy();
   send({ kind: 'snapshot', snapshot: live('running') });

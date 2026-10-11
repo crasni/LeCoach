@@ -5,14 +5,14 @@ import { type AudienceState, stateCopy } from './copy';
 // ripples through the room instead of flipping every face at once.
 
 const SEATS = [
-  { skin: '#e8c2a0', hair: '#3b2b22', shirt: '#7f9c86' },
-  { skin: '#c99671', hair: '#1f1a17', shirt: '#c9a46b' },
-  { skin: '#f0d3b8', hair: '#a5683a', shirt: '#6e8aa6' },
-  { skin: '#8d5e41', hair: '#17110e', shirt: '#b47c6a' },
-  { skin: '#d7a77f', hair: '#5a4130', shirt: '#9a8fb3' },
-  { skin: '#f3dcc6', hair: '#d0a45d', shirt: '#6f9a95' },
-  { skin: '#b07a55', hair: '#2b211b', shirt: '#cf8f5e' },
-  { skin: '#e3b593', hair: '#6c6c6c', shirt: '#8a9a6a' },
+  { skin: '#e8c2a0', hair: '#423342', shirt: '#95aca5' },
+  { skin: '#c99671', hair: '#2f2939', shirt: '#c1a788' },
+  { skin: '#f0d3b8', hair: '#a57355', shirt: '#8f9ec3' },
+  { skin: '#8d5e41', hair: '#2e2630', shirt: '#bb989d' },
+  { skin: '#d7a77f', hair: '#59424b', shirt: '#a49bbf' },
+  { skin: '#f3dcc6', hair: '#c1a07a', shirt: '#8daeb8' },
+  { skin: '#b07a55', hair: '#362c38', shirt: '#c6a58c' },
+  { skin: '#e3b593', hair: '#6c6570', shirt: '#8faaa1' },
 ];
 const RIPPLE_MS = 140;
 
@@ -49,11 +49,15 @@ function Seat({ index, state }: { index: number; state: AudienceState }) {
   const look = SEATS[index % SEATS.length];
   return <div className={`seat seat-${state.toLowerCase()}`} style={{ ['--i' as string]: index }}>
     <svg viewBox="0 0 100 112" aria-hidden="true">
-      <rect className="chair" x="14" y="58" width="72" height="54" rx="12" />
+      <rect className="chair" x="14" y="58" width="72" height="54" rx="15" />
+      <path className="chair-detail" d="M20 100 V76 Q20 64 32 64 H68 Q80 64 80 76 V100" />
       <g className="person">
-        <path d="M20 112 Q20 76 50 73 Q80 76 80 112 Z" fill={look.shirt} />
+        <path d="M21 112 24 88 Q26 78 41 75 L50 79 59 75 Q74 78 76 88 L79 112Z" fill={look.shirt} />
+        <path className="clothes-detail" d="M41 76 Q50 88 59 76 M32 91 30 111 M68 91 70 111" />
         <g className="head">
           <rect x="45" y="60" width="10" height="12" fill={look.skin} />
+          <ellipse cx="31" cy="48" rx="3" ry="5" fill={look.skin} />
+          <ellipse cx="69" cy="48" rx="3" ry="5" fill={look.skin} />
           <circle cx="50" cy="46" r="19" fill={look.skin} />
           <path d={index % 2 ? 'M31 44 Q31 24 50 25 Q69 24 69 44 Q63 33 50 34 Q37 33 31 44 Z'
             : 'M31 46 Q30 23 52 26 Q70 28 69 42 Q58 30 40 36 Q34 40 31 46 Z'} fill={look.hair} />

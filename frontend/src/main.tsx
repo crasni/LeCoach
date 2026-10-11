@@ -16,6 +16,19 @@ type EngagementEvent = Extract<Event, { type: 'engagement.state' }>;
 
 const LIVE = '__live__';
 
+function Icon({ name }: { name: 'spark' | 'play' | 'stop' | 'camera' | 'shield' }) {
+  const paths = {
+    spark: <><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z" /><path d="m20 2 .6 1.4L22 4l-1.4.6L20 6l-.6-1.4L18 4l1.4-.6Z" /></>,
+    play: <path d="m9 5 10 7-10 7Z" />,
+    stop: <rect x="6" y="6" width="12" height="12" rx="2" />,
+    camera: <><rect x="3" y="6" width="13" height="12" rx="3" /><path d="m16 10 5-3v10l-5-3" /></>,
+    shield: <><path d="M12 3 4 6v6c0 4 4 7 8 9 4-2 8-5 8-9V6Z" /><path d="m8.5 12 2.5 2.5 4.5-5" /></>,
+  };
+  return <svg className={`icon icon-${name}`} width="20" height="20" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+    aria-hidden="true">{paths[name]}</svg>;
+}
+
 async function api<T>(path: string, body?: object): Promise<T> {
   const response = await fetch(path, body === undefined ? undefined : {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
@@ -63,6 +76,7 @@ function Timeline({ transitions, end }: { transitions: EngagementEvent[]; end: n
   if (!transitions.length) return null;
   const span = Math.max(end, transitions[transitions.length - 1].timestamp_s, 1);
   return <div className="timeline" aria-label="Audience timeline">
+    <div className="timeline-top"><h2>How the room responded</h2><span>{clock(span)}</span></div>
     <div className="track">{transitions.map((event, index) => {
       const from = event.timestamp_s;
       const to = index + 1 < transitions.length ? transitions[index + 1].timestamp_s : span;
@@ -295,13 +309,13 @@ function App() {
     return () => clearInterval(timer);
   }, [showPreview, previewOk, previewLoaded, previewAttempt]);
 
-  return <main>
-    <header><a className="brand" href="/">LeCoach<span>Your Private AI Audience.</span></a>
-      <span className="local"><i /> Runs on this device</span></header>
+  return <main className={`studio ${running ? 'is-running' : feedback ? 'is-review' : 'is-ready'}`}>
+    <header><a className="brand" href="/"><span className="brand-mark"><Icon name="spark" /></span>
+      <span className="brand-name">LeCoach<span>Your Private AI Audience.</span></span></a>
+      <span className="local"><Icon name="shield" /> Runs on this device</span></header>
     <section className="intro"><div className="eyebrow">A SPACE TO PRACTICE</div>
-      <h1>Find your rhythm.<br /><span>Feel the audience.</span></h1>
-      <p>Rehearse and watch a simulated audience respond to your pace, fillers, pauses and
-        whether you face the room. Reactions come from fixed rules, not from reading emotions.</p>
+      <h1>Find your rhythm. <span>Feel the audience.</span></h1>
+      <p>A little practice. A more confident delivery. Your own space to find what works.</p>
     </section>
     {live
       ? <aside className="mode live"><strong>Live rehearsal</strong>
@@ -309,19 +323,6 @@ function App() {
       : <aside className="mode"><strong>Synthetic replay</strong>
         <span>Speech and camera observations are authored examples; the audience is computed from
           them by the engagement engine. Coaching is an authored example. Microphone and camera are off.</span></aside>}
-    <section className="controls" aria-label="Rehearsal controls">
-      <label>Example<select aria-label="Example" value={selected} onChange={e => setSelected(e.target.value)} disabled={!!running || busy}>
-        <option value={LIVE} disabled={!health?.live_integrated}>
-          Live microphone and camera{health?.live_integrated ? '' : ' (not connected yet)'}</option>
-        {fixtures.filter(f => f.session_count === 1).map(f => <option key={f.name} value={f.name}>
-          {caseLabels[f.name] || f.name}</option>)}
-      </select></label>
-      <button className="primary" onClick={start} disabled={!!running || busy || (!fixtures.length && selected !== LIVE)}>
-        {busy && !running ? 'Connecting…' : selected === LIVE ? 'Start rehearsal' : 'Start replay'}</button>
-      <button className="secondary" onClick={stop} disabled={!running || busy}>Stop</button>
-      <div className="timer" aria-label="Elapsed time">{clock(snapshot?.elapsed_s || 0)}
-        <small>{snapshot?.phase || 'Ready'}</small></div>
-    </section>
     {error && <div className="error" role="alert">{error}
       {activeId.current && <button onClick={() => {
         if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
@@ -329,7 +330,7 @@ function App() {
         connect(activeId.current!).catch(() => setError('The local connection is unavailable.'));
       }}>Reconnect</button>}</div>}
     <section className="grid">
-      <article className="audience card"><div className="card-top"><h2>Your audience</h2>
+      <article className="audience card"><div className="card-top"><div><span className="section-label">THE REHEARSAL ROOM</span><h2>Your audience</h2></div>
         <span className={`state state-${state.toLowerCase()}`} data-testid="audience-state">{state}</span></div>
         <Audience state={state} label={live ? 'Audience' : 'Example audience'} />
         <div className="reaction" aria-live="polite">
@@ -339,18 +340,17 @@ function App() {
             : running && !anyInput
               ? 'Waiting for usable speech or camera input.' : stateCopy[state].detail}</span>
         </div>
-        <p className="muted">Simulated audience states from deterministic rules. They are not measured
+        <p className="audience-note muted">Simulated audience states from deterministic rules. They are not measured
           emotions or judgments of you.</p>
-        <Timeline transitions={transitions} end={end} />
       </article>
-      <article className="card observations"><div className="card-top"><h2>Rehearsal input</h2>
+      <article className="card observations"><div className="card-top"><div><span className="section-label">YOUR SPACE</span><h2>Rehearsal input</h2></div>
         <span className="muted">{live ? 'On this device' : 'Example data'}</span></div>
         {showPreview && previewOk && <img className="camera" alt="Camera preview" key={previewAttempt}
           ref={previewImage} hidden={!previewLoaded}
           src={`/api/sessions/${snapshot!.session_id}/preview?attempt=${previewAttempt}`}
           onLoad={() => setPreviewLoaded(true)}
           onError={() => { setPreviewLoaded(false); setPreviewOk(false); }} />}
-        {!previewVisible && <div className="preview"><span aria-hidden="true">◉</span>
+        {!previewVisible && <div className="preview"><span className="preview-icon"><Icon name="camera" /></span>
           <p>{!live ? 'Camera is off during replay' : !running ? 'Camera starts with the rehearsal'
             : showPreview && previewOk ? 'Waiting for the camera preview' : 'Camera preview unavailable'}</p>
           <small>No video is recorded.</small></div>}
@@ -367,20 +367,34 @@ function App() {
               aria-label="Facing the audience" /> : '—'}</strong></div>
         </div>
         {pause && <p className="pause">{pause}</p>}
-        <h3>Transcript</h3><p className="transcript">{transcript.length
+        <div className="transcript-block"><h3>Transcript</h3><p className="transcript">{transcript.length
           ? transcript.map((e, i) => e.type === 'speech.transcript'
             ? <span key={e.event_id} className={e.payload.is_final ? undefined : 'partial'}>
               {i ? ' ' : ''}{e.payload.text}</span> : null)
-          : 'No transcript yet.'}</p>
+          : 'No transcript yet.'}</p></div>
       </article>
     </section>
+    <section className="controls" aria-label="Rehearsal controls">
+      <label>Practice mode<select aria-label="Practice mode" value={selected} onChange={e => setSelected(e.target.value)} disabled={!!running || busy}>
+        <option value={LIVE} disabled={!health?.live_integrated}>
+          Live microphone and camera{health?.live_integrated ? '' : ' (not connected yet)'}</option>
+        {fixtures.filter(f => f.session_count === 1).map(f => <option key={f.name} value={f.name}>
+          {caseLabels[f.name] || f.name}</option>)}
+      </select></label>
+      <div className="timer" aria-label="Elapsed time">{clock(snapshot?.elapsed_s || 0)}
+        <small><i /> {snapshot?.phase || 'Ready'}</small></div>
+      <div className="control-actions"><button className="secondary" onClick={stop} disabled={!running || busy}><Icon name="stop" />Stop</button>
+        <button className="primary" onClick={start} disabled={!!running || busy || (!fixtures.length && selected !== LIVE)}>
+          <Icon name="play" />{busy && !running ? 'Connecting…' : selected === LIVE ? 'Start rehearsal' : 'Start replay'}</button></div>
+    </section>
+    <Timeline transitions={transitions} end={end} />
     {feedback && <section className="summary" aria-label={live ? 'Rehearsal coaching' : 'Example coaching'}>
       <div className="eyebrow">AFTER THE REHEARSAL</div><h2>A few moments to learn from.</h2>
       <p className="muted">{live ? 'Coaching' : 'Authored example coaching'} · {clock(feedback.duration_s)} rehearsal</p>
-      <div className="moments">{feedback.moments.map((moment, index) => <article className="card" key={index}>
+      <div className="moments">{feedback.moments.map((moment, index) => <article className={`card moment moment-${moment.kind}`} key={index}>
         <div className="moment-top"><span>{clock(moment.timestamp_s)}</span>
           <strong>{moment.kind === 'strength' ? 'Keep doing this' : 'Try next time'}</strong></div>
-        <p>{moment.observation}</p><p className="suggestion">{moment.suggestion}</p>
+        <p>{moment.observation}</p><div className="suggestion"><span className="section-label">{moment.kind === 'strength' ? 'BUILD ON THIS' : 'YOUR NEXT STEP'}</span><p>{moment.suggestion}</p></div>
       </article>)}</div>
       {feedback.limitations.map((limitation, index) => <p className="notice" key={index}>{limitation}</p>)}
       {!feedback.moments.length && <p>No supported coaching moments in this example.</p>}
