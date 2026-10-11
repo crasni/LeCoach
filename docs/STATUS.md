@@ -830,3 +830,131 @@ accelerator compatibility or task acceptance. The actual demo host remains
 unconfirmed; live validation and component downstream acceptance remain in #11.
 PR #23 still requires collaborator review; it was not merged under the separate
 three-component authorization.
+
+## Maintainer-reported integrated live checks — 2026-10-10
+
+FACT: The maintainer tested live mode on their Ubuntu 26.04.1 / Ryzen AI 7 450 /
+approximately 30 GiB RAM computer using a Bluetooth microphone. They report
+transcription, camera detection and audience reactions work; their UI screenshot
+shows BORED with “A long silence” after the audience lost focus.
+
+FACT: In response to the requested manual reliability batch, the maintainer
+confirmed all checks work: coaching after stop, repeat-session transcript reset
+and working inputs, camera indicator release, short/no-person handling and the
+missing-microphone scenario. They also report a comfortable approximately 2:20
+read-through of the 316-word preview narration.
+
+LIMITATIONS: These are user-reported checks, not independently observed or
+instrumented timings/accuracy measurements. Exact run revision/model hashes,
+per-slot video timing and coaching moment text/evidence IDs were not supplied.
+Advice usefulness and client experience remain areas the maintainer wants improved.
+This record does not establish Stage II accelerator operation or final submission.
+
+## Current runtime and submission validation — 2026-10-10
+
+FACT: On application source `66d1c8e`, Ubuntu x86_64 / project Python 3.12.14,
+`env -u DISPLAY -u WAYLAND_DISPLAY .venv/bin/python -m pytest -q` passes
+**267 tests / 392 subtests**, with **two skips**, in 19.31 s. Speech/vision runtime
+versions are 1.2.1/0.5.6/0.10.35/4.14.0.94 (faster-whisper/sounddevice/MediaPipe/
+opencv-contrib-python). Prepared speech and pose files exist; sanitized model
+hashes are recorded in Issue #11. No model download or real capture in this check.
+
+FACT: Ruff, canonical schema parity, all nine synthetic fixture cases / ten
+sessions, seven strict OpenSpec items and whitespace pass. The refreshed
+12-page English proposal separates delivered CPU composition, user-reported
+functional checks, automated checks and deferred target measurements. All pages
+were visually inspected; all 245 source paragraphs and six PDF links match.
+Artifact hashes and exact export command are in submission/readiness.md.
+
+LIMITATIONS: Automated/weight tests and user-reported live checks do not establish
+instrumented real-input accuracy, latency or accelerator performance. No final
+video, registration/submission or external publication occurred in this refresh.
+
+## Plain-advice delivery and Ubuntu vision timing — 2026-10-10
+
+FACT: Maintainer instruction to do the listed integration work authorized delivery
+of reviewed PR #33 head `1f4607a`. It merged as `ff24d09`; assigned integration
+reconciled main as `81dead7`, preserving the unaccepted proposal draft. The delivered
+CPU live narration has 309 words; the earlier approximately 2:20 report belongs to
+the 316-word preview, not this revision. Demo guidance now uses the delivered
+script and distinguishes actual live feedback from authored fixture cards.
+
+FACT: On Ubuntu x86_64 / project CPython 3.12.14, application source `81dead7`:
+
+```sh
+env -u DISPLAY -u WAYLAND_DISPLAY .venv/bin/python -m pytest -q
+# 268 passed, 2 skipped, 392 subtests, 19.72 s
+.venv/bin/ruff check src scripts tests examples checks/coaching/feedback_replay.py
+.venv/bin/python scripts/export_schema.py --check
+.venv/bin/python scripts/validate_fixtures.py
+.venv/bin/python checks/coaching/feedback_replay.py
+.venv/bin/python checks/coaching/record_replay.py
+openspec validate --all --strict
+git diff --check
+```
+
+All checks pass: each coaching replay covers nine synthetic cases / ten sessions;
+all seven strict OpenSpec items pass. Updated guide file links and the six narration
+word counts were checked independently. No new download or raw-media recording.
+
+FACT: A separate **actual camera/MediaPipe CPU timing measurement** used camera
+index 0, prepared `pose_landmarker_lite.task` SHA-256
+`59929e1d1ee95287735ddd833b19cf4ac46d29bc7afddbbf6753c459690d574a`,
+and unchanged `VisionConfig`. After `prewarm().join()`, three fresh public
+`build_local_adapter(model_path=..., camera_index=0)` instances ran through
+`start(SessionContext)` / five seconds of capture / `stop_capture(clock.now())` /
+`drain()`. Every emitted event was contract-validated; metrics/counters only were
+saved under ignored `sessions/ubuntu-camera-timing.json`. The local measurement
+source is preserved as ignored `sessions/ubuntu-camera-timing-method.py`.
+
+| Session | Startup (s) | Camera open (ms) | Inference FPS | Stop/release (s) | Windows |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1 | 0.3599 | 282.48 | 9.96 | 0.0774 | 5 |
+| 2 | 0.2044 | 157.60 | 9.95 | 0.0708 | 5 |
+| 3 | 0.2118 | 158.41 | 9.95 | 0.0541 | 5 |
+
+All three reported `capture_started`, camera released, zero read failures and
+zero inference errors. Every startup was below the unchanged 5 s bound. No
+microphone was opened; no preview, frame, pose/keypoint or transcript file was saved.
+
+LIMITATIONS: This is isolated vision timing, with no guided posture judgement,
+concurrent speech/browser load or instrumented UI latency. It does not measure
+recognition quality, establish exact live coaching citations, accept a final demo,
+validate UGen300, or waive component owner review. The existing reported integrated
+reliability batch was not repeated. Proposal artifacts remain unaccepted pending
+the delegated rewrite and review.
+
+## Actual live coaching citation pickup — 2026-10-10
+
+FACT: Application source `225550f`, same Ubuntu host and prepared models, ran the
+existing `prepare_live_factory(SpeechConfig(), DEFAULT_RULES)` / `SessionManager`
+composition for one headless live session. The controller started actual local
+adapters, captured for 22 s, stopped/drained, generated feedback and shut down.
+Capture duration was 22.6512 s. No scripted speech/posture or browser was used.
+The unchanged default speech device selection reported `microphone_no_signal`;
+no usable speech observation was established in this run. This is not a
+retrospective description of the maintainer's earlier Bluetooth rehearsal.
+
+FACT: Generated feedback contained an improvement at capture time **4.0 s**:
+“You appeared to stay turned away from the camera during this passage.” Action:
+“Deliver your next key sentence facing the camera, with your notes beside it.”
+Citations are `vision-3`, `vision-4`, `vision-5`, `vision-6`, `engagement-1`.
+The four available vision windows ending at 4/5/6/7 s report person/pose present
+and facing scores 0 / 0.1248 / 0 / 0. The actual audience transition at 7.0249 s
+is NEUTRAL → BORED with `facing_away_sustained`, citing those same four windows.
+The moment's capture time is distinct from its audience decision time.
+
+Feedback correctly reports insufficient usable speech input and camera input
+unavailable for part of the session. Camera release is confirmed. Canonical
+Feedback, cited canonical metric/decision events, actual default RuleConfig and
+SpeechConfig, sanitized same-run provenance and a transcript-free text timeline
+are preserved under ignored `sessions/live-feedback-pickup/`; no raw media or
+transcript text file was saved. The exact local method is preserved there too.
+
+LIMITATIONS: This validates the actual vision-supported observation/action/ID
+chain, not a reviewed presenter scenario, spoken-delivery quality, recovery/
+strength quota, browser presentation, completed coaching acceptance or final
+demo evidence. Speech model preparation alone does not establish microphone
+signal. No new model download, media recording, external publication or target
+accelerator inference occurred. The completed operator reliability batch remains
+separate and was not requested again.

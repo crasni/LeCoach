@@ -21,7 +21,7 @@ live app composition or UGen300 compatibility.
 
 Integration accepts Lane 2's proposed English analysis baseline for the Stage I
 demo. Keep the existing `SpeechConfig` in `lecoach.speech.config`; the composition
-root will construct/pass that configuration, with no second definition in shared
+root constructs/passes that configuration, with no second definition in shared
 contracts. The existing adapter constructor accepts it. This follows the
 [speech design](https://github.com/crasni/LeCoach/blob/agent/audio-streaming/openspec/changes/aud-01-live-speech-adapter/design.md)
 and preserves the v0 event interface.
@@ -72,15 +72,17 @@ distribution: the four wheel variants share `cv2` and cannot coexist reliably
 Do not add `opencv-python` or either headless variant alongside it.
 
 Use the merged vision producer's `build_local_adapter()` public factory, with one
-adapter per session, after the composition handoff is agreed. Its README on main
+adapter per session, through the delivered opt-in live composition. Its README on main
 documents the Pose Landmarker lite asset, ignored model path, camera selection,
 probe and approximate facing/activity limitations:
 [vision handoff](https://github.com/crasni/LeCoach/blob/main/src/lecoach/vision/README.md#integration-handoff-lane-1).
 Do not open a second camera in the browser.
 
-Actual-camera CPU measurements in #16 include one 5.94 s startup, above the
-shared default 5 s bound. A proposed 10 s live-mode bound requires composition
-review; this dependency increment does not change that default. In-app UI
-responsiveness can be measured only once vision is composed into the app; that
-measurement remains part of #16 and joint #11/#19 acceptance. Final acceptance
-must not prevent independent composition preparation.
+Stage I vision is [accepted by the owner](https://github.com/crasni/LeCoach/issues/16#issuecomment-6097454631).
+On the Ubuntu demo host, three isolated runs started in 0.20–0.36 s, inferred
+about 9.95 frames/s and released the camera in 54–77 ms. The existing 5 s startup
+bound is retained. The earlier 5.94 s outlier was on the owner's Mac, not the
+Ubuntu demo host. Activity/gesture distinction was measured on Mac only; the
+owner accepted that limitation because no engine rule or coaching template uses
+activity. Future activity-based behavior needs a host recheck. Concurrent
+speech/browser latency and UGen300 performance remain separate measurements.
