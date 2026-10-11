@@ -157,6 +157,25 @@ class PortAudioSourceTests(TestCase):
 
 @skipUnless(RUNTIME, "speech dependency group not installed")
 class SileroSegmenterTests(TestCase):
+    def test_metrics_frontier_excludes_pending_audio_and_future_onset_padding(self):
+        import numpy as np
+
+        from lecoach.speech.vad import FRAME, SileroSegmenter
+
+        segmenter = SileroSegmenter(config(), model=types.SimpleNamespace(session=None),
+                                    pad_s=0.2)
+        segmenter._probabilities = lambda frames: np.zeros(len(frames))
+        processed = FRAME * 100
+        segmenter.process(np.zeros(processed, dtype=np.float32), 0)
+        frontier = segmenter.metrics_watermark_frame
+        self.assertEqual(frontier, processed - round(0.2 * 16_000))
+        # Unclassified fractional frames cannot move the metrics frontier.
+        segmenter.process(np.zeros(300, dtype=np.float32), processed)
+        self.assertEqual(segmenter.metrics_watermark_frame, frontier)
+        segmenter._probabilities = lambda frames: np.ones(len(frames))
+        onset = segmenter.process(np.zeros(FRAME - 300, dtype=np.float32), processed + 300)
+        self.assertEqual([(b.kind, b.frame) for b in onset], [("start", frontier)])
+
     def test_streaming_matches_batch_probabilities_and_silence_has_no_speech(self):
         import numpy as np
 

@@ -241,7 +241,9 @@ class SpeechAdapter:
                 if keep_from - history_start > sample_rate:
                     del history[:keep_from - history_start]
                     history_start = keep_from
-                self._post(self._advance, at(position))
+                watermark = min(position, getattr(
+                    self.segmenter, "metrics_watermark_frame", position))
+                self._post(self._advance, at(position), at(watermark))
         except Exception:
             if open_seq:  # finalize without words so no utterance stays open
                 self._post(self._speech_ended, open_seq, at(max(position, open_start)))
@@ -336,9 +338,12 @@ class SpeechAdapter:
     def _partial(self, seq: int, text: str, covered_end_s: float) -> list[dict]:
         return self._pipeline.partial(seq, text, self._clamp(covered_end_s))
 
-    def _advance(self, at_s: float) -> list[dict]:
+    def _advance(self, at_s: float, metrics_at_s: float | None = None) -> list[dict]:
         self.analyzed_s = max(self.analyzed_s, self._clamp(at_s))
-        return self._pipeline.advance(self.analyzed_s)
+        # Segmentation progress remains an honest lag diagnostic, while windows
+        # wait until VAD cannot discover a padded onset inside them later.
+        watermark = self.analyzed_s if metrics_at_s is None else self._clamp(metrics_at_s)
+        return self._pipeline.advance(watermark)
 
     def _fail(self, at_s: float, availability: str, reason: str) -> None:
         """Called from worker threads: stop capture and report non-available input."""

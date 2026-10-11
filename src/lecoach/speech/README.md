@@ -1,6 +1,6 @@
 # Speech adapter (AUD-01)
 
-`lecoach.speech` turns microphone audio into v0 `speech.transcript`, `speech.metrics`, and speech `signal.status` events behind the INT-01 `CaptureAdapter` seam. [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) owns the event contract. The [speech checks README](../../../checks/speech/README.md) owns the v0 speech rules: windows, coverage, pauses, and null versus zero. [Issue #13](https://github.com/crasni/LeCoach/issues/13) owns status and acceptance. The plan is the OpenSpec change [`aud-01-live-speech-adapter`](../../../openspec/changes/aud-01-live-speech-adapter/).
+`lecoach.speech` turns microphone audio into v0 `speech.transcript`, `speech.metrics`, and speech `signal.status` events behind the INT-01 `CaptureAdapter` seam. [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) owns the event contract. The [speech checks README](../../../checks/speech/README.md) owns the v0 speech rules: windows, coverage, pauses, and null versus zero. [Issue #13](https://github.com/crasni/LeCoach/issues/13) owns status and acceptance. The plan is the OpenSpec change [`aud-01-live-speech-adapter`](../../../openspec/changes/archive/2026-10-11-aud-01-live-speech-adapter/).
 
 **Current state.**
 - The model-free core and the adapter lifecycle are merged (PR #26).

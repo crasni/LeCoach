@@ -23,7 +23,7 @@ Integration accepts Lane 2's proposed English analysis baseline for the Stage I
 demo. Keep the existing `SpeechConfig` in `lecoach.speech.config`; the composition
 root constructs/passes that configuration, with no second definition in shared
 contracts. The existing adapter constructor accepts it. This follows the
-[speech design](https://github.com/crasni/LeCoach/blob/agent/audio-streaming/openspec/changes/aud-01-live-speech-adapter/design.md)
+[speech design](../openspec/changes/archive/2026-10-11-aud-01-live-speech-adapter/design.md)
 and preserves the v0 event interface.
 
 | Setting | Baseline |

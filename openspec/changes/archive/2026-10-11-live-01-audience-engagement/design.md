@@ -6,10 +6,10 @@ See [proposal.md](proposal.md#why). The base implementation is on `main` (PR #7,
 
 Other documents keep their roles:
 
-- [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md#engagement-contract--role-4) owns event semantics.
+- [ARCHITECTURE.md](../../../../docs/ARCHITECTURE.md#engagement-contract--role-4) owns event semantics.
 - `src/lecoach/engagement/config.py` owns every rule default and unit.
 - `src/lecoach/engagement/README.md` explains the rules.
-- Issues #18 and #19 own state and acceptance. [STATUS.md](../../../docs/STATUS.md#live-01-local-engine-and-rehearsal-screen) holds the 2026-10-08 evidence.
+- Issues #18 and #19 own state and acceptance. [STATUS.md](../../../../docs/STATUS.md#live-01-local-engine-and-rehearsal-screen) holds the 2026-10-08 evidence.
 
 The engine plugs into INT-01's `EngagementEngine` seam: `start(context)`, `on_event(event)`, `stop()`. The controller forwards speech/vision events, including `signal.status`, through its FIFO bus and rejects engagement emissions once stopping begins. In fixture mode, the replay seam advances a fake clock to each delivery time before dispatch and skips authored engagement events whenever an engine is injected.
 

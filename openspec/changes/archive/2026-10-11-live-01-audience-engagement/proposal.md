@@ -10,7 +10,7 @@ Live audience response is LeCoach's central product value, so producers, coachin
   - the sole engagement engine in `src/lecoach/engagement/`, which turns canonical speech, vision and `signal.status` events into evidence-cited `engagement.state` transitions;
   - sustained-evidence negative rules with separate clear thresholds and a minimum state dwell;
   - unusable input (missing, stale, unknown or outage) never counted as poor delivery;
-  - one validated rule configuration, and the reason codes in [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md#engagement-contract--role-4);
+  - one validated rule configuration, and the reason codes in [ARCHITECTURE.md](../../../../docs/ARCHITECTURE.md#engagement-contract--role-4);
   - the rehearsal screen: rippling 2D audience, plain-language reasons, timeline, input status, metrics, transcript, live preview slot and provenance labels;
   - composition in Lane 1 files, merged before integration review: the served app and `lecoach replay` compute audiences with the engine during synthetic replay (`--audience authored` restores authored ones); live mode stays unavailable.
 - **Proposed engine refinements (behavior delta for review):**
@@ -56,4 +56,4 @@ None. No capability is in `openspec/specs/` yet. INT-01's unarchived `synthetic-
   - Lane 2 ran the issue #6 speech defaults (English, 10 s window, 1 s hop) against this engine, and that run produced the pause observation the refinement addresses.
   - Lane 5's PR #24 marks the authored `weak_to_improved` oracle as historical; on `main` that README still awaits Lane 4 output.
   - Issue #17 holds the disposition of the unmerged `revert-7-agent/avatar-ui` branch.
-  - Live state, blockers and acceptance stay in issues #18 and #19. [STATUS.md](../../../docs/STATUS.md#live-01-local-engine-and-rehearsal-screen) holds the 2026-10-08 PR #7 evidence; checks for this change belong on issue #18 and the follow-up PR.
+  - Live state, blockers and acceptance stay in issues #18 and #19. [STATUS.md](../../../../docs/STATUS.md#live-01-local-engine-and-rehearsal-screen) holds the 2026-10-08 PR #7 evidence; checks for this change belong on issue #18 and the follow-up PR.

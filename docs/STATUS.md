@@ -6,6 +6,37 @@ This file preserves dated implementation evidence. [GitHub Issues](https://githu
 
 **Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
 
+## Stage I component verification and actual browser evidence — 2026-10-11
+
+The subsequent operator guided speech probe completed in 71.0943 s with zero
+overflows or incomplete sources: final delay median/p95/max 0.938/1.135/2.478 s
+(13 samples), window delay 0.160/1.026/2.478 s (41 samples), stop/drain 0.438 s.
+Its independent producer check exposed a real padded-onset/active-pause overlap
+at `metrics-51`. The original private stream remains unchanged and failing.
+The bounded scheduling correction waits for VAD's settled frame/padding frontier;
+its reproducing regression and production frontier test pass, and the updated
+full suite passes 283 tests / 392 subtests with two espeak-ng skips. No actual
+post-fix capture or latency result is inferred. The dated record below details
+both the measured baseline and the controlled defect verification.
+
+Runtime source `c4c4607` passes 281 tests / 392 subtests, with two synthesized-
+speech checks skipped for the missing espeak-ng executable. Frontend build/type
+parity, schemas, speech fixtures and both nine-case/ten-session coaching replays
+pass. Seven Chromium checks pass on an isolated model-free development server;
+the preview/outage checks use scripted browser responses. Four agreed capability
+specs are promoted with unchanged requirements; the two completed changes are
+archived in this increment. Publication/acceptance remains in the Issues.
+
+The maintainer's actual 29.0728 s CPU live browser run at `c4c4607` is reported
+successful. Its sanitized export supplies a camera-facing strength at 6 s, a
+6.212 s active-pause improvement at 13 s, facing-supported recovery, and
+same-session resolvable citations. No incomplete source or feedback limitation
+was reported. This verifies citation consistency plus operator functional
+satisfaction, not instrumented speech accuracy, latency or final video timing.
+The [dated verification record](validation/2026-10-11-stage1.md) contains methods,
+configuration, selected metrics/IDs and the distinction from the owner's earlier
+Windows speech measurements. Raw media and transcript text remain outside Git.
+
 ## Accepted scaffold archive — 2026-10-09
 
 Archived INT-01 to `openspec/changes/archive/2026-10-09-int-01-local-integration-scaffold`.
@@ -619,7 +650,7 @@ PROPOSAL: Run the probe on the development computer and the demo host for #13's 
 
 ## AUD-01 speech adapter core — 2026-10-09
 
-FACT: On `agent/audio-streaming` (first published at `cea23e2`, then merged with main `558f56f` and with the coordination migration `57aab92`), Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/aud-01-live-speech-adapter/tasks.md) in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+FACT: On `agent/audio-streaming` (first published at `cea23e2`, then merged with main `558f56f` and with the coordination migration `57aab92`), Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/archive/2026-10-11-aud-01-live-speech-adapter/tasks.md) in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
 
 - `SpeechConfig` with the defaults proposed in [issue #6](https://github.com/crasni/LeCoach/issues/6);
 - the English tokenizer and filler lexicon, kept equal to `checks/speech/speech_text.py` by a parity test;
