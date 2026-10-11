@@ -24,7 +24,9 @@ engine, session recording and generated template coaching through opt-in live mo
 The default app retains labeled synthetic replay with authored example coaching.
 The maintainer reports a working live rehearsal and reliability checks on their
 Ubuntu computer with a Bluetooth microphone. Measured quality/performance and
-final owner acceptance remain separate; see the dated evidence in STATUS.
+final live acceptance remain separate; see [dated evidence](docs/STATUS.md) and
+[#11](https://github.com/crasni/LeCoach/issues/11). Vision Stage I is
+[accepted with an activity-measurement limitation](https://github.com/crasni/LeCoach/issues/16#issuecomment-6097454631).
 
 Start at [AGENTS.md](AGENTS.md), the shared entry point for all five collaborators. Follow the canonical documents linked there:
 
@@ -40,8 +42,8 @@ Official competition and hardware reference PDFs are in [docs/](docs/).
 
 Prerequisites: [uv](https://docs.astral.sh/uv/), Node.js 24, and npm. Python 3.12.14
 is pinned in `.python-version`; uv provisions it if necessary. Core setup downloads
-dependencies but no inference models. Tested on Linux x86_64; live device/platform
-setup is not established by the scaffold.
+dependencies but no inference models. The maintainer reports functional live
+checks on Ubuntu x86_64; other hosts require their own device/runtime checks.
 
 From the repository root:
 
@@ -56,7 +58,7 @@ Open **http://127.0.0.1:8000**. Select an example, start replay, watch the audie
 react (computed by the engagement engine from the example observations), and let
 playback finish to see authored example coaching.
 Stopping early leaves that example summary unavailable. The microphone and camera
-stay off. Live mode is unavailable in the default composition.
+stay off. Use the opt-in CPU launch below for live input.
 
 ### Try the current prototype
 
@@ -74,19 +76,20 @@ timeline, example pace/fillers/facing metrics and transcript.
 | Unavailable inputs / An empty rehearsal | Audience stays NEUTRAL, missing metrics stay unknown, and completion invents no coaching moments. |
 
 These are synthetic observations with computed reactions and authored example
-coaching. Example coaching timestamps still need Lane 5's reconciliation with the
-computed transitions. Live capture, transcription, pose inference, generated
-coaching and UGen300 execution cannot be tested in the default app yet.
+coaching. Generated coaching can be checked against the same synthetic
+observations through the existing engine/recorder/generator seam.
 
-The recorder can be exercised separately, without recording media:
+Exercise generated feedback and the in-memory recorder with devices off:
 
 ```sh
+uv run python checks/coaching/feedback_replay.py --show-feedback
 uv run python checks/coaching/record_replay.py
 ```
 
-It checks the actual in-memory recorder against nine synthetic cases / ten sessions;
-the default browser composition does not use this recorder. Existing browser checks
-also cover connection recovery and a narrow screen. See [current evidence](docs/STATUS.md#int-03-refreshed-package-and-browser-validation).
+Each replay checks nine synthetic cases / ten sessions. The feedback replay
+computes evidence-linked moments; plain browser replay displays authored examples.
+Live mode uses the same sole recorder and generator. Existing browser checks
+also cover connection recovery and a narrow screen. See [dated evidence](docs/STATUS.md#int-03-refreshed-package-and-browser-validation).
 
 For frontend development, keep the backend running and use a second terminal:
 
@@ -94,23 +97,50 @@ For frontend development, keep the backend running and use a second terminal:
 npm --prefix frontend run dev
 ```
 
-The development UI is at http://127.0.0.1:5173 and proxies the local API. The eventual
-demo uses the built UI served directly from the backend.
+The development UI is at http://127.0.0.1:5173 and proxies the local API. The
+built UI is served directly from the backend.
 
 ### Opt-in local CPU rehearsal
 
-After preparing the optional runtimes and model assets in
-[demo host setup](docs/DEMO_HOST.md), launch:
+Prepare optional packages, build the UI and explicitly download models before
+the first live rehearsal. Ubuntu needs the PortAudio system library
+(`libportaudio2`); see [runtime setup](docs/LOCAL_RUNTIME.md).
 
 ```sh
+uv sync --frozen --group speech --group vision
+npm --prefix frontend ci
+npm --prefix frontend run build
+uv run --group speech --group vision python -m lecoach.speech.model --download
+uv run --group speech --group vision python -m lecoach.speech.model --check
+mkdir -p models
+curl -L -o models/pose_landmarker_lite.task \
+  https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task
+uv run --group speech --group vision python -m lecoach.speech.probe --list-devices
 uv run --group speech --group vision lecoach serve --live
 ```
 
-Select **Live microphone and camera** in the browser. Starting the session opens
+Initial package/model preparation requires downloads. Prepared rehearsals use
+local inference; session start does not download model weights. See
+[demo host setup](docs/DEMO_HOST.md) for model paths and camera selection.
+Set `LECOACH_SPEECH_DEVICE` to a listed input index or name query before launch
+if the system default is not the intended microphone.
+
+Open **http://127.0.0.1:8000** and select **Live microphone and camera**.
+Starting the session opens
 the devices; stopping drains observations and generates evidence-linked template
 coaching. Models warm before the API starts, with no automatic weight download or
 raw recording. Missing inputs produce notices and coaching limitations. Actual
-demo-host input/model quality and responsiveness remain to be verified.
+speech quality, concurrent responsiveness and final presenter/browser coaching
+acceptance remain in [#11](https://github.com/crasni/LeCoach/issues/11).
+Camera direction is approximate; no eye tracking or emotion detection is claimed.
+UGen300 inference remains unmeasured Stage II work.
+
+Raw audio/video recording is off by default. Normalized observations, transcript
+text and feedback are held transiently in memory for the current session,
+replaced when a new session starts and released on application exit. Explicit
+development exports belong in ignored `sessions/`; keep private media,
+transcripts, credentials and weights out of Git.
+
 Plain `lecoach serve` retains synthetic replay with authored example coaching.
 
 ### Headless replay and checks
@@ -164,7 +194,8 @@ uv sync --frozen --group speech --group vision
 
 See [local runtime setup](docs/LOCAL_RUNTIME.md) for configuration decisions,
 system libraries, model preparation and the distinction between runtime setup
-and accepted live composition. Installing these groups does not enable live mode.
+and actual device/model acceptance. After preparing assets, launch with `--live`
+to select the delivered live composition.
 
 [ARCHITECTURE.md](docs/ARCHITECTURE.md#int-01-implementation-decisions-and-handoff)
 defines directories, protocols, clock/capture semantics, and transport boundaries.
@@ -178,9 +209,9 @@ also accepts a consumer factory, replacing authored audience/feedback with the
 real engine and recorder/generator. [The subscription example](examples/consume_replay.py)
 demonstrates consumption without importing model internals.
 
-Lane 5's preparation files in `checks/coaching/` are reused unchanged from PR #1
-(`dcc280f`, preparation head `b8f5597`), now merged as preparation. Lane 2's
-synthetic checks in `checks/speech/` are merged through PR #3. These merges do
-not complete the live speech or coaching implementations. Positive reason codes
-still require Lane 4's handoff. Keep local rehearsal data, credentials, and weights
-out of Git, and follow the scoped publication rules in AGENTS.md.
+Speech and vision adapters, the sole deterministic engine and the sole
+recorder/generator are delivered on main. Public integration seams and checks
+are documented in the subsystem READMEs and local runtime setup. Component
+delivery and synthetic checks do not complete final live or hardware acceptance;
+follow the assigned GitHub Issues. Keep local rehearsal data, credentials and
+weights out of Git, and follow the scoped publication rules in AGENTS.md.

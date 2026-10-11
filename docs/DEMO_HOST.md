@@ -123,7 +123,9 @@ inference FPS, clean release and no read/inference errors. See
 [dated method/results](STATUS.md#plain-advice-delivery-and-ubuntu-vision-timing--2026-10-10)
 and the [owner handoff](https://github.com/crasni/LeCoach/issues/16#issuecomment-6096632027).
 These samples do not measure concurrent speech/browser load or guided pose quality;
-owner acceptance remains in #16. No longer startup bound is indicated by them.
+[the owner accepted Stage I vision](https://github.com/crasni/LeCoach/issues/16#issuecomment-6097454631),
+with activity tested only on Mac because no current rule/advice uses it. The
+existing startup bound is retained.
 
 For a later owner-requested guided check, the existing probe remains available.
 Use the prepared model/runtime and have the presenter follow the preview prompts:

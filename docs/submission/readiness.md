@@ -1,5 +1,27 @@
 # Stage I package readiness
 
+## Artifact scope reconciliation — 2026-10-11
+
+The maintainer rejected the 12-page refreshed proposal described below. Its
+hashes/checks are historical evidence, not approval. PR #32 now covers only
+integration documentation: its final diff restores the proposal source/PDF to
+the existing main baseline and preserves rejected artifact history in earlier
+commits. Do not use those baseline files as the replacement submission.
+
+The replacement pair is reviewed separately in
+[PR #35](https://github.com/crasni/LeCoach/pull/35), author revision `d34a58c`:
+15 main pages, FODP SHA-256
+`7e62d79281fc69ef528650e1b6f4a7b48914889841dbcb1373930fe97e9b048e`,
+PDF SHA-256
+`9133917f2d8ab821b306050774b8fbafe527490bc2af5fd5c2b14d987d6bf417`.
+Its proposal-specific export/parity/claim record is
+[versioned proposal-review.md](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal-review.md).
+Codex authoring was explicitly requested by the human collaborator; no Claude
+use is claimed. Integration content/layout review and final package acceptance
+are separate from authoring and artifact existence. Issues #12/#34 own their
+current dispositions. Final demo footage, revised script timing and external
+receipts are not supplied by this artifact review.
+
 ## Historical Stage I direction update — 2026-10-09
 
 The product, rehearsal and submission preparation remain English. The maintainer
