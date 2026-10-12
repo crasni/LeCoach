@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <title>LeCoach</title>
+  <defs><clipPath id="tile"><rect width="120" height="120" rx="27"/></clipPath></defs>
+  <rect x="1" y="1" width="118" height="118" rx="26" fill="#ffffff" stroke="#e4e8f0" stroke-width="2"/>
+  <g clip-path="url(#tile)">
+    <circle cx="44" cy="46" r="20" fill="#4263d5"/>
+    <path d="M6 126 Q6 84 44 82 Q82 84 82 126 Z" fill="#4263d5"/>
+    <path d="M90 64 L104 94" stroke="#1f2635" stroke-width="7.5" stroke-linecap="round"/>
+    <circle cx="85" cy="54" r="11" fill="#1f2635"/>
+    <path d="M77 51 Q85 46 93 51 M76.5 57 Q85 52 93.5 57" stroke="#6b7487" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

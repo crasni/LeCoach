@@ -16,9 +16,8 @@ type EngagementEvent = Extract<Event, { type: 'engagement.state' }>;
 
 const LIVE = '__live__';
 
-function Icon({ name }: { name: 'spark' | 'play' | 'stop' | 'camera' | 'shield' }) {
+function Icon({ name }: { name: 'play' | 'stop' | 'camera' | 'shield' }) {
   const paths = {
-    spark: <><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z" /><path d="m20 2 .6 1.4L22 4l-1.4.6L20 6l-.6-1.4L18 4l1.4-.6Z" /></>,
     play: <path d="m9 5 10 7-10 7Z" />,
     stop: <rect x="6" y="6" width="12" height="12" rx="2" />,
     camera: <><rect x="3" y="6" width="13" height="12" rx="3" /><path d="m16 10 5-3v10l-5-3" /></>,
@@ -406,7 +405,7 @@ function App() {
   const hint = <span className="hint"><kbd>Space</kbd> {running ? 'to stop' : 'to start'}</span>;
 
   return <main className={`studio is-${view}`}>
-    <header><a className="brand" href="/"><span className="brand-mark"><Icon name="spark" /></span>
+    <header><a className="brand" href="/"><img className="brand-mark" src="/favicon.svg" alt="" />
       <span className="brand-name">LeCoach</span></a>
       <ol className="steps" aria-label="Rehearsal steps">{STEPS.map(([key, label], index) =>
         <li key={key} className={key === view ? 'is-current'
