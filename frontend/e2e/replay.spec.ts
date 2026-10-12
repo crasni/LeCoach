@@ -32,7 +32,7 @@ test('stop, repeat and delayed transcript remain isolated', async ({ page }) => 
   await expect(page.getByRole('button', { name: 'Stop', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Stop', exact: true }).click();
   await expect(page.getByText('Replay stopped early. The authored example summary is unavailable.')).toBeVisible();
-  await page.getByLabel('Example', { exact: true }).selectOption('late_final_and_duplicates');
+  await page.getByLabel('Practice mode', { exact: true }).selectOption('late_final_and_duplicates');
   await page.getByRole('button', { name: 'Start replay' }).click();
   await expect(page.getByRole('region', { name: 'Example coaching' })).toBeVisible({ timeout: 10000 });
   await expect(page.locator('.transcript')).toHaveText('Our synthetic example is ready.');
@@ -45,7 +45,7 @@ test('stop, repeat and delayed transcript remain isolated', async ({ page }) => 
 test('empty session completes and narrow layout fits', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  await page.getByLabel('Example', { exact: true }).selectOption('empty_session');
+  await page.getByLabel('Practice mode', { exact: true }).selectOption('empty_session');
   await page.getByRole('button', { name: 'Start replay' }).click();
   await expect(page.getByRole('region', { name: 'Example coaching' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Start replay' })).toBeEnabled();
@@ -79,7 +79,7 @@ test('a connection interruption resynchronizes without restarting playback', asy
 
 test('unavailable camera is reported plainly and never shows a facing value', async ({ page }) => {
   await page.goto('/');
-  await page.getByLabel('Example', { exact: true }).selectOption('camera_unavailable');
+  await page.getByLabel('Practice mode', { exact: true }).selectOption('camera_unavailable');
   await page.getByRole('button', { name: 'Start replay' }).click();
   await expect(page.getByTestId('audience-state')).toHaveText('CONFUSED', { timeout: 12000 });
   await expect(page.getByText('Camera: Camera permission denied')).toBeVisible();
@@ -88,4 +88,24 @@ test('unavailable camera is reported plainly and never shows a facing value', as
   await expect(page.getByRole('meter')).toHaveCount(0);
   await expect(page.getByRole('list', { name: 'Audience transitions' }))
     .not.toContainText('Turned away from the audience');
+});
+
+test('rehearsal controls work with the keyboard and audience respects reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const start = page.getByRole('button', { name: 'Start replay' });
+  await expect(start).toBeEnabled();
+  const mode = page.getByLabel('Practice mode', { exact: true });
+  await mode.focus();
+  await page.keyboard.press('Tab');
+  await expect(start).toBeFocused();
+  await page.keyboard.press('Enter');
+  const stop = page.getByRole('button', { name: 'Stop', exact: true });
+  await expect(stop).toBeEnabled();
+  await expect(page.getByTestId('audience-state')).toHaveText('ENGAGED', { timeout: 15000 });
+  const animatedHead = page.locator('.seat-engaged .head').first();
+  await expect(animatedHead).toBeAttached();
+  expect(await animatedHead.evaluate(head => getComputedStyle(head).animationName)).toBe('none');
+  expect(await animatedHead.evaluate(head => getComputedStyle(head).transitionDuration)).toBe('0s');
+  await expect(start).toBeEnabled();
 });

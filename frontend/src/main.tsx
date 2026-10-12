@@ -16,6 +16,19 @@ type EngagementEvent = Extract<Event, { type: 'engagement.state' }>;
 
 const LIVE = '__live__';
 
+function Icon({ name }: { name: 'spark' | 'play' | 'stop' | 'camera' | 'shield' }) {
+  const paths = {
+    spark: <><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z" /><path d="m20 2 .6 1.4L22 4l-1.4.6L20 6l-.6-1.4L18 4l1.4-.6Z" /></>,
+    play: <path d="m9 5 10 7-10 7Z" />,
+    stop: <rect x="6" y="6" width="12" height="12" rx="2" />,
+    camera: <><rect x="3" y="6" width="13" height="12" rx="3" /><path d="m16 10 5-3v10l-5-3" /></>,
+    shield: <><path d="M12 3 4 6v6c0 4 4 7 8 9 4-2 8-5 8-9V6Z" /><path d="m8.5 12 2.5 2.5 4.5-5" /></>,
+  };
+  return <svg className={`icon icon-${name}`} width="20" height="20" viewBox="0 0 24 24"
+    fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+    aria-hidden="true">{paths[name]}</svg>;
+}
+
 async function api<T>(path: string, body?: object): Promise<T> {
   const response = await fetch(path, body === undefined ? undefined : {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
@@ -59,29 +72,54 @@ function freshMetrics<S extends Source>(snapshot: Snapshot | null, source: S) {
   return metrics.payload as Extract<Event, { type: `${S}.metrics` }>['payload'];
 }
 
-function Timeline({ transitions, end }: { transitions: EngagementEvent[]; end: number }) {
-  if (!transitions.length) return null;
-  const span = Math.max(end, transitions[transitions.length - 1].timestamp_s, 1);
-  return <div className="timeline" aria-label="Audience timeline">
-    <div className="track">{transitions.map((event, index) => {
-      const from = event.timestamp_s;
-      const to = index + 1 < transitions.length ? transitions[index + 1].timestamp_s : span;
-      return <span key={event.event_id} className={`segment state-${event.payload.state.toLowerCase()}`}
-        style={{ left: `${(from / span) * 100}%`, width: `${Math.max(0, (to - from) / span) * 100}%` }}
-        title={`${clock(from)} ${stateCopy[event.payload.state].label}`} />;
-    })}</div>
-    <ol className="transitions" aria-label="Audience transitions">
-      {transitions.map(event => <li key={event.event_id}>
-        <time>{clock(event.timestamp_s)}</time>
-        <strong className={`dot state-${event.payload.state.toLowerCase()}`}>
-          {stateCopy[event.payload.state].label}</strong>
-        <span>{event.payload.reasons.length
-          ? event.payload.reasons.map(r => reasonText(r.code)).join(' · ')
-          : event.payload.usable_sources.length ? 'No specific reason' : 'Waiting for usable input'}</span>
-      </li>)}
-    </ol>
-  </div>;
+function Track({ transitions, end }: { transitions: EngagementEvent[]; end: number }) {
+  const span = Math.max(end, transitions.at(-1)?.timestamp_s ?? 0, 1);
+  return <div className="track" aria-label="Audience timeline">{transitions.map((event, index) => {
+    const from = event.timestamp_s;
+    const to = index + 1 < transitions.length ? transitions[index + 1].timestamp_s : span;
+    return <span key={event.event_id} className={`segment state-${event.payload.state.toLowerCase()}`}
+      style={{ left: `${(from / span) * 100}%`, width: `${Math.max(0, (to - from) / span) * 100}%` }}
+      title={`${clock(from)} ${stateCopy[event.payload.state].label}`} />;
+  })}</div>;
 }
+
+function Transitions({ transitions }: { transitions: EngagementEvent[] }) {
+  return <ol className="transitions" aria-label="Audience transitions">
+    {transitions.map(event => <li key={event.event_id}>
+      <time>{clock(event.timestamp_s)}</time>
+      <strong className={`dot state-${event.payload.state.toLowerCase()}`}>
+        {stateCopy[event.payload.state].label}</strong>
+      <span>{event.payload.reasons.length
+        ? event.payload.reasons.map(r => reasonText(r.code)).join(' · ')
+        : event.payload.usable_sources.length ? 'No specific reason' : 'Waiting for usable input'}</span>
+    </li>)}
+  </ol>;
+}
+
+const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Eases a displayed number toward its latest value so readings glide instead of jumping.
+function useEased(target: number | null, ms = 450) {
+  const [value, setValue] = useState(target);
+  const shown = useRef(target);
+  useEffect(() => {
+    const from = shown.current;
+    if (target == null || from == null || reducedMotion()) {
+      shown.current = target; setValue(target); return;
+    }
+    const begin = performance.now();
+    let frame = requestAnimationFrame(function step(now) {
+      const t = Math.min(1, (now - begin) / ms);
+      shown.current = from + (target - from) * (1 - (1 - t) ** 3);
+      setValue(t < 1 ? shown.current : target);
+      if (t < 1) frame = requestAnimationFrame(step);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [target, ms]);
+  return value;
+}
+
+const STEPS = [['ready', 'Set up'], ['running', 'Rehearse'], ['review', 'Review']] as const;
 
 function App() {
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
@@ -295,100 +333,217 @@ function App() {
     return () => clearInterval(timer);
   }, [showPreview, previewOk, previewLoaded, previewAttempt]);
 
-  return <main>
-    <header><a className="brand" href="/">LeCoach<span>Your Private AI Audience.</span></a>
-      <span className="local"><i /> Runs on this device</span></header>
-    <section className="intro"><div className="eyebrow">A SPACE TO PRACTICE</div>
-      <h1>Find your rhythm.<br /><span>Feel the audience.</span></h1>
-      <p>Rehearse and watch a simulated audience respond to your pace, fillers, pauses and
-        whether you face the room. Reactions come from fixed rules, not from reading emotions.</p>
-    </section>
-    {live
-      ? <aside className="mode live"><strong>Live rehearsal</strong>
-        <span>Microphone and camera are processed on this device. No audio or video is recorded.</span></aside>
-      : <aside className="mode"><strong>Synthetic replay</strong>
-        <span>Speech and camera observations are authored examples; the audience is computed from
-          them by the engagement engine. Coaching is an authored example. Microphone and camera are off.</span></aside>}
-    <section className="controls" aria-label="Rehearsal controls">
-      <label>Example<select aria-label="Example" value={selected} onChange={e => setSelected(e.target.value)} disabled={!!running || busy}>
-        <option value={LIVE} disabled={!health?.live_integrated}>
-          Live microphone and camera{health?.live_integrated ? '' : ' (not connected yet)'}</option>
-        {fixtures.filter(f => f.session_count === 1).map(f => <option key={f.name} value={f.name}>
-          {caseLabels[f.name] || f.name}</option>)}
-      </select></label>
-      <button className="primary" onClick={start} disabled={!!running || busy || (!fixtures.length && selected !== LIVE)}>
-        {busy && !running ? 'Connecting…' : selected === LIVE ? 'Start rehearsal' : 'Start replay'}</button>
-      <button className="secondary" onClick={stop} disabled={!running || busy}>Stop</button>
-      <div className="timer" aria-label="Elapsed time">{clock(snapshot?.elapsed_s || 0)}
-        <small>{snapshot?.phase || 'Ready'}</small></div>
-    </section>
+  // One primary view per phase: set up, perform in front of the room, then review.
+  const view = running || (busy && snapshot?.phase === 'prepared') ? 'running'
+    : snapshot?.phase === 'completed' ? 'review' : 'ready';
+  const tone = `tone-${state.toLowerCase()}`;
+  const modeName = live ? 'Live rehearsal' : 'Synthetic replay';
+  const modeDetail = live
+    ? 'Microphone and camera are processed on this device. No audio or video is recorded.'
+    : 'Speech and camera observations are authored examples; the engagement engine computes the audience from them. Coaching is an authored example. Microphone and camera are off.';
+  const modeChip = <span className={`chip mode-chip${live ? ' live' : ''}`} title={modeDetail}>{modeName}</span>;
+  const reasons = engagement?.payload.reasons.length
+    ? engagement.payload.reasons.map(r => reasonText(r.code)).join(' · ')
+    : running && !anyInput ? 'Waiting for usable speech or camera input.' : stateCopy[state].detail;
+  const wpm = useEased(speech?.wpm ?? null);
+  const fillers = useEased(speech?.filler_rate_per_min ?? null);
+  const actionRef = useRef<HTMLButtonElement | null>(null);
+
+  // A short on-stage cue when the rehearsal begins, so the switch into the room is explained.
+  const [cue, setCue] = useState(false);
+  const wasRunning = useRef(false);
+  useEffect(() => {
+    const now = snapshot?.phase === 'running';
+    if (now && !wasRunning.current) {
+      setCue(true);
+      const timer = setTimeout(() => setCue(false), 3200);
+      wasRunning.current = now;
+      return () => clearTimeout(timer);
+    }
+    if (!now) setCue(false);
+    wasRunning.current = now;
+  }, [snapshot?.phase]);
+
+  // When a view swap removes the focused control, hand focus to the new view's main action.
+  useEffect(() => {
+    if (document.activeElement === document.body) actionRef.current?.focus({ preventScroll: true });
+  }, [view, running]);
+
+  // Space starts or stops a rehearsal when no control has focus.
+  const shortcut = useRef<() => void>(() => {});
+  shortcut.current = () => { if (running) void stop(); else if (view !== 'running') void start(); };
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.code !== 'Space' || event.repeat || event.target !== document.body) return;
+      event.preventDefault(); shortcut.current();
+    };
+    addEventListener('keydown', onKey);
+    return () => removeEventListener('keydown', onKey);
+  }, []);
+
+  const modeSelect = <label className="field">Practice mode
+    <select aria-label="Practice mode" value={selected} onChange={e => setSelected(e.target.value)} disabled={busy}>
+      <option value={LIVE} disabled={!health?.live_integrated}>
+        Live microphone and camera{health?.live_integrated ? '' : ' (not connected yet)'}</option>
+      {fixtures.filter(f => f.session_count === 1).map(f => <option key={f.name} value={f.name}>
+        {caseLabels[f.name] || f.name}</option>)}
+    </select></label>;
+  const action = running
+    ? <button ref={actionRef} className="secondary" onClick={stop} disabled={busy || snapshot?.phase === 'stopping'}>
+      <Icon name="stop" />Stop</button>
+    : <button ref={actionRef} className={`primary${busy ? ' is-busy' : ''}`} onClick={start}
+      disabled={busy || (!fixtures.length && selected !== LIVE)}>
+      {busy ? <span className="spinner" aria-hidden="true" /> : <Icon name="play" />}
+      {busy ? 'Connecting…' : selected === LIVE ? 'Start rehearsal' : 'Start replay'}</button>;
+  const transcriptBlock = <div className="transcript-block"><h3>Transcript</h3>
+    <p className="transcript">{transcript.length
+      ? transcript.map((e, i) => e.type === 'speech.transcript'
+        ? <span key={e.event_id} className={e.payload.is_final ? undefined : 'partial'}>
+          {i ? ' ' : ''}{e.payload.text}</span> : null)
+      : 'Listening for speech…'}</p></div>;
+  const audienceNote = <p className="audience-note">Simulated audience states from deterministic rules,
+    not measured emotions or judgments of you.</p>;
+  const hint = <span className="hint"><kbd>Space</kbd> {running ? 'to stop' : 'to start'}</span>;
+
+  return <main className={`studio is-${view}`}>
+    <header><a className="brand" href="/"><span className="brand-mark"><Icon name="spark" /></span>
+      <span className="brand-name">LeCoach</span></a>
+      <ol className="steps" aria-label="Rehearsal steps">{STEPS.map(([key, label], index) =>
+        <li key={key} className={key === view ? 'is-current'
+          : STEPS.findIndex(([k]) => k === view) > index ? 'is-done' : undefined}
+          aria-current={key === view ? 'step' : undefined}><span className="step-num">{index + 1}</span>
+          <span className="step-label">{label}</span></li>)}</ol>
+      <div className="header-status">
+        <span className="local"><Icon name="shield" /> Runs on this device</span>
+        <span className={`connection${connection === 'Connected locally' ? ' is-live' : ''}`}><i /> {connection}</span></div></header>
     {error && <div className="error" role="alert">{error}
       {activeId.current && <button onClick={() => {
         if (reconnectTimer.current) clearTimeout(reconnectTimer.current);
         socket.current?.close(); setError('');
         connect(activeId.current!).catch(() => setError('The local connection is unavailable.'));
       }}>Reconnect</button>}</div>}
-    <section className="grid">
-      <article className="audience card"><div className="card-top"><h2>Your audience</h2>
-        <span className={`state state-${state.toLowerCase()}`} data-testid="audience-state">{state}</span></div>
+
+    {view === 'ready' && <div className="view view-ready" key="ready">
+      <section className="stage">
+        <div className="intro"><h1>Find your rhythm. <span>Feel the audience.</span></h1>
+          <p>Rehearse in front of a private audience that reacts to your pace, filler words and where you face.</p></div>
         <Audience state={state} label={live ? 'Audience' : 'Example audience'} />
-        <div className="reaction" aria-live="polite">
-          <strong>{stateCopy[state].label}</strong>
-          <span>{engagement?.payload.reasons.length
-            ? engagement.payload.reasons.map(r => reasonText(r.code)).join(' · ')
-            : running && !anyInput
-              ? 'Waiting for usable speech or camera input.' : stateCopy[state].detail}</span>
+        {audienceNote}
+      </section>
+      <aside className="setup card" aria-label="Rehearsal controls">
+        <h2>Start a rehearsal</h2>
+        <ol className="how">
+          <li><span>1</span>Pick live practice or an example replay.</li>
+          <li><span>2</span>Start, then speak to the room. It reacts as you go.</li>
+          <li><span>3</span>Stop or finish to get coaching on key moments.</li>
+        </ol>
+        {modeSelect}
+        <div className="mode-note">{modeChip}<p>{modeDetail}</p></div>
+        <div className="action-row">{action}{hint}</div>
+      </aside>
+    </div>}
+
+    {view === 'running' && <div className="view view-running" key="running">
+      <section className="session-bar" aria-label="Rehearsal controls">
+        {modeChip}
+        <div className="timer" aria-label="Elapsed time">{clock(snapshot?.elapsed_s || 0)}
+          <small>{snapshot?.phase === 'stopping' ? 'Wrapping up…' : running ? 'Rehearsing' : 'Getting ready'}</small></div>
+        {running && hint}
+        {action}
+      </section>
+      <section className="live-grid">
+        <article className={`stage ${tone}`}>
+          <div className="stage-room">
+            <Audience state={state} label={live ? 'Audience' : 'Example audience'} />
+            {!running && <div className="overlay"><span className="spinner" aria-hidden="true" />
+              Setting up the room…</div>}
+            {cue && <div className="cue" role="status"><strong>You're on.</strong>
+              {live ? 'Face the camera and start speaking. The room reacts to your pace, filler words and where you face.'
+                : 'Watch the room react to the example speaker’s pace, filler words and where they face.'}</div>}
+          </div>
+          <div className="reaction" aria-live="polite">
+            <strong key={state}>{stateCopy[state].label}</strong>
+            <span className="state" data-testid="audience-state">{state}</span>
+            <p key={reasons}>{reasons}</p>
+          </div>
+          <Track transitions={transitions} end={end} />
+        </article>
+        <aside className="rail" aria-label={live ? 'Your delivery' : 'Example inputs'}>
+          {/* Live self-view leads the rail so framing is checkable without covering the room. */}
+          {live && <div className="self-view">
+            {showPreview && previewOk && <img className="camera" alt="Camera preview" key={previewAttempt}
+              ref={previewImage} hidden={!previewLoaded}
+              src={`/api/sessions/${snapshot!.session_id}/preview?attempt=${previewAttempt}`}
+              onLoad={() => setPreviewLoaded(true)}
+              onError={() => { setPreviewLoaded(false); setPreviewOk(false); }} />}
+            {!previewVisible && <div className="preview"><Icon name="camera" />
+              <p>{showPreview && previewOk ? 'Waiting for the camera preview' : 'Camera preview unavailable'}</p></div>}
+            <small className="caption">Preview only. No video is recorded.</small>
+          </div>}
+          <div className="metrics">
+            <div><strong>{wpm != null ? <>{Math.round(wpm)}<span> WPM</span></> : '—'}</strong>
+              <small>Pace</small></div>
+            <div><strong>{fillers != null ? <>{fillers.toFixed(0)}<span>/min</span></> : '—'}</strong>
+              <small>Fillers</small></div>
+            <div><strong>{facing != null ? <meter min={0} max={1} low={0.4} high={0.6} optimum={1} value={facing}
+              aria-label="Facing the audience" /> : '—'}</strong><small>Facing (approx.)</small></div>
+          </div>
+          {pause && <p className="pause">{pause}</p>}
+          <div className="inputs">{inputs.map(([name, value]) => <span key={name}
+            className={`input input-${value.availability}`}><i />
+            {name === 'speech' ? 'Microphone' : 'Camera'}: {statusText(value.reason)}</span>)}</div>
+          {(transcript.length > 0 || live) && transcriptBlock}
+          {transitions.length > 0 && <div className="log"><h3>How the room responded</h3>
+            <Transitions transitions={transitions} /></div>}
+          <div className="footnote">{!live && <p>{modeDetail}</p>}{audienceNote}</div>
+        </aside>
+      </section>
+    </div>}
+
+    {view === 'review' && <div className="view view-review" key="review">
+      <section className="session-bar" aria-label="Rehearsal controls">
+        {modeChip}
+        <div className="timer" aria-label="Elapsed time">{clock(end)}<small>Complete</small></div>
+        {modeSelect}
+        {action}
+      </section>
+      <div className="review-body">
+        <section className="review-head">
+          <div><h1>{feedback ? 'A few moments to learn from.' : 'Rehearsal complete.'}</h1>
+            <p>{live ? 'Coaching' : 'Authored example coaching'} · {clock(end)} rehearsal ·
+              Run it again or pick another mode above.</p></div>
+          <div className={`final ${tone}`}><small>The room ended</small>
+            <strong>{stateCopy[state].label}</strong>
+            <span className="state" data-testid="audience-state">{state}</span></div>
+        </section>
+        {feedback && <section className="summary" aria-label={live ? 'Rehearsal coaching' : 'Example coaching'}>
+          <div className="moments">{feedback.moments.map((moment, index) =>
+            <article className={`card moment moment-${moment.kind}`} key={index}
+              style={{ ['--i' as string]: index }}>
+              <div className="moment-top"><strong>{moment.kind === 'strength' ? 'Keep doing this' : 'Try next time'}</strong>
+                <time>{clock(moment.timestamp_s)}</time></div>
+              <p className="suggestion">{moment.suggestion}</p>
+              <p className="observation">{moment.observation}</p>
+            </article>)}</div>
+          {!feedback.moments.length && <p className="notice">No supported coaching moments in this example.</p>}
+          {feedback.limitations.map((limitation, index) => <p className="notice" key={index}>{limitation}</p>)}
+        </section>}
+        {snapshot?.feedback_status === 'pending' && <p className="notice loading">
+          <span className="spinner" aria-hidden="true" />Preparing the rehearsal summary…</p>}
+        {snapshot?.feedback_status === 'unavailable'
+          && <p className="notice">{live ? 'The rehearsal summary is unavailable.'
+            : 'Replay stopped early. The authored example summary is unavailable.'}</p>}
+        <div className="review-foot">
+          {transitions.length > 0 && <section className="timeline">
+            <div className="timeline-top"><h2>How the room responded</h2><span>{clock(end)}</span></div>
+            <Track transitions={transitions} end={end} />
+            <Transitions transitions={transitions} />
+          </section>}
+          {transcript.length > 0 && transcriptBlock}
         </div>
-        <p className="muted">Simulated audience states from deterministic rules. They are not measured
-          emotions or judgments of you.</p>
-        <Timeline transitions={transitions} end={end} />
-      </article>
-      <article className="card observations"><div className="card-top"><h2>Rehearsal input</h2>
-        <span className="muted">{live ? 'On this device' : 'Example data'}</span></div>
-        {showPreview && previewOk && <img className="camera" alt="Camera preview" key={previewAttempt}
-          ref={previewImage} hidden={!previewLoaded}
-          src={`/api/sessions/${snapshot!.session_id}/preview?attempt=${previewAttempt}`}
-          onLoad={() => setPreviewLoaded(true)}
-          onError={() => { setPreviewLoaded(false); setPreviewOk(false); }} />}
-        {!previewVisible && <div className="preview"><span aria-hidden="true">◉</span>
-          <p>{!live ? 'Camera is off during replay' : !running ? 'Camera starts with the rehearsal'
-            : showPreview && previewOk ? 'Waiting for the camera preview' : 'Camera preview unavailable'}</p>
-          <small>No video is recorded.</small></div>}
-        <div className="inputs">{inputs.map(([name, value]) => <span key={name}
-          className={`input input-${value.availability}`}>
-          {name === 'speech' ? 'Microphone' : 'Camera'}: {statusText(value.reason)}</span>)}</div>
-        <div className="metrics">
-          <div><small>{live ? 'Pace' : 'Example pace'}</small><strong>
-            {speech?.wpm != null ? `${Math.round(speech.wpm)} WPM` : '—'}</strong></div>
-          <div><small>Fillers</small><strong>
-            {speech?.filler_rate_per_min != null ? `${speech.filler_rate_per_min.toFixed(0)}/min` : '—'}</strong></div>
-          <div><small>Facing (approx.)</small><strong>
-            {facing != null ? <meter min={0} max={1} low={0.4} high={0.6} optimum={1} value={facing}
-              aria-label="Facing the audience" /> : '—'}</strong></div>
-        </div>
-        {pause && <p className="pause">{pause}</p>}
-        <h3>Transcript</h3><p className="transcript">{transcript.length
-          ? transcript.map((e, i) => e.type === 'speech.transcript'
-            ? <span key={e.event_id} className={e.payload.is_final ? undefined : 'partial'}>
-              {i ? ' ' : ''}{e.payload.text}</span> : null)
-          : 'No transcript yet.'}</p>
-      </article>
-    </section>
-    {feedback && <section className="summary" aria-label={live ? 'Rehearsal coaching' : 'Example coaching'}>
-      <div className="eyebrow">AFTER THE REHEARSAL</div><h2>A few moments to learn from.</h2>
-      <p className="muted">{live ? 'Coaching' : 'Authored example coaching'} · {clock(feedback.duration_s)} rehearsal</p>
-      <div className="moments">{feedback.moments.map((moment, index) => <article className="card" key={index}>
-        <div className="moment-top"><span>{clock(moment.timestamp_s)}</span>
-          <strong>{moment.kind === 'strength' ? 'Keep doing this' : 'Try next time'}</strong></div>
-        <p>{moment.observation}</p><p className="suggestion">{moment.suggestion}</p>
-      </article>)}</div>
-      {feedback.limitations.map((limitation, index) => <p className="notice" key={index}>{limitation}</p>)}
-      {!feedback.moments.length && <p>No supported coaching moments in this example.</p>}
-    </section>}
-    {snapshot?.phase === 'completed' && snapshot.feedback_status === 'unavailable'
-      && <p className="notice">{live ? 'The rehearsal summary is unavailable.'
-        : 'Replay stopped early. The authored example summary is unavailable.'}</p>}
-    <footer><span><i /> {connection}</span><span>Private practice, one rehearsal at a time.</span></footer>
+        <div className="footnote">{!live && <p>{modeDetail}</p>}{audienceNote}</div>
+      </div>
+    </div>}
   </main>;
 }
 
