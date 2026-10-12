@@ -28,6 +28,8 @@ log = logging.getLogger(__name__)
 _LOAD = object()
 
 DEVICE_VARIABLE = "LECOACH_SPEECH_DEVICE"
+# Demo-only: replay this 16-bit WAV in real time instead of opening the microphone.
+WAV_VARIABLE = "LECOACH_SPEECH_WAV"
 
 
 def parse_device(value: str | None) -> int | str | None:
@@ -49,6 +51,8 @@ def build_local_adapter(config: SpeechConfig | None = None, *, transcriber=_LOAD
         transcriber = get_transcriber(config)
     if device is None:
         device = parse_device(os.environ.get(DEVICE_VARIABLE))
+    if wav is None:
+        wav = os.environ.get(WAV_VARIABLE) or None
     try:
         segmenter = SileroSegmenter(config)
     except Exception as error:  # runtime missing: reported as speech_vad_unavailable

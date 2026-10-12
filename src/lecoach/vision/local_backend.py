@@ -14,6 +14,7 @@ from __future__ import annotations
 import os
 import sys
 import threading
+import time
 from pathlib import Path
 
 from .backend import VisionUnavailable
@@ -22,6 +23,8 @@ from .features import Keypoint, PoseFrame
 DEFAULT_MODEL_PATH = Path("models/pose_landmarker_lite.task")
 MODEL_ENV = "LECOACH_POSE_MODEL"
 CAMERA_ENV = "LECOACH_CAMERA_INDEX"
+# Demo-only: play this video file in real time instead of opening a camera.
+VIDEO_ENV = "LECOACH_CAMERA_VIDEO"
 
 # MediaPipe Pose (BlazePose, 33 landmarks) indices for the lane's keypoint subset.
 MEDIAPIPE_LANDMARKS = {
@@ -81,6 +84,51 @@ class OpenCVCamera:
             return None
         ok, frame = capture.read()
         return frame if ok else None
+
+    def close(self) -> None:
+        capture, self._capture = self._capture, None
+        if capture is not None:
+            capture.release()
+
+
+class VideoFileCamera:
+    """Demo-only: a video file played back in real time, as if it were the camera.
+
+    Frames are paced to the file's frame rate from ``open()``; the last frame is held
+    after the end so the session keeps a usable picture until it is stopped.
+    """
+
+    def __init__(self, path: str | Path) -> None:
+        self.path = Path(path)
+        self._capture = None
+        self._last = None
+
+    def open(self) -> None:
+        cv2 = _import_cv2()
+        capture = cv2.VideoCapture(str(self.path))
+        if not capture.isOpened():
+            capture.release()
+            raise VisionUnavailable("camera_unavailable", f"cannot open video {self.path}")
+        self._fps = capture.get(cv2.CAP_PROP_FPS) or 30.0
+        self._index = 0
+        self._capture, self._start = capture, time.monotonic()
+
+    def read(self):
+        capture = self._capture
+        if capture is None:
+            return None
+        due = int((time.monotonic() - self._start) * self._fps)
+        if due < self._index:
+            time.sleep((self._index - due) / self._fps)
+        while self._index < due:  # drop frames we are late for
+            if not capture.grab():
+                return self._last
+            self._index += 1
+        ok, frame = capture.read()
+        if ok:
+            self._index += 1
+            self._last = frame
+        return self._last
 
     def close(self) -> None:
         capture, self._capture = self._capture, None
@@ -211,7 +259,8 @@ def build_local_adapter(
         prewarm()
 
     return LocalVisionAdapter(
-        source_factory=lambda: OpenCVCamera(camera_index),
+        source_factory=lambda: (VideoFileCamera(os.environ[VIDEO_ENV])
+                                if os.environ.get(VIDEO_ENV) else OpenCVCamera(camera_index)),
         estimator_factory=lambda: MediaPipePose(model_path),
         encoder=opencv_jpeg,
         config=config,
