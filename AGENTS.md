@@ -1,14 +1,14 @@
-# LeCoach agent entry point
+# LeSpeech agent entry point
 
-LeCoach is **Your Private AI Audience**: local speech and approximate body/head-facing signals drive one deterministic audience engine, followed by evidence-based coaching. Keep the frozen P0 scope in [GUIDE.md](GUIDE.md); optional LLM, questions and TTS wait for an accepted end-to-end P0.
+LeSpeech is **Your Private AI Audience**: local speech and approximate body/head-facing signals drive one deterministic audience engine, followed by evidence-based coaching. Keep the frozen P0 scope in [GUIDE.md](GUIDE.md); optional LLM, questions and TTS wait for an accepted end-to-end P0.
 
 ## One source for each fact
 
 | Fact | Source |
 | --- | --- |
-| Owner, assigned branch, live status, blockers, remaining work and task acceptance | [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) |
+| Owner, assigned branch, live status, blockers, remaining work and task acceptance | [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination) |
 | Behavior/interface proposal, agreed delta and rationale | Linked `openspec/` proposal/design/specs; [OpenSpec workflow](docs/WORKFLOW.md) |
-| Canonical event schemas, units, clocks and subsystem boundaries | [ARCHITECTURE.md](docs/ARCHITECTURE.md) and `src/lecoach/contracts/` |
+| Canonical event schemas, units, clocks and subsystem boundaries | [ARCHITECTURE.md](docs/ARCHITECTURE.md) and `src/lespeech/contracts/` |
 | Product scope and official-source hierarchy | [GUIDE.md](GUIDE.md) |
 | Reproducible checks, dated observations and limitations | Issue/PR evidence; [STATUS.md](docs/STATUS.md) is historical evidence, not a live board |
 | Stable lane responsibilities | [AGENT_ROLES.md](docs/AGENT_ROLES.md) |
@@ -21,10 +21,10 @@ LeCoach is **Your Private AI Audience**: local speech and approximate body/head-
 2. Confirm the collaborator's actual GitHub username from the user or authenticated account, never from a commit author or runtime agent name. Read assigned Issues, full bodies/comments, native **Blocked by** relationships, relevant PRs and existing remote/local code:
 
    ```sh
-   gh issue list --repo crasni/LeCoach --assignee <username> --state open --label coordination
-   gh issue view <number> --repo crasni/LeCoach --comments
-   gh api repos/crasni/LeCoach/issues/<number>/dependencies/blocked_by
-   gh pr list --repo crasni/LeCoach --state open
+   gh issue list --repo crasni/LeSpeech --assignee <username> --state open --label coordination
+   gh issue view <number> --repo crasni/LeSpeech --comments
+   gh api repos/crasni/LeSpeech/issues/<number>/dependencies/blocked_by
+   gh pr list --repo crasni/LeSpeech --state open
    git fetch --prune origin
    ```
 
@@ -45,7 +45,7 @@ LeCoach is **Your Private AI Audience**: local speech and approximate body/head-
 
 The maintainer explicitly replaced per-push approval with this scoped policy during the coordination migration. Agents may independently implement, test, commit and push routine work **within their assigned Issue/lane to its assigned role branch**, and open/update scoped PRs. No separate approval is required for each such push; record commit/PR/check evidence in the Issue.
 
-Before publishing, verify the exact branch, staged diff, remote and scope. The canonical remote is `git@github.com:crasni/LeCoach.git`. Push an explicit single destination, for example:
+Before publishing, verify the exact branch, staged diff, remote and scope. The canonical remote is `git@github.com:crasni/LeSpeech.git`. Push an explicit single destination, for example:
 
 ```sh
 git push origin HEAD:refs/heads/<assigned-role-branch>

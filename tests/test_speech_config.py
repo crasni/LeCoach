@@ -2,12 +2,12 @@ from unittest import TestCase
 
 from pydantic import ValidationError
 
-from lecoach.speech.config import SpeechConfig
+from lespeech.speech.config import SpeechConfig
 
 
 class SpeechConfigTests(TestCase):
     def test_defaults_match_the_issue_6_decision(self):
-        # English Stage I baseline accepted in https://github.com/crasni/LeCoach/issues/6
+        # English Stage I baseline accepted in https://github.com/crasni/LeSpeech/issues/6
         config = SpeechConfig()
         self.assertEqual(
             (config.language, config.metrics_window_s, config.metrics_hop_s,
@@ -20,7 +20,7 @@ class SpeechConfigTests(TestCase):
 
     def test_model_dir_accepts_ordinary_paths(self):
         for path in ("models", "/home/presenter/" + "long-folder-name/" * 6 + "models",
-                     "C:\\Users\\Presenter\\LeCoach\\models", "~/My Models"):
+                     "C:\\Users\\Presenter\\LeSpeech\\models", "~/My Models"):
             with self.subTest(path=path):
                 self.assertEqual(SpeechConfig(model_dir=path).model_dir, path)
         with self.assertRaises(ValidationError):

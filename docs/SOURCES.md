@@ -1,6 +1,6 @@
 # Competition and hardware source provenance
 
-Competition rules content rechecked 2026-10-10; hardware sources reviewed 2026-10-07 for INT-03. The source hierarchy is defined in [GUIDE.md](../GUIDE.md#0-source-of-truth). [CONTEST.md](CONTEST.md) records verified external requirements; [STATUS.md](STATUS.md) records LeCoach's observed implementation and hardware readiness. Reference information does not establish working LeCoach inference.
+Competition rules content rechecked 2026-10-10; hardware sources reviewed 2026-10-07 for INT-03. The source hierarchy is defined in [GUIDE.md](../GUIDE.md#0-source-of-truth). [CONTEST.md](CONTEST.md) records verified external requirements; [STATUS.md](STATUS.md) records LeSpeech's observed implementation and hardware readiness. Reference information does not establish working LeSpeech inference.
 
 ## Competition source
 
@@ -17,7 +17,7 @@ Retrieval snapshots remain temporary investigation files, not committed copies o
 ```sh
 curl --fail --location --silent --show-error \
   'https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/' \
-  -o /tmp/lecoach-official-contest.html
+  -o /tmp/lespeech-official-contest.html
 ```
 
 Read the current rendered page or parse the JSON-LD description; a successful HTTP response alone is not evidence that the requirements were checked.
@@ -32,7 +32,7 @@ These were supplied with the repository. Publication provenance was not independ
 | [UGen sales kit](ASUS_UGen_Series_SalesKit_FINAL_Matt_20260917_v3_up.pdf) | 2–8: specifications/model coverage; 12: apps; 15 (slide 39): runtime/HEF flow. | `d769386b9099e110dd3c241e9255ec81a13471a112b410e7dbc8c5a0481ec3f6` |
 | [Arc Pro B70 reference](UGen_Arc_Pro_B70.pdf) | 3: preliminary specifications; 5–10: attributed benchmarks; 11–15: software and development status. B70 is outside the selected track. | `e40a10584d0b1a26412dc797a74890fd502eb12155ef244d0b05fb90ecf7a12f` |
 
-Text extraction used `pdftotext -layout`; image-only appendix pages were not used as evidence. Counts and vendor/demo benchmarks in the PDFs are not LeCoach measurements.
+Text extraction used `pdftotext -layout`; image-only appendix pages were not used as evidence. Counts and vendor/demo benchmarks in the PDFs are not LeSpeech measurements.
 
 ## Manufacturer and runtime references
 
@@ -51,7 +51,7 @@ Official Hailo revisions were resolved through GitHub's public commit API to mak
 
 | Subsystem | Evidence-backed candidate | Compatibility / measurement still required |
 | --- | --- | --- |
-| Speech | GenAI Model Zoo lists Whisper Tiny/Base/Small with C++/Python inference and compiled v5.4.0 HEFs. It describes 16 kHz audio in 10-second windows. | Lane 2 must verify model/runtime compatibility, chunking/revision behavior and delivery latency; this documentation does not establish a streaming LeCoach producer. |
+| Speech | GenAI Model Zoo lists Whisper Tiny/Base/Small with C++/Python inference and compiled v5.4.0 HEFs. It describes 16 kHz audio in 10-second windows. | Lane 2 must verify model/runtime compatibility, chunking/revision behavior and delivery latency; this documentation does not establish a streaming LeSpeech producer. |
 | Vision | The Hailo-10H pose table provides `yolov8s_pose` and `yolov8m_pose` HEFs with 640×640×3 input. | Lane 3 must validate preprocessing, keypoint postprocessing, approximate facing/activity mapping and model rights. Published FPS uses PCIe Gen3 ×4, not the selected USB host path. |
 
 Hailo Apps' inspected prerequisites identify v5.4.0 as their tested HailoRT version. Installation is platform/app dependent, and Python wheels are ABI-specific. Validate an actual USB-8G driver/runtime/firmware combination through ASUS/Hailo before selecting dependencies; generic PCIe instructions are not USB installation evidence. Do not change the core Python 3.12 pin or install an incompatible wheel based on a model list alone.

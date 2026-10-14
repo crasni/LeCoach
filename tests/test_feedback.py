@@ -3,12 +3,12 @@ from unittest import IsolatedAsyncioTestCase
 from fastapi.testclient import TestClient
 
 from checks.coaching.feedback_replay import check, evaluate
-from lecoach.api.app import create_app
-from lecoach.coaching import TemplateFeedbackGenerator
-from lecoach.coaching.compose import replay_with_coaching
-from lecoach.contracts import CompletedSession, parse_event
-from lecoach.engagement import DEFAULT_RULES, RuleConfig
-from lecoach.runtime.fixtures import FixtureRepository
+from lespeech.api.app import create_app
+from lespeech.coaching import TemplateFeedbackGenerator
+from lespeech.coaching.compose import replay_with_coaching
+from lespeech.contracts import CompletedSession, parse_event
+from lespeech.engagement import DEFAULT_RULES, RuleConfig
+from lespeech.runtime.fixtures import FixtureRepository
 from tests.helpers import event
 from tests.test_coaching import lifecycle
 
@@ -109,7 +109,7 @@ class FeedbackTests(IsolatedAsyncioTestCase):
 
     async def test_templates_use_measured_values_and_practical_actions(self):
         observations = [
-            ("pace_high", speech(), "200", "pausing"),
+            ("pace_high", speech(), "200", "pause"),
             ("pace_low", speech(wpm=70.0), "70", "phrases"),
             ("fillers_frequent", speech(filler_count=4, filler_rate_per_min=24.0), "24", "breath"),
             (
@@ -123,9 +123,9 @@ class FeedbackTests(IsolatedAsyncioTestCase):
                     }
                 ),
                 "7 seconds",
-                "transition",
+                "ready",
             ),
-            ("facing_away_sustained", vision(), "appeared", "camera"),
+            ("facing_away_sustained", vision(), "seemed", "camera"),
         ]
         for code, metric, observed, action in observations:
             with self.subTest(code=code):
@@ -379,7 +379,7 @@ class FeedbackTests(IsolatedAsyncioTestCase):
                     self.assertIn("144", moment.observation)
                     self.assertNotIn("camera", moment.observation + moment.suggestion)
                 else:
-                    self.assertIn("appeared", moment.observation)
+                    self.assertIn("seemed", moment.observation)
                     self.assertNotIn("pace", moment.observation + moment.suggestion)
                     self.assertNotIn("words per minute", moment.observation)
 

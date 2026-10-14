@@ -24,5 +24,5 @@ python3 checks/vision/make_fixture.py --check   # fixture matches its generator
 ```
 
 This fixture proves the code paths and contract handling only. Real-camera
-behavior is accepted separately with `python -m lecoach.vision.probe` (see
-`src/lecoach/vision/README.md` and Issues #15/#16).
+behavior is accepted separately with `python -m lespeech.vision.probe` (see
+`src/lespeech/vision/README.md` and Issues #15/#16).

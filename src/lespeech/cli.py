@@ -1,0 +1,59 @@
+import argparse
+import asyncio
+import json
+from pathlib import Path
+
+from lespeech.engagement.compose import replay_with_engine
+from lespeech.runtime.fixtures import FixtureRepository, replay_case
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="LeSpeech local integration scaffold")
+    sub = parser.add_subparsers(dest="command", required=True)
+    replay = sub.add_parser("replay", help="Replay hand-authored synthetic fixtures headlessly")
+    replay.add_argument("--case", default="weak_to_improved")
+    replay.add_argument("--output", type=Path, help="Explicitly save a synthetic delivery trace")
+    replay.add_argument(
+        "--audience",
+        choices=("engine", "authored"),
+        default="engine",
+        help="Compute audience states with the engagement engine, or keep authored ones",
+    )
+    serve = sub.add_parser("serve", help="Serve the loopback API and built frontend")
+    serve.add_argument(
+        "--live", action="store_true", help="Compose local microphone/camera and coaching",
+    )
+    serve.add_argument(
+        "--speech-model-dir", type=Path, default=Path("models"),
+        help="Prepared speech model directory for --live (no automatic download)",
+    )
+    args = parser.parse_args()
+    if args.command == "serve":
+        import uvicorn
+
+        if args.live:
+            from lespeech.api.app import create_app
+            from lespeech.runtime.live import prepare_live_factory
+            from lespeech.speech import SpeechConfig
+
+            factory = prepare_live_factory(SpeechConfig(model_dir=str(args.speech_model_dir)))
+            uvicorn.run(create_app(factory), host="127.0.0.1", port=8000)
+        else:
+            uvicorn.run("lespeech.api.app:app", host="127.0.0.1", port=8000)
+    else:
+        try:
+            result = asyncio.run(
+                replay_case(
+                    FixtureRepository().load(args.case),
+                    replay_with_engine() if args.audience == "engine" else None,
+                )
+            )
+        except (OSError, ValueError) as error:
+            parser.exit(1, f"Replay failed: {error}\n")
+        serialized = json.dumps(result, indent=2) + "\n"
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(serialized)
+            print(f"Saved synthetic delivery trace to {args.output}")
+        else:
+            print(serialized, end="")

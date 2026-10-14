@@ -1,6 +1,6 @@
 # Behavior specification and task workflow
 
-[AGENTS.md](../AGENTS.md) is the session/publication entry point. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) exclusively own assignments, branches, live status, blockers, remaining work and task acceptance. `TASKS.md` is a compatibility pointer, not a second board.
+[AGENTS.md](../AGENTS.md) is the session/publication entry point. [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination) exclusively own assignments, branches, live status, blockers, remaining work and task acceptance. `TASKS.md` is a compatibility pointer, not a second board.
 
 ## OpenSpec's role
 

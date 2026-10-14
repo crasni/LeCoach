@@ -1,8 +1,8 @@
-# LeCoach implementation status
+# LeSpeech implementation status
 
 Last updated: 2026-10-10 (Asia/Taipei).
 
-This file preserves dated implementation evidence. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) alone own current assignments, branches, progress, blockers, remaining work and acceptance; product scope lives in [GUIDE.md](../GUIDE.md).
+This file preserves dated implementation evidence. [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination) alone own current assignments, branches, progress, blockers, remaining work and acceptance; product scope lives in [GUIDE.md](../GUIDE.md).
 
 **Historical-record rule:** older sections retain the facts/proposals as recorded at their host/date/commit, including then-current task states, pending PRs, access limitations and the former per-push approval policy. They are not current instructions. Later merges and maintainer acceptance may supersede them. Read the Issue/actual remote code and [current AGENTS workflow](../AGENTS.md) before work; do not restart a component or delete a branch because an old proposal suggested it.
 
@@ -172,11 +172,11 @@ FACT: On 2026-10-08, @WolflordR pulled the role branch safely and fast-forwarded
 reconciled documentation-only migration `57aab92` before committing.
 Read-only GitHub inspection confirmed recorder PR #5 merged and issue #20 assigned
 to this owner. The merged LIVE-01 engine supplies usable reason codes now; final
-handoff acceptance in [issue #18](https://github.com/crasni/LeCoach/issues/18) and
+handoff acceptance in [issue #18](https://github.com/crasni/LeSpeech/issues/18) and
 the referenced revert disposition remain pending.
 
 FACT: Implemented `TemplateFeedbackGenerator`, deterministic selection and plain
-templates in [the coaching module](../src/lecoach/coaching/README.md), consuming
+templates in [the coaching module](../src/lespeech/coaching/README.md), consuming
 only canonical completed events and the existing engine's explicit reason
 citations. The optional `replay_with_coaching()` factory supplies the sole engine,
 accepted recorder and generator through existing component injection; it rejects
@@ -237,7 +237,7 @@ pending decision and validate integrated behavior before final task acceptance.
 
 ## Verified
 
-- GitHub repository: https://github.com/crasni/LeCoach. Canonical SSH remote supplied by the maintainer: `git@github.com:crasni/LeCoach.git`.
+- GitHub repository: https://github.com/crasni/LeSpeech. Canonical SSH remote supplied by the maintainer: `git@github.com:crasni/LeSpeech.git`.
 - Initial bootstrap commit: `5f3eb6b` on `main`, pushed to `origin/main` and verified against the remote commit.
 - README, product guide, ignore rules, and three reference PDFs are present.
 - At the start of coordination work, `git pull --ff-only` reported already up to date.
@@ -251,9 +251,9 @@ pending decision and validate integrated behavior before final task acceptance.
 
 ## INT-03 publication and cleanup review
 
-FACT: On 2026-10-08, the user approved checking and publishing the previously proposed eight-commit range `c88386a..b9e4cff` to `git@github.com:crasni/LeCoach.git`, branch `agent/integration`. The range and clean checkout were verified unchanged. Final checks pass: 130 tests / 69 subtests (0.82 s), four Node 24/Chromium browser checks (24.6 s), frontend build/types, core lint/schema parity, nine fixture cases / ten sessions and actual recorder injection. Both OpenSpec changes validate strictly; 138 local links/anchors, source/PDF parity, six reference annotations, recorded hashes and Git whitespace/private-data checks pass.
+FACT: On 2026-10-08, the user approved checking and publishing the previously proposed eight-commit range `c88386a..b9e4cff` to `git@github.com:crasni/LeSpeech.git`, branch `agent/integration`. The range and clean checkout were verified unchanged. Final checks pass: 130 tests / 69 subtests (0.82 s), four Node 24/Chromium browser checks (24.6 s), frontend build/types, core lint/schema parity, nine fixture cases / ten sessions and actual recorder injection. Both OpenSpec changes validate strictly; 138 local links/anchors, source/PDF parity, six reference annotations, recorded hashes and Git whitespace/private-data checks pass.
 
-FACT: Pushed exactly `b9e4cff721bfb85831c85dd4e4aeda95ff0630a1` to `origin/agent/integration` and verified the remote tip. Main remains `c88386a83a39fb08019789d1b6350cbacf7d741d`. Created [draft PR #8](https://github.com/crasni/LeCoach/pull/8); it contains the approved eight commits, targets main, and is mergeable. No hosted status checks are reported; the evidence above is local. Another collaborator's review and merge are pending; no merge or named review request occurred.
+FACT: Pushed exactly `b9e4cff721bfb85831c85dd4e4aeda95ff0630a1` to `origin/agent/integration` and verified the remote tip. Main remains `c88386a83a39fb08019789d1b6350cbacf7d741d`. Created [draft PR #8](https://github.com/crasni/LeSpeech/pull/8); it contains the approved eight commits, targets main, and is mergeable. No hosted status checks are reported; the evidence above is local. Another collaborator's review and merge are pending; no merge or named review request occurred.
 
 FACT: `git fetch --prune origin` refreshed tracking refs. Only `main` and `agent/integration` remain as local branches; the three detached review worktrees were preserved. Remote cleanup audit found:
 
@@ -284,12 +284,12 @@ Commands from the repository root, with the documented Node 24 runtime on PATH:
 ```sh
 npm --prefix frontend run types:check
 npm --prefix frontend run build
-PLAYWRIGHT_BROWSERS_PATH=/tmp/lecoach-browser npm --prefix frontend run test:e2e
+PLAYWRIGHT_BROWSERS_PATH=/tmp/lespeech-browser npm --prefix frontend run test:e2e
 ```
 
 The first browser run used system Node 22 and also passed; because the project requires Node 24, build/types/browser checks were repeated using the already-installed Node 24 runtime above. The backend's earlier 130 tests / 69 subtests, recorder checks and fixture checks are retained under the main-reconciliation record; no application changes justified another backend run. Headless replay also confirms camera-unavailable speech still reaches CONFUSED, while unavailable inputs, empty sessions, delayed transcript and drain-timeout examples stay NEUTRAL. These are synthetic checks, not actual microphone/camera or inference measurements.
 
-FACT: Re-exported with LibreOffice 26.2.6.3 and isolated profile `/tmp/lecoach-int03-refresh-lo`, inspected all 12 rendered pages, and checked paragraph/page parity and six reference annotations. The refreshed hashes and per-page evidence are recorded in [readiness](submission/readiness.md). Re-fetched the public official rules at approximately 11:18 UTC: their normalized content hash is unchanged, as SOURCES records. The rendered public announcements page showed no announcements at inspection; form/registration details and the pre-delivery recheck remain pending. No organizer/team message or authenticated action occurred.
+FACT: Re-exported with LibreOffice 26.2.6.3 and isolated profile `/tmp/lespeech-int03-refresh-lo`, inspected all 12 rendered pages, and checked paragraph/page parity and six reference annotations. The refreshed hashes and per-page evidence are recorded in [readiness](submission/readiness.md). Re-fetched the public official rules at approximately 11:18 UTC: their normalized content hash is unchanged, as SOURCES records. The rendered public announcements page showed no announcements at inspection; form/registration details and the pre-delivery recheck remain pending. No organizer/team message or authenticated action occurred.
 
 IMPACT: The refreshed local proposal passes task 6.1 with conditional/live/external scenarios explicitly pending; the CLI confirms 16/23 tasks complete. [README's test guide](../README.md#try-the-current-prototype) now explains what users can run and what to expect. Lane 5's script and advice reconciliation, INT-02 live evidence, final footage and external delivery still prevent full INT-03 completion.
 
@@ -297,7 +297,7 @@ PROPOSAL: Review the refreshed proposal and exact local commit range for role-br
 
 ## Latest main reconciliation — 2026-10-08
 
-FACT: At the user's request, fetched and fast-forwarded local main to `c88386a`, then pulled it into `agent/integration` in local merge `8345c98`. Main includes [PR #7](https://github.com/crasni/LeCoach/pull/7) (engagement engine/rehearsal screen) and [PR #5](https://github.com/crasni/LeCoach/pull/5) (in-memory recorder). Resolved the COACH-01 task-board conflict by retaining owner evidence and recording the merged recorder plus unfinished selection/template feedback. Existing INT-01 acceptance and INT-03 deliverables are retained. A public read-only open-PR listing returned no open PRs at inspection; no remote review, merge or push was performed here.
+FACT: At the user's request, fetched and fast-forwarded local main to `c88386a`, then pulled it into `agent/integration` in local merge `8345c98`. Main includes [PR #7](https://github.com/crasni/LeSpeech/pull/7) (engagement engine/rehearsal screen) and [PR #5](https://github.com/crasni/LeSpeech/pull/5) (in-memory recorder). Resolved the COACH-01 task-board conflict by retaining owner evidence and recording the merged recorder plus unfinished selection/template feedback. Existing INT-01 acceptance and INT-03 deliverables are retained. A public read-only open-PR listing returned no open PRs at inspection; no remote review, merge or push was performed here.
 
 FACT: On Linux x86_64 / Python 3.12.14, merged application source `8345c98` passes **130 tests and 69 subtests** in 1.01 s, with one upstream Starlette/httpx deprecation warning. The recorder matches nine synthetic cases / ten sessions; fixture validation, core lint and schema parity pass. Frontend generated-type check and production build pass. Commands:
 
@@ -313,7 +313,7 @@ npm --prefix frontend run build
 
 The earlier temporary Python interpreter was gone; the first offline run could not restore all locked dependencies. The frozen online run restored the development environment without changing dependency pins, then the checks passed. Browser E2E was not rerun in this pull review; no local browser executable was found.
 
-FACT: Explicit headless replay through `.venv/bin/lecoach replay --case weak_to_improved --audience engine` computes states at 0, 20, 30, 35 and 40 seconds. `--audience authored` retains the older fixture states at 0, 20.5, 30.5, 36 and 42 seconds. Both use synthetic input; feedback remains authored. The recorder check uses the actual recorder through injection, not the default browser composition. No live capture, model inference or target measurements occurred.
+FACT: Explicit headless replay through `.venv/bin/lespeech replay --case weak_to_improved --audience engine` computes states at 0, 20, 30, 35 and 40 seconds. `--audience authored` retains the older fixture states at 0, 20.5, 30.5, 36 and 42 seconds. Both use synthetic input; feedback remains authored. The recorder check uses the actual recorder through injection, not the default browser composition. No live capture, model inference or target measurements occurred.
 
 IMPACT: The deck/PDF still describe the dated pre-pull `35e99b2` baseline. They need a content/claim-map refresh for the merged engine and recorder before final package acceptance; INT-03 task 6.1 is reopened. Previous source/PDF export and visual checks remain historical evidence, not a review of an updated deck. INT-02, feedback generation, final narration/recording and external gates remain unfinished.
 
@@ -348,7 +348,7 @@ FACT: On 2026-10-07 UTC / overnight into 2026-10-08 Asia/Taipei, implemented the
 FACT: Reproduced the model-free baseline against application source `35e99b2` with the existing project Python 3.12.14 environment on Linux x86_64:
 
 ```sh
-uv run --frozen --offline lecoach replay --case weak_to_improved
+uv run --frozen --offline lespeech replay --case weak_to_improved
 uv run --frozen --offline python scripts/validate_fixtures.py
 uv run --frozen --offline pytest -q
 ```
@@ -361,7 +361,7 @@ FACT: Exported with LibreOffice 26.2.6.3 and an isolated temporary profile; `pdf
 
 FACT: Git ignore checks cover `sessions/`, `recordings/`, `models/` and `.env.*`; no files in those private-data locations are tracked. Only authored proposal content and sanitized observations are prepared for publication. No video/audio capture, transcript export from a real rehearsal, model download, upload, push, organizer message or competition submission occurred during this apply work.
 
-IMPACT: Local deck/evidence preparation is ready for team review. Target inference remains unmeasured; final Lane 5 narration/recording, accepted INT-02 live evidence, registration/cutoff/form/originality confirmation, role-branch publication, video link and actual submission receipt remain pending. The recorder continuation is open as [PR #5](https://github.com/crasni/LeCoach/pull/5), not accepted/integrated by this work.
+IMPACT: Local deck/evidence preparation is ready for team review. Target inference remains unmeasured; final Lane 5 narration/recording, accepted INT-02 live evidence, registration/cutoff/form/originality confirmation, role-branch publication, video link and actual submission receipt remain pending. The recorder continuation is open as [PR #5](https://github.com/crasni/LeSpeech/pull/5), not accepted/integrated by this work.
 
 PROPOSAL: Review the scoped local commit set and authorize publication separately if ready to share; then use the owner handoffs to replace draft/live placeholders with accepted observations. Keep INT-03 in progress and its unmet OpenSpec tasks unchecked. Existing INT-01 acceptance is preserved; archiving remains separate.
 
@@ -378,7 +378,7 @@ PROPOSAL: Assigned owners follow the TASKS.md first-task and dependency instruct
 Historical preparation evidence follows. PR #1 was subsequently accepted and
 merged; the recorder continuation below records the current Lane 5 work.
 
-FACT: Lane 5 prepared commit `dcc280f` on `agent/session-analysis`, following claim commit `8123599`, and published [draft PR #1](https://github.com/crasni/leCoach/pull/1) for integration-owner review. [checks/coaching/README.md](../checks/coaching/README.md) documents nine hand-authored synthetic cases covering ten expected completed sessions. Fixtures include weak-to-improved delivery, missing camera, no usable inputs, empty/startup sessions, late finals and duplicate retries, drain timeout, repeated sessions, and adjacent incidents. Example feedback uses the existing v0 document shapes; positive reason codes remain pending LIVE-01. No real rehearsal data or model output is included.
+FACT: Lane 5 prepared commit `dcc280f` on `agent/session-analysis`, following claim commit `8123599`, and published [draft PR #1](https://github.com/crasni/leSpeech/pull/1) for integration-owner review. [checks/coaching/README.md](../checks/coaching/README.md) documents nine hand-authored synthetic cases covering ten expected completed sessions. Fixtures include weak-to-improved delivery, missing camera, no usable inputs, empty/startup sessions, late finals and duplicate retries, drain timeout, repeated sessions, and adjacent incidents. Example feedback uses the existing v0 document shapes; positive reason codes remain pending LIVE-01. No real rehearsal data or model output is included.
 
 Validation on the local macOS development host with Python 3.14.5:
 
@@ -395,9 +395,9 @@ PROPOSAL: The integration owner reviews the claim and fixture placement, supplie
 
 ## COACH-01 recorder continuation — merged PR #5
 
-Current publication: [PR #5](https://github.com/crasni/LeCoach/pull/5), head
+Current publication: [PR #5](https://github.com/crasni/LeSpeech/pull/5), head
 `5991048`, was reviewed and merged on 2026-10-08. Recorder-only acceptance does
-not complete COACH-01; [issue #20](https://github.com/crasni/LeCoach/issues/20)
+not complete COACH-01; [issue #20](https://github.com/crasni/LeSpeech/issues/20)
 tracks the remaining selection/template-feedback work. The dated macOS evidence
 below remains attributed to the original contributor run.
 
@@ -415,7 +415,7 @@ LIVE-01 is still `todo` on the shared board with no published engine implementat
 No other lane's claim or task status was changed.
 
 FACT: Implemented the sole `InMemorySessionRecorder` in the approved
-`src/lecoach/coaching/` slot using the existing `SessionContext`, event models and
+`src/lespeech/coaching/` slot using the existing `SessionContext`, event models and
 `CompletedSession` protocol. It preserves normalized evidence and revisions,
 deduplicates stable retries, rejects changed retry payloads, orders by capture time
 and event ID, keeps eligible observations during drain, and ignores foreign/closed
@@ -426,7 +426,7 @@ protect retained evidence from mutations by producers or consumers.
 Retention: one active/completed timeline stays in memory until the recorder's next
 start or disposal. Returned copies belong to their callers. The recorder has no
 independent clock, media capture, disk persistence or network behavior. Its
-[module handoff](../src/lecoach/coaching/README.md) documents injection and retention.
+[module handoff](../src/lespeech/coaching/README.md) documents injection and retention.
 Default API composition remains the integration owner's responsibility; the actual
 recorder is exercised through the published consumer factory.
 
@@ -487,10 +487,10 @@ Validation host: Linux x86_64; CPython 3.12.14; Node 24.11.0; npm 11.6.1; uv 0.1
 | `uv run ruff check src scripts tests examples` | Pass. |
 | frontend `npm run build` | TypeScript check and production Vite build pass. |
 | frontend `npm run test:e2e` | 4 Chromium checks pass: authored deterioration/recovery and three example insights; stop/repeat and final transcript without foreign/duplicate content; empty session and 390-pixel layout; reconnection without another start request. The main replay made no off-device runtime requests and produced no browser errors. |
-| Isolated setup under `/tmp/lecoach-clean-r845mzvq` | Created a fresh working-tree copy without `.venv`, node_modules, or build output. Frozen/offline uv installation, cached/offline npm ci, frontend build, all 60 Python tests, schema/type checks, and the subscription example pass. No downloads were needed after populating caches. |
+| Isolated setup under `/tmp/lespeech-clean-r845mzvq` | Created a fresh working-tree copy without `.venv`, node_modules, or build output. Frozen/offline uv installation, cached/offline npm ci, frontend build, all 60 Python tests, schema/type checks, and the subscription example pass. No downloads were needed after populating caches. |
 | Wheel build | Core wheel builds offline; installed-artifact replay verifies packaged synthetic cases using the validated core environment dependencies. Standalone offline pip dependency resolution lacked cached wheels and was not used as installation evidence. Browser UI is launched from a checkout with the local frontend build; a distributable bundled UI is not part of this milestone. |
 
-The browser checks used headless Chromium 153.0.8010.12 downloaded to `/tmp`; the Playwright installer timed out, so the same official browser archive was fetched directly and selected using `LECOACH_CHROMIUM_PATH`. The API tests needed unsandboxed local execution because sandbox cross-thread event-loop wakeups stalled TestClient startup. The suite emits one upstream Starlette/httpx deprecation warning; checks pass. These environment details do not establish inference performance.
+The browser checks used headless Chromium 153.0.8010.12 downloaded to `/tmp`; the Playwright installer timed out, so the same official browser archive was fetched directly and selected using `LESPEECH_CHROMIUM_PATH`. The API tests needed unsandboxed local execution because sandbox cross-thread event-loop wakeups stalled TestClient startup. The suite emits one upstream Starlette/httpx deprecation warning; checks pass. These environment details do not establish inference performance.
 
 IMPACT: All four subsystem owners have concrete module slots, consumable executable contracts, a shared context/clock, lifecycle protocols, and repeatable fixtures. Integration implements no competing live audience engine, recorder, or coaching selector. Default live API composition explicitly reports unavailable until producers/consumers are injected. An early-stopped replay does not invent an authored summary. Preview/device release behavior is checked only through fake adapters; real devices remain an INT-02 acceptance requirement.
 
@@ -518,9 +518,9 @@ IMPACT: The local commit set can be proposed for publication on `agent/integrati
 
 ## INT-01 publication and remaining acceptance
 
-FACT: The user explicitly approved publication of the existing INT-01 commits through `a7a91ef` in this session. SSH push and remote verification confirmed `agent/integration` at `a7a91ef4dc91f810ac51c96db9d36423f6baa292`, while main remained at `d7d61c1`. [PR #4](https://github.com/crasni/LeCoach/pull/4) subsequently merged on 2026-10-07 at 11:03:57 UTC; fetched main is `c0f6c68` and contains all four approved commits. GitHub removed the remote role branch; its merged local branch/tracking ref were cleaned up, then the assigned branch was recreated from current main for this follow-up.
+FACT: The user explicitly approved publication of the existing INT-01 commits through `a7a91ef` in this session. SSH push and remote verification confirmed `agent/integration` at `a7a91ef4dc91f810ac51c96db9d36423f6baa292`, while main remained at `d7d61c1`. [PR #4](https://github.com/crasni/LeSpeech/pull/4) subsequently merged on 2026-10-07 at 11:03:57 UTC; fetched main is `c0f6c68` and contains all four approved commits. GitHub removed the remote role branch; its merged local branch/tracking ref were cleaned up, then the assigned branch was recreated from current main for this follow-up.
 
-FACT: Public GitHub API checks of PR #4's reviews, issue comments, and inline comments returned empty arrays. PRs [#1](https://github.com/crasni/LeCoach/pull/1) and [#3](https://github.com/crasni/LeCoach/pull/3) remain open synthetic preparation, not live subsystem handoffs. Public API reads are available; authenticated API writes remain unavailable. The earlier API-access limitation applied to that earlier preparation session.
+FACT: Public GitHub API checks of PR #4's reviews, issue comments, and inline comments returned empty arrays. PRs [#1](https://github.com/crasni/LeSpeech/pull/1) and [#3](https://github.com/crasni/LeSpeech/pull/3) remain open synthetic preparation, not live subsystem handoffs. Public API reads are available; authenticated API writes remain unavailable. The earlier API-access limitation applied to that earlier preparation session.
 
 IMPACT: Publication tasks 6.4 and 6.5 are satisfied. INT-01 is in review with 19/20 OpenSpec tasks complete; task 6.6 is still unchecked because collaborator review and downstream acceptance have not been established. The scaffold is available on main for all lanes. INT-02's live composition dependencies are not yet met.
 
@@ -540,7 +540,7 @@ FACT: On 2026-10-07, inspected the three supplied PDFs and retrieved the officia
 
 FACT: Read-only `lsusb` on Linux x86_64 (kernel `7.0.0-38-generic`) showed root hubs, an integrated camera, wireless device and USB receiver; no identifiable UGen300 appeared. `hailortcli` was absent from PATH. The application's `.venv/bin/python` reports Python 3.12.14 and `importlib.util.find_spec('hailo_platform')` returned `None`; system Python 3.14.4 is not the application's pinned runtime. These observations do not prove the team lacks hardware elsewhere. No device capture, driver install, model download or accelerator inference was performed.
 
-IMPACT: Vendor documentation supports specific Hailo-10H Whisper and pose HEF candidates, but LeCoach compatibility and concurrent inference remain unmeasured. The speech reference describes ten-second input windows, and the pose benchmark conditions use PCIe rather than the selected USB path. Neither model availability nor vendor throughput establishes a suitable live engagement delay. The current prototype still displays synthetic authored outputs only.
+IMPACT: Vendor documentation supports specific Hailo-10H Whisper and pose HEF candidates, but LeSpeech compatibility and concurrent inference remain unmeasured. The speech reference describes ten-second input windows, and the pose benchmark conditions use PCIe rather than the selected USB path. Neither model availability nor vendor throughput establishes a suitable live engagement delay. The current prototype still displays synthetic authored outputs only.
 
 PROPOSAL: [DEMO.md](DEMO.md) provides a proposed 2:55 recording sequence and existing replay commands for handoff to Lane 5. Complete INT-02 with the subsystem owners, then capture honest live CPU evidence and measured UGen300 evidence when the device/runtime are available. Confirm submission cutoff details and team registration, prepare final English assets, and obtain applicable publication/submission authorization. INT-03 remains in progress; documentation and its claim are local until a separately approved push.
 
@@ -558,21 +558,21 @@ PROPOSAL: Publish this local branch reconciliation only after explicit push appr
 
 ## LIVE-01 local engine and rehearsal screen
 
-FACT: On 2026-10-08, Lane 4 (@ricebal1) implemented the sole engagement engine in `src/lecoach/engagement/` (rules and defaults in [its README](../src/lecoach/engagement/README.md) and `config.py`) and replaced the inspection shell with a rehearsal screen: eight 2D SVG listeners that ripple through state changes, the current reaction with plain-language reasons, an audience timeline, input status, pace/filler/facing metrics, the live transcript with partials, a camera-preview slot for live mode, and the authored coaching summary. Composition change for integration review: `replay_with_engine()` supplies only the engine; the served app and `lecoach replay` (new `--audience engine|authored`, default `engine`) compute audience states from fixture observations, while live mode still reports unavailable. Proposed reason codes are recorded in ARCHITECTURE.
+FACT: On 2026-10-08, Lane 4 (@ricebal1) implemented the sole engagement engine in `src/lespeech/engagement/` (rules and defaults in [its README](../src/lespeech/engagement/README.md) and `config.py`) and replaced the inspection shell with a rehearsal screen: eight 2D SVG listeners that ripple through state changes, the current reaction with plain-language reasons, an audience timeline, input status, pace/filler/facing metrics, the live transcript with partials, a camera-preview slot for live mode, and the authored coaching summary. Composition change for integration review: `replay_with_engine()` supplies only the engine; the served app and `lespeech replay` (new `--audience engine|authored`, default `engine`) compute audience states from fixture observations, while live mode still reports unavailable. Proposed reason codes are recorded in ARCHITECTURE.
 
 Validation on Windows 11 x86_64; CPython 3.12.14 via uv 0.12.23; Node 24.14.1; npm 11.11.0; Playwright Chromium. No microphone, camera, model or accelerator was used.
 
 | Check | Observed result |
 | --- | --- |
 | `uv run pytest -q` | 117 passed, 60 subtests, including 20 engagement tests: deterioration/recovery and determinism on `weak_to_improved`; no negative state for missing inputs, outages, silence-only, unsupported language or delayed delivery; speech-only operation with the camera unavailable; 60 s of threshold-crossing jitter without negative states or transitions faster than the dwell; hysteresis hold; stale speech dropped from reasons; older observations ignored; absent person and camera outage not treated as facing away; restart/stop isolation; live tick; config validation; Lane 2 speech fixtures trigger `pace_high`, `fillers_frequent` and `silence_prolonged`. |
-| `uv run lecoach replay --case weak_to_improved` | `NEUTRAL → CONFUSED (20 s, pace_high) → BORED (30 s, pace_high + facing_away_sustained) → INTERESTED (35 s) → ENGAGED (40 s)`, every reason citing earlier fixture events. |
+| `uv run lespeech replay --case weak_to_improved` | `NEUTRAL → CONFUSED (20 s, pace_high) → BORED (30 s, pace_high + facing_away_sustained) → INTERESTED (35 s) → ENGAGED (40 s)`, every reason citing earlier fixture events. |
 | `uv run ruff check src scripts tests examples`, `scripts/export_schema.py --check`, `scripts/validate_fixtures.py`, `examples/consume_replay.py` | Pass. |
 | frontend `npm run build` and `npm run test:e2e` | Build passes; 4 Chromium checks pass, now asserting computed transitions with reasons and that the delayed-transcript case stays `NEUTRAL`. `playwright.config.ts` resolves the backend executable on Windows too. |
 | frontend `npm run types:check` | Fails identically on unmodified `main` in this checkout: Git `core.autocrlf=true` checks out the generated file with CRLF line endings. Not caused by this change; generated contracts were not modified. |
 
 IMPACT: Lane 5 can consume real transition events and reason codes; authored coaching in `weak_to_improved` still quotes authored times (20.5 s, 30.5 s, 42 s) that differ from computed ones, so its oracle needs review against engine output. Live adapters can replace fixtures through the unchanged `EngagementEngine` seam. Thresholds are demo heuristics, unvalidated against real rehearsals.
 
-FACT: With the user's approval, `agent/avatar-ui` was pushed at `fc96ec8` and published as [PR #7](https://github.com/crasni/LeCoach/pull/7). The successful push shows @ricebal1 has repository write access.
+FACT: With the user's approval, `agent/avatar-ui` was pushed at `fc96ec8` and published as [PR #7](https://github.com/crasni/LeSpeech/pull/7). The successful push shows @ricebal1 has repository write access.
 
 PROPOSAL: The integration owner reviews PR #7, especially the reason codes and the composition change. LIVE-02 then wires real speech/vision adapters, checks the live tick and camera preview with real devices, and retunes thresholds from recorded rehearsals.
 
@@ -589,7 +589,7 @@ FACT: The owner ran the guided probe once with a real microphone on a Windows 11
 - **Commands:**
 
   ```powershell
-  uv run --frozen --group speech python -m lecoach.speech.probe --out sessions\speech-probe.json
+  uv run --frozen --group speech python -m lespeech.speech.probe --out sessions\speech-probe.json
   uv run --frozen --group speech python checks\speech\check_speech.py --stream sessions\speech-probe.json --summary
   ```
 
@@ -606,7 +606,7 @@ FACT: Results of the 71.4 s take:
 - **Recognition:** the scripted passage was mostly correct, with errors such as "built" heard as "feels" and "pauses" as "pulse".
 - **Fillers:** the deliberate-filler part has no "um", "uh", "like", or "you know" in its finals. Its only interjection is "Aww.", which the English filler rules do not count.
 
-FACT: On the same laptop, `python -m lecoach.speech.probe --device nosuchmic` reported `unavailable / microphone_not_found` 0.1 s into the session. Later windows reported `unavailable` with null WPM and fillers until the run was stopped with Ctrl+C.
+FACT: On the same laptop, `python -m lespeech.speech.probe --device nosuchmic` reported `unavailable / microphone_not_found` 0.1 s into the session. Later windows reported `unavailable` with null WPM and fillers until the run was stopped with Ctrl+C.
 
 IMPACT: AUD-01's live capture works on an ordinary Windows laptop with local CPU inference, and its events pass the shared checks.
 - Filler counts from `base.en` are undercounts: the deliberate-filler part reported none.
@@ -614,17 +614,17 @@ IMPACT: AUD-01's live capture works on an ordinary Windows laptop with local CPU
 - The speaker started late in two parts. The stop-while-speaking case covered only about 1 s of speech, so the drain figure is not a worst case.
 - This is one take by one speaker with a headset microphone. It is not a recognition-quality or latency benchmark, nor demo-host evidence.
 
-PROPOSAL: AUD-02 (#14) measures and improves filler recall, retakes the stop-while-speaking case, and repeats the probe on the demo host. [Issue #13](https://github.com/crasni/LeCoach/issues/13) and [Issue #14](https://github.com/crasni/LeCoach/issues/14) track the remaining work.
+PROPOSAL: AUD-02 (#14) measures and improves filler recall, retakes the stop-while-speaking case, and repeats the probe on the demo host. [Issue #13](https://github.com/crasni/LeSpeech/issues/13) and [Issue #14](https://github.com/crasni/LeSpeech/issues/14) track the remaining work.
 
 ## AUD-01 production speech seams — 2026-10-09
 
-FACT: On `agent/audio-streaming`, based on main `91f6e63`, Lane 2 added the production speech seams in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+FACT: On `agent/audio-streaming`, based on main `91f6e63`, Lane 2 added the production speech seams in [`src/lespeech/speech/`](../src/lespeech/speech/README.md):
 
 - `PortAudioSource` and `WavFileSource`;
 - streaming Silero voice activity detection (`SileroSegmenter`, `SpeechGate`);
 - a process-wide faster-whisper `WhisperTranscriber` with `warm_up`;
-- `python -m lecoach.speech.model --download / --check`;
-- `build_local_adapter()` and the guided `python -m lecoach.speech.probe`.
+- `python -m lespeech.speech.model --download / --check`;
+- `build_local_adapter()` and the guided `python -m lespeech.speech.probe`.
 
 Optional packages load lazily; the core install and suite are unchanged.
 
@@ -646,13 +646,13 @@ FACT: The probe replayed a 27 s espeak-ng English talk in real time.
 
 IMPACT: Integration can compose live speech with `warm_up` and `build_local_adapter()` once PR #23's group is on main. These are synthetic-speech results on a container CPU, not microphone, recognition-quality, or demo-host evidence. The cold model load (14.7 s once) must happen before sessions.
 
-PROPOSAL: Run the probe on the development computer and the demo host for #13's live acceptance and #14's measurements. Remaining work is tracked in [Issue #13](https://github.com/crasni/LeCoach/issues/13).
+PROPOSAL: Run the probe on the development computer and the demo host for #13's live acceptance and #14's measurements. Remaining work is tracked in [Issue #13](https://github.com/crasni/LeSpeech/issues/13).
 
 ## AUD-01 speech adapter core — 2026-10-09
 
-FACT: On `agent/audio-streaming` (first published at `cea23e2`, then merged with main `558f56f` and with the coordination migration `57aab92`), Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/archive/2026-10-11-aud-01-live-speech-adapter/tasks.md) in [`src/lecoach/speech/`](../src/lecoach/speech/README.md):
+FACT: On `agent/audio-streaming` (first published at `cea23e2`, then merged with main `558f56f` and with the coordination migration `57aab92`), Lane 2 implemented task groups 1–3 of the OpenSpec change [`aud-01-live-speech-adapter`](../openspec/changes/archive/2026-10-11-aud-01-live-speech-adapter/tasks.md) in [`src/lespeech/speech/`](../src/lespeech/speech/README.md):
 
-- `SpeechConfig` with the defaults proposed in [issue #6](https://github.com/crasni/LeCoach/issues/6);
+- `SpeechConfig` with the defaults proposed in [issue #6](https://github.com/crasni/LeSpeech/issues/6);
 - the English tokenizer and filler lexicon, kept equal to `checks/speech/speech_text.py` by a parity test;
 - utterance and metrics tracking that follows the fixture rules, and v0 event emission with stable IDs;
 - `SpeechAdapter` with `start` / `stop_capture` / `drain`, a voice-activity thread, a transcription thread, emission on the event loop, degraded mode, and release.
@@ -670,7 +670,7 @@ python3 checks/speech/make_fixtures.py --check
 openspec validate aud-01-live-speech-adapter --strict
 ```
 
-Observed result after merging main `57aab92`: 161 tests and 286 subtests pass, with the existing Starlette/httpx deprecation warning; 31 of the tests are new speech tests (128 tests and 254 subtests before the merge). Ruff passes. The 10 speech cases / 11 sessions match their oracles, the 37 standalone speech tests pass, the fixtures match the scenario scripts, and all three OpenSpec changes validate. `numpy`, `sounddevice`, and `faster_whisper` are not installed, and importing `lecoach.speech` loads none of them.
+Observed result after merging main `57aab92`: 161 tests and 286 subtests pass, with the existing Starlette/httpx deprecation warning; 31 of the tests are new speech tests (128 tests and 254 subtests before the merge). Ruff passes. The 10 speech cases / 11 sessions match their oracles, the 37 standalone speech tests pass, the fixtures match the scenario scripts, and all three OpenSpec changes validate. `numpy`, `sounddevice`, and `faster_whisper` are not installed, and importing `lespeech.speech` loads none of them.
 
 The new tests show:
 
@@ -701,13 +701,13 @@ The recorder completed with every event, no source was incomplete, and no emissi
 
 IMPACT: The adapter's output is consumable by the merged engine and recorder. After speech stops, the 10 s trailing window's WPM falls through the comfortable band (162, 138, 114) while the window already reports an active pause. `pace_steady` therefore cites windows that are mostly silence, and the audience shows INTERESTED for 3 s before BORED.
 
-PROPOSAL: Lane 4 decides whether `pace_steady` should require no active pause in the cited window. It bears on [Issue #6](https://github.com/crasni/LeCoach/issues/6), whose acceptance includes engine staleness/gap compatibility. Lane 2 changed no engine code.
+PROPOSAL: Lane 4 decides whether `pace_steady` should require no active pause in the cited window. It bears on [Issue #6](https://github.com/crasni/LeSpeech/issues/6), whose acceptance includes engine staleness/gap compatibility. Lane 2 changed no engine code.
 
-PROPOSAL: Producers stamp capture times rounded down, never to the nearest unit; integration may add this to the producer guidance in ARCHITECTURE. Remaining AUD-01 work, blockers and handoffs are tracked in [Issue #13](https://github.com/crasni/LeCoach/issues/13), blocked by Issue #6; measurements are [Issue #14](https://github.com/crasni/LeCoach/issues/14).
+PROPOSAL: Producers stamp capture times rounded down, never to the nearest unit; integration may add this to the producer guidance in ARCHITECTURE. Remaining AUD-01 work, blockers and handoffs are tracked in [Issue #13](https://github.com/crasni/LeSpeech/issues/13), blocked by Issue #6; measurements are [Issue #14](https://github.com/crasni/LeSpeech/issues/14).
 
 ## PR #3 integration-owner review
 
-FACT: Merged current main locally into `agent/audio-streaming` without Git conflicts and reviewed speech tokenization, fixture generation, semantic checker and tests against the executable contracts. All 214 fixture events validate with `lecoach.contracts.events.parse_event`; all 10 cases / 11 sessions pass the oracles and generator parity check.
+FACT: Merged current main locally into `agent/audio-streaming` without Git conflicts and reviewed speech tokenization, fixture generation, semantic checker and tests against the executable contracts. All 214 fixture events validate with `lespeech.contracts.events.parse_event`; all 10 cases / 11 sessions pass the oracles and generator parity check.
 
 FACT: Reproduced acceptance of missing/late lifecycle starts and invalid lifecycle payloads (unknown or duplicated incomplete sources and extra fields). Added regression tests, observed seven failing assertions before the fix, then enforced lifecycle start/order and canonical lifecycle payload shapes. Speech-only exports remain supported. Added speech tests to default pytest discovery; no event schema or production adapter was changed.
 
@@ -715,11 +715,11 @@ Validation on Linux using the existing project Python 3.12 environment: `python 
 
 IMPACT: Preparation is acceptable with the local fixes. The standalone checker is not exhaustive schema validation; continue validating through executable contracts. Extra completed-pause metrics and leading-silence handling fit the current contract. Language and timing constants are fixture assumptions pending central configuration and demo-language agreement. Scaffold publication is no longer a blocker; live capture, inference, latency, filler recall and target hardware remain unverified.
 
-PROPOSAL: Publish the reviewed local branch only after explicit push approval, then accept the preparation PR without marking AUD-01 complete. The owner should implement the live adapter in `src/lecoach/speech/` against SessionContext and the start/stop_capture/drain seams. No remote review, push or merge was performed during this review.
+PROPOSAL: Publish the reviewed local branch only after explicit push approval, then accept the preparation PR without marking AUD-01 complete. The owner should implement the live adapter in `src/lespeech/speech/` against SessionContext and the start/stop_capture/drain seams. No remote review, push or merge was performed during this review.
 
 ## AUD-01 preparation — original contributor evidence
 
-FACT: Lane 2 prepared commit `1ac7b53` on `agent/audio-streaming`, following claim commit `1412994`, and published [draft PR #3](https://github.com/crasni/LeCoach/pull/3) for integration-owner review. [checks/speech/README.md](../checks/speech/README.md) documents ten synthetic cases covering eleven speech sessions, generated from hand-written scenario scripts. They cover steady and rapid pace, heavy fillers, prolonged silence, model warm-up with late, retried and out-of-order delivery, a hallucinated partial retracted by an empty final, denied and lost microphones, silence only, unsupported language, and repeated sessions. They follow proposed v0 speech rules documented in that README: English tokenizer and filler lexicon, window and coverage rules, null versus zero, and pause reporting. No microphone, audio, model, or accelerator was used.
+FACT: Lane 2 prepared commit `1ac7b53` on `agent/audio-streaming`, following claim commit `1412994`, and published [draft PR #3](https://github.com/crasni/LeSpeech/pull/3) for integration-owner review. [checks/speech/README.md](../checks/speech/README.md) documents ten synthetic cases covering eleven speech sessions, generated from hand-written scenario scripts. They cover steady and rapid pace, heavy fillers, prolonged silence, model warm-up with late, retried and out-of-order delivery, a hallucinated partial retracted by an empty final, denied and lost microphones, silence only, unsupported language, and repeated sessions. They follow proposed v0 speech rules documented in that README: English tokenizer and filler lexicon, window and coverage rules, null versus zero, and pause reporting. No microphone, audio, model, or accelerator was used.
 
 Validation in the cloud development container (Linux, Python 3.13.16; the tests also pass with Python 3.11 and 3.12):
 
@@ -742,7 +742,7 @@ Observed result: all 10 cases / 11 sessions match their hand-derived oracles, an
 - leading silence reported as a pause;
 - unreported, duplicated or misplaced pauses.
 
-Lane 5's `check_event` from [draft PR #1](https://github.com/crasni/LeCoach/pull/1) accepted all 214 fixture events. These results verify synthetic artifacts and the check utility only. They do not verify microphone capture, transcription accuracy, latency, or a live adapter.
+Lane 5's `check_event` from [draft PR #1](https://github.com/crasni/LeSpeech/pull/1) accepted all 214 fixture events. These results verify synthetic artifacts and the check utility only. They do not verify microphone capture, transcription accuracy, latency, or a live adapter.
 
 FACT: The official SalesKit in `docs/` lists Whisper-Tiny, Whisper-Base and Whisper-Small as runnable on the UGen300 (Hailo-10H) SKUs through the Hailo GenAI Model Zoo (PDF pages 7, 8 and 15). External reports say Whisper often omits filler words and can produce text on silence or noise; sources are in the README. None of this has been run or measured locally or on UGen300.
 
@@ -786,7 +786,7 @@ All checks pass. The pre-fix merged baseline separately passed 191 tests / 333
 subtests. Inputs are synthetic; no microphone/camera, optional model inference,
 browser responsiveness, intended-host timing, accelerator or recording was
 exercised. Current live acceptance and required component delivery remain in
-[Issue #11](https://github.com/crasni/LeCoach/issues/11).
+[Issue #11](https://github.com/crasni/LeSpeech/issues/11).
 
 ## Integration component agreement and status ties — 2026-10-10
 
@@ -824,7 +824,7 @@ The maintainer explicitly authorized merging reviewed component PRs #24, #28 and
 were retained. Assigned `agent/integration` reconciles main `5d2bcd0` in clean merge
 `8800971`, preserving existing integration fixes/setup/archive/evidence.
 
-`lecoach serve --live` now composes the owners' public local speech/vision
+`lespeech serve --live` now composes the owners' public local speech/vision
 factories, sole RuleEngine/InMemorySessionRecorder and TemplateFeedbackGenerator.
 Coaching reads the same public rule freshness ages. Speech/model/VAD preparation
 runs before serving; camera runtime imports warm in the background. Models are
@@ -851,7 +851,7 @@ All checks pass. New composition tests use synthetic capture seams with the real
 engine/recorder/coach: repeat sessions compute the supported 10/25/40 s moments;
 both failed inputs remain NEUTRAL and return empty moments/limitations; preparation
 alone and prepared-session shutdown never start capture. A real launch smoke check
-of `serve --live --speech-model-dir /tmp/lecoach-no-models` reached loopback health
+of `serve --live --speech-model-dir /tmp/lespeech-no-models` reached loopback health
 ready with `live_integrated: true` and shut down cleanly. No session was prepared
 or started in that smoke check; no devices were acquired or weights downloaded.
 

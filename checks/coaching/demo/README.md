@@ -2,18 +2,18 @@
 
 This Lane 5 preparation connects the existing [2:55 shot plan](../../../docs/DEMO.md)
 to [a CPU live narration draft](narration.md), computed coaching and a repeatable
-pace/facing rehearsal. Issues [#21](https://github.com/crasni/LeCoach/issues/21),
-[#20](https://github.com/crasni/LeCoach/issues/20) and
-[#11](https://github.com/crasni/LeCoach/issues/11) own current progress, blockers
+pace/facing rehearsal. Issues [#21](https://github.com/crasni/LeSpeech/issues/21),
+[#20](https://github.com/crasni/LeSpeech/issues/20) and
+[#11](https://github.com/crasni/LeSpeech/issues/11) own current progress, blockers
 and acceptance. This supplies scenarios and evidence procedures, not another
 task board. Integration owns launch/composition; video recording and external
 publication require the applicable team authorization.
 
-The current English direction in [#21](https://github.com/crasni/LeCoach/issues/21)
+The current English direction in [#21](https://github.com/crasni/LeSpeech/issues/21)
 uses an ordinary computer with local CPU inference for Stage I. UGen300 hardware
 validation remains Stage II work after qualification. The confirmed demo host is
 the maintainer's Ubuntu 26.04.1 / Linux x86_64 PC (Ryzen AI 7 450, approximately 30 GiB RAM), with Bluetooth microphone.
-The [operator's live functional batch](https://github.com/crasni/LeCoach/issues/11#issuecomment-6095334266)
+The [operator's live functional batch](https://github.com/crasni/LeSpeech/issues/11#issuecomment-6095334266)
 reports transcription/camera/audience, stop/generated feedback, repeat isolation,
 release, short/no-person and missing-microphone checks passed. This is attributed
 operator evidence, not Lane 5's independent device test, quantified accuracy/latency
@@ -34,7 +34,7 @@ uv run python checks/coaching/feedback_replay.py --case drain_timeout --show-fee
 
 The optional factory runs the existing engine, sole recorder and generator.
 Output is computed from hand-authored synthetic observations and writes no
-rehearsal files. See [consumer behavior](../../../src/lecoach/coaching/README.md)
+rehearsal files. See [consumer behavior](../../../src/lespeech/coaching/README.md)
 and the test-only [computed baseline](../engine_expectations.json).
 
 For the audience shot, follow integration's launch instructions in DEMO and
@@ -83,12 +83,12 @@ Use integration's delivered public composition and [host setup](../../../docs/DE
 The already-prepared demo host needs no new model download merely for this handoff:
 
 ```sh
-uv run --group speech --group vision lecoach serve --live
+uv run --group speech --group vision lespeech serve --live
 ```
 
 Select **Live microphone and camera**, rehearse, then stop to inspect generated
 feedback. If selecting a Bluetooth input, use the speech owner's documented
-`LECOACH_SPEECH_DEVICE`; integration owns launch/configuration decisions. The
+`LESPEECH_SPEECH_DEVICE`; integration owns launch/configuration decisions. The
 replay-only `replay_with_coaching()` factory does not enable live devices.
 
 The operator has already completed the reliability batch above. Do not request
@@ -142,7 +142,7 @@ not a new JSON contract. Raw media, transcripts and private outputs stay out of 
 
 The maintainer reports an approximately **2:20 (140 s)** comfortable read-through
 of the earlier six-block, **316-word** script at `03028dd`
-([source](https://github.com/crasni/LeCoach/issues/12#issuecomment-6095163116)).
+([source](https://github.com/crasni/LeSpeech/issues/12#issuecomment-6095163116)).
 It fits the 175 s shot plan with about 35 s remaining. This is operator-reported
 spoken duration, not measured slot timing or finished-video duration.
 
@@ -219,7 +219,7 @@ operator read-through is attributed above. Earlier 310-word validation applies
 to the previous draft, not the 316-word revision or current CPU live draft.
 
 After integration supplies a canonical completed-session record and its actual
-engine configuration, [the local checker](../../../src/lecoach/coaching/README.md#inspect-a-completed-session-locally)
+engine configuration, [the local checker](../../../src/lespeech/coaching/README.md#inspect-a-completed-session-locally)
 can display the complete timeline and generated moments without transcript text.
 It also accepts current synthetic completed records. Record the input/inference
 provenance and accepted-run references separately; the checker does not certify

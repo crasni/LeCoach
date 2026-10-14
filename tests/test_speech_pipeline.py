@@ -6,10 +6,10 @@ import sys
 from pathlib import Path
 from unittest import TestCase
 
-from lecoach.contracts import parse_event
-from lecoach.speech.config import SpeechConfig
-from lecoach.speech.pipeline import SpeechPipeline
-from lecoach.speech.seams import Transcription
+from lespeech.contracts import parse_event
+from lespeech.speech.config import SpeechConfig
+from lespeech.speech.pipeline import SpeechPipeline
+from lespeech.speech.seams import Transcription
 
 CHECKS = Path(__file__).resolve().parents[1] / "checks" / "speech"
 

@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from unittest import TestCase
 
-from lecoach.speech import text
+from lespeech.speech import text
 
 CHECKS = Path(__file__).resolve().parents[1] / "checks" / "speech"
 SENTENCES = [
@@ -15,7 +15,7 @@ SENTENCES = [
     "[BLANK_AUDIO] (applause) Thank you.",
     "Ummm... hmm, mhm, ahh, err, eh, mm",
     "like um",
-    "大家好，今天我想介紹 LeCoach。",
+    "大家好，今天我想介紹 LeSpeech。",
     "",
 ]
 

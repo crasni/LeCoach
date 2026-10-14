@@ -11,11 +11,11 @@ import threading
 import time
 from unittest import IsolatedAsyncioTestCase, TestCase
 
-from lecoach.contracts import parse_event
-from lecoach.contracts.interfaces import Components, SessionConfig, SessionContext
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.session import SessionController, SessionManager
-from lecoach.speech import (
+from lespeech.contracts import parse_event
+from lespeech.contracts.interfaces import Components, SessionConfig, SessionContext
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.session import SessionController, SessionManager
+from lespeech.speech import (
     MicrophoneError,
     MicrophoneNotFound,
     MicrophonePermissionDenied,
@@ -129,7 +129,7 @@ class SpeechAdapterSessionTests(IsolatedAsyncioTestCase):
                          {"state": "completed", "duration_s": 1.5, "start_s": 2.5, "end_s": 4.0})
         self.assertEqual((windows["metrics-7"].wpm, windows["metrics-7"].filler_count),
                          (51.4, 1))
-        self.assertEqual(self.transcriber.thread_names, {"lecoach-speech-asr"})
+        self.assertEqual(self.transcriber.thread_names, {"lespeech-speech-asr"})
         self.assertEqual((self.source.opened, self.source.closed), (1, 1))
         self.assert_consistent()
 
@@ -404,7 +404,7 @@ class SpeechAdapterSessionTests(IsolatedAsyncioTestCase):
 
 class SpeechImportTests(TestCase):
     def test_package_imports_without_optional_speech_dependencies(self):
-        code = ("import sys, lecoach.speech; "
+        code = ("import sys, lespeech.speech; "
                 "loaded = {'faster_whisper', 'sounddevice', 'numpy'} & set(sys.modules); "
                 "assert not loaded, loaded")
         subprocess.run([sys.executable, "-c", code], check=True)

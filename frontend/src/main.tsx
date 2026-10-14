@@ -142,7 +142,7 @@ function App() {
   useEffect(() => {
     mounted.current = true;
     api<Fixture[]>('/api/fixtures').then(setFixtures).catch(() => {
-      setError('The local service is unavailable. Reopen LeCoach after starting it.');
+      setError('The local service is unavailable. Reopen LeSpeech after starting it.');
     });
     api<Health>('/api/health').then(setHealth).catch(() => {});
     return () => {
@@ -339,7 +339,7 @@ function App() {
   const modeName = live ? 'Live rehearsal' : 'Synthetic replay';
   const modeDetail = live
     ? 'Microphone and camera are processed on this device. No audio or video is recorded.'
-    : 'Speech and camera observations are authored examples; the engagement engine computes the audience from them. Coaching is an authored example. Microphone and camera are off.';
+    : 'The speech and camera data are a made-up example. The audience engine reacts to them live; the feedback is pre-written. Microphone and camera are off.';
   const modeChip = <span className={`chip mode-chip${live ? ' live' : ''}`} title={modeDetail}>{modeName}</span>;
   const reasons = engagement?.payload.reasons.length
     ? engagement.payload.reasons.map(r => reasonText(r.code)).join(' · ')
@@ -400,13 +400,13 @@ function App() {
         ? <span key={e.event_id} className={e.payload.is_final ? undefined : 'partial'}>
           {i ? ' ' : ''}{e.payload.text}</span> : null)
       : 'Listening for speech…'}</p></div>;
-  const audienceNote = <p className="audience-note">Simulated audience states from deterministic rules,
-    not measured emotions or judgments of you.</p>;
+  const audienceNote = <p className="audience-note">The audience is simulated by fixed rules.
+    It does not measure your emotions or judge you.</p>;
   const hint = <span className="hint"><kbd>Space</kbd> {running ? 'to stop' : 'to start'}</span>;
 
   return <main className={`studio is-${view}`}>
     <header><a className="brand" href="/"><img className="brand-mark" src="/favicon.svg" alt="" />
-      <span className="brand-name">LeCoach</span></a>
+      <span className="brand-name">LeSpeech</span></a>
       <ol className="steps" aria-label="Rehearsal steps">{STEPS.map(([key, label], index) =>
         <li key={key} className={key === view ? 'is-current'
           : STEPS.findIndex(([k]) => k === view) > index ? 'is-done' : undefined}
@@ -433,8 +433,8 @@ function App() {
         <h2>Start a rehearsal</h2>
         <ol className="how">
           <li><span>1</span>Pick live practice or an example replay.</li>
-          <li><span>2</span>Start, then speak to the room. It reacts as you go.</li>
-          <li><span>3</span>Stop or finish to get coaching on key moments.</li>
+          <li><span>2</span>Press Start and talk. The audience reacts as you go.</li>
+          <li><span>3</span>Stop when you’re done to see your key moments.</li>
         </ol>
         {modeSelect}
         <div className="mode-note">{modeChip}<p>{modeDetail}</p></div>
@@ -457,8 +457,8 @@ function App() {
             {!running && <div className="overlay"><span className="spinner" aria-hidden="true" />
               Setting up the room…</div>}
             {cue && <div className="cue" role="status"><strong>You're on.</strong>
-              {live ? 'Face the camera and start speaking. The room reacts to your pace, filler words and where you face.'
-                : 'Watch the room react to the example speaker’s pace, filler words and where they face.'}</div>}
+              {live ? 'Face the camera and start talking. The audience reacts to your pace, filler words and where you face.'
+                : 'Watch the audience react to the example speaker’s pace, filler words and where they face.'}</div>}
           </div>
           <div className="reaction" aria-live="polite">
             <strong key={state}>{stateCopy[state].label}</strong>
@@ -492,7 +492,7 @@ function App() {
             className={`input input-${value.availability}`}><i />
             {name === 'speech' ? 'Microphone' : 'Camera'}: {statusText(value.reason)}</span>)}</div>
           {(transcript.length > 0 || live) && transcriptBlock}
-          {transitions.length > 0 && <div className="log"><h3>How the room responded</h3>
+          {transitions.length > 0 && <div className="log"><h3>How your audience reacted</h3>
             <Transitions transitions={transitions} /></div>}
           <div className="footnote">{!live && <p>{modeDetail}</p>}{audienceNote}</div>
         </aside>
@@ -508,10 +508,10 @@ function App() {
       </section>
       <div className="review-body">
         <section className="review-head">
-          <div><h1>{feedback ? 'A few moments to learn from.' : 'Rehearsal complete.'}</h1>
-            <p>{live ? 'Coaching' : 'Authored example coaching'} · {clock(end)} rehearsal ·
+          <div><h1>{feedback ? 'Your key moments.' : 'Rehearsal complete.'}</h1>
+            <p>{live ? 'Feedback' : 'Pre-written example feedback'} · {clock(end)} rehearsal ·
               Run it again or pick another mode above.</p></div>
-          <div className={`final ${tone}`}><small>The room ended</small>
+          <div className={`final ${tone}`}><small>Audience at the end</small>
             <strong>{stateCopy[state].label}</strong>
             <span className="state" data-testid="audience-state">{state}</span></div>
         </section>
@@ -524,17 +524,17 @@ function App() {
               <p className="suggestion">{moment.suggestion}</p>
               <p className="observation">{moment.observation}</p>
             </article>)}</div>
-          {!feedback.moments.length && <p className="notice">No supported coaching moments in this example.</p>}
+          {!feedback.moments.length && <p className="notice">No key moments in this example.</p>}
           {feedback.limitations.map((limitation, index) => <p className="notice" key={index}>{limitation}</p>)}
         </section>}
         {snapshot?.feedback_status === 'pending' && <p className="notice loading">
           <span className="spinner" aria-hidden="true" />Preparing the rehearsal summary…</p>}
         {snapshot?.feedback_status === 'unavailable'
           && <p className="notice">{live ? 'The rehearsal summary is unavailable.'
-            : 'Replay stopped early. The authored example summary is unavailable.'}</p>}
+            : 'Replay stopped early. The pre-written example summary is unavailable.'}</p>}
         <div className="review-foot">
           {transitions.length > 0 && <section className="timeline">
-            <div className="timeline-top"><h2>How the room responded</h2><span>{clock(end)}</span></div>
+            <div className="timeline-top"><h2>How your audience reacted</h2><span>{clock(end)}</span></div>
             <Track transitions={transitions} end={end} />
             <Transitions transitions={transitions} />
           </section>}

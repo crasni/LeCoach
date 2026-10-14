@@ -10,13 +10,13 @@ reconciliation restored the old main baseline while preserving rejected artifact
 history; PR #35 subsequently delivered the reviewed replacement to main.
 
 The replacement pair was reviewed separately in
-[PR #35](https://github.com/crasni/LeCoach/pull/35), author revision `d34a58c`:
+[PR #35](https://github.com/crasni/LeSpeech/pull/35), author revision `d34a58c`:
 15 main pages, FODP SHA-256
 `7e62d79281fc69ef528650e1b6f4a7b48914889841dbcb1373930fe97e9b048e`,
 PDF SHA-256
 `9133917f2d8ab821b306050774b8fbafe527490bc2af5fd5c2b14d987d6bf417`.
 Its proposal-specific export/parity/claim record is
-[versioned proposal-review.md](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal-review.md).
+[versioned proposal-review.md](https://github.com/crasni/LeSpeech/blob/d34a58c/docs/submission/proposal-review.md).
 Codex authoring was explicitly requested by the human collaborator; no Claude
 use is claimed. The maintainer explicitly authorized merging the reviewed
 replacement on 2026-10-11; PR #35 merged as `319d274`. Integration reconciled
@@ -42,12 +42,12 @@ and submission remain separate. To reproduce the reviewed revision independently
 without changing branches or tracked artifacts, after fetching its branch:
 
 ```sh
-mkdir -p /tmp/lecoach-replacement-review
-git show d34a58c:docs/submission/proposal.fodp > /tmp/lecoach-replacement-review/proposal.fodp
-git show d34a58c:docs/submission/proposal.pdf > /tmp/lecoach-replacement-review/proposal.pdf
+mkdir -p /tmp/lespeech-replacement-review
+git show d34a58c:docs/submission/proposal.fodp > /tmp/lespeech-replacement-review/proposal.fodp
+git show d34a58c:docs/submission/proposal.pdf > /tmp/lespeech-replacement-review/proposal.pdf
 uv run python scripts/check_submission.py \
-  --source /tmp/lecoach-replacement-review/proposal.fodp \
-  --pdf /tmp/lecoach-replacement-review/proposal.pdf --json
+  --source /tmp/lespeech-replacement-review/proposal.fodp \
+  --pdf /tmp/lespeech-replacement-review/proposal.pdf --json
 ```
 
 The checker verifies matching page counts within a conservative 20-total-page
@@ -105,7 +105,7 @@ visual revalidation was performed in this direction update. Final claim-map and
 script review still require accepted live evidence, actual-host checks and timing.
 Official rules retain an English deck and mainly English video explanation.
 
-Package evidence record, updated 2026-10-10 (Asia/Taipei). The proposal/evidence range merged through [PR #8](https://github.com/crasni/LeCoach/pull/8). Current remaining work, dependencies and task acceptance live only in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12); follow [AGENTS](../../AGENTS.md) for scoped publication. This document records artifact versions, checks and claim provenance, not assignments, a live status board or a submission receipt. Older check/disposition entries are dated package evidence, not acceptance of the final task. [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) preserves observed behavior.
+Package evidence record, updated 2026-10-10 (Asia/Taipei). The proposal/evidence range merged through [PR #8](https://github.com/crasni/LeSpeech/pull/8). Current remaining work, dependencies and task acceptance live only in [INT-03 Issue #12](https://github.com/crasni/LeSpeech/issues/12); follow [AGENTS](../../AGENTS.md) for scoped publication. This document records artifact versions, checks and claim provenance, not assignments, a live status board or a submission receipt. Older check/disposition entries are dated package evidence, not acceptance of the final task. [CONTEST.md](../CONTEST.md) owns requirements; [STATUS.md](../STATUS.md) preserves observed behavior.
 
 **Refreshed for the current CPU demonstration:** the 12-slide source/PDF now reflect delivered speech/vision composition and generated coaching, plus the maintainer-reported live reliability checks. Automated evidence uses application source `66d1c8e`: 267 tests / 392 subtests, two skips. Final owner acceptance, measured quality/performance, reviewed video and external receipts remain separate.
 
@@ -118,7 +118,7 @@ Package evidence record, updated 2026-10-10 (Asia/Taipei). The proposal/evidence
 | Demo | [DEMO.md](../DEMO.md#versioned-lane-5-preview-handoff) pairs the 2:55 shot plan with Lane 5's 316-word English preview at `03028dd` in PR #24, synthetic commands and generated-coaching evidence anchors. Maintainer reports a 2:20 read-through; final live narration, edited recording and video hash remain pending. | Adapt the preview to accepted INT-02 evidence on the confirmed CPU host, time/review the final script and local recording. |
 | Evidence baseline | Deck uses application source `66d1c8e`; 267 tests / 392 subtests, two skips. Maintainer reports actual live checks passed. | Final owner acceptance, measured quality/performance and reviewed video remain separate. |
 | Hardware | [Observed host outcome](../STATUS.md#int-03-apply-hardware-readiness) and [procedure](../HARDWARE.md). | No identifiable target device/runtime on this host; obtain supported setup and owner handoffs for measurements. |
-| Git publication | Eight-commit range published at `b9e4cff`; [PR #8](https://github.com/crasni/LeCoach/pull/8) subsequently merged as `558f56f`. | Publication/merge evidence, not final INT-03 acceptance; new scoped role-branch work follows AGENTS. |
+| Git publication | Eight-commit range published at `b9e4cff`; [PR #8](https://github.com/crasni/LeSpeech/pull/8) subsequently merged as `558f56f`. | Publication/merge evidence, not final INT-03 acceptance; new scoped role-branch work follows AGENTS. |
 | YouTube | No upload or URL. | Separate publication authorization, unlisted upload and link verification after recording review. |
 | Registration/submission | Global Online Track selected; cutoff verified as 2026-10-14 17:00 Asia/Taipei. Registration and delivery receipts absent. | Team/form confirmation; retain private details outside Git. |
 
@@ -141,7 +141,7 @@ Local proposal review does not resolve section IX's original-work/licensing inte
 
 ## Claim-to-evidence map
 
-Each row covers all material claims on the named page(s), including headline/body text and provenance labels. Planned statements are reviewed as plans; a vendor property is not a LeCoach measurement.
+Each row covers all material claims on the named page(s), including headline/body text and provenance labels. Planned statements are reviewed as plans; a vendor property is not a LeSpeech measurement.
 
 | Page / material claim | Basis | Mode and limits |
 | --- | --- | --- |
@@ -158,8 +158,8 @@ Each row covers all material claims on the named page(s), including headline/bod
 | 8: no identifiable UGen300 on development host | [Read-only host inspection](../STATUS.md#int-03-apply-hardware-readiness). | One Linux host observation; does not establish hardware access elsewhere. |
 | 9: 267 tests, 392 subtests, nine fixture cases/ten sessions, reported live checks | Source `66d1c8e`; dated commands/results in [STATUS](../STATUS.md#current-runtime-and-submission-validation--2026-10-10); prior browser checks and maintainer live report are separately dated. | Ubuntu x86_64/Python 3.12.14 with prepared local models; two tests skipped. No instrumented live accuracy, latency or accelerator measurements. |
 | 10: intuitive reactions, actionable practice loop, workplace pilot | Intended value in GUIDE; proposed pilot/evaluation in this deck. | Hypotheses and future evaluation, with no claimed study, ROI, adoption or accuracy benefit. |
-| 11: delivered CPU implementation, final review and separate Stage II hardware milestone | [INT-03 Issue](https://github.com/crasni/LeCoach/issues/12), STATUS and [CONTEST](../CONTEST.md). | Live behavior reported by maintainer; owner handoffs, final recording and measured target performance remain separate. |
-| 12: source/repository access, online participation and exact cutoff | [Repository](https://github.com/crasni/LeCoach), SOURCES and CONTEST. | Six exported references verified; Global Online Track selected and 2026-10-14 17:00 Asia/Taipei cutoff confirmed. No submission or video receipt exists. |
+| 11: delivered CPU implementation, final review and separate Stage II hardware milestone | [INT-03 Issue](https://github.com/crasni/LeSpeech/issues/12), STATUS and [CONTEST](../CONTEST.md). | Live behavior reported by maintainer; owner handoffs, final recording and measured target performance remain separate. |
+| 12: source/repository access, online participation and exact cutoff | [Repository](https://github.com/crasni/LeSpeech), SOURCES and CONTEST. | Six exported references verified; Global Online Track selected and 2026-10-14 17:00 Asia/Taipei cutoff confirmed. No submission or video receipt exists. |
 
 ## Export and visual review
 
@@ -168,13 +168,13 @@ Authoring source is Flat OpenDocument, editable in LibreOffice Impress. All grap
 Re-export from the repository root:
 
 ```sh
-libreoffice -env:UserInstallation=file:///tmp/lecoach-int03-refresh-lo \
+libreoffice -env:UserInstallation=file:///tmp/lespeech-int03-refresh-lo \
   --headless --convert-to pdf --outdir docs/submission \
   docs/submission/proposal.fodp
 pdfinfo docs/submission/proposal.pdf
 pdfinfo -url docs/submission/proposal.pdf
-pdftotext -raw docs/submission/proposal.pdf /tmp/lecoach-int03-deck-raw.txt
-pdftoppm -scale-to 1400 -png docs/submission/proposal.pdf /tmp/lecoach-int03-slide
+pdftotext -raw docs/submission/proposal.pdf /tmp/lespeech-int03-deck-raw.txt
+pdftoppm -scale-to 1400 -png docs/submission/proposal.pdf /tmp/lespeech-int03-slide
 sha256sum docs/submission/proposal.fodp docs/submission/proposal.pdf
 ```
 
@@ -214,7 +214,7 @@ Fresh package-only checks pass: both recorded artifact SHA-256 values match; `pd
 
 ## Live task follow-up
 
-Remaining decisions, owner handoffs, final review/recording, authorization and delivery acceptance are maintained exclusively in [INT-03 Issue #12](https://github.com/crasni/LeCoach/issues/12). Read that Issue and its native dependencies rather than maintaining a parallel checklist here. The artifact checks and unresolved scenario dispositions above are historical package evidence, not a submission receipt or a live task board. INT-01 archival is a separate Issue/workflow.
+Remaining decisions, owner handoffs, final review/recording, authorization and delivery acceptance are maintained exclusively in [INT-03 Issue #12](https://github.com/crasni/LeSpeech/issues/12). Read that Issue and its native dependencies rather than maintaining a parallel checklist here. The artifact checks and unresolved scenario dispositions above are historical package evidence, not a submission receipt or a live task board. INT-01 archival is a separate Issue/workflow.
 
 
 ## Lane 5 preview reconciliation — 2026-10-10
@@ -227,7 +227,7 @@ This completes independent preview reconciliation only. INT-03 task 5.1 remains 
 ## Opt-in composition implementation — 2026-10-10
 
 The authorized component PRs #24/#28/#29 are merged. Integration now provides
-`lecoach serve --live`, using the existing public speech/vision factories and
+`lespeech serve --live`, using the existing public speech/vision factories and
 sole engine/recorder/template coach. [Host setup](../DEMO_HOST.md) documents
 model preparation, launch and missing-input behavior. Default replay retains
 computed audience and authored coaching. Composition implementation and synthetic
@@ -268,8 +268,8 @@ online participation and exact public cutoff. The synthetic example on page 5
 retains its authored labels/times; vendor/Stage II claims remain unmeasured.
 
 Export: `GSETTINGS_BACKEND=memory libreoffice
--env:UserInstallation=file:///tmp/lecoach-int03-live-review-lo --headless
---convert-to pdf --outdir /tmp/lecoach-package-live-export
+-env:UserInstallation=file:///tmp/lespeech-int03-live-review-lo --headless
+--convert-to pdf --outdir /tmp/lespeech-package-live-export
 docs/submission/proposal.fodp`, followed by reviewed copy into this directory.
 Renderer: LibreOffice 26.2.6.3. All 12 pages were rendered at 1100 px and visually
 inspected; no clipping or unreadable diagram labels were observed. The final

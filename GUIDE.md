@@ -1,4 +1,4 @@
-# LeCoach — MASTER AGENT PROMPT
+# LeSpeech — MASTER AGENT PROMPT
 ## ASUS UGen AI League Hackathon 2026
 
 ## Shared team entry point
@@ -16,9 +16,9 @@ recording arrangement before final validation. The English deck and mainly
 English video explanation follow the official rules; final recording/publication
 and submission still require their separate authorization.
 
-Product name: **LeCoach**. Use this exact spelling and capitalization in product copy, UI, proposal, demo, and project documentation. Technical identifiers and existing repository URLs follow their actual names.
+Product name: **LeSpeech**. Use this exact spelling and capitalization in product copy, UI, proposal, demo, and project documentation. Technical identifiers and existing repository URLs follow their actual names.
 
-Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) own assignments, branches, progress, blockers and task acceptance; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
+Every collaborator starts at [AGENTS.md](AGENTS.md). This guide is the canonical product scope and priorities. [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination) own assignments, branches, progress, blockers and task acceptance; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) owns subsystem contracts; [docs/STATUS.md](docs/STATUS.md) owns verified implementation evidence. Use [docs/AGENT_ROLES.md](docs/AGENT_ROLES.md) to start one of the five roles.
 
 The assigned-role placeholder at the end is a template, not a live assignment. The GitHub Issue assignee and recorded branch determine ownership. Competition and hardware claims below must be checked against official sources before submission or implementation claims.
 
@@ -176,7 +176,7 @@ We are not optimizing purely for technical novelty.
 
 Product name:
 
-# LeCoach
+# LeSpeech
 
 Tagline:
 
@@ -184,9 +184,9 @@ Tagline:
 
 Core concept:
 
-LeCoach is a local, multimodal presentation and speech coach.
+LeSpeech is a local, multimodal presentation and speech coach.
 
-Instead of merely producing statistics after a presentation, LeCoach creates the feeling of practicing in front of a real audience.
+Instead of merely producing statistics after a presentation, LeSpeech creates the feeling of practicing in front of a real audience.
 
 The system:
 
@@ -202,13 +202,13 @@ The central product insight is:
 > Practicing alone has one fundamental problem:
 > there is no audience.
 
-LeCoach provides that audience.
+LeSpeech provides that audience.
 
 ---
 
 # 4. PRODUCT DIFFERENTIATION
 
-DO NOT reduce LeCoach to:
+DO NOT reduce LeSpeech to:
 
 "speech-to-text + WPM dashboard"
 
@@ -222,7 +222,7 @@ Our primary innovation is:
 
 # LIVE AUDIENCE RESPONSE
 
-Instead of showing constant technical warnings, LeCoach turns multimodal delivery signals into intuitive audience reactions.
+Instead of showing constant technical warnings, LeSpeech turns multimodal delivery signals into intuitive audience reactions.
 
 Example:
 
@@ -254,10 +254,10 @@ during the speech.
 
 Basic session:
 
-1. User opens LeCoach.
+1. User opens LeSpeech.
 2. Camera and microphone activate locally.
 3. User starts a presentation.
-4. LeCoach continuously processes:
+4. LeSpeech continuously processes:
 
 AUDIO
 - speech transcription
@@ -287,7 +287,7 @@ Possible audience states:
 
 7. Events are stored on a session timeline.
 
-8. When the user finishes, LeCoach shows a concise analysis.
+8. When the user finishes, LeSpeech shows a concise analysis.
 
 Example:
 
@@ -475,7 +475,7 @@ Example:
 
 "You said everything runs locally. Why is that better than using a cloud API?"
 
-This extends LeCoach from speech coach toward:
+This extends LeSpeech from speech coach toward:
 
 presentation rehearsal simulator.
 
@@ -530,7 +530,7 @@ Do not let them delay the prototype.
 
 This part is strategically important for the competition.
 
-LeCoach continuously receives:
+LeSpeech continuously receives:
 
 - camera video
 - microphone audio
@@ -547,7 +547,7 @@ The product principle is:
 > Your presentation never needs to leave your device.
 
 Intended UGen300 capabilities for future Stage II integration (vendor-supported
-plan, not measured LeCoach compatibility/performance):
+plan, not measured LeSpeech compatibility/performance):
 
 - local AI inference
 - low latency
@@ -571,7 +571,7 @@ internet
 ↓
 remote AI service
 
-LeCoach:
+LeSpeech:
 
 camera ─┐
         ├─ local device + UGen300 → AI Audience
@@ -693,7 +693,7 @@ Audience visibly becomes engaged.
 
 3. Session ends
 
-LeCoach shows:
+LeSpeech shows:
 
 - engagement timeline
 - important weak moment
@@ -778,7 +778,7 @@ ten incomplete features.
 The product thesis we are testing is:
 
 > Traditional speech coaches tell you statistics.
-> LeCoach lets you feel the audience.
+> LeSpeech lets you feel the audience.
 
 The privacy thesis is:
 
@@ -830,7 +830,7 @@ Escalate major irreversible product changes.
 
 By Stage I deadline, the repo should contain:
 
-1. A functioning LeCoach prototype
+1. A functioning LeSpeech prototype
 2. Real-time speech analysis
 3. Real-time visual/body-language analysis
 4. Live virtual audience reactions

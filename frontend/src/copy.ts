@@ -5,20 +5,20 @@ export const STATES = ['ENGAGED', 'INTERESTED', 'NEUTRAL', 'CONFUSED', 'BORED'] 
 export type AudienceState = typeof STATES[number];
 
 export const stateCopy: Record<AudienceState, { label: string; detail: string }> = {
-  ENGAGED: { label: 'Leaning in', detail: 'Delivery has been steady for a while.' },
-  INTERESTED: { label: 'Perking up', detail: 'Recent delivery is landing well.' },
-  NEUTRAL: { label: 'Listening', detail: 'Nothing notable yet.' },
-  CONFUSED: { label: 'Losing the thread', detail: 'Something is making you harder to follow.' },
-  BORED: { label: 'Drifting off', detail: 'Attention is slipping.' },
+  ENGAGED: { label: 'Engaged', detail: 'They’re with you.' },
+  INTERESTED: { label: 'Interested', detail: 'They like what they’re hearing.' },
+  NEUTRAL: { label: 'Listening', detail: 'Nothing stands out yet.' },
+  CONFUSED: { label: 'Confused', detail: 'They’re having trouble following you.' },
+  BORED: { label: 'Bored', detail: 'They’re losing interest.' },
 };
 
 export const reasonCopy: Record<string, string> = {
-  pace_high: 'Pace has stayed fast',
-  pace_low: 'Pace has stayed slow',
-  fillers_frequent: 'Frequent filler words',
-  silence_prolonged: 'A long silence',
-  facing_away_sustained: 'Turned away from the audience for a while',
-  pace_steady: 'Comfortable pace',
+  pace_high: 'Talking too fast',
+  pace_low: 'Talking too slowly',
+  fillers_frequent: 'Too many filler words',
+  silence_prolonged: 'Long silence',
+  facing_away_sustained: 'Turned away from the audience',
+  pace_steady: 'Good pace',
   facing_audience: 'Facing the audience',
 };
 
@@ -36,7 +36,7 @@ const statusCopy: Record<string, string> = {
   microphone_permission_denied: 'Microphone permission denied',
   camera_disconnected: 'Camera disconnected',
   microphone_disconnected: 'Microphone disconnected',
-  // Vision adapter (src/lecoach/vision/README.md).
+  // Vision adapter (src/lespeech/vision/README.md).
   capture_started: 'Starting',
   camera_unavailable: 'Camera unavailable (missing, busy or permission denied)',
   camera_start_failed: 'Camera could not start',
@@ -44,7 +44,7 @@ const statusCopy: Record<string, string> = {
   vision_capture_failed: 'Camera processing failed',
   pose_model_missing: 'Pose model not installed',
   pose_runtime_missing: 'Pose software not installed',
-  // Speech adapter (src/lecoach/speech/README.md, "Failure reasons").
+  // Speech adapter (src/lespeech/speech/README.md, "Failure reasons").
   microphone_not_found: 'No microphone found',
   microphone_no_signal: 'No sound from the microphone (muted or access denied)',
   speech_vad_unavailable: 'Speech detection not installed',

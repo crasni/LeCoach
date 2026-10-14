@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Provide a reviewable Stage I proposal and demo package whose claims match LeCoach's demonstrated behavior and whose external submission status is explicit.
+Provide a reviewable Stage I proposal and demo package whose claims match LeSpeech's demonstrated behavior and whose external submission status is explicit.
 
 ## ADDED Requirements
 

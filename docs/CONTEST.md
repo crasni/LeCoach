@@ -1,6 +1,6 @@
 # Competition requirements and submission preparation
 
-Rules content rechecked 2026-10-11 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/); the exact rendered cutoff retains its 2026-10-10 verification. Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeCoach's product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
+Rules content rechecked 2026-10-11 against the [official competition rules](https://contest.bhuntr.com/tw/39jg9vimiynrhlksze/home/); the exact rendered cutoff retains its 2026-10-10 verification. Retrieval details and reference provenance are in [SOURCES.md](SOURCES.md). [GUIDE.md](../GUIDE.md) controls LeSpeech's product scope; [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination) control ownership and live task acceptance; [STATUS.md](STATUS.md) records demonstrated behavior.
 
 ## Verified requirements
 
@@ -15,15 +15,15 @@ Rules content rechecked 2026-10-11 against the [official competition rules](http
 | Judging | Feasibility/business 35%, creativity 30%, practical value 25%, presentation 10%; VII. |
 | Final deliverables | Online: December 4, including actual platform operation and repository evidence. Onsite: deck December 10, event December 19; V–VI. |
 
-## Preparation for LeCoach
+## Preparation for LeSpeech
 
-The delivered replacement in [PR #35](https://github.com/crasni/LeCoach/pull/35)
+The delivered replacement in [PR #35](https://github.com/crasni/LeSpeech/pull/35)
 has 15 English main pages and no appendix: workplace problem, audience experience,
 rehearsal loop, local speech/camera limits, generated synthetic coaching,
 architecture/retention, limited actual vision advice, isolated camera timings,
 failures, proposed value/pilot, demo plan, Stage I/II and source references.
-Use its versioned [PDF](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.pdf)
-and [editable source](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.fodp)
+Use its versioned [PDF](https://github.com/crasni/LeSpeech/blob/d34a58c/docs/submission/proposal.pdf)
+and [editable source](https://github.com/crasni/LeSpeech/blob/d34a58c/docs/submission/proposal.fodp)
 for the reviewed artifact revision. PR #35 merged as `319d274` on 2026-10-11
 under explicit maintainer authorization; the local [PDF](submission/proposal.pdf)
 and [source](submission/proposal.fodp) are now that replacement. The rejected
@@ -32,7 +32,7 @@ refreshed draft is absent from PR #32's final diff.
 artifact checks from final live/package acceptance. Synthetic coaching, actual
 CPU observations and unmeasured hardware plans retain their respective labels.
 
-Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The default shell demonstrates synthetic playback; opt-in `lecoach serve --live` composes local speech/vision and generated coaching. Its final integrated rehearsal acceptance remains pending in INT-02. Replace example shots with accepted actual rehearsal behavior; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeCoach has already run on that hardware.
+Build the video from [DEMO.md](DEMO.md), using the evidence available in STATUS. The default shell demonstrates synthetic playback; opt-in `lespeech serve --live` composes local speech/vision and generated coaching. Its final integrated rehearsal acceptance remains pending in INT-02. Replace example shots with accepted actual rehearsal behavior; label every input/inference mode accurately. Vendor specifications support intended architecture, not claims that LeSpeech has already run on that hardware.
 
 ## Unresolved submission details
 

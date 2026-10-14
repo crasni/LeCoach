@@ -1,4 +1,4 @@
-"""Check LeCoach speech event streams against the v0 speech contract.
+"""Check LeSpeech speech event streams against the v0 speech contract.
 
 Lane 2 (AUD-01) preparation utility. It checks the synthetic fixtures now and a
 speech adapter's recorded event stream later. It is a test utility, not a

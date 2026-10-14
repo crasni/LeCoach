@@ -88,7 +88,7 @@ The official Stage I hardware flexibility permits an honest missing-device dispo
 
 ### 6. Keep publication distinct from artifact creation
 
-Prepare and review local deliverables first. Any Git publication request must name the exact commit set and `git@github.com:crasni/LeCoach.git` / `agent/integration`, then wait for a new explicit approval. Main is updated only through the project PR/review workflow. Video upload and competition submission require their applicable explicit team authorization, separate from planning/apply or branch-publication approval. After authorized actions, verify the unlisted link and actual receipt; retain private registration/receipt data outside Git and record a sanitized confirmation.
+Prepare and review local deliverables first. Any Git publication request must name the exact commit set and `git@github.com:crasni/LeSpeech.git` / `agent/integration`, then wait for a new explicit approval. Main is updated only through the project PR/review workflow. Video upload and competition submission require their applicable explicit team authorization, separate from planning/apply or branch-publication approval. After authorized actions, verify the unlisted link and actual receipt; retain private registration/receipt data outside Git and record a sanitized confirmation.
 
 Alternative: automatically upload after export. Rejected because a reviewable local package is needed before external actions and authorization is not supplied by this proposal.
 

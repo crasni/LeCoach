@@ -5,8 +5,8 @@ import pytest
 
 from checks.coaching.feedback_replay import evaluate
 from checks.coaching.session_feedback import main
-from lecoach.contracts import Feedback
-from lecoach.engagement import RuleConfig
+from lespeech.contracts import Feedback
+from lespeech.engagement import RuleConfig
 from tests.test_feedback import completed, speech, transition
 
 

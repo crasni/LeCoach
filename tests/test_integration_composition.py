@@ -6,13 +6,13 @@ No microphone, camera, model inference or generated coaching is exercised here.
 import asyncio
 from unittest import IsolatedAsyncioTestCase
 
-from lecoach.coaching.recorder import InMemorySessionRecorder
-from lecoach.contracts.interfaces import Components, SessionConfig
-from lecoach.engagement.engine import RuleEngine
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.session import SessionManager
-from lecoach.speech import MicrophoneNotFound, SpeechAdapter, SpeechConfig
-from lecoach.vision.adapter import LocalVisionAdapter
+from lespeech.coaching.recorder import InMemorySessionRecorder
+from lespeech.contracts.interfaces import Components, SessionConfig
+from lespeech.engagement.engine import RuleEngine
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.session import SessionManager
+from lespeech.speech import MicrophoneNotFound, SpeechAdapter, SpeechConfig
+from lespeech.vision.adapter import LocalVisionAdapter
 from tests.speech_doubles import ScriptedSegmenter, ScriptedSource, ScriptedTranscriber
 from tests.test_vision import PassThroughPose, ReplaySource, frontal
 

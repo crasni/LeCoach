@@ -8,7 +8,7 @@ engagement engine. Application language and directories remain Lane 1's
 decision, and [ARCHITECTURE.md](../../docs/ARCHITECTURE.md) remains the
 contract authority.
 
-The model-free speech core in [`src/lecoach/speech/`](../../src/lecoach/speech/README.md)
+The model-free speech core in [`src/lespeech/speech/`](../../src/lespeech/speech/README.md)
 implements these rules, and a parity test replays every scenario below through it.
 
 `fixtures/*.json` are arrays of v0 events in **delivery order**, one event per
@@ -104,7 +104,7 @@ These checks validate **producer** output. Lane 5's coaching fixtures
 deliberately include post-completion callbacks and metrics-only speech windows
 that consumers must tolerate, so this checker rejects them by design. In the
 other direction, Lane 5's `check_event` from
-[draft PR #1](https://github.com/crasni/LeCoach/pull/1) accepted all 214 events
+[draft PR #1](https://github.com/crasni/LeSpeech/pull/1) accepted all 214 events
 in these fixtures.
 
 ## Implementation research for the live adapter

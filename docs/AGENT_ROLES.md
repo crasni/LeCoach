@@ -8,19 +8,19 @@ Own shared contracts, app composition, setup, dependency manifests/lockfiles, ca
 
 ## Lane 2 — Audio / speech
 
-Own microphone capture, local transcription, transcript timing/revisions, WPM/fillers/pauses, speech metrics and the speech producer lifecycle in `src/lecoach/speech/`, plus focused tests. Reuse the shared SessionContext/clock and public adapter seams. Report measurement/configuration decisions through the Issue; central dependency changes go through integration. Measure real latency/filler limitations rather than claiming synthetic tests prove model quality.
+Own microphone capture, local transcription, transcript timing/revisions, WPM/fillers/pauses, speech metrics and the speech producer lifecycle in `src/lespeech/speech/`, plus focused tests. Reuse the shared SessionContext/clock and public adapter seams. Report measurement/configuration decisions through the Issue; central dependency changes go through integration. Measure real latency/filler limitations rather than claiming synthetic tests prove model quality.
 
 ## Lane 3 — Vision / body language
 
-Own camera capture, local pose, approximate head/body-facing and activity, normalized visual events and preview in `src/lecoach/vision/`, plus focused tests. Use shared units/timing/lifecycle. Distinguish facing approximation from eye contact/emotion and explicitly handle missing camera/person. Coordinate selected runtime/dependencies with integration before changing shared files.
+Own camera capture, local pose, approximate head/body-facing and activity, normalized visual events and preview in `src/lespeech/vision/`, plus focused tests. Use shared units/timing/lifecycle. Distinguish facing approximation from eye contact/emotion and explicitly handle missing camera/person. Coordinate selected runtime/dependencies with integration before changing shared files.
 
 ## Lane 4 — Realtime experience / engagement
 
-Own the **sole** deterministic engine/rules in `src/lecoach/engagement/` and the rehearsal UI in `frontend/`: smoothed states, evidence-backed reasons, avatar reactions, metrics/transcript/input notices and camera preview. Agree reason/evidence semantics with coaching and integration. Use public producers/composition, not another capture stack. Thresholds remain demo heuristics until measured.
+Own the **sole** deterministic engine/rules in `src/lespeech/engagement/` and the rehearsal UI in `frontend/`: smoothed states, evidence-backed reasons, avatar reactions, metrics/transcript/input notices and camera preview. Agree reason/evidence semantics with coaching and integration. Use public producers/composition, not another capture stack. Thresholds remain demo heuristics until measured.
 
 ## Lane 5 — Coaching / analytics / demo
 
-Own the **sole** session recorder, deterministic moment selector and template feedback in `src/lecoach/coaching/`, synthetic coaching checks and English demo scenario/evaluation handoff. Consume actual engine transitions/source evidence without building another engine or inventing authored moments. Preserve null/unavailable and session/drain/revision semantics. Coordinate final script/evidence with integration; external recording/upload is not implicit task authorization.
+Own the **sole** session recorder, deterministic moment selector and template feedback in `src/lespeech/coaching/`, synthetic coaching checks and English demo scenario/evaluation handoff. Consume actual engine transitions/source evidence without building another engine or inventing authored moments. Preserve null/unavailable and session/drain/revision semantics. Coordinate final script/evidence with integration; external recording/upload is not implicit task authorization.
 
 ## Shared guardrails
 

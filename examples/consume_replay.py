@@ -7,8 +7,8 @@ Run from the repository root: uv run python examples/consume_replay.py
 import asyncio
 from collections import Counter
 
-from lecoach.contracts import Event
-from lecoach.runtime.fixtures import FixtureRepository, replay_case
+from lespeech.contracts import Event
+from lespeech.runtime.fixtures import FixtureRepository, replay_case
 
 
 async def main():

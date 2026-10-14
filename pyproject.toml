@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
 [project]
-name = "lecoach"
+name = "lespeech"
 version = "0.1.0"
 description = "Local presentation rehearsal integration scaffold"
 requires-python = ">=3.12,<3.13"
@@ -27,14 +27,14 @@ vision = [
 ]
 
 [project.scripts]
-lecoach = "lecoach.cli:main"
+lespeech = "lespeech.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/lecoach"]
+packages = ["src/lespeech"]
 
 [tool.hatch.build.targets.wheel.force-include]
-"checks/coaching/fixtures" = "lecoach/fixture_data/fixtures"
-"checks/coaching/expectations.json" = "lecoach/fixture_data/expectations.json"
+"checks/coaching/fixtures" = "lespeech/fixture_data/fixtures"
+"checks/coaching/expectations.json" = "lespeech/fixture_data/expectations.json"
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "checks/coaching", "checks/speech"]

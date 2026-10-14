@@ -4,8 +4,8 @@
 
 See [proposal.md](proposal.md#why) for motivation and [the specs](specs/) for required behavior. The design is shaped by these facts on main (`ebdf421`):
 
-- **Adapter seam.** `CaptureAdapter` (`src/lecoach/contracts/interfaces.py`) exposes `async start(context)`, `async stop_capture(capture_end_s)`, and `async drain()`.
-- **Startup.** The controller (`src/lecoach/runtime/session.py`) bounds each adapter's start by `startup_timeout_s` (5 s). A start that fails or times out gets a generic `adapter_start_failed` status, and the controller then calls `stop_capture`.
+- **Adapter seam.** `CaptureAdapter` (`src/lespeech/contracts/interfaces.py`) exposes `async start(context)`, `async stop_capture(capture_end_s)`, and `async drain()`.
+- **Startup.** The controller (`src/lespeech/runtime/session.py`) bounds each adapter's start by `startup_timeout_s` (5 s). A start that fails or times out gets a generic `adapter_start_failed` status, and the controller then calls `stop_capture`.
 - **Shutdown.** `stop_capture` and `drain` share one `drain_timeout_s` budget (2 s). Adapters that time out are cancelled and listed in `incomplete_sources`.
 - **Emission.** `SessionContext.emit` is synchronous. It validates and publishes on the controller's event loop, and drops events after capture end or completion. ARCHITECTURE requires worker threads to marshal emissions back onto that loop.
 - **Per-session components.** `SessionManager` calls the integration factory once per session, so per-session objects must not own expensive model state.
@@ -67,7 +67,7 @@ Workers post their results to the loop captured in `start` with `loop.call_soon_
 
 A shared provider loads the Whisper model once per process, at composition time or through an explicit warm-up. `start` only opens the microphone and starts the worker. If the model is missing or failed to load, `start` emits `signal.status` error `speech_model_unavailable` and continues in unavailable mode.
 
-A small speech-owned module (`python -m lecoach.speech.model --download`) pre-downloads weights into the ignored `models/` directory. Downloads never happen during a session: the provider loads only local files.
+A small speech-owned module (`python -m lespeech.speech.model --download`) pre-downloads weights into the ignored `models/` directory. Downloads never happen during a session: the provider loads only local files.
 
 - `warm_up(config)` loads the model and runs one silent transcription at application startup. A cold `base.en` load took 14.7 s once in testing.
 - `get_transcriber(config)` returns `None` when the runtime or model is missing, so composition still succeeds and the adapter reports the status.
@@ -79,9 +79,9 @@ A small speech-owned module (`python -m lecoach.speech.model --download`) pre-do
 - `PortAudioSource` captures at 16 kHz in 32 ms blocks, or at the device's default rate with streaming linear resampling.
   - It reports a stream that stops by itself, or stalls for 2 s, as lost.
   - It reports exact digital silence for the first 2 s as `microphone_no_signal`. macOS delivers zeros instead of an error when access is denied.
-  - It opens the system default input, or the device that `LECOACH_SPEECH_DEVICE` names by index or name. The application's composition therefore needs no device option; the probe's `--device` overrides the variable.
+  - It opens the system default input, or the device that `LESPEECH_SPEECH_DEVICE` names by index or name. The application's composition therefore needs no device option; the probe's `--device` overrides the variable.
 - `WavFileSource` replays a recording in real time through the same seam, so one take can be compared across models and settings.
-- `python -m lecoach.speech.probe` runs the production adapter through the session controller with guided prompts. It reports delays and drain timing, and saves a stream for `check_speech.py`. It writes no audio.
+- `python -m lespeech.speech.probe` runs the production adapter through the session controller with guided prompts. It reports delays and drain timing, and saves a stream for `check_speech.py`. It writes no audio.
 
 ### Degraded mode reports instead of raising
 
@@ -121,13 +121,13 @@ A parity test replays the fixture scenario scripts through `MetricsTracker` and 
 
 ### Text rules move into the package
 
-The English tokenizer and filler lexicon become production code in `lecoach.speech.text`. `checks/speech/speech_text.py` stays a standard-library copy, so the checker still runs without installing the package. A parity test compares both on a shared corpus.
+The English tokenizer and filler lexicon become production code in `lespeech.speech.text`. `checks/speech/speech_text.py` stays a standard-library copy, so the checker still runs without installing the package. A parity test compares both on a shared corpus.
 
 - **Alternative rejected:** importing `checks/` from production code. Production should not depend on test utilities.
 
 ### Speech-owned configuration until issue #6 decides
 
-`SpeechConfig`, a strict Pydantic model in `lecoach.speech.config`, holds:
+`SpeechConfig`, a strict Pydantic model in `lespeech.speech.config`, holds:
 
 - `language`, `metrics_window_s`, `metrics_hop_s`, `min_observation_s`, `pause_min_s`, `coverage_wait_s`, `max_utterance_s`;
 - model name, device, and compute type;

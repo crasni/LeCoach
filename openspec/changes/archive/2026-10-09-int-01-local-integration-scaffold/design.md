@@ -6,7 +6,7 @@ Closure decision (2026-10-07): the implementation is merged via PR #4, and the m
 
 See [proposal.md](proposal.md#why) for motivation. This is a migration of the existing INT-01 plan, not a proposal to replace the locally implemented scaffold. The implementation baseline is commits `b7a42cd` and `802042e`; [STATUS.md](../../../../docs/STATUS.md#int-01-local-scaffold-validation) records its checks and limitations. No main OpenSpec capability specs existed before migration, so the four delta specs establish initial acceptance descriptions.
 
-[ARCHITECTURE.md](../../../../docs/ARCHITECTURE.md) remains the semantic contract reference. [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) control ownership, branch assignment, task state and acceptance. The OpenSpec checklist preserves historical execution evidence, not live task tracking, and does not reassign other lanes.
+[ARCHITECTURE.md](../../../../docs/ARCHITECTURE.md) remains the semantic contract reference. [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination) control ownership, branch assignment, task state and acceptance. The OpenSpec checklist preserves historical execution evidence, not live task tracking, and does not reassign other lanes.
 
 ## Goals / Non-Goals
 
@@ -20,7 +20,7 @@ See [proposal.md](proposal.md#why) for motivation. This is a migration of the ex
 
 Python 3.12.14 with uv runs FastAPI, the controller, and an in-process FIFO bus; Node 24.11.0/npm builds the React/TypeScript Vite shell. The pinned runtime files and lockfiles supply reproducible core setup. This keeps capture/model adapters close to their Python consumers and supports one local launch. A separate queue service or database would add deployment and lifecycle complexity without an INT-01 need.
 
-`Components` is the composition seam. `SessionContext` shares identity, clock, `emit`, and configuration. The capture, vision-preview, engagement, recorder, and feedback protocols live in `src/lecoach/contracts/interfaces.py`. Capture/inference workers must marshal emissions onto the controller's event loop. Optional model dependencies are added through integration after producer owners verify compatibility; the core manifest currently contains no capture/model packages.
+`Components` is the composition seam. `SessionContext` shares identity, clock, `emit`, and configuration. The capture, vision-preview, engagement, recorder, and feedback protocols live in `src/lespeech/contracts/interfaces.py`. Capture/inference workers must marshal emissions onto the controller's event loop. Optional model dependencies are added through integration after producer owners verify compatibility; the core manifest currently contains no capture/model packages.
 
 ### One executable schema with generated frontend types
 

@@ -2,7 +2,7 @@
 
 import asyncio
 
-from lecoach.contracts import CompletedSession, Feedback, parse_event
+from lespeech.contracts import CompletedSession, Feedback, parse_event
 
 
 def event(session_id="test-session", event_id="metric", timestamp=1.0, **changes):

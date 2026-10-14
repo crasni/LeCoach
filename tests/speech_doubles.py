@@ -2,7 +2,7 @@
 
 import threading
 
-from lecoach.speech.seams import Boundary, MicrophoneLost, Transcription, Word
+from lespeech.speech.seams import Boundary, MicrophoneLost, Transcription, Word
 
 RATE = 16_000
 

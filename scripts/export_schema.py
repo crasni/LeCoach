@@ -4,9 +4,9 @@ import argparse
 import json
 from pathlib import Path
 
-from lecoach.contracts import CompletedSession, Event, Feedback
-from lecoach.contracts.events import Model
-from lecoach.contracts.interfaces import SessionConfig, SessionSnapshot
+from lespeech.contracts import CompletedSession, Event, Feedback
+from lespeech.contracts.events import Model
+from lespeech.contracts.interfaces import SessionConfig, SessionSnapshot
 
 
 class ContractSchema(Model):

@@ -1,8 +1,8 @@
 # Local speech and vision runtime setup
 
 The integration-owned optional dependency groups provide the CPU runtimes
-requested in [#6](https://github.com/crasni/LeCoach/issues/6) and
-[#15](https://github.com/crasni/LeCoach/issues/15). They are excluded from the
+requested in [#6](https://github.com/crasni/LeSpeech/issues/6) and
+[#15](https://github.com/crasni/LeSpeech/issues/15). They are excluded from the
 default core/dev installation. The exact versions and hashes are in `uv.lock`.
 
 ```sh
@@ -20,7 +20,7 @@ live app composition or UGen300 compatibility.
 ## Speech configuration handoff
 
 Integration accepts Lane 2's proposed English analysis baseline for the Stage I
-demo. Keep the existing `SpeechConfig` in `lecoach.speech.config`; the composition
+demo. Keep the existing `SpeechConfig` in `lespeech.speech.config`; the composition
 root constructs/passes that configuration, with no second definition in shared
 contracts. The existing adapter constructor accepts it. This follows the
 [speech design](../openspec/changes/archive/2026-10-11-aud-01-live-speech-adapter/design.md)
@@ -56,9 +56,9 @@ sudo apt-get install libportaudio2
 On macOS/Windows, the sounddevice wheels normally bundle PortAudio. Device
 permissions and availability must still be checked on the actual rehearsal host.
 The production source/VAD/transcriber is delivered by Lane 2 in PR #28; actual
-microphone acceptance remains [#13](https://github.com/crasni/LeCoach/issues/13).
+microphone acceptance remains [#13](https://github.com/crasni/LeSpeech/issues/13).
 Follow [demo host preparation](DEMO_HOST.md) for explicit model preparation and
-`lecoach serve --live`. Model loading finishes before serving; neither package
+`lespeech serve --live`. Model loading finishes before serving; neither package
 setup nor serving alone acquires devices. Downloads require the explicit model
 preparation command, never a session start.
 
@@ -75,10 +75,10 @@ Use the merged vision producer's `build_local_adapter()` public factory, with on
 adapter per session, through the delivered opt-in live composition. Its README on main
 documents the Pose Landmarker lite asset, ignored model path, camera selection,
 probe and approximate facing/activity limitations:
-[vision handoff](https://github.com/crasni/LeCoach/blob/main/src/lecoach/vision/README.md#integration-handoff-lane-1).
+[vision handoff](https://github.com/crasni/LeSpeech/blob/main/src/lespeech/vision/README.md#integration-handoff-lane-1).
 Do not open a second camera in the browser.
 
-Stage I vision is [accepted by the owner](https://github.com/crasni/LeCoach/issues/16#issuecomment-6097454631).
+Stage I vision is [accepted by the owner](https://github.com/crasni/LeSpeech/issues/16#issuecomment-6097454631).
 On the Ubuntu demo host, three isolated runs started in 0.20–0.36 s, inferred
 about 9.95 frames/s and released the camera in 54–77 ms. The existing 5 s startup
 bound is retained. The earlier 5.94 s outlier was on the owner's Mac, not the

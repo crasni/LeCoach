@@ -2,7 +2,7 @@
 
 ## Why
 
-LeCoach has a validated synthetic scaffold and initial competition/hardware research, but lacks a finished English proposal and a reviewable submission package tied to demonstrated behavior. INT-03 must turn that preparation into credible deliverables while exposing the live-demo and target-device dependencies that remain with INT-02 and the subsystem owners.
+LeSpeech has a validated synthetic scaffold and initial competition/hardware research, but lacks a finished English proposal and a reviewable submission package tied to demonstrated behavior. INT-03 must turn that preparation into credible deliverables while exposing the live-demo and target-device dependencies that remain with INT-02 and the subsystem owners.
 
 ## What Changes
 
@@ -30,7 +30,7 @@ None.
 
 ## Impact
 
-Implementation belongs to Lane 1 on `agent/integration`. Expected changes are the existing [requirements](../../../docs/CONTEST.md), [sources](../../../docs/SOURCES.md), [demo plan](../../../docs/DEMO.md), [GitHub task Issue](https://github.com/crasni/LeCoach/issues/12), and [status](../../../docs/STATUS.md), plus `docs/submission/` deliverables and a hardware evidence guide. [GUIDE.md](../../../GUIDE.md) retains scope, and [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) retains contracts.
+Implementation belongs to Lane 1 on `agent/integration`. Expected changes are the existing [requirements](../../../docs/CONTEST.md), [sources](../../../docs/SOURCES.md), [demo plan](../../../docs/DEMO.md), [GitHub task Issue](https://github.com/crasni/LeSpeech/issues/12), and [status](../../../docs/STATUS.md), plus `docs/submission/` deliverables and a hardware evidence guide. [GUIDE.md](../../../GUIDE.md) retains scope, and [ARCHITECTURE.md](../../../docs/ARCHITECTURE.md) retains contracts.
 
 No application dependency or API change is planned. Live evidence requires INT-02 and owner handoffs; accelerator measurements additionally require a compatible device/runtime/model setup. The maintainer confirms no UGen300 before qualification. Stage I implementation
 and real validation run on the confirmed ordinary computer with local CPU

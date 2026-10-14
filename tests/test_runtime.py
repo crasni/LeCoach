@@ -1,12 +1,12 @@
 import asyncio
 from unittest import IsolatedAsyncioTestCase
 
-from lecoach.contracts import parse_event
-from lecoach.contracts.interfaces import Components, SessionConfig
-from lecoach.runtime.bus import EventBus
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.fixtures import FixtureRepository, replay_case
-from lecoach.runtime.session import SessionConflict, SessionController, SessionManager
+from lespeech.contracts import parse_event
+from lespeech.contracts.interfaces import Components, SessionConfig
+from lespeech.runtime.bus import EventBus
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.fixtures import FixtureRepository, replay_case
+from lespeech.runtime.session import SessionConflict, SessionController, SessionManager
 from tests.helpers import Capture, Generator, Recorder, event
 
 

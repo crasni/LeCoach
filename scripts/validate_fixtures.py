@@ -1,6 +1,6 @@
 """Validate all reviewed synthetic inputs using executable v0 contracts."""
 
-from lecoach.runtime.fixtures import FixtureRepository
+from lespeech.runtime.fixtures import FixtureRepository
 
 repository = FixtureRepository()
 sessions = 0

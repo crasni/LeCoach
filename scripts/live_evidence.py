@@ -19,13 +19,13 @@ from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 
-from lecoach.api.app import create_app
-from lecoach.contracts import CompletedSession, Feedback
-from lecoach.contracts.interfaces import FeedbackGenerator, SessionConfig
-from lecoach.engagement import DEFAULT_RULES
-from lecoach.runtime.live import prepare_live_factory
-from lecoach.speech import SpeechConfig
-from lecoach.speech.whisper import model_path
+from lespeech.api.app import create_app
+from lespeech.contracts import CompletedSession, Feedback
+from lespeech.contracts.interfaces import FeedbackGenerator, SessionConfig
+from lespeech.engagement import DEFAULT_RULES
+from lespeech.runtime.live import prepare_live_factory
+from lespeech.speech import SpeechConfig
+from lespeech.speech.whisper import model_path
 
 ROOT = Path(__file__).resolve().parents[1]
 log = logging.getLogger(__name__)
@@ -124,7 +124,7 @@ def provenance(config: SpeechConfig) -> dict:
         ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=False,
     )
     dirty = subprocess.run(["git", "diff", "--quiet", "HEAD"], cwd=ROOT, check=False)
-    pose = Path(os.environ.get("LECOACH_POSE_MODEL", "models/pose_landmarker_lite.task"))
+    pose = Path(os.environ.get("LESPEECH_POSE_MODEL", "models/pose_landmarker_lite.task"))
     return {
         "source_revision": revision.stdout.strip() if revision.returncode == 0 else None,
         "tracked_worktree_modified": dirty.returncode != 0,
@@ -134,8 +134,8 @@ def provenance(config: SpeechConfig) -> dict:
                  "architecture": platform.machine(), "python": platform.python_version()},
         "speech_config": config.model_dump(exclude={"model_dir"}),
         "rule_config": DEFAULT_RULES.model_dump(),
-        "microphone_selection": os.environ.get("LECOACH_SPEECH_DEVICE") or "system default",
-        "camera_index": os.environ.get("LECOACH_CAMERA_INDEX", "0"),
+        "microphone_selection": os.environ.get("LESPEECH_SPEECH_DEVICE") or "system default",
+        "camera_index": os.environ.get("LESPEECH_CAMERA_INDEX", "0"),
         "speech_model": asset_identity(model_path(config) / "model.bin"),
         "pose_model": asset_identity(pose),
         "limits": "Model hashes identify prepared assets, not inference accuracy or latency",

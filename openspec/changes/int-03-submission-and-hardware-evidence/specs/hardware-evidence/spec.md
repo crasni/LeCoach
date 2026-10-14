@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Make LeCoach's hardware readiness and inference performance claims reproducible, with clear separation between intended accelerator support and execution observed on an identified host/device.
+Make LeSpeech's hardware readiness and inference performance claims reproducible, with clear separation between intended accelerator support and execution observed on an identified host/device.
 
 ## ADDED Requirements
 
@@ -28,7 +28,7 @@ validation; target inference SHALL remain unverified until measured in Stage II.
 
 #### Scenario: Device present but inference cannot start
 - **WHEN** driver, firmware, runtime, model, or host compatibility prevents execution
-- **THEN** the record captures the failed prerequisite and next action without presenting device detection as successful LeCoach inference
+- **THEN** the record captures the failed prerequisite and next action without presenting device detection as successful LeSpeech inference
 
 ### Requirement: Ground adapter compatibility in official evidence
 The hardware record SHALL cite official model/runtime references and pin inspected revisions. Before reporting target execution, it SHALL identify the actual device/interface, driver, firmware, runtime, model version/hash, preprocessing, and postprocessing used. Advertised model availability and non-USB benchmark conditions SHALL NOT substitute for validated USB compatibility.
@@ -49,7 +49,7 @@ Performance records SHALL state exact commands/configuration, clock mapping, uni
 - **THEN** the report labels producer delay, states UI delay is unmeasured, and makes no end-to-end latency claim
 
 ### Requirement: Validate concurrent application operation
-A claim of integrated accelerator performance SHALL require concurrent speech and vision operation through LeCoach's sole engagement engine and recorder. The record SHALL include repeated-session, shutdown/resource-release, and unavailable-input results alongside timing. Isolated model throughput SHALL NOT establish live audience responsiveness.
+A claim of integrated accelerator performance SHALL require concurrent speech and vision operation through LeSpeech's sole engagement engine and recorder. The record SHALL include repeated-session, shutdown/resource-release, and unavailable-input results alongside timing. Isolated model throughput SHALL NOT establish live audience responsiveness.
 
 #### Scenario: Concurrent rehearsal observed
 - **WHEN** the integrated pipeline runs on the identified target configuration
@@ -57,7 +57,7 @@ A claim of integrated accelerator performance SHALL require concurrent speech an
 
 #### Scenario: Only an isolated model runs
 - **WHEN** one model executes without the integrated concurrent pipeline
-- **THEN** the record identifies isolated inference and leaves concurrent LeCoach compatibility and responsiveness unverified
+- **THEN** the record identifies isolated inference and leaves concurrent LeSpeech compatibility and responsiveness unverified
 
 ### Requirement: Reuse owner implementations and local data rules
 Hardware validation SHALL use the approved subsystem implementations and canonical clocks/events without creating alternate producers, engagement engines, or loggers. Input, inference, and session processing SHALL stay local. Raw recordings, transcripts, exports, credentials, and weights SHALL remain outside Git; public evidence SHALL contain sanitized observations.

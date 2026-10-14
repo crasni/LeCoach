@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
 from starlette.websockets import WebSocketDisconnect
 
-from lecoach.api.app import ClientSubscription, create_app
-from lecoach.contracts.interfaces import Components, RuntimeSettings
+from lespeech.api.app import ClientSubscription, create_app
+from lespeech.contracts.interfaces import Components, RuntimeSettings
 from tests.helpers import Capture, Recorder, event
 
 

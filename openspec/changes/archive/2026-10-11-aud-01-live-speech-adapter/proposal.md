@@ -6,7 +6,7 @@ The audience can only react to real delivery if the rehearsal microphone produce
 
 ## What Changes
 
-- Add a live speech adapter in `src/lecoach/speech/` that implements `start` / `stop_capture` / `drain` for local microphone capture against `SessionContext`.
+- Add a live speech adapter in `src/lespeech/speech/` that implements `start` / `stop_capture` / `drain` for local microphone capture against `SessionContext`.
 - Segment captured audio with voice activity detection. Transcribe each segment locally with Whisper word timestamps, and publish canonical `speech.transcript` partial revisions and finals.
 - Compute `speech.metrics` (WPM, fillers, pauses) from finalized words, following the rules proven by `checks/speech/`: null versus zero, finalized coverage, and one event per completed pause. Parameters come from a speech configuration object.
 - Report device and model failures as `signal.status`, with unavailable metrics. Release the microphone on stop, failure, and cancellation. Drain pending speech within the session's stop bound.
@@ -35,7 +35,7 @@ None. The change uses the v0 event shapes and session lifecycle from INT-01 with
 
 ## Impact
 
-- **Code:** new modules under `src/lecoach/speech/` and speech tests under `tests/`. No change to `src/lecoach/contracts/` unless integration places the speech configuration there (issue #6).
+- **Code:** new modules under `src/lespeech/speech/` and speech tests under `tests/`. No change to `src/lespeech/contracts/` unless integration places the speech configuration there (issue #6).
 - **Dependencies:** an optional `speech` group (`faster-whisper`, `sounddevice`, `numpy`) added by integration. Core setup and the default test suite stay model-free and device-free.
 - **Runtime:**
   - Model weights download once into the ignored `models/` directory, and inference runs locally.

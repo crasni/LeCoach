@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from lecoach.speech.text import even_tokens
-from lecoach.speech.tracking import UtteranceTracker
+from lespeech.speech.text import even_tokens
+from lespeech.speech.tracking import UtteranceTracker
 
 
 class UtteranceTrackerTests(TestCase):
