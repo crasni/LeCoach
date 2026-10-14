@@ -7,13 +7,13 @@ from unittest import IsolatedAsyncioTestCase, TestCase
 
 from pydantic import ValidationError
 
-from lecoach.contracts import parse_event
-from lecoach.contracts.interfaces import Components, SessionConfig, SessionContext
-from lecoach.engagement import RuleConfig, RuleEngine
-from lecoach.engagement.compose import replay_with_engine
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.fixtures import FixtureRepository, replay_case
-from lecoach.runtime.session import SessionController
+from lespeech.contracts import parse_event
+from lespeech.contracts.interfaces import Components, SessionConfig, SessionContext
+from lespeech.engagement import RuleConfig, RuleEngine
+from lespeech.engagement.compose import replay_with_engine
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.fixtures import FixtureRepository, replay_case
+from lespeech.runtime.session import SessionController
 
 SPEECH_FIXTURES = Path(__file__).resolve().parents[1] / "checks" / "speech" / "fixtures"
 NEGATIVE = {"CONFUSED", "BORED"}
@@ -515,7 +515,7 @@ class CompositionTests(TestCase):
     def test_default_app_computes_audience_but_keeps_live_unavailable(self):
         from fastapi.testclient import TestClient
 
-        from lecoach.api.app import create_app
+        from lespeech.api.app import create_app
 
         with TestClient(create_app(replay_with_engine())) as client:
             assert client.get("/api/health").json()["live_integrated"] is False

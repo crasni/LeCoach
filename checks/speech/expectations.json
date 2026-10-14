@@ -8,7 +8,7 @@
         "final_transcript": [
           ["u1", "Practicing a presentation alone has one fundamental problem for every speaker."],
           ["u2", "There is no audience to tell you how it lands."],
-          ["u3", "LeCoach gives you a private audience that reacts while you speak."],
+          ["u3", "LeSpeech gives you a private audience that reacts while you speak."],
           ["u4", "Everything runs locally, so your rehearsal never leaves the device."],
           ["u5", "Um, the avatars lean in when your pace is steady and clear."],
           ["u6", "Afterwards, it shows the few moments that mattered most."]
@@ -32,7 +32,7 @@
         "session_id": "synthetic-speech-rapid",
         "capture_end_s": 30,
         "final_transcript": [
-          ["u1", "Today I want to show you how LeCoach works."],
+          ["u1", "Today I want to show you how LeSpeech works."],
           ["u2", "We capture your voice and camera, and the audience reacts right away."],
           ["u3", "The speech pipeline transcribes locally, measures your pace, counts fillers, and tracks pauses."],
           ["u4", "The vision pipeline estimates facing direction and movement, then the engagement engine combines everything."],
@@ -193,7 +193,7 @@
         "session_id": "synthetic-speech-mandarin",
         "capture_end_s": 15.5,
         "final_transcript": [
-          ["u1", "大家好，今天我想介紹 LeCoach。"],
+          ["u1", "大家好，今天我想介紹 LeSpeech。"],
           ["u2", "它會在你練習的時候即時給你反應。"],
           ["u3", "所有資料都留在你的電腦上。"]
         ],

@@ -12,14 +12,14 @@ UGen300 validation remains Stage II. Existing authored scenarios/replays are
 preparation, not final live evidence. Keep the English deck and mainly English
 competition explanation and measure the final script/edit duration.
 
-Proposed 2:55 shot plan for INT-03, checked against [CONTEST.md](CONTEST.md). The official three-minute guidance is a recommendation; 2:55 is the team's planning target. This is not a recorded or published demo. Lane 5 owns the rehearsal scenarios and final script; integration maintains launch, evidence and claim checks here. [Issue #12](https://github.com/crasni/LeCoach/issues/12) owns package acceptance and current dependencies; [STATUS.md](STATUS.md) preserves dated observations.
+Proposed 2:55 shot plan for INT-03, checked against [CONTEST.md](CONTEST.md). The official three-minute guidance is a recommendation; 2:55 is the team's planning target. This is not a recorded or published demo. Lane 5 owns the rehearsal scenarios and final script; integration maintains launch, evidence and claim checks here. [Issue #12](https://github.com/crasni/LeSpeech/issues/12) owns package acceptance and current dependencies; [STATUS.md](STATUS.md) preserves dated observations.
 
 ## Run the current prototype
 
 Follow [README development setup](../README.md#development), then launch:
 
 ```sh
-uv run lecoach serve
+uv run lespeech serve
 ```
 
 Open `http://127.0.0.1:8000`, select `weak_to_improved`, start replay and let it finish. The current UI computes audience reactions from synthetic observations and displays authored example feedback, with microphone/camera off. At the default 5× speed, its 50-second fixture lasts about ten seconds of wall time. The computed audience sequence is NEUTRAL → CONFUSED → BORED → INTERESTED → ENGAGED at 0, 20, 30, 35 and 40 seconds. These are shared-clock decision times, not browser playback elapsed time.
@@ -27,8 +27,8 @@ Open `http://127.0.0.1:8000`, select `weak_to_improved`, start replay and let it
 The headless reproduction is:
 
 ```sh
-uv run lecoach replay --case weak_to_improved
-uv run lecoach replay --case weak_to_improved --audience authored
+uv run lespeech replay --case weak_to_improved
+uv run lespeech replay --case weak_to_improved --audience authored
 uv run python scripts/validate_fixtures.py
 ```
 
@@ -36,7 +36,7 @@ Default replay computes engagement with the sole engine; feedback stays authored
 
 ## Versioned Lane 5 live-script handoff
 
-Lane 5 supplied the [English narration](https://github.com/crasni/LeCoach/blob/1f4607ab95e50a115468339e7d4dc070a9b860fb/checks/coaching/demo/narration.md) and [scenario/runbook](https://github.com/crasni/LeCoach/blob/1f4607ab95e50a115468339e7d4dc070a9b860fb/checks/coaching/demo/README.md) in [PR #33](https://github.com/crasni/LeCoach/pull/33), approved and delivered at `1f4607a`. Keep these owner-maintained sources rather than copying the script into this guide. This CPU live draft describes delivered browser coaching and uses no fixed live timestamps or insight quotas. Final script acceptance still needs actual supported shots and measured timing. Its six spoken segments align with the slots below.
+Lane 5 supplied the [English narration](https://github.com/crasni/LeSpeech/blob/1f4607ab95e50a115468339e7d4dc070a9b860fb/checks/coaching/demo/narration.md) and [scenario/runbook](https://github.com/crasni/LeSpeech/blob/1f4607ab95e50a115468339e7d4dc070a9b860fb/checks/coaching/demo/README.md) in [PR #33](https://github.com/crasni/LeSpeech/pull/33), approved and delivered at `1f4607a`. Keep these owner-maintained sources rather than copying the script into this guide. This CPU live draft describes delivered browser coaching and uses no fixed live timestamps or insight quotas. Final script acceptance still needs actual supported shots and measured timing. Its six spoken segments align with the slots below.
 
 These standalone synthetic generated-coaching commands remain available in this integration checkout:
 
@@ -56,7 +56,7 @@ The delivered narration totals 309 words, with per-slot counts 35/32/90/76/43/33
 | Video time | Shot / purpose | Evidence needed |
 | --- | --- | --- |
 | 0:00–0:20 | Explain the problem: practicing alone gives little sense of audience response. | Product intent from GUIDE. |
-| 0:20–0:35 | Show LeCoach and session controls. Identify the demonstrated mode. | Opt-in live composition is delivered; final live footage needs accepted INT-02 evidence. |
+| 0:20–0:35 | Show LeSpeech and session controls. Identify the demonstrated mode. | Opt-in live composition is delivered; final live footage needs accepted INT-02 evidence. |
 | 0:35–1:35 | Show weak delivery and recovery through visible audience changes. | Preview: synthetic observations and computed reactions. Live footage: actual speech/vision and the same engine, with real observed timestamps. |
 | 1:35–2:15 | Show generated live feedback: timestamp, observation and one practice action. | Match each actual card to its cited evidence and run configuration. Show fewer cards when evidence is limited; fixture summaries need replay labels. |
 | 2:15–2:40 | Show local architecture, Stage I CPU target and Stage II UGen300 plan. | Architecture and SOURCES distinguish automated checks, maintainer-reported live behavior and unmeasured accelerator plans. |
@@ -66,7 +66,7 @@ Use English narration for the final video. Keep mode/provenance visible in edite
 
 ## Remaining live evidence pickup
 
-The maintainer-reported functional/reliability batch in [#11](https://github.com/crasni/LeCoach/issues/11#issuecomment-6095334266) already covers transcription/camera/audience, stop/feedback, repeat isolation, release, short/no-person and missing-microphone behavior. Do not request its repetition. For coaching review, obtain an actual moment's kind, timestamp, observation, practice action and cited IDs, together with a sanitized source revision, exact launch and run/configuration reference. Match the cited measurements to the advice; current model hashes cannot retrospectively establish an earlier run's configuration. Keep private transcript/media out of Issues and Git. Store explicitly requested development artifacts under ignored `sessions/`.
+The maintainer-reported functional/reliability batch in [#11](https://github.com/crasni/LeSpeech/issues/11#issuecomment-6095334266) already covers transcription/camera/audience, stop/feedback, repeat isolation, release, short/no-person and missing-microphone behavior. Do not request its repetition. For coaching review, obtain an actual moment's kind, timestamp, observation, practice action and cited IDs, together with a sanitized source revision, exact launch and run/configuration reference. Match the cited measurements to the advice; current model hashes cannot retrospectively establish an earlier run's configuration. Keep private transcript/media out of Issues and Git. Store explicitly requested development artifacts under ignored `sessions/`.
 
 The Ubuntu vision startup/inference/repeat-release measurement is recorded in [STATUS](STATUS.md#plain-advice-delivery-and-ubuntu-vision-timing--2026-10-10) and supplied to the vision owner in #16. [DEMO_HOST](DEMO_HOST.md#ubuntu-camera-timing-handoff) describes its scope and the existing guided probe. Quantitative speech quality/timing/filler recall remains with its owner. Use pace/facing for the demo rather than relying on unverified filler recall. Actual operator reports, model checks and quantitative measurements retain their own attribution.
 
@@ -76,7 +76,7 @@ The final recording, YouTube upload and competition submission remain pending. V
 
 ## Evidence handoff format
 
-Use the existing Issues for handoff and acceptance: [INT-02 #11](https://github.com/crasni/LeCoach/issues/11) for the integrated run, [COACH-02 #21](https://github.com/crasni/LeCoach/issues/21) for the script/scenario, and [INT-03 #12](https://github.com/crasni/LeCoach/issues/12) for package review. This format describes evidence to supply; it neither assigns work nor establishes a new interface.
+Use the existing Issues for handoff and acceptance: [INT-02 #11](https://github.com/crasni/LeSpeech/issues/11) for the integrated run, [COACH-02 #21](https://github.com/crasni/LeSpeech/issues/21) for the script/scenario, and [INT-03 #12](https://github.com/crasni/LeSpeech/issues/12) for package review. This format describes evidence to supply; it neither assigns work nor establishes a new interface.
 
 | Record | Fields needed for package review |
 | --- | --- |
@@ -88,8 +88,8 @@ Before substituting live shots or revising deck claims, compare the run's source
 
 ## INT-03 package handoff
 
-The reviewed [replacement English proposal](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal.pdf)
-is paired with its [versioned claim map](https://github.com/crasni/LeCoach/blob/d34a58c/docs/submission/proposal-review.md)
+The reviewed [replacement English proposal](https://github.com/crasni/LeSpeech/blob/d34a58c/docs/submission/proposal.pdf)
+is paired with its [versioned claim map](https://github.com/crasni/LeSpeech/blob/d34a58c/docs/submission/proposal-review.md)
 and integration [artifact record](submission/readiness.md). PR #35 merged as
 `319d274`; the local proposal source/PDF now match that reviewed replacement.
 Headless reproduction was
@@ -97,4 +97,4 @@ repeated during INT-03 apply; [STATUS](STATUS.md#int-03-apply-local-validation)
 records synthetic inputs, exact state times and authored outputs. This does not
 establish a recorded demo or live behavior.
 
-The versioned Lane 5 handoff supplies the delivered CPU live narration and separate synthetic coaching anchors. Recorder [PR #5](https://github.com/crasni/LeCoach/pull/5), coaching PR #24 and plain-advice/script PR #33 are merged; opt-in live sessions generate browser coaching. Default replay browser cards remain authored examples. Before final script acceptance, match the visible advice to accepted actual evidence and measure revised narration/edit timing. The replacement in [#34](https://github.com/crasni/LeCoach/issues/34) is reviewed and merged in PR #35 under explicit maintainer authorization; final live-demo and complete package acceptance remain separate. This guide does not approve a synthetic-only final submission.
+The versioned Lane 5 handoff supplies the delivered CPU live narration and separate synthetic coaching anchors. Recorder [PR #5](https://github.com/crasni/LeSpeech/pull/5), coaching PR #24 and plain-advice/script PR #33 are merged; opt-in live sessions generate browser coaching. Default replay browser cards remain authored examples. Before final script acceptance, match the visible advice to accepted actual evidence and measure revised narration/edit timing. The replacement in [#34](https://github.com/crasni/LeSpeech/issues/34) is reviewed and merged in PR #35 under explicit maintainer authorization; final live-demo and complete package acceptance remain separate. This guide does not approve a synthetic-only final submission.

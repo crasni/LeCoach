@@ -201,7 +201,7 @@ SCENARIOS = {
             utterance("u2", 5.9, 9.4, "There is no audience to tell you how it lands.",
                       [(6.9, "There is no"), (7.9, "There is no audience to tell"),
                        (8.9, "There is no audience to tell you how it lens")]),
-            utterance("u3", 9.9, 14.1, "LeCoach gives you a private audience that reacts "
+            utterance("u3", 9.9, 14.1, "LeSpeech gives you a private audience that reacts "
                       "while you speak."),
             utterance("u4", 15.8, 19.6, "Everything runs locally, so your rehearsal never "
                       "leaves the device."),
@@ -215,7 +215,7 @@ SCENARIOS = {
         "session_id": "synthetic-speech-rapid",
         "capture_end": 30.0,
         "utterances": [
-            utterance("u1", 0.6, 4.4, "Today I want to show you how LeCoach works."),
+            utterance("u1", 0.6, 4.4, "Today I want to show you how LeSpeech works."),
             utterance("u2", 5.0, 9.0, "We capture your voice and camera, and the audience "
                       "reacts right away."),
             utterance("u3", 9.4, 13.0, "The speech pipeline transcribes locally, measures "
@@ -301,7 +301,7 @@ SCENARIOS = {
         "capture_end": 15.5,
         "language": "zh",
         "utterances": [
-            utterance("u1", 0.8, 4.6, "大家好，今天我想介紹 LeCoach。",
+            utterance("u1", 0.8, 4.6, "大家好，今天我想介紹 LeSpeech。",
                       [(2.0, "大家好"), (3.5, "大家好，今天我想")]),
             utterance("u2", 5.9, 10.2, "它會在你練習的時候即時給你反應。",
                       [(7.0, "它會在你"), (9.0, "它會在你練習的時候即時")]),

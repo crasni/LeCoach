@@ -2,7 +2,7 @@
 
 The maintainer selected their Ubuntu computer with a Bluetooth microphone for
 Stage I and reports a successful first live functional/reliability check. See
-[#11](https://github.com/crasni/LeCoach/issues/11) for the actual host/configuration
+[#11](https://github.com/crasni/LeSpeech/issues/11) for the actual host/configuration
 record; final recording arrangement remains pending. No UGen300 before qualification;
 actual accelerator validation remains required for Stage II. Product, rehearsal,
 UI and coaching remain English. See [GUIDE](../GUIDE.md).
@@ -33,32 +33,32 @@ permissions on other systems. Include the groups on subsequent sync/run commands
 Prepare the speech owner's local model outside sessions:
 
 ```sh
-uv run --group speech --group vision python -m lecoach.speech.model --download
-uv run --group speech --group vision python -m lecoach.speech.model --check
+uv run --group speech --group vision python -m lespeech.speech.model --download
+uv run --group speech --group vision python -m lespeech.speech.model --check
 ```
 
 Initial English `base.en`/CPU/int8 remains a baseline pending actual-host
 measurements. Weights live in ignored `models/`; inference never downloads them.
 Vision's merged README documents `pose_landmarker_lite.task`, camera selection,
-`LECOACH_POSE_MODEL` and `LECOACH_CAMERA_INDEX`. Prepare that asset separately.
+`LESPEECH_POSE_MODEL` and `LESPEECH_CAMERA_INDEX`. Prepare that asset separately.
 
 To choose a microphone, list the inputs before the rehearsal:
 
 ```sh
-uv run --group speech --group vision python -m lecoach.speech.probe --list-devices
+uv run --group speech --group vision python -m lespeech.speech.probe --list-devices
 ```
 
-Set `LECOACH_SPEECH_DEVICE` to an input index or a name query before launching
+Set `LESPEECH_SPEECH_DEVICE` to an input index or a name query before launching
 the server; unset or blank uses the system default. On Windows, the same physical
 microphone may appear under several host APIs; use the listed index or a name
-including the host API. See the [speech setup](../src/lecoach/speech/README.md).
+including the host API. See the [speech setup](../src/lespeech/speech/README.md).
 
 ## Launch and identify the mode
 
 Launch the opt-in local CPU composition:
 
 ```sh
-uv run --group speech --group vision lecoach serve --live
+uv run --group speech --group vision lespeech serve --live
 ```
 
 Open `http://127.0.0.1:8000` and select **Live microphone and camera**. Speech
@@ -69,7 +69,7 @@ engine/recorder and generated template coaching. Missing models/runtimes/devices
 remain input limitations; composition availability does not certify usable input.
 Use `--speech-model-dir /path/to/models` for a different prepared speech directory.
 
-Plain `lecoach serve` retains the synthetic replay app; its audience is computed
+Plain `lespeech serve` retains the synthetic replay app; its audience is computed
 and its coaching authored. The same synthetic examples remain available in the
 opt-in app and do not acquire devices. The maintainer reports the Ubuntu live
 functional/reliability batch passed in #11; exact coaching citations, quantified
@@ -86,7 +86,7 @@ the repository root, prepare only the core packages and frontend:
 uv sync --frozen
 npm --prefix frontend ci
 npm --prefix frontend run build
-uv run lecoach serve
+uv run lespeech serve
 ```
 
 Open `http://127.0.0.1:8000`, select **Finding your rhythm**, and click **Start
@@ -115,15 +115,15 @@ These do not establish microphone/camera or local model inference acceptance.
 ## Ubuntu camera timing handoff
 
 Vision accepts the reported qualitative live check in
-[#16](https://github.com/crasni/LeCoach/issues/16#issuecomment-6095630504).
+[#16](https://github.com/crasni/LeSpeech/issues/16#issuecomment-6095630504).
 Its quantitative host request is camera-open/startup timing against the 5 s
 startup bound, inference rate and repeat/release. Integration supplied three real,
 isolated five-second sessions: startup 0.2044–0.3599 s, approximately 9.95–9.96
 inference FPS, clean release and no read/inference errors. See
 [dated method/results](STATUS.md#plain-advice-delivery-and-ubuntu-vision-timing--2026-10-10)
-and the [owner handoff](https://github.com/crasni/LeCoach/issues/16#issuecomment-6096632027).
+and the [owner handoff](https://github.com/crasni/LeSpeech/issues/16#issuecomment-6096632027).
 These samples do not measure concurrent speech/browser load or guided pose quality;
-[the owner accepted Stage I vision](https://github.com/crasni/LeCoach/issues/16#issuecomment-6097454631),
+[the owner accepted Stage I vision](https://github.com/crasni/LeSpeech/issues/16#issuecomment-6097454631),
 with activity tested only on Mac because no current rule/advice uses it. The
 existing startup bound is retained.
 
@@ -131,8 +131,8 @@ For a later owner-requested guided check, the existing probe remains available.
 Use the prepared model/runtime and have the presenter follow the preview prompts:
 
 ```sh
-uv run --group speech --group vision python -m lecoach.vision.probe --list-cameras
-uv run --group speech --group vision python -m lecoach.vision.probe -v --camera 0 --repeat 3 --out sessions/vision-probe.json
+uv run --group speech --group vision python -m lespeech.vision.probe --list-cameras
+uv run --group speech --group vision python -m lespeech.vision.probe -v --camera 0 --repeat 3 --out sessions/vision-probe.json
 ```
 
 Use the intended index from the first command. The guided run asks the presenter
@@ -154,7 +154,7 @@ uv run --group speech --group vision python scripts/live_evidence.py
 ```
 
 Use the already prepared packages/models and built UI. Set the intended
-`LECOACH_SPEECH_DEVICE` before launch as above. This replaces the usual server
+`LESPEECH_SPEECH_DEVICE` before launch as above. This replaces the usual server
 command for the diagnostic run; it uses the same loopback address/port and does
 not download models. Open `http://127.0.0.1:8000`, select **Live microphone and
 camera**, follow the owner-provided workplace passage and pace/facing retry,

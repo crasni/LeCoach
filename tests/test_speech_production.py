@@ -12,22 +12,22 @@ import types
 from pathlib import Path
 from unittest import IsolatedAsyncioTestCase, TestCase, mock
 
-from lecoach.contracts.interfaces import Components, SessionConfig
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.session import SessionController
-from lecoach.speech import (
+from lespeech.contracts.interfaces import Components, SessionConfig
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.session import SessionController
+from lespeech.speech import (
     MicrophoneError,
     MicrophoneNotFound,
     MicrophonePermissionDenied,
     SpeechConfig,
     whisper,
 )
-from lecoach.speech import model as model_cli
-from lecoach.speech.local import DEVICE_VARIABLE, build_local_adapter
-from lecoach.speech.probe import describe, summarize
-from lecoach.speech.seams import Boundary
-from lecoach.speech.sources import PortAudioSource, classify
-from lecoach.speech.vad import FRAME, SpeechGate
+from lespeech.speech import model as model_cli
+from lespeech.speech.local import DEVICE_VARIABLE, build_local_adapter
+from lespeech.speech.probe import describe, summarize
+from lespeech.speech.seams import Boundary
+from lespeech.speech.sources import PortAudioSource, classify
+from lespeech.speech.vad import FRAME, SpeechGate
 from tests.helpers import Recorder
 
 RATE = 16_000
@@ -200,7 +200,7 @@ class LocalCompositionTests(IsolatedAsyncioTestCase):
 class DeviceSelectionTests(TestCase):
     def device(self, value, **options):
         with mock.patch.dict(os.environ), \
-                mock.patch("lecoach.speech.local.SileroSegmenter", return_value=None):
+                mock.patch("lespeech.speech.local.SileroSegmenter", return_value=None):
             os.environ.pop(DEVICE_VARIABLE, None)
             if value is not None:
                 os.environ[DEVICE_VARIABLE] = value

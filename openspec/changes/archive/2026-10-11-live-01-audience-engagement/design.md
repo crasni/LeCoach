@@ -7,8 +7,8 @@ See [proposal.md](proposal.md#why). The base implementation is on `main` (PR #7,
 Other documents keep their roles:
 
 - [ARCHITECTURE.md](../../../../docs/ARCHITECTURE.md#engagement-contract--role-4) owns event semantics.
-- `src/lecoach/engagement/config.py` owns every rule default and unit.
-- `src/lecoach/engagement/README.md` explains the rules.
+- `src/lespeech/engagement/config.py` owns every rule default and unit.
+- `src/lespeech/engagement/README.md` explains the rules.
 - Issues #18 and #19 own state and acceptance. [STATUS.md](../../../../docs/STATUS.md#live-01-local-engine-and-rehearsal-screen) holds the 2026-10-08 evidence.
 
 The engine plugs into INT-01's `EngagementEngine` seam: `start(context)`, `on_event(event)`, `stop()`. The controller forwards speech/vision events, including `signal.status`, through its FIFO bus and rejects engagement emissions once stopping begins. In fixture mode, the replay seam advances a fake clock to each delivery time before dispatch and skips authored engagement events whenever an engine is injected.
@@ -110,7 +110,7 @@ Plain-language wording for each state, reason code and input-status reason lives
 
 `replay_with_engine()` returns a factory that supplies only the engine. For live mode it raises the existing `live_not_integrated` conflict, and it marks itself `live_integrated = False` so health stays honest.
 
-The served app and `lecoach replay` now default to this factory. `--audience authored` keeps authored transitions. `examples/consume_replay.py` passes no factory, so it still reports authored transitions. Coaching remains authored because no recorder or generator is injected.
+The served app and `lespeech replay` now default to this factory. `--audience authored` keeps authored transitions. `examples/consume_replay.py` passes no factory, so it still reports authored transitions. Coaching remains authored because no recorder or generator is injected.
 
 *Alternative:* leaving authored audiences as the default. Rejected because LIVE-01's deliverable is a rehearsal screen driven by the real engine.
 
@@ -126,7 +126,7 @@ The served app and `lecoach replay` now default to this factory. `--audience aut
 
   On 2026-10-09, PR #24's branch (`9850ae0`) ran in an isolated worktree without merging:
   - its coaching, feedback and engine tests pass (51);
-  - with this change's `src/lecoach/engagement` and `tests/test_engagement.py` overlaid, they pass (with this change's engine tests replacing PR #7's);
+  - with this change's `src/lespeech/engagement` and `tests/test_engagement.py` overlaid, they pass (with this change's engine tests replacing PR #7's);
   - every coaching case yields the same moments both ways, for example two improvements and one strength for `weak_to_improved`.
 - **[Held-rule citations can age]** A rule held inside its hysteresis band keeps citing the windows that latched it. These can be older than the stale age when another transition re-cites the rule; a re-cited window can also simply age before the next transition. → This is intended. The coaching selector (PR #24) rejects a reason when its newest cited window, or the source's newest observation, is staler than that source's limit, and records an omission. Stale evidence therefore never becomes advice. The transition that latched the rule carries fresh evidence.
 - **[Behavior change after merge]** The pause hold, uninterrupted `ENGAGED`, and outage boundaries change when `INTERESTED`, `ENGAGED` and pace/filler rules fire relative to PR #7. Codes and event shapes are unchanged. → Before merge, the follow-up PR asks integration and coaching (@crasni, @WolflordR) to review on issue #18, and Lane 2 (@firstsnow1226) is notified on issue #6.
@@ -140,7 +140,7 @@ The served app and `lecoach replay` now default to this factory. `--audience aut
 
 ## Migration Plan
 
-The base is merged. The refinements land through a follow-up PR on `agent/avatar-ui` after review. Rollback is `lecoach replay --audience authored`, or reverting the composition lines in `api/app.py` and `cli.py`. The engine and screen have no persisted state or schema migration.
+The base is merged. The refinements land through a follow-up PR on `agent/avatar-ui` after review. Rollback is `lespeech replay --audience authored`, or reverting the composition lines in `api/app.py` and `cli.py`. The engine and screen have no persisted state or schema migration.
 
 ## Open Questions
 

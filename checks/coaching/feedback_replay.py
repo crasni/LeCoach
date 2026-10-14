@@ -9,10 +9,10 @@ import asyncio
 import json
 from pathlib import Path
 
-from lecoach.coaching.compose import replay_with_coaching
-from lecoach.contracts import Feedback
-from lecoach.contracts.events import validate_feedback
-from lecoach.runtime.fixtures import FixtureRepository, replay_case
+from lespeech.coaching.compose import replay_with_coaching
+from lespeech.contracts import Feedback
+from lespeech.contracts.events import validate_feedback
+from lespeech.runtime.fixtures import FixtureRepository, replay_case
 
 
 async def evaluate(name):

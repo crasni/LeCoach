@@ -1,4 +1,4 @@
-"""Proposed v0 English word and filler rules for LeCoach speech metrics.
+"""Proposed v0 English word and filler rules for LeSpeech speech metrics.
 
 Lane 2 preparation artifact. ARCHITECTURE.md requires the speech adapter to
 document its tokenizer, analysis language, and filler lexicon. The adapter

@@ -12,9 +12,9 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
-from lecoach.coaching import TemplateFeedbackGenerator
-from lecoach.contracts import CompletedSession, Feedback
-from lecoach.engagement import DEFAULT_RULES, RuleConfig
+from lespeech.coaching import TemplateFeedbackGenerator
+from lespeech.contracts import CompletedSession, Feedback
+from lespeech.engagement import DEFAULT_RULES, RuleConfig
 
 
 async def generate(session: CompletedSession, rules: RuleConfig) -> Feedback:

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <title>LeCoach</title>
+  <title>LeSpeech</title>
   <defs><clipPath id="tile"><rect width="120" height="120" rx="27"/></clipPath></defs>
   <rect x="1" y="1" width="118" height="118" rx="26" fill="#ffffff" stroke="#e4e8f0" stroke-width="2"/>
   <g clip-path="url(#tile)">

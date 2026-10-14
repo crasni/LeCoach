@@ -2,17 +2,17 @@
 
 ## Why
 
-Live audience response is LeCoach's central product value, so producers, coaching and the UI need one deterministic engine with traceable reasons plus a screen that shows its reactions. LIVE-01 ([issue #18](https://github.com/crasni/LeCoach/issues/18)) merged through [PR #7](https://github.com/crasni/LeCoach/pull/7) without integration review or an OpenSpec change, and issue #18's acceptance asks integration and coaching to confirm the reason/evidence interface, so this change records that behavior and proposes the fixes review found.
+Live audience response is LeSpeech's central product value, so producers, coaching and the UI need one deterministic engine with traceable reasons plus a screen that shows its reactions. LIVE-01 ([issue #18](https://github.com/crasni/LeSpeech/issues/18)) merged through [PR #7](https://github.com/crasni/LeSpeech/pull/7) without integration review or an OpenSpec change, and issue #18's acceptance asks integration and coaching to confirm the reason/evidence interface, so this change records that behavior and proposes the fixes review found.
 
 ## What Changes
 
 - **Record (merged in PR #7):**
-  - the sole engagement engine in `src/lecoach/engagement/`, which turns canonical speech, vision and `signal.status` events into evidence-cited `engagement.state` transitions;
+  - the sole engagement engine in `src/lespeech/engagement/`, which turns canonical speech, vision and `signal.status` events into evidence-cited `engagement.state` transitions;
   - sustained-evidence negative rules with separate clear thresholds and a minimum state dwell;
   - unusable input (missing, stale, unknown or outage) never counted as poor delivery;
   - one validated rule configuration, and the reason codes in [ARCHITECTURE.md](../../../../docs/ARCHITECTURE.md#engagement-contract--role-4);
   - the rehearsal screen: rippling 2D audience, plain-language reasons, timeline, input status, metrics, transcript, live preview slot and provenance labels;
-  - composition in Lane 1 files, merged before integration review: the served app and `lecoach replay` compute audiences with the engine during synthetic replay (`--audience authored` restores authored ones); live mode stays unavailable.
+  - composition in Lane 1 files, merged before integration review: the served app and `lespeech replay` compute audiences with the engine during synthetic replay (`--audience authored` restores authored ones); live mode stays unavailable.
 - **Proposed engine refinements (behavior delta for review):**
   - `ENGAGED` requires positive evidence at every evaluation for the engaged duration, as ARCHITECTURE's "sustained positive observations" requires. The merged code let interrupted evidence through.
   - While speech reports an active pause, pace and filler rules hold, and that window gives no pace verdict. This answers Lane 2's issue #6 observation that silence-filled trailing windows produced `pace_steady`.
@@ -44,11 +44,11 @@ None. No capability is in `openspec/specs/` yet. INT-01's unarchived `synthetic-
 ## Impact
 
 - **Code:**
-  - `src/lecoach/engagement/` (engine, configuration, composition helper, rules README);
+  - `src/lespeech/engagement/` (engine, configuration, composition helper, rules README);
   - `frontend/src/` (`main.tsx`, `Audience.tsx`, `copy.ts`, `style.css`);
   - `tests/test_engagement.py`;
   - `frontend/e2e/replay.spec.ts` and `frontend/e2e/ui-states.spec.ts`.
-- **Shared files (Lane 1):** `src/lecoach/api/app.py` and `src/lecoach/cli.py` compose the engine. `frontend/playwright.config.ts` resolves the backend executable on Windows. ARCHITECTURE carries the reason codes.
+- **Shared files (Lane 1):** `src/lespeech/api/app.py` and `src/lespeech/cli.py` compose the engine. `frontend/playwright.config.ts` resolves the backend executable on Windows. ARCHITECTURE carries the reason codes.
 - **Interfaces:** No event schema, generated type or dependency change.
   - The reason vocabulary, citation semantics and `RuleConfig` stale ages are consumed by Lane 5's open PR #24.
   - The refinements change when `INTERESTED`, `ENGAGED` and pace rules fire, but not event shapes or codes.

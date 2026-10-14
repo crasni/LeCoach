@@ -4,14 +4,14 @@ from unittest import IsolatedAsyncioTestCase, TestCase, mock
 
 from fastapi.testclient import TestClient
 
-from lecoach.api.app import create_app
-from lecoach.cli import main
-from lecoach.contracts.interfaces import SessionConfig
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.fixtures import FixtureRepository, remap
-from lecoach.runtime.live import prepare_live_factory
-from lecoach.runtime.session import SessionManager
-from lecoach.speech.whisper import ModelUnavailable
+from lespeech.api.app import create_app
+from lespeech.cli import main
+from lespeech.contracts.interfaces import SessionConfig
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.fixtures import FixtureRepository, remap
+from lespeech.runtime.live import prepare_live_factory
+from lespeech.runtime.session import SessionManager
+from lespeech.speech.whisper import ModelUnavailable
 from tests.helpers import Capture
 
 
@@ -19,10 +19,10 @@ class LiveFactoryTests(IsolatedAsyncioTestCase):
     async def test_shutdown_of_prepared_session_never_opens_devices(self):
         speech, vision = Capture(), Capture()
         with (
-            mock.patch("lecoach.runtime.live.warm_up", return_value=object()),
-            mock.patch("lecoach.runtime.live.prewarm"),
-            mock.patch("lecoach.runtime.live.build_speech_adapter", return_value=speech),
-            mock.patch("lecoach.runtime.live.build_vision_adapter", return_value=vision),
+            mock.patch("lespeech.runtime.live.warm_up", return_value=object()),
+            mock.patch("lespeech.runtime.live.prewarm"),
+            mock.patch("lespeech.runtime.live.build_speech_adapter", return_value=speech),
+            mock.patch("lespeech.runtime.live.build_vision_adapter", return_value=vision),
         ):
             manager = SessionManager(prepare_live_factory())
             controller = manager.create(SessionConfig(mode="live"), clock=FakeClock())
@@ -39,10 +39,10 @@ class LiveFactoryTests(IsolatedAsyncioTestCase):
         speech, vision = [Capture(), Capture()], [Capture(), Capture()]
         model = object()
         with (
-            mock.patch("lecoach.runtime.live.warm_up", return_value=model) as warm,
-            mock.patch("lecoach.runtime.live.prewarm"),
-            mock.patch("lecoach.runtime.live.build_speech_adapter", side_effect=speech) as build,
-            mock.patch("lecoach.runtime.live.build_vision_adapter", side_effect=vision),
+            mock.patch("lespeech.runtime.live.warm_up", return_value=model) as warm,
+            mock.patch("lespeech.runtime.live.prewarm"),
+            mock.patch("lespeech.runtime.live.build_speech_adapter", side_effect=speech) as build,
+            mock.patch("lespeech.runtime.live.build_vision_adapter", side_effect=vision),
         ):
             factory = prepare_live_factory()
             fixture = factory(SessionConfig())
@@ -96,10 +96,10 @@ class LiveApiTests(TestCase):
     def test_failed_inputs_return_generated_limitations_and_release(self):
         speech, vision = Capture(fail=True), Capture(fail=True)
         with (
-            mock.patch("lecoach.runtime.live.warm_up", side_effect=ModelUnavailable("missing")),
-            mock.patch("lecoach.runtime.live.prewarm"),
-            mock.patch("lecoach.runtime.live.build_speech_adapter", return_value=speech) as build,
-            mock.patch("lecoach.runtime.live.build_vision_adapter", return_value=vision),
+            mock.patch("lespeech.runtime.live.warm_up", side_effect=ModelUnavailable("missing")),
+            mock.patch("lespeech.runtime.live.prewarm"),
+            mock.patch("lespeech.runtime.live.build_speech_adapter", return_value=speech) as build,
+            mock.patch("lespeech.runtime.live.build_vision_adapter", return_value=vision),
         ):
             factory = prepare_live_factory()
             self.assertIsNone(build.call_args.kwargs["transcriber"])
@@ -131,15 +131,15 @@ class LiveApiTests(TestCase):
                 self.assertTrue(speech.released and vision.released)
 
     def test_cli_live_is_opt_in_and_prepares_before_serving(self):
-        with mock.patch("sys.argv", ["lecoach", "serve"]), mock.patch("uvicorn.run") as run:
+        with mock.patch("sys.argv", ["lespeech", "serve"]), mock.patch("uvicorn.run") as run:
             main()
-            run.assert_called_once_with("lecoach.api.app:app", host="127.0.0.1", port=8000)
+            run.assert_called_once_with("lespeech.api.app:app", host="127.0.0.1", port=8000)
         with (
             mock.patch(
-                "sys.argv", ["lecoach", "serve", "--live", "--speech-model-dir", "/tmp/models"]
+                "sys.argv", ["lespeech", "serve", "--live", "--speech-model-dir", "/tmp/models"]
             ),
-            mock.patch("lecoach.runtime.live.prepare_live_factory") as prepare,
-            mock.patch("lecoach.api.app.create_app") as create,
+            mock.patch("lespeech.runtime.live.prepare_live_factory") as prepare,
+            mock.patch("lespeech.api.app.create_app") as create,
             mock.patch("uvicorn.run") as run,
         ):
             main()

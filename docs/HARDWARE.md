@@ -41,7 +41,7 @@ Record the observation date, host OS/architecture, source revision and actual ou
 
 ## Resolve target prerequisites
 
-Use the official USB-8G specifications and pinned Hailo references in SOURCES. The speech candidate uses windowed audio; the pose table's published performance conditions use PCIe, while LeCoach targets USB. The inspected generic Hailo Apps prerequisites include PCIe/Hailo-8 instructions. Confirm a supported Hailo-10H USB host/driver/runtime/firmware combination before selecting an ABI-compatible wheel or installing anything.
+Use the official USB-8G specifications and pinned Hailo references in SOURCES. The speech candidate uses windowed audio; the pose table's published performance conditions use PCIe, while LeSpeech targets USB. The inspected generic Hailo Apps prerequisites include PCIe/Hailo-8 instructions. Confirm a supported Hailo-10H USB host/driver/runtime/firmware combination before selecting an ABI-compatible wheel or installing anything.
 
 Lane 2 owns speech inference, Lane 3 owns vision inference, Lane 4 owns the sole engagement engine, and Lane 5 owns the recorder/feedback. Integration owns composition and evidence review. Do not create alternate adapters or a second logger for a benchmark. Keep CPU/live and target-device paths separately named even when they implement the same public seam.
 
@@ -52,7 +52,7 @@ Before a measured target run, obtain:
 - INT-02 composition with the shared clock and accepted lifecycle, plus instrumentation that identifies timing endpoints without changing the event schema here.
 - A consented reproducible local scenario; warm-up, workload, duration and repeat count agreed for the run.
 
-If a prerequisite is missing, record it, the required owner/handoff action, and the unmeasured scope. Do not download weights, change the Python pin, install drivers, or turn vendor benchmarks into LeCoach measurements under this inspection procedure.
+If a prerequisite is missing, record it, the required owner/handoff action, and the unmeasured scope. Do not download weights, change the Python pin, install drivers, or turn vendor benchmarks into LeSpeech measurements under this inspection procedure.
 
 ## Run record
 

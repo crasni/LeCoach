@@ -10,16 +10,16 @@ import threading
 from pathlib import Path
 from unittest import IsolatedAsyncioTestCase, TestCase
 
-from lecoach.contracts import parse_event
-from lecoach.contracts.interfaces import Components, SessionConfig
-from lecoach.engagement.engine import RuleEngine
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.session import SessionController
-from lecoach.vision.adapter import LocalVisionAdapter
-from lecoach.vision.backend import VisionUnavailable
-from lecoach.vision.config import VisionConfig
-from lecoach.vision.features import FrameFeatures, Keypoint, PoseFrame, WindowAggregator
-from lecoach.vision.local_backend import MediaPipePose
+from lespeech.contracts import parse_event
+from lespeech.contracts.interfaces import Components, SessionConfig
+from lespeech.engagement.engine import RuleEngine
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.session import SessionController
+from lespeech.vision.adapter import LocalVisionAdapter
+from lespeech.vision.backend import VisionUnavailable
+from lespeech.vision.config import VisionConfig
+from lespeech.vision.features import FrameFeatures, Keypoint, PoseFrame, WindowAggregator
+from lespeech.vision.local_backend import MediaPipePose
 
 FIXTURE = Path(__file__).parents[1] / "checks/vision/fixtures/labeled_session.json"
 
@@ -370,7 +370,7 @@ class AdapterTests(IsolatedAsyncioTestCase):
 
         model = SlowPose()
         adapter = LocalVisionAdapter(lambda: source, lambda: model)
-        from lecoach.contracts.interfaces import SessionContext
+        from lespeech.contracts.interfaces import SessionContext
 
         context = SessionContext("s", clock, lambda e: True, SessionConfig(mode="live"))
         start = asyncio.create_task(adapter.start(context))
@@ -395,7 +395,7 @@ class LocalBackendTests(TestCase):
 
 class ProbeJudgeTests(TestCase):
     def test_segment_verdicts(self):
-        from lecoach.vision.probe import judge
+        from lespeech.vision.probe import judge
 
         def w(facing, activity, person=True):
             return {"facing_score": facing, "activity_score": activity, "person_present": person}
@@ -418,7 +418,7 @@ class ProbeViewerTests(TestCase):
             import cv2  # noqa: F401
             import numpy  # noqa: F401
 
-            from lecoach.vision.viewer import ProbeViewer
+            from lespeech.vision.viewer import ProbeViewer
         except ImportError:
             self.skipTest("opencv/numpy not installed")
         self.viewer = ProbeViewer()
@@ -446,7 +446,7 @@ class ProbeRunTests(TestCase):
     def test_probe_runs_scripted_segments_and_releases_camera(self):
         from unittest import mock
 
-        from lecoach.vision import probe
+        from lespeech.vision import probe
 
         frames = [frontal(i / 10 + 0.05) for i in range(10_000)]
 
@@ -552,7 +552,7 @@ class StartupAndThrottleTests(IsolatedAsyncioTestCase):
         adapter = LocalVisionAdapter(
             lambda: source, PassThroughPose, config=VisionConfig(max_inference_fps=10)
         )
-        from lecoach.contracts.interfaces import SessionContext
+        from lespeech.contracts.interfaces import SessionContext
 
         context = SessionContext("s", clock, lambda e: True, SessionConfig(mode="live"))
         await adapter.start(context)
@@ -579,7 +579,7 @@ class TrailingWindowTests(IsolatedAsyncioTestCase):
         source = ReplaySource(clock, frames)
         emitted = []
         adapter = LocalVisionAdapter(lambda: source, PassThroughPose)
-        from lecoach.contracts.interfaces import SessionContext
+        from lespeech.contracts.interfaces import SessionContext
 
         context = SessionContext("s", clock, emitted.append, SessionConfig(mode="live"))
         await adapter.start(context)
@@ -635,7 +635,7 @@ class ProbeRepeatTests(TestCase):
     def test_repeat_sessions_reopen_and_release_each_time(self):
         from unittest import mock
 
-        from lecoach.vision import probe
+        from lespeech.vision import probe
 
         sources = []
 
@@ -661,7 +661,7 @@ class CameraListTests(TestCase):
     def test_list_cameras_reports_openable_indices_and_releases(self):
         from unittest import mock
 
-        from lecoach.vision import local_backend, probe
+        from lespeech.vision import local_backend, probe
 
         released = []
 
@@ -701,7 +701,7 @@ class CameraListTests(TestCase):
 
 class StartupWarmupTests(IsolatedAsyncioTestCase):
     def test_prewarm_runs_once_per_process(self):
-        from lecoach.vision import local_backend
+        from lespeech.vision import local_backend
 
         first = local_backend.prewarm()
         self.assertIs(local_backend.prewarm(), first)
@@ -711,7 +711,7 @@ class StartupWarmupTests(IsolatedAsyncioTestCase):
     def test_build_without_warm_does_not_start_prewarm(self):
         from unittest import mock
 
-        from lecoach.vision import local_backend
+        from lespeech.vision import local_backend
 
         with mock.patch.object(local_backend, "prewarm") as prewarm:
             local_backend.build_local_adapter(warm=False)
@@ -720,7 +720,7 @@ class StartupWarmupTests(IsolatedAsyncioTestCase):
             prewarm.assert_called_once()
 
     async def test_startup_breakdown_is_recorded(self):
-        from lecoach.contracts.interfaces import SessionContext
+        from lespeech.contracts.interfaces import SessionContext
 
         clock = FakeClock()
         source = ReplaySource(clock, [frontal(0.05)])

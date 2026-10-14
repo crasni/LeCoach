@@ -1,11 +1,11 @@
 # Tasks
 
-Groups 1–3 are model-free and device-free, and can proceed while issue #6 is open. Group 4 starts only after issue #6 records the language and default decisions and integration adds the optional speech dependency group. [Issue #13](https://github.com/crasni/LeCoach/issues/13) owns status, blockers, remaining work, and acceptance; this checklist is a work breakdown. Publication follows [AGENTS.md](../../../../AGENTS.md#scoped-autonomous-branch-publication).
+Groups 1–3 are model-free and device-free, and can proceed while issue #6 is open. Group 4 starts only after issue #6 records the language and default decisions and integration adds the optional speech dependency group. [Issue #13](https://github.com/crasni/LeSpeech/issues/13) owns status, blockers, remaining work, and acceptance; this checklist is a work breakdown. Publication follows [AGENTS.md](../../../../AGENTS.md#scoped-autonomous-branch-publication).
 
 ## 1. Configuration and text rules
 
-- [x] 1.1 Add a strict `SpeechConfig` in `src/lecoach/speech/config.py`. Defaults come from the issue #6 proposal (`en`, window 10 s, hop 1 s, minimum observation 5 s, pause minimum 1 s, coverage wait 3 s, maximum utterance 8 s), and the model, device, sample-rate, and partial-interval fields are documented. Verify that `tests/test_speech_config.py` covers defaults and rejects non-positive values and a hop longer than the window.
-- [x] 1.2 Move the English tokenizer and filler lexicon into `src/lecoach/speech/text.py`. Verify that a parity test gives identical word and filler counts with `checks/speech/speech_text.py` for every fixture transcript and the existing tokenizer test sentences.
+- [x] 1.1 Add a strict `SpeechConfig` in `src/lespeech/speech/config.py`. Defaults come from the issue #6 proposal (`en`, window 10 s, hop 1 s, minimum observation 5 s, pause minimum 1 s, coverage wait 3 s, maximum utterance 8 s), and the model, device, sample-rate, and partial-interval fields are documented. Verify that `tests/test_speech_config.py` covers defaults and rejects non-positive values and a hop longer than the window.
+- [x] 1.2 Move the English tokenizer and filler lexicon into `src/lespeech/speech/text.py`. Verify that a parity test gives identical word and filler counts with `checks/speech/speech_text.py` for every fixture transcript and the existing tokenizer test sentences.
 
 ## 2. Model-free transcript and metrics tracking
 
@@ -30,7 +30,7 @@ Groups 1–3 are model-free and device-free, and can proceed while issue #6 is o
 
 ## 3. Adapter lifecycle with injected seams
 
-- [x] 3.1 Define `AudioSource`, segmenter, and `Transcriber` protocols, with scripted test doubles under `tests/`. Verify that `lecoach.speech` imports and the default `uv run pytest -q` passes without `faster-whisper`, `sounddevice`, or `numpy` installed.
+- [x] 3.1 Define `AudioSource`, segmenter, and `Transcriber` protocols, with scripted test doubles under `tests/`. Verify that `lespeech.speech` imports and the default `uv run pytest -q` passes without `faster-whisper`, `sounddevice`, or `numpy` installed.
 - [x] 3.2 Implement `SpeechAdapter.start` / `stop_capture` / `drain`:
   - capture time from sample offsets on the shared clock;
   - a voice-activity worker thread and a transcription worker thread;
@@ -43,13 +43,13 @@ Groups 1–3 are model-free and device-free, and can proceed while issue #6 is o
   - idempotent, cancellation-safe cleanup.
 
   Verify with `SessionController` tests for each failure, a single microphone release on repeated stop or cancelled drain, and speech listed as incomplete when drain exceeds the bound.
-- [x] 3.4 Document the adapter seams, configuration, failure reasons, and limitations in `src/lecoach/speech/README.md`. Verify that the documented test and check commands run as written.
+- [x] 3.4 Document the adapter seams, configuration, failure reasons, and limitations in `src/lespeech/speech/README.md`. Verify that the documented test and check commands run as written.
 
 ## 4. Production microphone and local transcription
 
 - [x] 4.1 Apply the issue #6 decisions to `SpeechConfig` defaults and the speech README. Verify that the configuration tests and documentation state the decided language and values, and link the issue.
 - [x] 4.2 Implement the PortAudio microphone source with the integration-added optional `speech` group. Verify that a smoke test skips cleanly when the group is absent, and that a manual check on the development host captures audio and reports a denied or missing device as a status.
-- [x] 4.3 Implement the process-wide model provider, the faster-whisper transcriber with word timestamps and bundled voice activity detection, and `python -m lecoach.speech.model --download` into the ignored `models/` directory. Verify that a smoke test on generated silence produces no speech segments or an empty final, and that `start` performs no download.
+- [x] 4.3 Implement the process-wide model provider, the faster-whisper transcriber with word timestamps and bundled voice activity detection, and `python -m lespeech.speech.model --download` into the ignored `models/` directory. Verify that a smoke test on generated silence produces no speech segments or an empty final, and that `start` performs no download.
 - [x] 4.4 Run a live microphone rehearsal on the development host and export the speech stream to the ignored `sessions/` directory. Verify that `checks/speech/check_speech.py --stream` passes, and record the host, model, configuration, and observed limitations in STATUS.
 
 ## 5. Integration handoff

@@ -8,9 +8,9 @@ import asyncio
 
 from check_cases import check_completed, load_case
 
-from lecoach.coaching import InMemorySessionRecorder
-from lecoach.contracts.interfaces import Components
-from lecoach.runtime.fixtures import FixtureRepository, replay_case
+from lespeech.coaching import InMemorySessionRecorder
+from lespeech.contracts.interfaces import Components
+from lespeech.runtime.fixtures import FixtureRepository, replay_case
 
 
 async def main() -> None:

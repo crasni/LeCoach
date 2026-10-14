@@ -46,7 +46,7 @@ uv run pytest -q tests/test_coaching.py
 published fixture/controller seam and checks its completed timelines against
 all ten session oracles. The controller still receives authored audience events;
 no live engine or feedback generator is injected. The command writes no session
-files. See [recorder behavior and retention](../../src/lecoach/coaching/README.md).
+files. See [recorder behavior and retention](../../src/lespeech/coaching/README.md).
 
 ## Cases and expected behavior
 
@@ -140,7 +140,7 @@ recovery examples, with final acceptance pending issue #18. No shared interface
 revision is introduced here.
 
 The recorder, selector, templates and optional replay composition are implemented
-in `src/lecoach/coaching/`; they use the existing `Event`,
+in `src/lespeech/coaching/`; they use the existing `Event`,
 `CompletedSession`, `Feedback`, and `Moment` contracts. The UI remains Lane 4's
 responsibility. Durable storage, live integration, and the COACH-02 demo evidence
 are still pending; P1 LLM feedback/questions/TTS remain gated by integrated P0.

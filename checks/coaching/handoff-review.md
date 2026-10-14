@@ -2,20 +2,20 @@
 
 This is dated Lane 5 compatibility evidence, not a task board or acceptance of
 the integrated live product. Current acceptance lives in
-[#20](https://github.com/crasni/LeCoach/issues/20),
-[#21](https://github.com/crasni/LeCoach/issues/21) and
-[#18](https://github.com/crasni/LeCoach/issues/18).
+[#20](https://github.com/crasni/LeSpeech/issues/20),
+[#21](https://github.com/crasni/LeSpeech/issues/21) and
+[#18](https://github.com/crasni/LeSpeech/issues/18).
 
 ## Reviewed sources and boundary
 
 - Coaching preparation at `9850ae0` was independently approved by integration in
-  [PR #24's review](https://github.com/crasni/LeCoach/pull/24#pullrequestreview-5468827739).
+  [PR #24's review](https://github.com/crasni/LeSpeech/pull/24#pullrequestreview-5468827739).
 - Main source snapshot: `e5c083837a06ae4e3c8edd4fd9b8e0281dbb8ca0`, including
   speech core and vision producer continuations. No runtime dependencies were
   installed and no live adapters were started for this review.
 - Proposed engine snapshot: `d76d37375cfd7870dad6d97d0e9b22c355626b59` in
-  [PR #29](https://github.com/crasni/LeCoach/pull/29), with its linked
-  [`live-01-audience-engagement` specification](https://github.com/crasni/LeCoach/tree/d76d37375cfd7870dad6d97d0e9b22c355626b59/openspec/changes/live-01-audience-engagement).
+  [PR #29](https://github.com/crasni/LeSpeech/pull/29), with its linked
+  [`live-01-audience-engagement` specification](https://github.com/crasni/LeSpeech/tree/d76d37375cfd7870dad6d97d0e9b22c355626b59/openspec/changes/live-01-audience-engagement).
   This review confirms coaching compatibility; integration owns shared behavior
   acceptance and merge. No feature branch was merged for these checks.
 
@@ -45,12 +45,12 @@ macOS arm64, pinned CPython 3.12.14, existing frozen core/dev environment. Two
 temporary source snapshots were created with `git archive`, outside the working
 tree; no branch/ref merge, dependency update or live composition was performed:
 
-1. Export main `e5c0838`; overlay this increment's `src/lecoach/coaching/`,
+1. Export main `e5c0838`; overlay this increment's `src/lespeech/coaching/`,
    `checks/coaching/`, `tests/test_coaching.py`, `tests/test_feedback.py` and
    `tests/test_session_feedback.py`. From that snapshot:
    `PYTHONPATH=src <project-venv>/bin/python -m pytest -q`.
    **216 tests / 376 subtests passed; 2 optional cv2 tests skipped.**
-2. Copy that snapshot; overlay only PR #29's `src/lecoach/engagement/` and
+2. Copy that snapshot; overlay only PR #29's `src/lespeech/engagement/` and
    `tests/test_engagement.py`. From this separate snapshot:
    `PYTHONPATH=src <project-venv>/bin/python -m pytest -q tests/test_coaching.py tests/test_feedback.py tests/test_session_feedback.py tests/test_engagement.py`.
    **72 tests / 75 subtests passed.**
@@ -93,7 +93,7 @@ Integration composes the existing recorder and generator through `Components`;
 the generator receives the same engine stale ages. UI consumes canonical
 `Feedback` plus `CompletedSession.events`; it can show the complete recorded
 timeline even after a websocket reconnect missed transitions. The independent
-[completed-session checker](../../src/lecoach/coaching/README.md#inspect-a-completed-session-locally)
+[completed-session checker](../../src/lespeech/coaching/README.md#inspect-a-completed-session-locally)
 reads the same canonical data and emits canonical Feedback or a text timeline
 without transcript contents. It neither captures nor persists input.
 
@@ -113,7 +113,7 @@ PR #23 delivers the public local CPU composition. #17 is accepted (no rollback;
 abandoned scratch branch retained). Historical observations above retain their
 original revision/host attribution; live acceptance belongs to Issues.
 
-The maintainer's [requested advice refinement](https://github.com/crasni/LeCoach/issues/20#issuecomment-6095551081)
+The maintainer's [requested advice refinement](https://github.com/crasni/LeSpeech/issues/20#issuecomment-6095551081)
 is implemented as plain observations plus one concrete practice action. User copy
 no longer exposes cited-window terminology or normalized facing scores. The
 selector/recorder/engine, quotas, capture anchors and canonical citations are
@@ -153,7 +153,7 @@ estimates. The maintainer-reported approximately 2:20 read-through belongs to
 the earlier 316-word `03028dd` draft, not this revision or the edited video.
 
 The script/runbook now reflect delivered live browser coaching and the confirmed
-Ubuntu/Bluetooth operator handoff. The [passed reliability batch](https://github.com/crasni/LeCoach/issues/11#issuecomment-6095334266)
+Ubuntu/Bluetooth operator handoff. The [passed reliability batch](https://github.com/crasni/LeSpeech/issues/11#issuecomment-6095334266)
 is attributed operator evidence; no repetition is requested. Exact moment
 time/text/citations and sanitized run/configuration provenance still need reviewer
 confirmation before live advice acceptance and final footage. Revised read-through,

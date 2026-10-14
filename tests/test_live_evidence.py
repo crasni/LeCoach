@@ -7,10 +7,10 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from lecoach.coaching.compose import replay_with_coaching
-from lecoach.contracts import CompletedSession, Feedback, parse_event
-from lecoach.contracts.interfaces import Components, SessionConfig
-from lecoach.runtime.fixtures import FixtureRepository, replay_case
+from lespeech.coaching.compose import replay_with_coaching
+from lespeech.contracts import CompletedSession, Feedback, parse_event
+from lespeech.contracts.interfaces import Components, SessionConfig
+from lespeech.runtime.fixtures import FixtureRepository, replay_case
 from scripts.live_evidence import EvidenceExports, EvidenceFeedback, evidence_factory, main
 
 

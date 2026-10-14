@@ -1,8 +1,8 @@
-# LeCoach
+# LeSpeech
 
 Your Private AI Audience.
 
-LeCoach is a local, multimodal presentation coach for the ASUS UGen AI League Hackathon 2026. It combines speech and body-language signals to make a virtual audience react in real time, then highlights specific moments and practical improvements after each rehearsal.
+LeSpeech is a local, multimodal presentation coach for the ASUS UGen AI League Hackathon 2026. It combines speech and body-language signals to make a virtual audience react in real time, then highlights specific moments and practical improvements after each rehearsal.
 
 ## MVP
 
@@ -25,13 +25,13 @@ The default app retains labeled synthetic replay with authored example coaching.
 The maintainer reports a working live rehearsal and reliability checks on their
 Ubuntu computer with a Bluetooth microphone. Measured quality/performance and
 final live acceptance remain separate; see [dated evidence](docs/STATUS.md) and
-[#11](https://github.com/crasni/LeCoach/issues/11). Vision Stage I is
-[accepted with an activity-measurement limitation](https://github.com/crasni/LeCoach/issues/16#issuecomment-6097454631).
+[#11](https://github.com/crasni/LeSpeech/issues/11). Vision Stage I is
+[accepted with an activity-measurement limitation](https://github.com/crasni/LeSpeech/issues/16#issuecomment-6097454631).
 
 Start at [AGENTS.md](AGENTS.md), the shared entry point for all five collaborators. Follow the canonical documents linked there:
 
 - [GUIDE.md](GUIDE.md): agreed product scope and priorities.
-- [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination): assignments, branches, live status, blockers and acceptance.
+- [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination): assignments, branches, live status, blockers and acceptance.
 - [Architecture](docs/ARCHITECTURE.md): shared event contracts.
 - [Implementation evidence](docs/STATUS.md): dated checks and limitations, not live task state.
 - [Lane boundaries](docs/AGENT_ROLES.md): stable responsibilities; assigned Issues provide the handoff.
@@ -51,7 +51,7 @@ From the repository root:
 uv sync --frozen
 npm --prefix frontend ci
 npm --prefix frontend run build
-uv run lecoach serve
+uv run lespeech serve
 ```
 
 Open **http://127.0.0.1:8000**. Select an example, start replay, watch the audience
@@ -110,19 +110,19 @@ the first live rehearsal. Ubuntu needs the PortAudio system library
 uv sync --frozen --group speech --group vision
 npm --prefix frontend ci
 npm --prefix frontend run build
-uv run --group speech --group vision python -m lecoach.speech.model --download
-uv run --group speech --group vision python -m lecoach.speech.model --check
+uv run --group speech --group vision python -m lespeech.speech.model --download
+uv run --group speech --group vision python -m lespeech.speech.model --check
 mkdir -p models
 curl -L -o models/pose_landmarker_lite.task \
   https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/latest/pose_landmarker_lite.task
-uv run --group speech --group vision python -m lecoach.speech.probe --list-devices
-uv run --group speech --group vision lecoach serve --live
+uv run --group speech --group vision python -m lespeech.speech.probe --list-devices
+uv run --group speech --group vision lespeech serve --live
 ```
 
 Initial package/model preparation requires downloads. Prepared rehearsals use
 local inference; session start does not download model weights. See
 [demo host setup](docs/DEMO_HOST.md) for model paths and camera selection.
-Set `LECOACH_SPEECH_DEVICE` to a listed input index or name query before launch
+Set `LESPEECH_SPEECH_DEVICE` to a listed input index or name query before launch
 if the system default is not the intended microphone.
 
 Open **http://127.0.0.1:8000** and select **Live microphone and camera**.
@@ -131,7 +131,7 @@ the devices; stopping drains observations and generates evidence-linked template
 coaching. Models warm before the API starts, with no automatic weight download or
 raw recording. Missing inputs produce notices and coaching limitations. Actual
 speech quality, concurrent responsiveness and final presenter/browser coaching
-acceptance remain in [#11](https://github.com/crasni/LeCoach/issues/11).
+acceptance remain in [#11](https://github.com/crasni/LeSpeech/issues/11).
 Camera direction is approximate; no eye tracking or emotion detection is claimed.
 UGen300 inference remains unmeasured Stage II work.
 
@@ -141,12 +141,12 @@ replaced when a new session starts and released on application exit. Explicit
 development exports belong in ignored `sessions/`; keep private media,
 transcripts, credentials and weights out of Git.
 
-Plain `lecoach serve` retains synthetic replay with authored example coaching.
+Plain `lespeech serve` retains synthetic replay with authored example coaching.
 
 ### Headless replay and checks
 
 ```sh
-uv run lecoach replay --case weak_to_improved
+uv run lespeech replay --case weak_to_improved
 uv run python scripts/validate_fixtures.py
 uv run python examples/consume_replay.py
 uv run pytest -q
@@ -179,7 +179,7 @@ npm run test:e2e
 
 They launch the loopback backend, check deterioration/recovery, stop/restart,
 transcript revisions, an empty rehearsal, mobile layout, reconnection, and local-only
-runtime requests. A system test browser can be selected with `LECOACH_CHROMIUM_PATH`.
+runtime requests. A system test browser can be selected with `LESPEECH_CHROMIUM_PATH`.
 Browser checks require a free port 8000. In a restricted coding-agent sandbox,
 HTTP/WebSocket tests may require permission to run outside the sandbox; the checks
 do not contact external inference services.
@@ -199,8 +199,8 @@ to select the delivered live composition.
 
 [ARCHITECTURE.md](docs/ARCHITECTURE.md#int-01-implementation-decisions-and-handoff)
 defines directories, protocols, clock/capture semantics, and transport boundaries.
-Import executable types from `lecoach.contracts` and public seams from
-`lecoach.contracts.interfaces`. Implement inside your assigned subsystem directory;
+Import executable types from `lespeech.contracts` and public seams from
+`lespeech.contracts.interfaces`. Implement inside your assigned subsystem directory;
 ask integration to add dependencies or change shared files.
 
 The integrator supplies a fresh `Components` instance through

@@ -15,8 +15,8 @@ test('replay shows computed reactions with reasons and coaching and keeps all re
   await expect(page.getByTestId('audience-state')).toHaveText('INTERESTED', { timeout: 5000 });
   await expect(page.getByTestId('audience-state')).toHaveText('ENGAGED', { timeout: 5000 });
   const timeline = page.getByRole('list', { name: 'Audience transitions' });
-  await expect(timeline).toContainText('Pace has stayed fast');
-  await expect(timeline).toContainText('Turned away from the audience for a while');
+  await expect(timeline).toContainText('Talking too fast');
+  await expect(timeline).toContainText('Turned away from the audience');
   await expect(page.getByText('Live microphone and camera (not connected yet)')).toBeAttached();
   await expect(page.getByRole('region', { name: 'Example coaching' })).toBeVisible();
   await expect(page.getByText('Keep doing this', { exact: true })).toBeVisible();
@@ -31,15 +31,15 @@ test('stop, repeat and delayed transcript remain isolated', async ({ page }) => 
   await page.getByRole('button', { name: 'Start replay' }).click();
   await expect(page.getByRole('button', { name: 'Stop', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Stop', exact: true }).click();
-  await expect(page.getByText('Replay stopped early. The authored example summary is unavailable.')).toBeVisible();
+  await expect(page.getByText('Replay stopped early. The pre-written example summary is unavailable.')).toBeVisible();
   await page.getByLabel('Practice mode', { exact: true }).selectOption('late_final_and_duplicates');
   await page.getByRole('button', { name: 'Start replay' }).click();
   await expect(page.getByRole('region', { name: 'Example coaching' })).toBeVisible({ timeout: 10000 });
   await expect(page.locator('.transcript')).toHaveText('Our synthetic example is ready.');
   await expect(page.locator('.transcript')).not.toContainText('foreign');
-  await expect(page.getByText('No supported coaching moments in this example.')).toBeVisible();
+  await expect(page.getByText('No key moments in this example.')).toBeVisible();
   await expect(page.getByTestId('audience-state')).toHaveText('NEUTRAL');
-  await expect(page.getByRole('list', { name: 'Audience transitions' })).not.toContainText('Pace has stayed fast');
+  await expect(page.getByRole('list', { name: 'Audience transitions' })).not.toContainText('Talking too fast');
 });
 
 test('empty session completes and narrow layout fits', async ({ page }) => {

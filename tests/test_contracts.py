@@ -3,8 +3,8 @@ import copy
 import pytest
 from pydantic import ValidationError
 
-from lecoach.contracts import Feedback, parse_event
-from lecoach.runtime.fixtures import FixtureRepository
+from lespeech.contracts import Feedback, parse_event
+from lespeech.runtime.fixtures import FixtureRepository
 from tests.helpers import event
 
 

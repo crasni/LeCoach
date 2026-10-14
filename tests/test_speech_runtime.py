@@ -1,8 +1,8 @@
 """Real speech runtime: Silero streaming, PortAudio handling, and Whisper on audio.
 
 Skipped unless the optional `speech` group is installed. Model tests also need
-prepared weights (`python -m lecoach.speech.model --download`, or a directory in
-`LECOACH_SPEECH_MODEL_DIR`); the end-to-end test also needs `espeak-ng`, which
+prepared weights (`python -m lespeech.speech.model --download`, or a directory in
+`LESPEECH_SPEECH_MODEL_DIR`); the end-to-end test also needs `espeak-ng`, which
 synthesizes the English speech. No microphone is used: these are synthetic
 signals, not microphone or recognition-quality evidence.
 """
@@ -21,15 +21,15 @@ from array import array
 from pathlib import Path
 from unittest import IsolatedAsyncioTestCase, TestCase, mock, skipUnless
 
-from lecoach.contracts.interfaces import Components, SessionConfig
-from lecoach.runtime.clock import FakeClock
-from lecoach.runtime.session import SessionController
-from lecoach.speech import MicrophoneLost, MicrophoneNoSignal, MicrophoneNotFound, SpeechConfig
-from lecoach.speech.adapter import SpeechAdapter
+from lespeech.contracts.interfaces import Components, SessionConfig
+from lespeech.runtime.clock import FakeClock
+from lespeech.runtime.session import SessionController
+from lespeech.speech import MicrophoneLost, MicrophoneNoSignal, MicrophoneNotFound, SpeechConfig
+from lespeech.speech.adapter import SpeechAdapter
 from tests.helpers import Recorder
 
 RUNTIME = all(importlib.util.find_spec(name) for name in ("numpy", "faster_whisper"))
-MODEL_DIR = os.environ.get("LECOACH_SPEECH_MODEL_DIR", "models")
+MODEL_DIR = os.environ.get("LESPEECH_SPEECH_MODEL_DIR", "models")
 MODEL = Path(MODEL_DIR) / "faster-whisper-base.en" / "model.bin"
 ESPEAK = shutil.which("espeak-ng")
 
@@ -43,7 +43,7 @@ class ResamplerTests(TestCase):
     def test_streaming_resampling_matches_a_direct_signal(self):
         import numpy as np
 
-        from lecoach.speech.sources import LinearResampler
+        from lespeech.speech.sources import LinearResampler
 
         t48 = np.arange(48_000) / 48_000
         source = np.sin(2 * np.pi * 220 * t48).astype(np.float32)
@@ -99,7 +99,7 @@ def fake_sounddevice(supports_16k=True, query_error=None):
 @skipUnless(RUNTIME, "speech dependency group not installed")
 class PortAudioSourceTests(TestCase):
     def open_source(self, module, **options):
-        from lecoach.speech.sources import PortAudioSource
+        from lespeech.speech.sources import PortAudioSource
 
         received, errors = [], []
         source = PortAudioSource(**options)
@@ -160,7 +160,7 @@ class SileroSegmenterTests(TestCase):
     def test_metrics_frontier_excludes_pending_audio_and_future_onset_padding(self):
         import numpy as np
 
-        from lecoach.speech.vad import FRAME, SileroSegmenter
+        from lespeech.speech.vad import FRAME, SileroSegmenter
 
         segmenter = SileroSegmenter(config(), model=types.SimpleNamespace(session=None),
                                     pad_s=0.2)
@@ -179,7 +179,7 @@ class SileroSegmenterTests(TestCase):
     def test_streaming_matches_batch_probabilities_and_silence_has_no_speech(self):
         import numpy as np
 
-        from lecoach.speech.vad import FRAME, SileroSegmenter, shared_silero_model
+        from lespeech.speech.vad import FRAME, SileroSegmenter, shared_silero_model
 
         rng = np.random.default_rng(0)
         audio = (0.05 * rng.standard_normal(FRAME * 60)).astype(np.float32)
@@ -208,7 +208,7 @@ def synthesize(text: str, directory: str) -> Path:
 def load_audio(path: Path):
     import numpy as np
 
-    from lecoach.speech.sources import LinearResampler
+    from lespeech.speech.sources import LinearResampler
 
     with wave.open(str(path), "rb") as file:
         rate = file.getframerate()
@@ -219,14 +219,14 @@ def load_audio(path: Path):
 @skipUnless(RUNTIME and MODEL.is_file(), "speech runtime or prepared model missing")
 class WhisperRuntimeTests(TestCase):
     def test_generated_silence_gives_an_empty_final(self):
-        from lecoach.speech.whisper import load_transcriber
+        from lespeech.speech.whisper import load_transcriber
 
         result = load_transcriber(config()).transcribe(array("f", bytes(4 * 32_000)), 16_000, True)
         self.assertEqual((result.text, result.words), ("", ()))
 
     @skipUnless(ESPEAK, "espeak-ng not installed")
     def test_synthesized_english_is_transcribed_with_word_times(self):
-        from lecoach.speech.whisper import load_transcriber
+        from lespeech.speech.whisper import load_transcriber
 
         with tempfile.TemporaryDirectory() as directory:
             audio = load_audio(synthesize("Hello everyone. Today I want to show you our project.",
@@ -267,8 +267,8 @@ class EndToEndTests(IsolatedAsyncioTestCase):
         import faster_whisper.utils
         import numpy as np
 
-        from lecoach.speech.vad import SileroSegmenter
-        from lecoach.speech.whisper import load_transcriber
+        from lespeech.speech.vad import SileroSegmenter
+        from lespeech.speech.whisper import load_transcriber
         from tests.test_speech_pipeline import CHECKER
 
         with tempfile.TemporaryDirectory() as directory:

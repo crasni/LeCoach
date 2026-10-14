@@ -1,6 +1,6 @@
-# LeCoach architecture and shared contracts
+# LeSpeech architecture and shared contracts
 
-This file is the canonical interface reference for all five roles. [GUIDE.md](../GUIDE.md) defines product scope; [GitHub Issues](https://github.com/crasni/LeCoach/issues?q=is%3Aissue+label%3Acoordination) assign work and own live acceptance. INT-01 implements the MVP v0 shapes below, is merged through PR #4, and is accepted by the maintainer with the remaining peer-review/downstream signoff gate waived. Current implementation evidence lives in [STATUS.md](STATUS.md). Model choices remain with the producer owners. The [OpenSpec implementation checklist](../openspec/changes/archive/2026-10-09-int-01-local-integration-scaffold/tasks.md) records execution order.
+This file is the canonical interface reference for all five roles. [GUIDE.md](../GUIDE.md) defines product scope; [GitHub Issues](https://github.com/crasni/LeSpeech/issues?q=is%3Aissue+label%3Acoordination) assign work and own live acceptance. INT-01 implements the MVP v0 shapes below, is merged through PR #4, and is accepted by the maintainer with the remaining peer-review/downstream signoff gate waived. Current implementation evidence lives in [STATUS.md](STATUS.md). Model choices remain with the producer owners. The [OpenSpec implementation checklist](../openspec/changes/archive/2026-10-09-int-01-local-integration-scaffold/tasks.md) records execution order.
 
 ## INT-01 implementation decisions and handoff
 
@@ -9,7 +9,7 @@ This file is the canonical interface reference for all five roles. [GUIDE.md](..
 English is the product/rehearsal and speech-analysis baseline. The maintainer
 canceled the unaccepted Mandarin/zh-TW delta; existing v0 English units, tokenizer,
 filler rules and consumer semantics remain unchanged. Unsupported measurements
-remain null/unknown. [#6](https://github.com/crasni/LeCoach/issues/6) records the
+remain null/unknown. [#6](https://github.com/crasni/LeSpeech/issues/6) records the
 speech-owned configuration and optional dependency handoff; no new shared schema
 or engine rule is introduced.
 
@@ -21,14 +21,14 @@ below are unchanged.
 
 Python 3.12.14 with uv hosts the controller, in-process event bus, and local FastAPI API. React/TypeScript with Vite renders outputs. Core lockfiles exclude model/capture packages; request modality dependency additions through integration. One backend process runs on `127.0.0.1:8000`; development Vite runs on loopback port 5173 with an API/WebSocket proxy. The backend can serve the built frontend for the demo. No remote inference or media service is used.
 
-The executable event models live in `src/lecoach/contracts/events.py`; protocols/configuration live in `contracts/interfaces.py`. The root `contracts/schema.json` and `frontend/src/generated/contracts.ts` are generated artifacts. This document owns semantics; Python models implement them. Update both together and regenerate rather than editing TypeScript separately.
+The executable event models live in `src/lespeech/contracts/events.py`; protocols/configuration live in `contracts/interfaces.py`. The root `contracts/schema.json` and `frontend/src/generated/contracts.ts` are generated artifacts. This document owns semantics; Python models implement them. Update both together and regenerate rather than editing TypeScript separately.
 
 | Location | Boundary |
 | --- | --- |
-| `src/lecoach/runtime/` | Shared clocks, controller, FIFO subscriptions, synthetic fixture playback. |
-| `src/lecoach/api/` | Local HTTP/WebSocket transport and composition. |
-| `src/lecoach/speech/`, `src/lecoach/vision/` | Producer implementation slots; no capture/model implementation in INT-01. |
-| `src/lecoach/engagement/`, `src/lecoach/coaching/` | Sole engine and recorder/generator implementation slots, for their assigned owners. |
+| `src/lespeech/runtime/` | Shared clocks, controller, FIFO subscriptions, synthetic fixture playback. |
+| `src/lespeech/api/` | Local HTTP/WebSocket transport and composition. |
+| `src/lespeech/speech/`, `src/lespeech/vision/` | Producer implementation slots; no capture/model implementation in INT-01. |
+| `src/lespeech/engagement/`, `src/lespeech/coaching/` | Sole engine and recorder/generator implementation slots, for their assigned owners. |
 | `frontend/src/` | Integration inspection shell; Lane 4 replaces it with the rehearsal experience. |
 | `checks/coaching/` | Unchanged, locally reviewed Lane 5 synthetic cases from PR #1. |
 
@@ -36,7 +36,7 @@ Inject `Components` into `SessionManager(factory)` to compose live implementatio
 
 The capture adapter protocol is `await start(context)`, `await stop_capture(capture_end_s)`, `await drain()`. `start` completes after capture is initialized, not after the rehearsal finishes. `stop_capture` stops acquisition; `drain` flushes observations captured at or before the supplied end. Implement both idempotently and release resources in cancellation-safe cleanup. The vision adapter additionally provides `preview_jpeg() -> bytes | None`; the local volatile preview uses only the latest JPEG, capped at 512 kB and five frames/s by default. The browser does not open a second camera stream.
 
-The engine protocol is `start(context)`, `on_event(event)`, `stop()`. The recorder protocol is `start(context)`, `on_event(event)`, `complete(duration_s, incomplete_sources) -> CompletedSession`. The generator protocol is `await generate(completed_session) -> Feedback`. Integration's opt-in `lecoach serve --live` composes the owners' public local adapter factories, RuleEngine, InMemorySessionRecorder and TemplateFeedbackGenerator; coaching freshness reads the same RuleConfig stale ages. Speech model/VAD preparation precedes serving, while capture starts only through the existing session lifecycle. Plain serve retains synthetic replay with authored coaching. The P0 recorder keeps active/completed data in memory until next session/application exit; explicit development exports use ignored `sessions/`. Producer owners must not enable raw recording by default.
+The engine protocol is `start(context)`, `on_event(event)`, `stop()`. The recorder protocol is `start(context)`, `on_event(event)`, `complete(duration_s, incomplete_sources) -> CompletedSession`. The generator protocol is `await generate(completed_session) -> Feedback`. Integration's opt-in `lespeech serve --live` composes the owners' public local adapter factories, RuleEngine, InMemorySessionRecorder and TemplateFeedbackGenerator; coaching freshness reads the same RuleConfig stale ages. Speech model/VAD preparation precedes serving, while capture starts only through the existing session lifecycle. Plain serve retains synthetic replay with authored coaching. The P0 recorder keeps active/completed data in memory until next session/application exit; explicit development exports use ignored `sessions/`. Producer owners must not enable raw recording by default.
 
 `SessionConfig.mode` and every transport snapshot explicitly distinguish `fixture` and `live`. `output_provenance` distinguishes authored fixture outputs from computed live outputs without changing the v0 event envelope. Live composition is available through the opt-in launch; actual-host acceptance remains distinct from composition availability. Configuration defaults are centralized: startup timeout 5 s, shared stop/drain timeout 2 s, feedback timeout 5 s, browser queue 128 events, replay speed 5×. These are integration bounds, not engagement thresholds or measured inference latencies. Pace/language and audience rule defaults remain Lane 4's handoff.
 
@@ -200,7 +200,7 @@ The event timestamp is the current shared clock time when the audience decision 
 
 Use a small explicit rule configuration: pace bands, filler threshold, silence duration, facing threshold/duration, per-source stale age, smoothing duration, and transition dwell/hysteresis. Speech staleness must accommodate the chosen metric window and measured inference delay; video uses its own age limit. Declare every default and unit in one implementation configuration file. Require sustained evidence before transitions and a recovery threshold/dwell to prevent flicker. Keep rules deterministic for a given event stream and configuration.
 
-LIVE-01 reason codes (proposed by Lane 4, pending integration review). Negative: `pace_high` and `fillers_frequent` (→ `CONFUSED`); `pace_low`, `silence_prolonged` and `facing_away_sustained` (→ `BORED`). Positive, cited by `INTERESTED`/`ENGAGED`: `pace_steady` (speech) and `facing_audience` (vision). Each cites the speech or vision metric events that supported it. Negative states cite every currently active negative rule; a transition to `NEUTRAL` has no reasons. The rules, defaults and units are documented in `src/lecoach/engagement/README.md` and `config.py`.
+LIVE-01 reason codes (proposed by Lane 4, pending integration review). Negative: `pace_high` and `fillers_frequent` (→ `CONFUSED`); `pace_low`, `silence_prolonged` and `facing_away_sustained` (→ `BORED`). Positive, cited by `INTERESTED`/`ENGAGED`: `pace_steady` (speech) and `facing_audience` (vision). Each cites the speech or vision metric events that supported it. Negative states cite every currently active negative rule; a transition to `NEUTRAL` has no reasons. The rules, defaults and units are documented in `src/lespeech/engagement/README.md` and `config.py`.
 
 Thresholds are demo heuristics to tune using recorded fixtures, **not scientifically validated measures**. Use `INTERESTED` for configured recovery/positive observations, `ENGAGED` for sustained positive observations, and negative states only for explicit supported rules. Avoid unsupported labels such as "unconfident" or "bad eye contact." Completed short pauses may contribute to a positive transition only with contextual evidence; prolonged silence may trigger a rule only when audio capture and silence detection are known to work.
 

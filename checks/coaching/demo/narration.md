@@ -6,12 +6,12 @@ main's delivered live composition. It is a reviewable script, not a final record
 or submission. Read only the six `text` blocks.
 
 The maintainer reported an approximately **2:20 spoken read-through of the previous
-316-word script** ([source](https://github.com/crasni/LeCoach/issues/12#issuecomment-6095163116)).
+316-word script** ([source](https://github.com/crasni/LeSpeech/issues/12#issuecomment-6095163116)).
 That timing does not measure this revision, individual slots or the edited video.
 The confirmed host is the maintainer's Ubuntu PC using local CPU inference and a
 Bluetooth microphone. The operator reports that the live functional batch passed;
 exact coaching moments/citations and quantitative accuracy/latency remain separate.
-See [the functional handoff](https://github.com/crasni/LeCoach/issues/11#issuecomment-6095334266).
+See [the functional handoff](https://github.com/crasni/LeSpeech/issues/11#issuecomment-6095334266).
 
 Keep **Live · local CPU** visible for actual live footage and **Synthetic replay**
 for fixture footage. Session timestamps and edited-video times are different clocks.
@@ -24,7 +24,7 @@ Screen: title and audience. Introduce intended value; no user-study result is cl
 
 ```text
 Practicing a presentation alone gives you few clues about how an audience might
-respond. LeCoach is our prototype for a private virtual audience, designed to
+respond. LeSpeech is our prototype for a private virtual audience, designed to
 connect delivery habits with visible reactions and practical rehearsal advice.
 ```
 
@@ -96,7 +96,7 @@ Screen: one reviewed observation/action card and the new-session control. No
 accuracy, learning-outcome or release-date promise.
 
 ```text
-Choose one supported suggestion, then practice the passage again. LeCoach aims
+Choose one supported suggestion, then practice the passage again. LeSpeech aims
 to make that next rehearsal more focused: connect a delivery habit with an
 audience response and a concrete action you can try.
 ```
@@ -109,7 +109,7 @@ The slots total 175 seconds. Before final script/footage acceptance:
   moment kind, timestamp, observation, action and supporting IDs for the advice shot.
   #11's passed operator batch does not supply these exact values. Do not repeat
   the completed functional batch just to establish the same general success.
-- Confirm that live footage shows generated coaching. Plain `lecoach serve` and
+- Confirm that live footage shows generated coaching. Plain `lespeech serve` and
   fixture selection still show authored example coaching; label that mode explicitly.
 - Review the actual outcome with #20/#11 owners. More silence is not necessarily
   intentional; camera direction is not eye contact. Avoid filler-driven reactions
